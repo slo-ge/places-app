@@ -1,0 +1,15 @@
+<div (click)="sortBy('distance')">search by position</div>
+<div *ngFor="let location of locations$ | async">
+    <h3>{{location.title.rendered}}</h3>
+    <div class="description" [innerHTML]="location.acf.description[0].text"></div>
+    <div class="address">{{location.acf.place.address}}</div>
+    <div class="distance" *ngIf="myPosition">{{calcDistance(location, myPosition) | number}} km</div>
+</div>
+
+{{searchInfo$ | async | json}}
+<div class="pagination" *ngIf="searchInfo$ | async as searchInfo">
+    <div *ngFor="let it of numberReturn(searchInfo.pages); let i = index"
+         (click)="nextPage(i+1)">
+        {{i + 1}}
+    </div>
+</div>

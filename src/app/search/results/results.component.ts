@@ -50,6 +50,10 @@ export class ResultsComponent implements OnInit {
         )
     }
 
+    loadPage(page: number) {
+        this.locations$ = this.locationService.allLocations({page: page});
+    }
+
     numberReturn(length) {
         return new Array(length);
     }

@@ -48,8 +48,8 @@ export class LocationService {
 
     private nextInfo(headers: HttpHeaders) {
         this.info.next({
-            pages: Number(headers.get('X-WP-Total')),
-            total: Number(headers.get('X-WP-TotalPages'))
+            total: Number(headers.get('X-WP-Total')),
+            pages: Number(headers.get('X-WP-TotalPages'))
         });
     }
 

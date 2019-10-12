@@ -1,0 +1,33 @@
+$primary: #719192;
+$rosa: #dfcdc3;
+$grey: #5f6769;
+$dark-grey: #3c4245;
+:host {
+  display: block;
+  background-color: $rosa;
+  color: $dark-grey;
+}
+
+h2 {
+  color: $primary;
+}
+
+.place {
+  margin: 10px;
+  padding: 5px;
+  border-bottom: 1px solid $dark-grey;
+}
+
+.pages {
+  display: flex;
+
+  > div {
+    background-color: $dark-grey;
+    padding: 10px;
+    width: 25px;
+    text-align: center;
+    margin: 3px;
+    color: $rosa;
+  }
+}
+

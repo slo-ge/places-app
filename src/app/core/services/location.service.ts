@@ -36,12 +36,6 @@ export class LocationService {
         );
     }
 
-    public allLocationsByGeo(pos: { lat: number, lng: number }): Observable<ACFLocation[]> {
-        return this.httpClient.get<ACFLocation[]>(
-            `${BASE_URL}?geo_location={"lat":"${pos.lat}","lng":"${pos.lng}","radius":"50"}`
-        );
-    }
-
     public getInfo() {
         return this.info.asObservable();
     }

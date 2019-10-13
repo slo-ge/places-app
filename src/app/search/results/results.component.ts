@@ -20,6 +20,11 @@ export class ResultsComponent implements OnInit {
     currentPage: 1;
     searchInfo$: Observable<Info>;
 
+    params = {
+      page: 1,
+      geo_location: null,
+    };
+
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService) {
     }
@@ -41,17 +46,29 @@ export class ResultsComponent implements OnInit {
         )
     }
 
+    // TODO: rename
     sortBy(order: string) {
         this.geoLocation.getPosition().then(
             (position: { lat: number, lng: number }) => {
                 this.myPosition = position;
-                this.locations$ = this.locationService.allLocationsByGeo(position);
+                // TODO: refactore stuff make radius global
+                this.updateParams({
+                  geo_location: `{"lat":"${position.lat}","lng":"${position.lng}","radius":"50"}`
+              });
             }
         )
     }
 
     loadPage(page: number) {
-        this.locations$ = this.locationService.allLocations({page: page});
+      this.updateParams({page: page});
+    }
+
+    updateParams(params: any){
+      this.params = {
+        ...this.params,
+        ...params
+      };
+      this.locations$ = this.locationService.allLocations(this.params);
     }
 
     numberReturn(length) {

@@ -3,10 +3,17 @@ import {Info, LocationService} from "../../core/services/location.service";
 import {Observable} from "rxjs";
 import {ACFLocation} from "../../core/model/location";
 import {calculateDistance, GeoLocationService} from "../../core/services/geo-location.service";
+import {ActivatedRoute} from "@angular/router";
+import {switchMap} from "rxjs/operators";
 
 interface GeoPosition {
     lat: number;
     lng: number
+}
+
+enum SortType {
+    DEFAULT = 'default',
+    GEO = 'geo'
 }
 
 @Component({
@@ -21,18 +28,35 @@ export class ResultsComponent implements OnInit {
     searchInfo$: Observable<Info>;
 
     params = {
-      page: 1,
-      geo_location: null,
+        page: 1,
+        geo_location: null,
     };
 
     constructor(private locationService: LocationService,
-                private geoLocation: GeoLocationService) {
+                private geoLocation: GeoLocationService,
+                private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.locations$ = this.locationService.allLocations(
-            {page: this.currentPage || 1}
+        this.geoLocation.getPosition().then(
+            (position: { lat: number, lng: number }) => {
+                this.myPosition = position;
+            }
         );
+
+        this.locations$ = this.route.queryParams.pipe(switchMap((params: { sort: SortType, page: number }) => {
+            const sort = params.sort || SortType.DEFAULT;
+            let httpParams: any = {page: params.page || 1};
+
+            if (sort === SortType.GEO && this.myPosition) {
+                httpParams = {
+                    ...httpParams,
+                    geo_location: `{"lat":"${this.myPosition.lat}","lng":"${this.myPosition.lng}","radius":"50"}`
+                }
+            }
+            return this.locationService.allLocations(httpParams);
+        }));
+
 
         this.searchInfo$ = this.locationService.getInfo();
     }
@@ -44,31 +68,6 @@ export class ResultsComponent implements OnInit {
             location.acf.place.lng,
             myPos.lng
         )
-    }
-
-    // TODO: rename
-    sortBy(order: string) {
-        this.geoLocation.getPosition().then(
-            (position: { lat: number, lng: number }) => {
-                this.myPosition = position;
-                // TODO: refactore stuff make radius global
-                this.updateParams({
-                  geo_location: `{"lat":"${position.lat}","lng":"${position.lng}","radius":"50"}`
-              });
-            }
-        )
-    }
-
-    loadPage(page: number) {
-      this.updateParams({page: page});
-    }
-
-    updateParams(params: any){
-      this.params = {
-        ...this.params,
-        ...params
-      };
-      this.locations$ = this.locationService.allLocations(this.params);
     }
 
     numberReturn(length) {

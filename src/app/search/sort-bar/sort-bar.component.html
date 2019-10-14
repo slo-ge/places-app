@@ -1,0 +1,14 @@
+<div class="title">Sorting</div>
+<div class="actions">
+    <div class="latest"
+         [routerLink]="['/search']"
+         [queryParams]="{sort: 'default'}"
+         queryParamsHandling="merge">latest
+    </div>
+
+    <div class="geo"
+         [routerLink]="['/search']"
+         [queryParams]="{sort: 'geo'}"
+         queryParamsHandling="merge">distance
+    </div>
+</div>

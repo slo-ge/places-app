@@ -8,7 +8,6 @@ export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/locations
 export const ACF_URL = 'https://locations.phipluspi.com/wp-json/acf/v3/locations';
 
 // https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
-const pagination = '?page=2&per_page=1';
 
 export interface Params {
     page: number;
@@ -36,6 +35,10 @@ export class LocationService {
         );
     }
 
+    public getPlace(slug: string): Observable<ACFLocation[]>{
+        return this.httpClient.get<ACFLocation[]>(BASE_URL, {params: {slug: slug}})
+    }
+
     public getInfo() {
         return this.info.asObservable();
     }
@@ -46,5 +49,4 @@ export class LocationService {
             pages: Number(headers.get('X-WP-TotalPages'))
         });
     }
-
 }

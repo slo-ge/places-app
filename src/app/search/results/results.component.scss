@@ -2,20 +2,41 @@ $primary: #719192;
 $rosa: #dfcdc3;
 $grey: #5f6769;
 $dark-grey: #3c4245;
+
 :host {
   display: block;
   background-color: $rosa;
   color: $dark-grey;
+  margin-bottom: 150px;
 }
+
 
 h2 {
   color: $primary;
+  margin: 5px auto;
+}
+
+address {
+  font-size: 12px;
 }
 
 .place {
   margin: 10px;
   padding: 5px;
   border-bottom: 1px solid $dark-grey;
+
+  ::ng-deep {
+
+    .description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 16px;
+      max-height: 64px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+  }
 }
 
 .pages {

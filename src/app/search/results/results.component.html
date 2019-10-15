@@ -1,4 +1,4 @@
-<div *ngFor="let location of locations$ | async" class="place" [routerLink]="['/detail', location.slug]">
+<div *ngFor="let location of locations$ | async" class="place" [routerLink]="['/detail', location.slug]" queryParamsHandling="merge">
     <h2>{{location.title.rendered}}</h2>
     <address>
         <div class="distance" *ngIf="myPosition">{{calcDistance(location, myPosition) | number}} km</div>

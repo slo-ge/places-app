@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 
 import { DetailRoutingModule } from './detail-routing.module';
 import { DetailComponent } from './detail.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
-  declarations: [DetailComponent],
+  declarations: [DetailComponent, FooterComponent],
   imports: [
     CommonModule,
     DetailRoutingModule

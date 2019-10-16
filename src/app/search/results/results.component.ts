@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {ACFLocation} from "../../core/model/location";
 import {calculateDistance, GeoLocationService} from "../../core/services/geo-location.service";
 import {ActivatedRoute} from "@angular/router";
-import {switchMap} from "rxjs/operators";
+import {finalize, switchMap, tap} from "rxjs/operators";
 
 interface GeoPosition {
     lat: number;
@@ -37,6 +37,8 @@ export class ResultsComponent implements OnInit {
                 private route: ActivatedRoute) {
     }
 
+    loading = true;
+
     ngOnInit() {
         this.geoLocation.getPosition().then(
             (position: { lat: number, lng: number }) => {
@@ -44,19 +46,24 @@ export class ResultsComponent implements OnInit {
             }
         );
 
-        this.locations$ = this.route.queryParams.pipe(switchMap((params: { sort: SortType, page: number }) => {
-            const sort = params.sort || SortType.DEFAULT;
-            let httpParams: any = {page: params.page || 1};
+        this.locations$ = this.route.queryParams.pipe(
+            tap(() => this.loading = true),
+            switchMap((params: { sort: SortType, page: number }) => {
+                const sort = params.sort || SortType.DEFAULT;
+                let httpParams: any = {page: params.page || 1};
 
-            if (sort === SortType.GEO && this.myPosition) {
-                httpParams = {
-                    ...httpParams,
-                    geo_location: `{"lat":"${this.myPosition.lat}","lng":"${this.myPosition.lng}","radius":"50"}`
+                if (sort === SortType.GEO && this.myPosition) {
+                    httpParams = {
+                        ...httpParams,
+                        geo_location: `{"lat":"${this.myPosition.lat}","lng":"${this.myPosition.lng}","radius":"50"}`
+                    }
                 }
-            }
-            return this.locationService.allLocations(httpParams);
-        }));
 
+                return this.locationService.allLocations(httpParams).pipe(
+                    finalize(() => this.loading = false)
+                )
+            })
+        );
 
         this.searchInfo$ = this.locationService.getInfo();
     }

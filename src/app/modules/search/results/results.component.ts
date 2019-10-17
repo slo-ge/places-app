@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Info, LocationService} from "../../core/services/location.service";
 import {Observable} from "rxjs";
-import {ACFLocation} from "../../core/model/location";
-import {calculateDistance, GeoLocationService} from "../../core/services/geo-location.service";
 import {ActivatedRoute} from "@angular/router";
 import {finalize, switchMap, tap} from "rxjs/operators";
+import {ACFLocation} from "../../../core/model/location";
+import {Info, LocationService} from "../../../core/services/location.service";
+import {calculateDistance, GeoLocationService} from "../../../core/services/geo-location.service";
 
 interface GeoPosition {
     lat: number;

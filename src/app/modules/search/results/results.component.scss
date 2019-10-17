@@ -1,18 +1,15 @@
-$primary: #719192;
-$rosa: #dfcdc3;
-$grey: #5f6769;
-$dark-grey: #3c4245;
+@import 'style';
 
 :host {
   display: block;
-  background-color: $rosa;
-  color: $dark-grey;
+  background-color: $item-background-color;
+  color: $item-font-color;
   margin-bottom: 150px;
 }
 
 
 h2 {
-  color: $primary;
+  color: $item-heading-color;
   margin: 5px auto;
 }
 
@@ -23,7 +20,7 @@ address {
 .place {
   margin: 10px;
   padding: 5px;
-  border-bottom: 1px solid $dark-grey;
+  border-bottom: 1px solid $item-border-color;
 
   ::ng-deep {
 
@@ -43,12 +40,12 @@ address {
   display: flex;
 
   > div {
-    background-color: $dark-grey;
+    background-color: $pagination-background-color;
     padding: 10px;
     width: 25px;
     text-align: center;
     margin: 3px;
-    color: $rosa;
+    color: $pagination-font-color;
   }
 }
 

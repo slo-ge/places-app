@@ -1,0 +1,26 @@
+@import 'style';
+
+:host {
+  height: 44px;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  top: 0;
+  background-color: $header-background;
+  color: $header-font-color;
+  width: 100%;
+}
+
+.actions {
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  > div {
+    cursor: pointer;
+
+    &.active {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {LocationService} from "../core/services/location.service";
 import {Observable} from "rxjs";
-import {ACFLocation} from "../core/model/location";
 import {ActivatedRoute} from "@angular/router";
 import {map, switchMap} from "rxjs/operators";
+import {LocationService} from "../../core/services/location.service";
+import {ACFLocation} from "../../core/model/location";
 
 @Component({
     selector: 'app-detail',

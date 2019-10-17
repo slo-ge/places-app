@@ -1,4 +1,7 @@
 @import 'style';
+:host {
+  display: block;
+}
 
 footer {
   position: fixed;

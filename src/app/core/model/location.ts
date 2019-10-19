@@ -1,3 +1,5 @@
+import {WpEmbed} from "./embed";
+
 export interface Location {
     id: number;
     date: string;
@@ -18,6 +20,7 @@ export interface Location {
     ping_status: string;
     template: string;
     meta?: (null)[] | null;
+    _embedded: WpEmbed;
 }
 
 export interface Rendered {

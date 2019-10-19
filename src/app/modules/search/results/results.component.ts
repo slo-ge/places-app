@@ -5,6 +5,8 @@ import {finalize, switchMap, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
 import {Info, LocationService} from "../../../core/services/location.service";
 import {calculateDistance, GeoLocationService} from "../../../core/services/geo-location.service";
+import {getFeaturedImage} from "../../../core/utils/media";
+import {WpEmbed} from "../../../core/model/embed";
 
 interface GeoPosition {
     lat: number;
@@ -75,6 +77,10 @@ export class ResultsComponent implements OnInit {
             location.acf.place.lng,
             myPos.lng
         )
+    }
+
+    getFeatureImage(embedded: WpEmbed) {
+        return getFeaturedImage(embedded);
     }
 
     numberReturn(length) {

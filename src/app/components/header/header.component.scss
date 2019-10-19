@@ -10,6 +10,7 @@
   color: $header-font-color;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  z-index: 100;
 
   > div {
     cursor: pointer;

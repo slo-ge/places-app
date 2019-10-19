@@ -6,6 +6,25 @@
   color: $item-font-color;
 }
 
+header {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.7);
+}
+img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
 
 h2 {
   color: $item-heading-color;
@@ -14,6 +33,7 @@ h2 {
 
 address {
   font-size: 12px;
+  margin-bottom: 15px;
 }
 
 .place {

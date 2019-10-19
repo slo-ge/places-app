@@ -25,10 +25,16 @@ export class LocationService {
 
     private info: BehaviorSubject<Info> = new BehaviorSubject(null);
 
+    private readonly paramOptions = {
+        _embed: '' // this options embeds the media data
+    };
+
     constructor(private httpClient: HttpClient) {
     }
 
     public allLocations(params: any): Observable<ACFLocation[]> {
+        params = {...this.paramOptions, ...params};
+
         return this.httpClient.get<ACFLocation[]>(BASE_URL, {observe: 'response', params: params}).pipe(
             tap(data => this.nextInfo(data.headers)),
             map(data => data.body)

@@ -1,26 +1,24 @@
 @import 'style';
 
 :host {
-  height: 44px;
+  line-height: 44px;
+  text-align: center;
   position: sticky;
-  display: flex;
   align-items: center;
   top: 0;
   background-color: $header-background;
   color: $header-font-color;
-  width: 100%;
-}
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
-.actions {
-  padding: 0 10px;
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
   > div {
     cursor: pointer;
+    justify-self: stretch;
+    align-self: stretch;
 
     &.active {
-      text-decoration: underline;
+      background: $header-font-color;
+      color: $header-background;
     }
   }
 }

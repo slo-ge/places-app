@@ -8,7 +8,10 @@
         </div>
     </header>
     <address>
-        <div class="distance" *ngIf="myPosition">{{calcDistance(place, myPosition) | number}} km</div>
+        <div *ngIf="geoPosition$ | async as geoPosition"
+             class="distance">
+            {{calcDistance(place, geoPosition) | number}} km
+        </div>
         <div class="address">{{place.acf.place.address}}</div>
     </address>
     <div class="description" [innerHTML]="place.acf.description[0].text"></div>

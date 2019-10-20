@@ -1,14 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ACFLocation} from "../../../core/model/location";
+import {ACFLocation, GeoPosition} from "../../../core/model/location";
 import {calculateDistance} from "../../../core/services/geo-location.service";
 import {WpEmbed} from "../../../core/model/embed";
 import {getFeaturedImage} from "../../../core/utils/media";
-
-interface GeoPosition {
-  lat: number;
-  lng: number
-}
-
+import {Select} from "@ngxs/store";
+import {AppState} from "../../../store/app.state";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-place',
@@ -16,6 +13,8 @@ interface GeoPosition {
   styleUrls: ['./place.component.scss']
 })
 export class PlaceComponent implements OnInit {
+  @Select(AppState.geoPosition)
+  geoPosition$: Observable<GeoPosition>;
 
   @Input()
   place: ACFLocation;

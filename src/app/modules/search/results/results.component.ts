@@ -3,8 +3,10 @@ import {combineLatest, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {finalize, switchMap, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
-import {Info, LocationService} from "../../../core/services/location.service";
+import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
+import {Store} from "@ngxs/store";
+import {SelectGeoLoactionAction} from "../../../store/app.actions";
 
 
 enum SortType {
@@ -20,7 +22,6 @@ enum SortType {
 export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
     currentPage: 1;
-    isGeoLocationOn = false;
 
     params = {
         page: 1,
@@ -29,7 +30,8 @@ export class ResultsComponent implements OnInit {
 
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private store: Store) {
     }
 
     loading = true;
@@ -43,7 +45,10 @@ export class ResultsComponent implements OnInit {
             switchMap(([params, locations]) => {
                 const sort = params.sort || SortType.DEFAULT;
                 let httpParams: any = {page: params.page || 1};
-                this.isGeoLocationOn = !!locations;
+
+                if (!!locations){
+                    this.store.dispatch(new SelectGeoLoactionAction(locations));
+                }
 
                 if (sort === SortType.GEO && locations) {
                     httpParams = {

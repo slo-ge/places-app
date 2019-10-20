@@ -51,3 +51,8 @@ interface Place {
 export interface ACFLocation extends Location {
     acf: ACF
 }
+
+export interface GeoPosition {
+    lat: number;
+    lng: number
+}

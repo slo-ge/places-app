@@ -5,6 +5,8 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from "./components/header/header.component";
+import {NgxsModule} from "@ngxs/store";
+import {AppState} from "./store/app.state";
 
 @NgModule({
     declarations: [
@@ -14,7 +16,10 @@ import {HeaderComponent} from "./components/header/header.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        NgxsModule.forRoot([
+            AppState
+        ])
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -4,6 +4,8 @@ $rosa: black;
 $grey: white;
 $dark-grey: white;
 
+$app-main-background-color: #f1f1f1;
+
 $header-background: $primary;
 $header-font-color: white;
 
@@ -11,10 +13,11 @@ $footer-border-top: 1px solid $primary-soft;
 $footer-background: white;
 $footer-font-color: black;
 
-$item-font-color: black;
+$item-font-color: #565656;
 $item-background-color: white;
 $item-heading-color: $primary;
 $item-border-color: $primary;
+$background-place-tile: white;
 
 $pagination-background-color: $primary;
 $pagination-font-color: black;

@@ -1,6 +1,8 @@
 @import 'style';
+
 :host {
   display: block;
+  background: $app-main-background-color;
 }
 
 footer {

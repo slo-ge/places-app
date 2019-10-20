@@ -7,12 +7,14 @@
             <img [src]="getFeatureImage(place._embedded)">
         </div>
     </header>
-    <address>
-        <div *ngIf="geoPosition$ | async as geoPosition"
-             class="distance">
-            {{calcDistance(place, geoPosition) | number}} km
-        </div>
-        <div class="address">{{place.acf.place.address}}</div>
-    </address>
-    <div class="description" [innerHTML]="place.acf.description[0].text"></div>
+    <div class="text">
+        <address>
+            <div *ngIf="geoPosition$ | async as geoPosition"
+                 class="distance">
+                {{calcDistance(place, geoPosition) | number}} km
+            </div>
+            <div class="address">{{place.acf.place.address}}</div>
+        </address>
+        <div class="description" [innerHTML]="place.acf.description[0].text"></div>
+    </div>
 </div>

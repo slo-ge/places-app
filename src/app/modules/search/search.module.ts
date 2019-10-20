@@ -5,13 +5,17 @@ import {SearchRoutingModule} from './search-routing.module';
 import {SearchComponent} from './search.component';
 import {ResultsComponent} from './results/results.component';
 import { SortBarComponent } from './sort-bar/sort-bar.component';
+import { PlaceComponent } from './place/place.component';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 @NgModule({
     declarations: [
         SearchComponent,
         ResultsComponent,
-        SortBarComponent
+        SortBarComponent,
+        PlaceComponent,
+        PaginationComponent
     ],
     imports: [
         CommonModule,

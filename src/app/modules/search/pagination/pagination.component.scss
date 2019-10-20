@@ -1,0 +1,14 @@
+@import 'style';
+
+.pages {
+  display: flex;
+
+  > div {
+    background-color: $pagination-background-color;
+    padding: 10px;
+    width: 25px;
+    text-align: center;
+    margin: 3px;
+    color: $pagination-font-color;
+  }
+}

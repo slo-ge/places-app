@@ -1,36 +1,10 @@
 <ng-container [ngTemplateOutlet]="loadings" *ngIf="loading"></ng-container>
 
 <ng-container *ngIf="locations$ | async as locations">
-    <div *ngFor="let location of locations" class="place"
-         [routerLink]="['/detail', location.slug]"
-         queryParamsHandling="merge">
-        <header>
-            <div class="title">
-                <h2>{{location.title.rendered}}</h2>
-            </div>
-            <div class="image">
-                <img [src]="getFeatureImage(location._embedded)">
-            </div>
-        </header>
-        <address>
-            <div class="distance" *ngIf="myPosition">{{calcDistance(location, myPosition) | number}} km</div>
-            <div class="address">{{location.acf.place.address}}</div>
-        </address>
-        <div class="description" [innerHTML]="location.acf.description[0].text"></div>
-    </div>
+    <ng-container *ngFor="let place of locations">
+        <app-place [place]="place"></app-place>
+    </ng-container>
 </ng-container>
-
-<div class="pagination" *ngIf="searchInfo$ | async as searchInfo">
-    <div>Total: {{searchInfo.total}}</div>
-    <div class="pages">
-        <div *ngFor="let it of numberReturn(searchInfo.pages); let i = index"
-             [routerLink]="['/search']"
-             [queryParams]="{page: i+1}"
-             queryParamsHandling="merge">
-            {{i + 1}}
-        </div>
-    </div>
-</div>
 
 <ng-template #loadings>
     <div *ngFor="let i of [1,1,1,1,1]" class="place-holder">
@@ -42,3 +16,5 @@
         </div>
     </div>
 </ng-template>
+
+<app-pagination></app-pagination>

@@ -1,0 +1,51 @@
+@import 'style';
+
+:host {
+  display: block;
+  padding: 5px;
+  border-bottom: 1px solid $item-border-color;
+
+  ::ng-deep {
+
+    .description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 16px;
+      max-height: 64px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; /* number of lines to show */
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+header {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+
+h2 {
+  color: $item-heading-color;
+  margin: 5px auto;
+}
+
+address {
+  font-size: 12px;
+  margin-bottom: 15px;
+}

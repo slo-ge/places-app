@@ -1,17 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {finalize, switchMap, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
 import {Info, LocationService} from "../../../core/services/location.service";
-import {calculateDistance, GeoLocationService} from "../../../core/services/geo-location.service";
-import {getFeaturedImage} from "../../../core/utils/media";
-import {WpEmbed} from "../../../core/model/embed";
+import {GeoLocationService} from "../../../core/services/geo-location.service";
 
-interface GeoPosition {
-    lat: number;
-    lng: number
-}
 
 enum SortType {
     DEFAULT = 'default',
@@ -25,9 +19,8 @@ enum SortType {
 })
 export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
-    myPosition: GeoPosition;
     currentPage: 1;
-    searchInfo$: Observable<Info>;
+    isGeoLocationOn = false;
 
     params = {
         page: 1,
@@ -42,22 +35,20 @@ export class ResultsComponent implements OnInit {
     loading = true;
 
     ngOnInit() {
-        this.geoLocation.getPosition().then(
-            (position: { lat: number, lng: number }) => {
-                this.myPosition = position;
-            }
-        );
+        const queryParams$ = this.route.queryParams;
+        const geoLocation$ = this.geoLocation.getPosition();
 
-        this.locations$ = this.route.queryParams.pipe(
+        this.locations$ = combineLatest([queryParams$, geoLocation$]).pipe(
             tap(() => this.loading = true),
-            switchMap((params: { sort: SortType, page: number }) => {
+            switchMap(([params, locations]) => {
                 const sort = params.sort || SortType.DEFAULT;
                 let httpParams: any = {page: params.page || 1};
+                this.isGeoLocationOn = !!locations;
 
-                if (sort === SortType.GEO && this.myPosition) {
+                if (sort === SortType.GEO && locations) {
                     httpParams = {
                         ...httpParams,
-                        geo_location: `{"lat":"${this.myPosition.lat}","lng":"${this.myPosition.lng}","radius":"50"}`
+                        geo_location: `{"lat":"${locations.lat}","lng":"${locations.lng}","radius":"50"}`
                     }
                 }
 
@@ -66,24 +57,5 @@ export class ResultsComponent implements OnInit {
                 )
             })
         );
-
-        this.searchInfo$ = this.locationService.getInfo();
-    }
-
-    calcDistance(location: ACFLocation, myPos: GeoPosition) {
-        return calculateDistance(
-            location.acf.place.lat,
-            myPos.lat,
-            location.acf.place.lng,
-            myPos.lng
-        )
-    }
-
-    getFeatureImage(embedded: WpEmbed) {
-        return getFeaturedImage(embedded);
-    }
-
-    numberReturn(length) {
-        return new Array(length);
     }
 }

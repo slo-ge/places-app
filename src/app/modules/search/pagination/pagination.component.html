@@ -1,0 +1,11 @@
+<div class="pagination" *ngIf="searchInfo$ | async as searchInfo">
+    <div>Total: {{searchInfo.total}}</div>
+    <div class="pages">
+        <div *ngFor="let it of numberReturn(searchInfo.pages); let i = index"
+             [routerLink]="['/search']"
+             [queryParams]="{page: i+1}"
+             queryParamsHandling="merge">
+            {{i + 1}}
+        </div>
+    </div>
+</div>

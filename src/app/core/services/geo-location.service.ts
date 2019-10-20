@@ -17,6 +17,13 @@ export class GeoLocationService {
     constructor() {
     }
 
+    /**
+     * returns promise with geo location
+     *
+     * in error cases (user denied or something else)
+     *  - log error
+     *  - return promise with null
+     */
     getPosition(): Promise<any> {
         return new Promise((resolve, reject) => {
             navigator.geolocation.getCurrentPosition(resp => {
@@ -26,6 +33,6 @@ export class GeoLocationService {
                     console.error(err);
                     reject(err);
                 });
-        });
+        }).catch(err => null);
     }
 }

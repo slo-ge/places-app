@@ -16,8 +16,4 @@ export class PaginationComponent implements OnInit {
     ngOnInit() {
         this.searchInfo$ = this.locationService.getInfo();
     }
-
-    numberReturn(length) {
-        return new Array(length);
-    }
 }

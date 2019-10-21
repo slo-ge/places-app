@@ -15,6 +15,7 @@ export interface Params {
 
 export interface Info {
     pages: number;
+    page: number; // current page
     total: number;
 }
 
@@ -36,7 +37,7 @@ export class LocationService {
         params = {...this.paramOptions, ...params};
 
         return this.httpClient.get<ACFLocation[]>(BASE_URL, {observe: 'response', params: params}).pipe(
-            tap(data => this.nextInfo(data.headers)),
+            tap(data => this.nextInfo(data.headers, params.page)),
             map(data => data.body)
         );
     }
@@ -49,10 +50,11 @@ export class LocationService {
         return this.info.asObservable();
     }
 
-    private nextInfo(headers: HttpHeaders) {
+    private nextInfo(headers: HttpHeaders, page) {
         this.info.next({
             total: Number(headers.get('X-WP-Total')),
-            pages: Number(headers.get('X-WP-TotalPages'))
+            pages: Number(headers.get('X-WP-TotalPages')),
+            page: Number(page)
         });
     }
 }

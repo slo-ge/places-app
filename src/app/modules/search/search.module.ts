@@ -7,6 +7,7 @@ import {ResultsComponent} from './results/results.component';
 import { SortBarComponent } from './sort-bar/sort-bar.component';
 import { PlaceComponent } from './place/place.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import {SharedModule} from "../../shared/shared.module";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     ],
     imports: [
         CommonModule,
-        SearchRoutingModule
+        SearchRoutingModule,
+        SharedModule
     ]
 })
 export class SearchModule {

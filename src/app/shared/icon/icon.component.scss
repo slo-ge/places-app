@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+:host-context(.small){
+  svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+:host-context(.large){
+  svg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+:host-context(.turn){
+  svg {
+    transform: rotate(180deg);
+  }
+}

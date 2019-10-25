@@ -9,7 +9,7 @@ import {Store} from "@ngxs/store";
 import {SelectGeoLoactionAction} from "../../../store/app.actions";
 
 
-enum SortType {
+export enum SortType {
     DEFAULT = 'default',
     GEO = 'geo'
 }
@@ -22,6 +22,7 @@ enum SortType {
 export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
     currentPage: 1;
+    geoLocation$: Promise<any>;
 
     params = {
         page: 1,
@@ -37,16 +38,19 @@ export class ResultsComponent implements OnInit {
     loading = true;
 
     ngOnInit() {
-        const queryParams$ = this.route.queryParams;
-        const geoLocation$ = this.geoLocation.getPosition();
+        this.geoLocation$ = this.geoLocation.getPosition();
+        this.initPaginated();
+    }
 
-        this.locations$ = combineLatest([queryParams$, geoLocation$]).pipe(
+    initPaginated() {
+        const queryParams$ = this.route.queryParams;
+        this.locations$ = combineLatest([queryParams$, this.geoLocation$]).pipe(
             tap(() => this.loading = true),
             switchMap(([params, locations]) => {
                 const sort = params.sort || SortType.DEFAULT;
                 let httpParams: any = {page: params.page || 1};
 
-                if (!!locations){
+                if (!!locations) {
                     this.store.dispatch(new SelectGeoLoactionAction(locations));
                 }
 

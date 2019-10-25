@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class IconComponent implements OnInit {
 
   @Input()
-  name: 'back';
+  name: 'back' | 'geo-search' | 'sort-latest';
 
   constructor() { }
 

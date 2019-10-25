@@ -1,4 +1,7 @@
+@import 'style';
+
 :host {
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,5 +13,13 @@
     > div {
       margin-right: 10px;
     }
+
+    .active {
+      color: $primary;
+    }
   }
+}
+
+.title {
+  font-weight: bold;
 }

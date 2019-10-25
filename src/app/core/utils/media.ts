@@ -3,14 +3,18 @@ import {MediaTypes, WpEmbed} from "../model/embed";
 export function getFeaturedImage(embeddedMedia: WpEmbed) {
 
     if (embeddedMedia["wp:featuredmedia"]) {
-        return embeddedMedia["wp:featuredmedia"]
+        const sizes = embeddedMedia["wp:featuredmedia"]
             .find(data => data.media_type = MediaTypes.Image)
             .media_details
-            .sizes
-            .medium_large
-            .source_url;
+            .sizes;
+
+        if (sizes.medium_large) {
+            return sizes.medium_large.source_url;
+        } else {
+            sizes.full.source_url;
+        }
+
     }
 
     return 'https://placehold.it/200x150';
-
 }

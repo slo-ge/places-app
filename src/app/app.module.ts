@@ -7,6 +7,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from "./components/header/header.component";
 import {NgxsModule} from "@ngxs/store";
 import {AppState} from "./store/app.state";
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,8 @@ import {AppState} from "./store/app.state";
         HttpClientModule,
         NgxsModule.forRoot([
             AppState
-        ])
+        ]),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [],
     bootstrap: [AppComponent]

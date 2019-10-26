@@ -1,4 +1,5 @@
 <div class="title">Sorting</div>
+<div class="sort-name">{{activeSort$ | async}}</div>
 <div class="actions" *ngIf="activeSort$ | async as activeSort">
     <div class="latest"
          [class.active]="activeSort === Sort.DEFAULT"

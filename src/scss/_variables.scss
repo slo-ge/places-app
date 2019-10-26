@@ -3,18 +3,18 @@ $primary-soft: #bae6e7;
 $rosa: black;
 $grey: white;
 
+$grey-0: #f1f1f1;
 $grey-1: #9d9d9d;
+$grey-2: #5b5b5b;
 
-$dark-grey: white;
-
-$app-main-background-color: #f1f1f1;
+$app-main-background-color: $grey-0;
 
 $header-background: $primary;
 $header-font-color: white;
 
-$footer-border-top: 1px solid black;
+$footer-border-top: 1px solid $grey-1;
 $footer-background: white;
-$footer-font-color: black;
+$footer-font-color: $grey-1;
 
 $item-font-color: #565656;
 $item-background-color: white;

@@ -61,6 +61,14 @@ export class ResultsComponent implements OnInit {
                     }
                 }
 
+                // TODO: improve
+                if (params.tags){
+                    httpParams = {
+                        ...httpParams,
+                        tags: params.tags
+                    }
+                }
+
                 return this.locationService.allLocations(httpParams).pipe(
                     finalize(() => this.loading = false)
                 )

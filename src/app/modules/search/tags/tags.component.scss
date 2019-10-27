@@ -1,0 +1,13 @@
+@import 'style';
+
+:host {
+  display: flex;
+}
+
+div {
+  margin: 4px;
+  border-radius: 3px;
+  border: 1px solid $primary;
+  color: black;
+  padding: 4px;
+}

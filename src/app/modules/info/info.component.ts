@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SwUpdate, UpdateAvailableEvent} from "@angular/service-worker";
 import {Observable} from "rxjs";
+import {VERSION} from "version";
 
 @Component({
     selector: 'app-info',
@@ -23,5 +24,9 @@ export class InfoComponent implements OnInit {
 
     reload() {
         window.location.reload();
+    }
+
+    get version(){
+        return VERSION.build;
     }
 }

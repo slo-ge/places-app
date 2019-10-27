@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {SwUpdate, UpdateAvailableEvent} from "@angular/service-worker";
+import {Observable} from "rxjs";
 
 @Component({
-  selector: 'app-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss']
+    selector: 'app-info',
+    templateUrl: './info.component.html',
+    styleUrls: ['./info.component.scss']
 })
 export class InfoComponent implements OnInit {
 
-  constructor() { }
+    isSwUpdateAvailable = false;
+    availableUpdate$: Observable<UpdateAvailableEvent>;
 
-  ngOnInit() {
-  }
+    constructor(private swUpdate: SwUpdate) {}
 
+    ngOnInit() {
+        this.isSwUpdateAvailable = this.swUpdate.isEnabled;
+        if (this.swUpdate.isEnabled) {
+            this.availableUpdate$ = this.swUpdate.available;
+        }
+    }
+
+    reload() {
+        window.location.reload();
+    }
 }

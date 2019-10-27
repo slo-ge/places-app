@@ -12,8 +12,10 @@
     display: flex;
     color: $grey-1;
 
-    > div {
+    > a {
       margin-right: 10px;
+      cursor: pointer;
+
     }
 
     .active {
@@ -28,5 +30,7 @@
 
 .sort-name {
   color: $primary;
-font-style: italic;
+  font-style: italic;
+  flex: 1;
+  text-align: center;
 }

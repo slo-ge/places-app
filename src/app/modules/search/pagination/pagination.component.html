@@ -1,20 +1,20 @@
 <ng-container *ngIf="searchInfo$ | async as searchInfo">
     <nav>
-        <div class="p"
+        <a class="p"
              [routerLink]="['/search']"
              [queryParams]="{page: searchInfo.page-1}"
              queryParamsHandling="merge"
              [class.disabled]="searchInfo.page === 1">
 
             <app-icon name="back"></app-icon><span>Previous</span>
-        </div>
-        <div class="n"
+        </a>
+        <a class="n"
              [routerLink]="['/search']"
              [queryParams]="{page: searchInfo.page+1}"
              queryParamsHandling="merge"
              [class.disabled]="searchInfo.page === searchInfo.pages">
 
             <span>Next</span><app-icon name="back" class="turn"></app-icon>
-        </div>
+        </a>
     </nav>
 </ng-container>

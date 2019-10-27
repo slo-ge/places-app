@@ -1,0 +1,26 @@
+@import 'style';
+
+:host {
+  display: block;
+  min-height: 100vh;
+  margin: 10px;
+}
+
+.confirm-update {
+  padding: 10px 5px;
+  text-align: center;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-weight: bold;
+  color: $primary;
+}
+
+.info {
+  font-size: 12px;
+}
+
+.info,
+.confirm-update,
+.version {
+  margin-bottom: 10px;
+}

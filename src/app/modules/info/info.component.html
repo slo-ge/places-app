@@ -1,1 +1,13 @@
-<p>info works!</p>
+<div *ngIf="isSwUpdateAvailable">
+    <div *ngIf="availableUpdate$ | async as update">
+        <h3>Following Update Available</h3>
+        <p>{{update | json}}</p>
+        <div>Update will be installed after reload</div>
+        <div class="confirm-update" (click)="reload()">Reload App</div>
+    </div>
+</div>
+
+
+<div class="confirm-update" (click)="reload()">Force an update</div>
+<div class="info">Sometimes forced updates do not work on first click, so try to click several times</div>
+<div class="version">Version: 0.0.10</div>

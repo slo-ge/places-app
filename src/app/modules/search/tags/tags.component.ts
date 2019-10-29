@@ -1,21 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {TaxonomyService} from "../../../core/services/taxonomy.service";
+import {Component, Input} from '@angular/core';
 import {Observable} from "rxjs";
 import {Tag} from "../../../core/model/tags";
 
 @Component({
-  selector: 'app-tags',
-  templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.scss']
+    selector: 'app-tags',
+    templateUrl: './tags.component.html',
+    styleUrls: ['./tags.component.scss']
 })
-export class TagsComponent implements OnInit {
+export class TagsComponent {
 
-  constructor(private tagService: TaxonomyService) { }
+    @Input()
+    tags$: Observable<Tag[]>;
 
-  tags$: Observable<Tag[]>
-
-  ngOnInit() {
-    this.tags$ = this.tagService.getTags();
-  }
-
+    constructor() {
+    }
 }

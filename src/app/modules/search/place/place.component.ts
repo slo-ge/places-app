@@ -6,6 +6,8 @@ import {getFeaturedImage} from "../../../core/utils/media";
 import {Select} from "@ngxs/store";
 import {AppState} from "../../../store/app.state";
 import {Observable} from "rxjs";
+import {TaxonomyService} from "../../../core/services/taxonomy.service";
+import {Tag} from "../../../core/model/tags";
 
 @Component({
   selector: 'app-place',
@@ -19,9 +21,12 @@ export class PlaceComponent implements OnInit {
   @Input()
   place: ACFLocation;
 
-  constructor() { }
+  tags$: Observable<Tag[]>;
+
+  constructor(private taxonomyService: TaxonomyService) { }
 
   ngOnInit() {
+    this.tags$ = this.taxonomyService.getNamesFromId(this.place.tags);
   }
 
   calcDistance(location: ACFLocation, myPos: GeoPosition) {

@@ -2,12 +2,13 @@
 
 :host {
   display: flex;
+  flex-wrap: wrap;
+  color: $primary;
+  font-weight: bold;
 }
 
 div {
-  margin: 4px;
-  border-radius: 3px;
-  border: 1px solid $primary;
-  color: black;
-  padding: 4px;
+  margin: 2px;
+  cursor: pointer;
 }
+

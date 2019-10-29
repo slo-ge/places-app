@@ -21,6 +21,7 @@ export interface Location {
     template: string;
     meta?: (null)[] | null;
     _embedded: WpEmbed;
+    tags?: number[];
 }
 
 export interface Rendered {

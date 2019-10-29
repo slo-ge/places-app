@@ -1,5 +1,5 @@
-<div class="place" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
-    <header>
+<div class="place" queryParamsHandling="merge">
+    <header [routerLink]="['/detail', place.slug]">
         <div class="title">
             <div class="cat">Restaurant</div>
             <h2>{{place.title.rendered}}</h2>
@@ -8,7 +8,7 @@
             <img [src]="getFeatureImage(place._embedded)">
         </div>
     </header>
-    <div class="text">
+    <div class="text" [routerLink]="['/detail', place.slug]">
         <address>
             <div *ngIf="geoPosition$ | async as geoPosition"
                  class="distance">
@@ -16,6 +16,8 @@
             </div>
             <div class="address">{{place.acf.place.address}}</div>
         </address>
-        <div class="description" [innerHTML]="place.acf.description[0].text"></div>
     </div>
+
+    <app-tags [tags$]="tags$"></app-tags>
+    <footer></footer>
 </div>

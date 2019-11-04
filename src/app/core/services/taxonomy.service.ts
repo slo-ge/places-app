@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Tag} from "../model/tags";
-import {flatMap, map, take} from "rxjs/operators";
+import {map, take} from "rxjs/operators";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
 
@@ -17,9 +17,7 @@ export class TaxonomyService {
     constructor(private httpClient: HttpClient) {
         this.fetchTags()
             .pipe(take(1))
-            .subscribe(
-            (data) => this._tags$.next(data)
-        )
+            .subscribe(data => this._tags$.next(data))
     }
 
 
@@ -39,5 +37,13 @@ export class TaxonomyService {
         return this._tags$.pipe(
             map(data => data.filter(tag => ids.includes(tag.id)))
         );
+    }
+
+    public getTagFrom(id: string): Observable<Tag> {
+        return this._tags$.pipe(
+            map(tags =>{
+                return tags.find(tag => tag.id === Number(id));
+            } )
+        )
     }
 }

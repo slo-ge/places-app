@@ -9,6 +9,7 @@ import { PlaceComponent } from './place/place.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import {SharedModule} from "../../shared/shared.module";
 import { TagsComponent } from './tags/tags.component';
+import { SelectedTagComponent } from './selected-tag/selected-tag.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { TagsComponent } from './tags/tags.component';
         SortBarComponent,
         PlaceComponent,
         PaginationComponent,
-        TagsComponent
+        TagsComponent,
+        SelectedTagComponent
     ],
     imports: [
         CommonModule,

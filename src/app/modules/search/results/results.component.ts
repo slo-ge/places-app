@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {combineLatest, Observable} from "rxjs";
+import {combineLatest, EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {finalize, switchMap, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
@@ -7,6 +7,8 @@ import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
 import {Store} from "@ngxs/store";
 import {SelectGeoLoactionAction} from "../../../store/app.actions";
+import {TaxonomyService} from "../../../core/services/taxonomy.service";
+import {Tag} from "../../../core/model/tags";
 
 
 export enum SortType {
@@ -23,6 +25,7 @@ export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
     currentPage: 1;
     geoLocation$: Promise<any>;
+    tag$: Observable<Tag>;
 
     params = {
         page: 1,
@@ -32,7 +35,8 @@ export class ResultsComponent implements OnInit {
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService,
                 private route: ActivatedRoute,
-                private store: Store) {
+                private store: Store,
+                private tagService: TaxonomyService) {
     }
 
     loading = true;
@@ -63,10 +67,13 @@ export class ResultsComponent implements OnInit {
 
                 // TODO: improve
                 if (params.tags){
+                    this.tag$ = this.tagService.getTagFrom(params.tags);
                     httpParams = {
                         ...httpParams,
                         tags: params.tags
                     }
+                } else {
+                    this.tag$ = EMPTY;
                 }
 
                 return this.locationService.allLocations(httpParams).pipe(

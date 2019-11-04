@@ -16,6 +16,7 @@
     cursor: pointer;
     justify-self: stretch;
     align-self: stretch;
+    font-weight: bold;
 
     &.active {
       background: $header-font-color;

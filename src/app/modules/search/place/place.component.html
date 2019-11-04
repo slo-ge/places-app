@@ -2,22 +2,23 @@
     <header [routerLink]="['/detail', place.slug]">
         <div class="title">
             <div class="cat">Restaurant</div>
-            <h2>{{place.title.rendered}}</h2>
+            <h2>{{unescape(place.title.rendered)}}</h2>
         </div>
         <div class="image">
             <img [src]="getFeatureImage(place._embedded)">
         </div>
     </header>
-    <div class="text" [routerLink]="['/detail', place.slug]">
-        <address>
-            <div *ngIf="geoPosition$ | async as geoPosition"
-                 class="distance">
-                {{calcDistance(place, geoPosition) | number}} km
-            </div>
-            <div class="address">{{place.acf.place.address}}</div>
-        </address>
-    </div>
-
-    <app-tags [tags$]="tags$"></app-tags>
+    <section>
+        <div class="text" [routerLink]="['/detail', place.slug]">
+            <address>
+                <div *ngIf="geoPosition$ | async as geoPosition"
+                     class="distance">
+                    {{calcDistance(place, geoPosition) | number}} km
+                </div>
+                <div class="address">{{place.acf.place.address}}</div>
+            </address>
+        </div>
+        <app-tags [tags$]="tags$"></app-tags>
+    </section>
     <footer></footer>
 </div>

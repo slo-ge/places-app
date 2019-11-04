@@ -1,4 +1,4 @@
 <div *ngFor="let tag of tags$ | async"
      [routerLink]="['./']"
-     [queryParams]="{tags: tag.id}"
+     [queryParams]="{tags: tag.id, page: null}"
      queryParamsHandling="merge">#{{tag.name}}</div>

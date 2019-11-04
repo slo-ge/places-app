@@ -1,7 +1,6 @@
 @import 'style';
 
 :host {
-  margin: 20px 10px;
   display: block;
 }
 
@@ -12,7 +11,7 @@ nav {
   align-items: center;
   background: white;
   border: 2px solid $primary;
-  border-radius: 20px;
+  border-radius: $common-border-radius;
   font-weight: bold;
 
   > * {

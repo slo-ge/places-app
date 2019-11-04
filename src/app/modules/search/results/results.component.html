@@ -1,6 +1,7 @@
 <ng-container [ngTemplateOutlet]="loadings" *ngIf="loading"></ng-container>
 
 <ng-container *ngIf="locations$ | async as locations">
+    <app-selected-tag [tag$]="tag$"></app-selected-tag>
     <ng-container *ngFor="let place of locations">
         <app-place [place]="place"></app-place>
     </ng-container>

@@ -1,4 +1,5 @@
 <div *ngFor="let tag of tags$ | async"
+     [style.fontSize]="cloud ? calculateSize(tag) : null"
      [routerLink]="['./']"
      [queryParams]="{tags: tag.id, page: null}"
      queryParamsHandling="merge">#{{tag.name}}</div>

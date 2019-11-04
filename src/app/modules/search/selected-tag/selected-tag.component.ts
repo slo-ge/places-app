@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Observable} from "rxjs";
 import {Tag} from "../../../core/model/tags";
 import {Router} from "@angular/router";
@@ -8,14 +8,11 @@ import {Router} from "@angular/router";
     templateUrl: './selected-tag.component.html',
     styleUrls: ['./selected-tag.component.scss']
 })
-export class SelectedTagComponent implements OnInit {
+export class SelectedTagComponent {
     @Input()
     tag$: Observable<Tag>;
 
     constructor(private router: Router) {
-    }
-
-    ngOnInit() {
     }
 
     removeTag() {

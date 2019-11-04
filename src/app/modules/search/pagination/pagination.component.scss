@@ -31,5 +31,6 @@ nav {
   .disabled {
     color: $grey-1;
     pointer-events: none;
+    text-decoration: line-through;
   }
 }

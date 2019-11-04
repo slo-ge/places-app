@@ -1,7 +1,7 @@
 export interface Tag {
     id: number; // important
     name: string; // important
-    count: number;
+    count: number; // important
     description: string;
     link: string;
     slug: string;

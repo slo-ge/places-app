@@ -1,21 +1,44 @@
 @import 'style';
 
-:host {
+.list,
+.hash {
   display: flex;
   flex-wrap: wrap;
-  color: $primary;
-  font-weight: bold;
+
+  > div {
+    margin: 2px;
+    cursor: pointer;
+  }
 }
 
-div {
-  cursor: pointer;
-  margin: 2px;
+.hash {
+  color: $primary;
+  font-weight: bold;
 
-  &:first-child {
-    margin-left: 0;
+  > div {
+    align-self: center;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
-  &:last-child {
-    margin-right: 0;
+}
+
+.list {
+  color: $item-font-color;
+  font-weight: normal;
+  font-size: 14px;
+
+  > div {
+    margin: 5px;
+  }
+  span {
+    font-weight: bold;
+    color: $primary;
   }
 }
 

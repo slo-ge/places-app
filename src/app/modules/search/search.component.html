@@ -1,2 +1,5 @@
 <app-results></app-results>
-<app-tags [cloud]="true" [tags$]="tags$"></app-tags>
+<div>
+    <h3>Most common tags</h3>
+    <app-tags [view]="'list'" [tags$]="tags$"></app-tags>
+</div>

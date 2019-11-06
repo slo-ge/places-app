@@ -2,9 +2,11 @@
 
 <ng-container *ngIf="locations$ | async as locations">
     <app-selected-tag [tag$]="tag$"></app-selected-tag>
-    <ng-container *ngFor="let place of locations">
-        <app-place [place]="place"></app-place>
-    </ng-container>
+    <div class="places">
+        <ng-container *ngFor="let place of locations">
+            <app-place [place]="place"></app-place>
+        </ng-container>
+    </div>
 </ng-container>
 
 <ng-template #loadings>

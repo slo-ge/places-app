@@ -1,5 +1,21 @@
-<div *ngFor="let tag of tags$ | async"
-     [style.fontSize]="cloud ? calculateSize(tag) : null"
-     [routerLink]="['./']"
-     [queryParams]="{tags: tag.id, page: null}"
-     queryParamsHandling="merge">#{{tag.name}}</div>
+<ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'list'">
+        <div class="list">
+            <div *ngFor="let tag of tags$ | async"
+                 [routerLink]="['./']"
+                 [queryParams]="{tags: tag.id, page: null}"
+                 queryParamsHandling="merge">{{tag.name}} <span class="count">({{tag.count}})</span></div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+        <div class="hash">
+            <div *ngFor="let tag of tags$ | async"
+                 [style.fontSize]="view === 'cloud' ? calculateSize(tag) : null"
+                 [routerLink]="['./']"
+                 [queryParams]="{tags: tag.id, page: null}"
+                 queryParamsHandling="merge">#{{tag.name}}</div>
+        </div>
+    </ng-container>
+</ng-container>
+

@@ -19,7 +19,7 @@ export enum SortType {
 @Component({
     selector: 'app-results',
     templateUrl: './results.component.html',
-    styleUrls: ['./results.component.scss']
+    styleUrls: ['./results.component.scss', './loading-animation.scss']
 })
 export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;

@@ -16,5 +16,5 @@ export function getFeaturedImage(embeddedMedia: WpEmbed) {
 
     }
 
-    return 'https://placehold.it/200x150';
+    return 'assets/branding/logo-written.png';
 }

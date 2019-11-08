@@ -1,0 +1,79 @@
+@import 'style';
+
+@keyframes placeHolderShimmer {
+  0% {
+    background-position: -468px 0
+  }
+  100% {
+    background-position: 468px 0
+  }
+}
+
+.linear-background {
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1000px 104px;
+  height: 268px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 1px lightgrey solid;
+  margin-bottom: 30px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.placeholder-logo {
+  background-image: url('/assets/branding/logo-written.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 60px;
+  width: 120px;
+  height: 40px;
+}
+
+.divider-line{
+  margin: 0 15px;
+  position: absolute;
+  top: 160px;
+  bottom:0;
+  left: 0;
+  right: 0;
+
+
+  .placeholder-geo{
+    width: 120px;
+  }
+
+  > div {
+    height: 20px;
+    background: $grey-0;
+    margin: 10px;
+  }
+
+  > .divider-tags{
+    display: flex;
+    background: transparent;
+
+    > div {
+      margin-right: 10px;
+      background: $grey-0;
+      width: 50px;
+
+      &:first-child {
+        width: 60px;
+      }
+
+      &:last-child {
+        width: 70px;
+      }
+    }
+  }
+}
+

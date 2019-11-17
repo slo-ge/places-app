@@ -10,8 +10,6 @@ export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
     providedIn: 'root'
 })
 export class TaxonomyService {
-
-
     private _tags$: BehaviorSubject<Tag[]> = new BehaviorSubject([]);
 
     constructor(private httpClient: HttpClient) {
@@ -19,7 +17,6 @@ export class TaxonomyService {
             .pipe(take(1))
             .subscribe(data => this._tags$.next(data))
     }
-
 
     private fetchTags(): Observable<Tag[]> {
         const params: any = {
@@ -41,9 +38,7 @@ export class TaxonomyService {
 
     public getTagFrom(id: string): Observable<Tag> {
         return this._tags$.pipe(
-            map(tags =>{
-                return tags.find(tag => tag.id === Number(id));
-            } )
-        )
+            map(tags => tags.find(tag => tag.id === Number(id)))
+        );
     }
 }

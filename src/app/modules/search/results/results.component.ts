@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {combineLatest, EMPTY, Observable} from "rxjs";
-import {ActivatedRoute} from "@angular/router";
-import {finalize, switchMap, tap} from "rxjs/operators";
+import {ActivatedRoute, Params} from "@angular/router";
+import {finalize, map, switchMap, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
 import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
@@ -16,6 +16,7 @@ export enum SortType {
     GEO = 'geo'
 }
 
+
 @Component({
     selector: 'app-results',
     templateUrl: './results.component.html',
@@ -23,14 +24,12 @@ export enum SortType {
 })
 export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
-    currentPage: 1;
     geoLocation$: Promise<any>;
     tag$: Observable<Tag>;
 
-    params = {
-        page: 1,
-        geo_location: null,
-    };
+    params = {page: 1, geo_location: null};
+    currentPage: 1;
+    loading = true;
 
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService,
@@ -38,8 +37,6 @@ export class ResultsComponent implements OnInit {
                 private store: Store,
                 private tagService: TaxonomyService) {
     }
-
-    loading = true;
 
     ngOnInit() {
         this.geoLocation$ = this.geoLocation.getPosition();
@@ -50,36 +47,45 @@ export class ResultsComponent implements OnInit {
         const queryParams$ = this.route.queryParams;
         this.locations$ = combineLatest([queryParams$, this.geoLocation$]).pipe(
             tap(() => this.loading = true),
-            switchMap(([params, locations]) => {
-                const sort = params.sort || SortType.DEFAULT;
-                let httpParams: any = {page: params.page || 1};
-
-                if (!!locations) {
-                    this.store.dispatch(new SelectGeoLoactionAction(locations));
-                }
-
-                if (sort === SortType.GEO && locations) {
-                    httpParams = {
-                        ...httpParams,
-                        geo_location: `{"lat":"${locations.lat}","lng":"${locations.lng}","radius":"50"}`
-                    }
-                }
-
-                // TODO: improve
-                if (params.tags){
-                    this.tag$ = this.tagService.getTagFrom(params.tags);
-                    httpParams = {
-                        ...httpParams,
-                        tags: params.tags
-                    }
-                } else {
-                    this.tag$ = EMPTY;
-                }
-
-                return this.locationService.allLocations(httpParams).pipe(
-                    finalize(() => this.loading = false)
-                )
-            })
+            map(([params, location]) => this.buildPlacesResponseFrom(params, location)),
+            switchMap(mappedParams => this.locationService.allLocations(mappedParams).pipe(
+                finalize(() => this.loading = false)
+            ))
         );
+    }
+
+    /**
+     * Query parameter mapping for rest call.
+     * Buildingi
+     * @param params
+     * @param geoLocation
+     */
+    private buildPlacesResponseFrom(params: Params, geoLocation: { lat: number, lng: number }) {
+        const sort = params.sort || SortType.DEFAULT;
+        let httpParams: any = {page: params.page || 1};
+
+        if (!!geoLocation) {
+            this.store.dispatch(new SelectGeoLoactionAction(geoLocation));
+        }
+
+        if (sort === SortType.GEO && geoLocation) {
+            httpParams = {
+                ...httpParams,
+                geo_location: `{"lat":"${geoLocation.lat}","lng":"${geoLocation.lng}","radius":"50"}`
+            };
+        }
+
+        // TODO: improve
+        if (params.tags) {
+            this.tag$ = this.tagService.getTagFrom(params.tags);
+            httpParams = {
+                ...httpParams,
+                tags: params.tags
+            };
+        } else {
+            this.tag$ = EMPTY;
+        }
+
+        return httpParams;
     }
 }

@@ -33,6 +33,6 @@ export class GeoLocationService {
                     console.error(err);
                     reject(err);
                 });
-        }).catch(err => null);
+        }).catch(() => null);
     }
 }

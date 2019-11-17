@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {ACFLocation} from "../model/location";
-import {map, tap} from "rxjs/operators";
+import {map, take, tap} from "rxjs/operators";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/locations';
 export const ACF_URL = 'https://locations.phipluspi.com/wp-json/acf/v3/locations';
@@ -42,7 +42,7 @@ export class LocationService {
         );
     }
 
-    public getPlace(slug: string): Observable<ACFLocation[]>{
+    public getPlace(slug: string): Observable<ACFLocation[]> {
         return this.httpClient.get<ACFLocation[]>(BASE_URL, {params: {slug: slug}})
     }
 
@@ -56,5 +56,13 @@ export class LocationService {
             pages: Number(headers.get('X-WP-TotalPages')),
             page: Number(page)
         });
+    }
+
+    // Use this method anywhere
+    private fetchInfo() {
+        return this.httpClient.head<any>(BASE_URL).pipe(
+            take(1),
+            tap(data => this.nextInfo(data, 1))
+        );
     }
 }

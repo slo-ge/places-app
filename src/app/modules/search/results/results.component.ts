@@ -1,14 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {combineLatest, EMPTY, Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
-import {finalize, map, switchMap, tap} from "rxjs/operators";
+import {finalize, map, switchMap, take, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/location";
 import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
-import {Store} from "@ngxs/store";
-import {SelectGeoLoactionAction} from "../../../store/app.actions";
+import {Select, Store} from "@ngxs/store";
+import {SelectGeoLoactionAction, SelectTagAction} from "../../../store/app.actions";
 import {TaxonomyService} from "../../../core/services/taxonomy.service";
 import {Tag} from "../../../core/model/tags";
+import {AppState} from "../../../store/app.state";
 
 
 export enum SortType {
@@ -23,9 +24,11 @@ export enum SortType {
     styleUrls: ['./results.component.scss', './loading-animation.scss']
 })
 export class ResultsComponent implements OnInit {
+    @Select(AppState.selectedTag)
+    tag$: Observable<Tag>;
+
     locations$: Observable<ACFLocation[]>;
     geoLocation$: Promise<any>;
-    tag$: Observable<Tag>;
 
     params = {page: 1, geo_location: null};
     currentPage: 1;
@@ -77,13 +80,18 @@ export class ResultsComponent implements OnInit {
 
         // TODO: improve
         if (params.tags) {
-            this.tag$ = this.tagService.getTagFrom(params.tags);
+
+            // TODO: make a nicer dispatch service
+            this.tagService.getTagFrom(params.tags)
+                .pipe(take(1))
+                .subscribe(tag => this.store.dispatch(new SelectTagAction(tag)));
+
             httpParams = {
                 ...httpParams,
                 tags: params.tags
             };
         } else {
-            this.tag$ = EMPTY;
+            this.store.dispatch(new SelectTagAction(null));
         }
 
         return httpParams;

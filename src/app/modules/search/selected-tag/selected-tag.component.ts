@@ -1,7 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {Tag} from "../../../core/model/tags";
 import {Router} from "@angular/router";
+import {Select} from "@ngxs/store";
+import {AppState} from "../../../store/app.state";
 
 @Component({
     selector: 'app-selected-tag',
@@ -9,7 +11,7 @@ import {Router} from "@angular/router";
     styleUrls: ['./selected-tag.component.scss']
 })
 export class SelectedTagComponent {
-    @Input()
+    @Select(AppState.selectedTag)
     tag$: Observable<Tag>;
 
     constructor(private router: Router) {

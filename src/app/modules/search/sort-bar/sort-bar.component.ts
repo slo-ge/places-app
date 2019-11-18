@@ -1,8 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
-import {SortType} from "../results/results.component";
+import {Component} from '@angular/core';
 
 
 @Component({
@@ -10,22 +6,13 @@ import {SortType} from "../results/results.component";
     templateUrl: './sort-bar.component.html',
     styleUrls: ['./sort-bar.component.scss']
 })
-export class SortBarComponent implements OnInit {
-    constructor(private route: ActivatedRoute) {
+export class SortBarComponent {
+    modalOpen = false;
+
+    constructor() {
     }
 
-    Sort = SortType;
-    activeSort$: Observable<SortType>
-
-    ngOnInit() {
-        this.activeSort$ = this.route.queryParams.pipe(
-            map(params => {
-                if (params.sort && params.sort === SortType.GEO) {
-                    return SortType.GEO;
-                }
-                return SortType.DEFAULT;
-            })
-        );
+    openModal() {
+        this.modalOpen = !this.modalOpen;
     }
-
 }

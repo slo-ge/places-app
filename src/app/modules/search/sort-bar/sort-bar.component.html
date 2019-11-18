@@ -1,17 +1,3 @@
-<div class="title">Sorting</div>
-<div class="sort-name">{{activeSort$ | async}}</div>
-<div class="actions" *ngIf="activeSort$ | async as activeSort">
-    <a class="latest"
-         [class.active]="activeSort === Sort.DEFAULT"
-         [routerLink]="['/search']"
-         [queryParams]="{sort: 'default'}"
-         queryParamsHandling="merge"><app-icon class="large" name="sort-latest"></app-icon>
-    </a>
+<div class="text">Settings</div><div (click)="openModal()" class="open">+</div>
+<app-simple-settings-modal (dismissed)="openModal()" [show]="modalOpen"></app-simple-settings-modal>
 
-    <a class="geo"
-         [class.active]="activeSort === Sort.GEO"
-         [routerLink]="['/search']"
-         [queryParams]="{sort: 'geo'}"
-         queryParamsHandling="merge"><app-icon class="large" name="geo-search"></app-icon>
-    </a>
-</div>

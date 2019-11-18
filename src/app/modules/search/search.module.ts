@@ -10,6 +10,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import {SharedModule} from "../../shared/shared.module";
 import { TagsComponent } from './tags/tags.component';
 import { SelectedTagComponent } from './selected-tag/selected-tag.component';
+import { SimpleSettingsModalComponent } from './simple-settings-modal/simple-settings-modal.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SelectedTagComponent } from './selected-tag/selected-tag.component';
         PlaceComponent,
         PaginationComponent,
         TagsComponent,
-        SelectedTagComponent
+        SelectedTagComponent,
+        SimpleSettingsModalComponent
     ],
     imports: [
         CommonModule,

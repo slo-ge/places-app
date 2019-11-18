@@ -1,11 +1,13 @@
 import {GeoPosition} from "../core/model/location";
+import {Tag} from "../core/model/tags";
 
-export class AppAction {
-  static readonly type = '[App] Add item';
-  constructor(public payload: string) { }
-}
 
 export class SelectGeoLoactionAction {
   static readonly  type = '[User] Add Geoloaction'
   constructor(public geoPosition: GeoPosition) {}
+}
+
+export class SelectTagAction {
+  static readonly  type = '[Tag] Select new Tag'
+  constructor(public tag: Tag) {}
 }

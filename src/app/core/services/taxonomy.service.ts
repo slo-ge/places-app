@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {BehaviorSubject, Observable, ReplaySubject} from "rxjs";
 import {Tag} from "../model/tags";
 import {map, take} from "rxjs/operators";
 
@@ -10,7 +10,7 @@ export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
     providedIn: 'root'
 })
 export class TaxonomyService {
-    private _tags$: BehaviorSubject<Tag[]> = new BehaviorSubject([]);
+    private _tags$: ReplaySubject<Tag[]> = new ReplaySubject();
 
     constructor(private httpClient: HttpClient) {
         this.fetchTags()

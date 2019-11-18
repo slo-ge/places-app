@@ -1,0 +1,30 @@
+<header>
+    <div>Settings</div>
+    <div class="close" (click)="dismiss()"></div>
+</header>
+
+<div>
+    <div class="title">Sorting <span class="sort-name">({{activeSort$ | async}})</span></div>
+    <div class="actions" *ngIf="activeSort$ | async as activeSort">
+        <a class="latest"
+           [class.active]="activeSort === Sort.DEFAULT"
+           [routerLink]="['/search']"
+           [queryParams]="{sort: 'default'}"
+           queryParamsHandling="merge">
+            <app-icon class="large" name="sort-latest"></app-icon>
+        </a>
+
+        <a class="geo"
+           [class.active]="activeSort === Sort.GEO"
+           [routerLink]="['/search']"
+           [queryParams]="{sort: 'geo'}"
+           queryParamsHandling="merge">
+            <app-icon class="large" name="geo-search"></app-icon>
+        </a>
+    </div>
+</div>
+
+<div>
+    <h3>Most common tags <app-selected-tag></app-selected-tag></h3>
+    <app-tags [view]="'list'" [tags$]="tags$"></app-tags>
+</div>

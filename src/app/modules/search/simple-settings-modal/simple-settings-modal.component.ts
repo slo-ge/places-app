@@ -8,7 +8,7 @@ import {TaxonomyService} from "../../../core/services/taxonomy.service";
 @Component({
     selector: 'app-simple-settings-modal',
     templateUrl: './simple-settings-modal.component.html',
-    styleUrls: ['./simple-settings-modal.component.scss']
+    styleUrls: ['./simple-settings-modal.component.scss', './animation.scss']
 })
 export class SimpleSettingsModalComponent implements OnInit {
     @HostBinding('class.visible')

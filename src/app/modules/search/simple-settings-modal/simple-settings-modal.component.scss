@@ -12,9 +12,17 @@
     right: 5px;
     bottom: 55px;
     border-radius: $common-border-radius;
+    border: 1px solid $grey-0;
     background: white;
+    animation: fadein .5s;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    opacity: 0;
+    animation-name: fadeInUp;
   }
+
 }
+
 
 header {
   font-size: 20px;
@@ -36,6 +44,10 @@ header {
   }
 }
 
+
+.back {
+  margin-top: 20px;
+}
 
 .title {
   font-weight: bold;
@@ -83,3 +95,4 @@ header {
 .close:after {
   transform: rotate(-45deg);
 }
+

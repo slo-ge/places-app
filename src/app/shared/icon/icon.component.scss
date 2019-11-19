@@ -14,6 +14,13 @@
   }
 }
 
+:host-context(.medium){
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 :host-context(.large){
   svg {
     width: 40px;

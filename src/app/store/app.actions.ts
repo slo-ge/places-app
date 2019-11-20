@@ -1,4 +1,4 @@
-import {GeoPosition} from "../core/model/location";
+import {GeoPosition} from "../core/model/wpObject";
 import {Tag} from "../core/model/tags";
 
 

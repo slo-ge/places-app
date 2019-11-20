@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {map, switchMap} from "rxjs/operators";
 import {LocationService} from "../../core/services/location.service";
-import {ACFLocation} from "../../core/model/location";
+import {ACFLocation} from "../../core/model/wpObject";
 
 @Component({
     selector: 'app-detail',

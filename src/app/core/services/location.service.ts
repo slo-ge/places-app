@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpEvent, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
-import {ACFLocation} from "../model/location";
+import {ACFLocation} from "../model/wpObject";
 import {map, take, tap} from "rxjs/operators";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/locations';

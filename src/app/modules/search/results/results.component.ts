@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {combineLatest, EMPTY, Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {finalize, map, switchMap, take, tap} from "rxjs/operators";
-import {ACFLocation} from "../../../core/model/location";
+import {ACFLocation} from "../../../core/model/wpObject";
 import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
 import {Select, Store} from "@ngxs/store";

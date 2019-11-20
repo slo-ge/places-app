@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ACFLocation, GeoPosition} from "../../../core/model/location";
+import {ACFLocation, GeoPosition} from "../../../core/model/wpObject";
 import {calculateDistance} from "../../../core/services/geo-location.service";
 import {WpEmbed} from "../../../core/model/embed";
 import {getFeaturedImage} from "../../../core/utils/media";

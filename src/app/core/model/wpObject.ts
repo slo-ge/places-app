@@ -1,6 +1,6 @@
 import {WpEmbed} from "./embed";
 
-export interface Location {
+export interface WpObject {
     id: number;
     date: string;
     date_gmt: string;
@@ -49,7 +49,7 @@ interface Place {
     lng: number;
 }
 
-export interface ACFLocation extends Location {
+export interface ACFLocation extends WpObject {
     acf: ACF
 }
 

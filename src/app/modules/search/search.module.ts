@@ -14,21 +14,24 @@ import { SimpleSettingsModalComponent } from './simple-settings-modal/simple-set
 
 
 @NgModule({
-    declarations: [
-        SearchComponent,
-        ResultsComponent,
-        SortBarComponent,
-        PlaceComponent,
-        PaginationComponent,
-        TagsComponent,
-        SelectedTagComponent,
-        SimpleSettingsModalComponent
-    ],
-    imports: [
-        CommonModule,
-        SearchRoutingModule,
-        SharedModule
-    ]
+  declarations: [
+    SearchComponent,
+    ResultsComponent,
+    SortBarComponent,
+    PlaceComponent,
+    PaginationComponent,
+    TagsComponent,
+    SelectedTagComponent,
+    SimpleSettingsModalComponent
+  ],
+  exports: [
+    PlaceComponent
+  ],
+  imports: [
+    CommonModule,
+    SearchRoutingModule,
+    SharedModule
+  ]
 })
 export class SearchModule {
 }

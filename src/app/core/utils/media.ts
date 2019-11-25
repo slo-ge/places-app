@@ -1,6 +1,6 @@
 import {MediaTypes, WpEmbed} from "../model/embed";
 
-export function getFeaturedImage(embeddedMedia: WpEmbed) {
+export function getFeaturedImage(embeddedMedia: WpEmbed): string {
 
     if (embeddedMedia["wp:featuredmedia"]) {
         const sizes = embeddedMedia["wp:featuredmedia"]

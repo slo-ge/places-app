@@ -18,6 +18,10 @@ const routes: Routes = [
     {
         path: 'info',
         loadChildren: () => import('./modules/info/info.module').then(m => m.InfoModule)
+    },
+    {
+        path: 'blog',
+        loadChildren: () => import('./modules/post/post.module').then(m => m.PostModule)
     }
 ];
 

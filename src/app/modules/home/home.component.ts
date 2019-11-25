@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PageService} from "../../core/services/page.service";
+import {ContentService} from "../../core/services/content.service";
 import {WpObject} from "../../core/model/wpObject";
 import {Observable} from "rxjs";
 
@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private pageService: PageService) { }
+  constructor(private pageService: ContentService) { }
 
   homePage$: Observable<WpObject>;
 

@@ -6,7 +6,8 @@ import {ActivatedRoute} from "@angular/router";
 import {getFeaturedImage} from "../../../core/utils/media";
 import {WpEmbed} from "../../../core/model/embed";
 import {LocationService} from "../../../core/services/location.service";
-import {switchMap} from "rxjs/operators";
+import {switchMap, tap} from "rxjs/operators";
+import {SeoService} from "../../../core/services/seo.service";
 
 
 @Component({
@@ -21,14 +22,15 @@ export class PostComponent implements OnInit {
 
   constructor(private contentService: ContentService,
               private locationService: LocationService,
-              private router: ActivatedRoute) {
+              private router: ActivatedRoute,
+              private seoService: SeoService) {
   }
 
   ngOnInit() {
     const id = this.router.snapshot.params['id'];
 
     if (id) {
-      this.post$ = this.contentService.getPostBy(id);
+      this.post$ = this.contentService.getPostBy(id).pipe(tap(data => this.seoService.setMetaFrom(data)));
       this.related$ = this.post$.pipe(
         switchMap(data => this.locationService.getPlaceByIds(data.acf.relatedPlaces.map(data => data.place.ID)))
       );

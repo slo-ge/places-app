@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {ACFLocation} from "../model/wpObject";
 import {map, take, tap} from "rxjs/operators";
@@ -43,7 +43,7 @@ export class LocationService {
   }
 
   public getPlace(slug: string): Observable<ACFLocation[]> {
-    return this.httpClient.get<ACFLocation[]>(BASE_URL, {params: {slug: slug}})
+    return this.httpClient.get<ACFLocation[]>(BASE_URL, {params: {...this.paramOptions, slug: slug}})
   }
 
   public getPlaceByIds(ids: number[]) {

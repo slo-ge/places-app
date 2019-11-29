@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
-import {Tag} from "../../../core/model/tags";
 import {map, tap} from "rxjs/operators";
+import {Tag} from "../../core/model/tags";
 
 // TODO calculate
 const MAX_COUNTS = 30;

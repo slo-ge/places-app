@@ -1,3 +1,5 @@
-<div (click)="openModal()" class="open"><app-icon class="medium" name="italic-burger-menu"></app-icon></div>
+<app-action-bubble (click)="openModal()">
+    <app-icon class="medium" name="italic-burger-menu"></app-icon>
+</app-action-bubble>
 <app-simple-settings-modal (dismissed)="openModal()" [show]="modalOpen"></app-simple-settings-modal>
 

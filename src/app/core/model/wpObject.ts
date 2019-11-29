@@ -57,3 +57,21 @@ export interface GeoPosition {
     lat: number;
     lng: number
 }
+
+export enum ContentType {
+    PAGE = 'pages',
+    POST = 'posts',
+    LOCATION = 'locations'
+}
+
+export interface RelatedPlace {
+    place: {
+        ID: number
+    }
+}
+
+export interface Post extends WpObject {
+    acf: {
+        relatedPlaces: RelatedPlace[]
+    }
+}

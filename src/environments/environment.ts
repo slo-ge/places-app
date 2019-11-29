@@ -7,6 +7,7 @@ export const environment = {
   seoTitlePostFix: 'now on goove, Vienna finest food app ',
   seoDescription: 'Wir bringen das Beste, was Wien zu bieten hat - hübsch verpackt - auf dein Smartphone. Neue Bars, Restaurants und angesagte Partys findest du easy mit goove',
   seoImageUrl: 'assets/icons/icon-192x192.png',
+    apiUrl: 'https://locations.phipluspi.com/wp-json/wp/v2',
   production: false
 };
 

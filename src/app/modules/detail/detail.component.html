@@ -1,5 +1,5 @@
 <ng-container *ngIf="(location$ | async) as location; else loading">
-    <h2>{{location.title.rendered}}</h2>
+    <h2 [innerHTML]="location.title.rendered"></h2>
     <img [src]="imgUrl">
     <address>
         <div class="address">{{location.acf.place.address}}</div>

@@ -42,7 +42,4 @@ export class PlaceComponent implements OnInit {
     return getFeaturedImage(embedded);
   }
 
-  unescape(text: string){
-    return unescape(text);
-  }
 }

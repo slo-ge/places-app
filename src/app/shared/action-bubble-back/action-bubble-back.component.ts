@@ -16,7 +16,7 @@ export class ActionBubbleBackComponent {
     back() {
         let path: string[] = this.location.path().split("/");
         path.pop();
-        this.router.navigate(this.getCorrectBackPath(path), {preserveQueryParams: true});
+        this.router.navigate(this.getCorrectBackPath(path), {queryParamsHandling: 'merge'});
     }
 
     backUrlMappingTable: { from: string[], to: string[] }[] = [

@@ -1,5 +1,5 @@
 <div class="place">
-    <header [routerLink]="['/detail', place.slug]" preserveQueryParams>
+    <header [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
     <div class="title">
       <div class="cat">Restaurant</div>
         <h2 [innerHTML]=" place.title.rendered"></h2>
@@ -10,7 +10,7 @@
     </div>
   </header>
   <section>
-      <div class="text" [routerLink]="['/detail', place.slug]" preserveQueryParams>
+      <div class="text" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
       <address>
         <div *ngIf="geoPosition$ | async as geoPosition"
              class="distance">

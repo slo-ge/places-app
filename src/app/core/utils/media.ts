@@ -11,7 +11,7 @@ export function getFeaturedImage(embeddedMedia: WpEmbed): string {
         if (sizes.medium_large) {
             return sizes.medium_large.source_url;
         } else {
-            sizes.full.source_url;
+            return sizes.full.source_url;
         }
 
     }

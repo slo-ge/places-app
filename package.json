@@ -5,10 +5,13 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run increase:version && ng build --prod",
+      "build:full": "npm run build && npm run create:sitemap && npm run move:sitemap",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "increase:version": "node scripts/write-version.js"
+      "increase:version": "node scripts/write-version.js",
+      "create:sitemap": "python scripts/generate.py",
+      "move:sitemap": "move sitemap.xml dist/goove"
   },
   "private": true,
   "dependencies": {

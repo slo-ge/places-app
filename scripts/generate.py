@@ -11,8 +11,10 @@ BASE = 'https://www.goove.at'
 BLOG = 'blog'
 SEARCH = 'search'
 HOME = 'home'
-
+LOCATION = 'locations'
+TAGS = 'tags'
 BLOG_TYPE = 'posts'
+
 
 def main():
     url_set = ET.Element('urlset', {
@@ -28,16 +30,14 @@ def main():
       </url>
     </urlset>
     """
-
     append_url_from_wp_type('locations', url_set, FE_URL_PLACE)
     append_url_from_wp_type('posts', url_set, FE_URL_BLOG)
-
     for url in [BLOG, SEARCH, HOME]:
         url_set.append(element_from_wp_object(None, f'{BASE}/{url}'))
+    append_search_pages(url_set)
 
     with open('sitemap.xml', 'wb') as writer:
         writer.write(ET.tostring(url_set, encoding='utf8', method='xml'))
-    # a = ET.Element('<?xml version="1.0" encoding="UTF-8"?>')
 
 
 def get_wp_response(url):
@@ -47,6 +47,13 @@ def get_wp_response(url):
     for page in range(2, page_count):
         wp += requests.get(url + '?page={}'.format(page)).json()
     return wp
+
+
+def append_search_pages(url_set):
+    wp_response = requests.get(f'{API_URL}/{LOCATION}')
+    page_count = int(wp_response.headers.get('X-WP-TotalPages'))
+    for index in range(1, page_count):
+        url_set.append(element_from_wp_object(None, f'{BASE}/{SEARCH}?page={index}'))
 
 
 def append_url_from_wp_type(type, url_set, route):
@@ -61,7 +68,7 @@ def element_from_wp_object(wp_object, route):
     url = ET.Element('url')
     loc = ET.SubElement(url, 'loc')
     lastmod = ET.SubElement(url, 'lastmod')
-
+    ET.SubElement(url, 'changefreq').text = 'weekly'
     if wp_object:
         try:
             loc.text = route + '/' + wp_object['slug']
@@ -76,6 +83,7 @@ def element_from_wp_object(wp_object, route):
         lastmod.text = now.strftime('%Y-%m-%d')
 
     return url
+
 
 if __name__ == '__main__':
     main()

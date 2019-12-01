@@ -1,3 +1,5 @@
 <app-header></app-header>
-<router-outlet></router-outlet>
+<div [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+</div>
 <router-outlet name="sticky-footer"></router-outlet>

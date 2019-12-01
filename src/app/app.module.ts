@@ -7,8 +7,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from "./components/header/header.component";
 import {NgxsModule} from "@ngxs/store";
 import {AppState} from "./store/app.state";
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
     declarations: [
@@ -22,6 +23,7 @@ import { environment } from '../environments/environment';
         NgxsModule.forRoot([
             AppState
         ]),
+        BrowserAnimationsModule,
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [],

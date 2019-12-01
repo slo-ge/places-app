@@ -7,6 +7,8 @@ import {RouterModule} from "@angular/router";
 import {TagsComponent} from "./tags/tags.component";
 import {ActionBubbleBackComponent} from './action-bubble-back/action-bubble-back.component';
 import {LoadingComponent} from './loading/loading.component';
+import {SocialShareComponent} from './social-share/social-share.component';
+import {ShareModule} from "@ngx-share/core";
 
 
 @NgModule({
@@ -16,11 +18,13 @@ import {LoadingComponent} from './loading/loading.component';
         PlaceComponent,
         TagsComponent,
         ActionBubbleBackComponent,
-        LoadingComponent
+        LoadingComponent,
+        SocialShareComponent
     ],
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        ShareModule
     ],
     exports: [
         IconComponent,
@@ -28,7 +32,8 @@ import {LoadingComponent} from './loading/loading.component';
         ActionBubbleBackComponent,
         PlaceComponent,
         TagsComponent,
-        LoadingComponent
+        LoadingComponent,
+        SocialShareComponent
     ]
 })
 export class SharedModule {

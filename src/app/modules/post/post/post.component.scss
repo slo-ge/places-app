@@ -1,7 +1,7 @@
 @import 'style';
 
-:host {
-  display: block;
+.post,
+.posts {
   margin: 20px;
 }
 
@@ -31,4 +31,8 @@ img {
 
 .loading {
   text-align: center;
+}
+
+footer {
+    height: $footer-min-height;
 }

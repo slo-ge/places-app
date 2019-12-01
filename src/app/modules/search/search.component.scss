@@ -1,9 +1,10 @@
-:host {
+@import 'style';
+
+app-results {
   display: block;
   margin: 10px 3%;
 }
 
-app-results,
-app-tags {
-  margin-bottom: 10px;
+footer {
+    height: $footer-min-height;
 }

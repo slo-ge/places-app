@@ -1,24 +1,28 @@
-<ng-container *ngIf="posts$ | async as posts">
-  <h1>Goove Blog</h1>
-  <a *ngFor="let post of posts" [routerLink]="['./', post.slug]">
-    <div class="post">
-      <h2>{{post.title.rendered}}</h2>
-      <img [src]="getImageUrl(post._embedded)">
-    </div>
-  </a>
-</ng-container>
+<div class="posts" *ngIf="posts$ | async as posts">
+    <h1>Goove Blog</h1>
+    <a *ngFor="let post of posts" [routerLink]="['./', post.slug]">
+        <div class="post">
+            <h2>{{post.title.rendered}}</h2>
+            <img [src]="getImageUrl(post._embedded)">
+        </div>
+    </a>
+</div>
 
-<ng-container *ngIf="post$ | async as post">
-  <h1>{{post.title.rendered}}</h1>
-  <img [src]="getImageUrl(post._embedded)">
-  <div class="description" [innerHTML]="post.content.rendered"></div>
-  <div class="related">
-    <div *ngFor="let place of related$ | async as place">
-      <app-place [place]="place"></app-place>
+<div class="post" *ngIf="post$ | async as post">
+    <h1>{{post.title.rendered}}</h1>
+    <img [src]="getImageUrl(post._embedded)">
+    <div class="description" [innerHTML]="post.content.rendered"></div>
+    <div class="related">
+        <div *ngFor="let place of related$ | async as place">
+            <app-place [place]="place"></app-place>
+        </div>
     </div>
-  </div>
-</ng-container>
+    <app-social-share></app-social-share>
+</div>
 
 <div *ngIf="loading" class="loading">
-  <app-loading></app-loading>
+    <app-loading></app-loading>
 </div>
+
+
+<footer></footer>

@@ -25,3 +25,18 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: $common-border-radius;
   color: white;
 }
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border-radius: $common-border-radius;
+    margin: 20px 0;
+    color: $grey-2;
+    font-size: 18px;
+
+    h2 {
+        margin: 0 0 10px 0;
+        font-size: 30px;
+        color: $primary;
+    }
+}

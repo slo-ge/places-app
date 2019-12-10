@@ -1,7 +1,7 @@
 <ng-container *ngIf="homePage$ | async as homePage">
   <div [innerHTML]="homePage.content.rendered"></div>
 
-  <a [routerLink]="['blog']">
+    <a class="blog-link" [routerLink]="['blog']">
     <h1>Goove Blog</h1>
   </a>
 </ng-container>

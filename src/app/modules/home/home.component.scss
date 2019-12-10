@@ -1,0 +1,16 @@
+:host {
+    padding: 10px;
+    display: block;
+}
+
+::ng-deep {
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.blog-link {
+    font-size: 30px;
+    text-align: center;
+}

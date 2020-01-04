@@ -10,6 +10,8 @@ import {AppState} from "./store/app.state";
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ProfileState} from "./modules/profile/store/profile.state";
+import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 
 @NgModule({
     declarations: [
@@ -21,10 +23,14 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         AppRoutingModule,
         HttpClientModule,
         NgxsModule.forRoot([
-            AppState
+            AppState,
+            ProfileState
         ]),
+        NgxsStoragePluginModule.forRoot({
+            key: ProfileState
+        }),
         BrowserAnimationsModule,
-        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [],
     bootstrap: [AppComponent]

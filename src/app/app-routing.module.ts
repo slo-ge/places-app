@@ -26,6 +26,11 @@ const routes: Routes = [
         path: 'blog',
         loadChildren: () => import('./modules/post/blog.module').then(m => m.BlogModule),
         data: {animation: 'Page4'}
+    },
+    {
+        path: 'profile',
+        loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
+        data: {animation: 'Page4'}
     }
 ];
 

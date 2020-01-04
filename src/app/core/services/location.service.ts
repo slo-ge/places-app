@@ -47,6 +47,7 @@ export class LocationService {
     }
 
     public getPlaceByIds(ids: number[]) {
+        console.log(ids);
         const params = {...this.paramOptions, include: ids.join(',')};
         return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {params});
     }

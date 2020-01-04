@@ -5,6 +5,7 @@
         <div class="address">{{location.acf.place.address}}</div>
     </address>
     <div class="description" [innerHTML]="location.acf.description[0].text"></div>
+    <div (click)="makeFav(location)">make fav</div>
     <app-social-share></app-social-share>
 </ng-container>
 

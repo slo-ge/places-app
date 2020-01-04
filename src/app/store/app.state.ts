@@ -36,6 +36,4 @@ export class AppState {
     selectTag(ctx: StateContext<AppStateModel>, {tag}: SelectTagAction) {
         ctx.setState(patch({selectedTag: tag}));
     }
-
-
 }

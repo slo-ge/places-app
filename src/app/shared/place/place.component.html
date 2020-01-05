@@ -1,25 +1,26 @@
 <div class="place">
     <header [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
-    <div class="title">
-      <div class="cat">Restaurant</div>
-        <h2 [innerHTML]=" place.title.rendered"></h2>
-    </div>
-    <div class="image">
-      <!-- TODO: remove from template -->
-      <img [src]="getFeatureImage(place._embedded)">
-    </div>
-  </header>
-  <section>
-      <div class="text" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
-      <address>
-        <div *ngIf="geoPosition$ | async as geoPosition"
-             class="distance">
-          {{calcDistance(place, geoPosition) | number}} km
+        <div class="title">
+            <div class="cat">Restaurant</div>
+            <h2 [innerHTML]=" place.title.rendered"></h2>
         </div>
-        <div class="address">{{place.acf.place.address}}</div>
-      </address>
-    </div>
-    <app-tags [tags$]="tags$"></app-tags>
-  </section>
-  <footer></footer>
+        <div class="image">
+            <!-- TODO: remove from template -->
+            <img [src]="getFeatureImage(place._embedded)">
+        </div>
+    </header>
+    <section>
+        <div class="text" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
+            <address>
+                <div *ngIf="geoPosition$ | async as geoPosition"
+                     class="distance">
+                    {{calcDistance(place, geoPosition) | number}} km
+                </div>
+                <div class="address">{{place.acf.place.address}}</div>
+            </address>
+        </div>
+        <app-tags [tags$]="tags$"></app-tags>
+    </section>
+    <footer></footer>
+    <app-favourite-toggle [place]="place"></app-favourite-toggle>
 </div>

@@ -22,3 +22,10 @@ export class RemoveFavouritePlace {
     constructor(public place: ACFLocation) {
     }
 }
+
+export class ToggleFavouritePlace {
+    static readonly type = '[Toggle Favourite] remove favorite Place'
+
+    constructor(public place: ACFLocation) {
+    }
+}

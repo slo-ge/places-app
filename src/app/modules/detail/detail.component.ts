@@ -6,8 +6,6 @@ import {LocationService} from "../../core/services/location.service";
 import {ACFLocation} from "../../core/model/wpObject";
 import {SeoService} from "../../core/services/seo.service";
 import {getFeaturedImage} from "../../core/utils/media";
-import {Store} from "@ngxs/store";
-import {SelectPlaceAction} from "../profile/store/profile.actions";
 
 @Component({
   selector: 'app-detail',
@@ -18,8 +16,7 @@ export class DetailComponent implements OnInit {
 
   constructor(private locationService: LocationService,
               private route: ActivatedRoute,
-              private seoService: SeoService,
-              private store: Store) {
+              private seoService: SeoService) {
   }
 
   location$: Observable<ACFLocation>;
@@ -34,8 +31,4 @@ export class DetailComponent implements OnInit {
       tap(data => this.imgUrl = getFeaturedImage(data._embedded))
     );
   }
-
-    makeFav(place: ACFLocation) {
-        this.store.dispatch(new SelectPlaceAction(place));
-    }
 }

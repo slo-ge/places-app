@@ -3,66 +3,74 @@
 $border-radius: $common-border-radius;
 
 :host {
-  display: block;
-  background: $background-place-tile;
-  border-radius: $border-radius;
+    display: block;
+    background: $background-place-tile;
+    border-radius: $border-radius;
+    position: relative;
+}
+
+app-favourite-toggle {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 20px;
 }
 
 header {
-  position: relative;
-  cursor: pointer;
+    position: relative;
+    cursor: pointer;
 }
 
 img {
-  height: 170px;
-  object-fit: cover;
-  width: 100%;
-  border-top-left-radius: $border-radius;
-  border-top-right-radius: $border-radius;
+    height: 170px;
+    object-fit: cover;
+    width: 100%;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
 }
 
 h2 {
-  color: white;
-  margin: 0 auto;
-  font-size: 20px;
-  font-weight: bold;
+    color: white;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 address {
-  font-size: 12px;
-  margin-bottom: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
 }
 
 app-tags {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 section {
-  padding: 10px;
-  margin-bottom: 5px;
+    padding: 10px;
+    margin-bottom: 5px;
 }
 
 footer {
-  height: 1px;
+    height: 1px;
 }
 
 .title {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 10px;
-  border-radius: 15px;
-  background: rgb(0, 0, 0);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    border-radius: 15px;
+    background: rgb(0, 0, 0);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 50%);
 }
 
 .cat {
-  color: $item-category-color;
-  opacity: 0.5;
+    color: $item-category-color;
+    opacity: 0.5;
 }
 
 .text {
-  color: $item-font-color;
+    color: $item-font-color;
 }

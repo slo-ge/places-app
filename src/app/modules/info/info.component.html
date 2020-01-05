@@ -1,3 +1,5 @@
+<div class="confirm-update" routerLink="/profile">Open Profile</div>
+
 <div *ngIf="isSwUpdateAvailable">
     <div *ngIf="availableUpdate$ | async as update">
         <h3>Following Update Available</h3>
@@ -11,4 +13,4 @@
 <div class="info">Sometimes forced updates do not work on first click, so try to click several times</div>
 <div class="version">Build-Version: {{version}}</div>
 
-<div class="confirm-update" routerLink="/profile">Open Profile</div>
+

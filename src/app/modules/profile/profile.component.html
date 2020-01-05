@@ -2,11 +2,15 @@
 
 <h2>Favorite Places</h2>
 
-<div *ngIf="places | async as places; else noPlaces">
+<div *ngIf="places | async as places; else loading">
     <div *ngIf="places.length > 0; else noPlaces">
         <app-place *ngFor="let place of places" [place]="place"></app-place>
     </div>
 </div>
+
+<ng-template #loading>
+    <app-loading></app-loading>
+</ng-template>
 
 <ng-template #noPlaces>
     <div>It seems that you do not have any favourite places,

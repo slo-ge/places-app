@@ -9,6 +9,7 @@ import {ActionBubbleBackComponent} from './action-bubble-back/action-bubble-back
 import {LoadingComponent} from './loading/loading.component';
 import {SocialShareComponent} from './social-share/social-share.component';
 import {ShareModule} from "@ngx-share/core";
+import {FavouriteToggleComponent} from './favourite-toggle/favourite-toggle.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {ShareModule} from "@ngx-share/core";
         TagsComponent,
         ActionBubbleBackComponent,
         LoadingComponent,
-        SocialShareComponent
+        SocialShareComponent,
+        FavouriteToggleComponent
     ],
     imports: [
         CommonModule,
@@ -33,7 +35,8 @@ import {ShareModule} from "@ngx-share/core";
         PlaceComponent,
         TagsComponent,
         LoadingComponent,
-        SocialShareComponent
+        SocialShareComponent,
+        FavouriteToggleComponent
     ]
 })
 export class SharedModule {

@@ -1,0 +1,2 @@
+<input (click)="$event.stopPropagation()" type="checkbox" [checked]="isFav$ | async"/>
+<label (click)="toggle(); $event.stopPropagation()">❤</label>

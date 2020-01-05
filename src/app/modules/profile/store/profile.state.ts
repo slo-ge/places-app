@@ -1,5 +1,10 @@
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {RemoveFavouritePlace, SelectFavouritePlaceAction, SelectPlaceAction} from './profile.actions';
+import {
+    RemoveFavouritePlace,
+    SelectFavouritePlaceAction,
+    SelectPlaceAction,
+    ToggleFavouritePlace
+} from './profile.actions';
 import {append, patch, removeItem} from "@ngxs/store/operators";
 
 export class ProfileStateModel {
@@ -52,11 +57,20 @@ export class ProfileState {
     }
 
     @Action(RemoveFavouritePlace)
-    removePanda(ctx: StateContext<ProfileStateModel>, {place}: SelectPlaceAction) {
+    removeFavouritePlace(ctx: StateContext<ProfileStateModel>, {place}: SelectPlaceAction) {
         ctx.setState(
             patch({
                 places: removeItem<number>(name => name === place.id)
             })
         );
+    }
+
+    @Action(ToggleFavouritePlace)
+    toggleFavouritePlace(ctx: StateContext<ProfileStateModel>, data: SelectPlaceAction) {
+        if (ctx.getState().places.includes(data.place.id)) {
+            this.removeFavouritePlace(ctx, data);
+        } else {
+            this.addFavouritePlace(ctx, data);
+        }
     }
 }

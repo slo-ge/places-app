@@ -10,17 +10,20 @@
         </div>
     </header>
     <section>
-        <div class="text" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
-            <address>
-                <div *ngIf="geoPosition$ | async as geoPosition"
-                     class="distance">
-                    {{calcDistance(place, geoPosition) | number}} km
-                </div>
-                <div class="address">{{place.acf.place.address}}</div>
-            </address>
+        <div class="details">
+            <div class="text" [routerLink]="['/detail', place.slug]" queryParamsHandling="merge">
+                <address>
+                    <div *ngIf="geoPosition$ | async as geoPosition"
+                         class="distance">
+                        {{calcDistance(place, geoPosition) | number}} km
+                    </div>
+                    <div class="address">{{place.acf.place.address}}</div>
+                </address>
+            </div>
+            <app-tags [tags$]="tags$"></app-tags>
         </div>
-        <app-tags [tags$]="tags$"></app-tags>
+        <app-favourite-toggle [place]="place"></app-favourite-toggle>
     </section>
     <footer></footer>
-    <app-favourite-toggle [place]="place"></app-favourite-toggle>
+
 </div>

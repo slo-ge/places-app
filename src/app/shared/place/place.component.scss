@@ -11,9 +11,7 @@ $border-radius: $common-border-radius;
 
 app-favourite-toggle {
     display: block;
-    position: absolute;
-    top: 0;
-    right: 20px;
+    align-self: flex-end;
 }
 
 header {
@@ -48,6 +46,9 @@ app-tags {
 section {
     padding: 10px;
     margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 footer {

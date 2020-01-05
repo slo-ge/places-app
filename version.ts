@@ -1,1 +1,1 @@
-export const VERSION = {"build": 37};
+export const VERSION = {"build": 39};

@@ -1,6 +1,96 @@
 <?xml version='1.0' encoding='utf8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
+        <loc>https://www.goove.at/detail/nyguens-1020</loc>
+        <lastmod>2020-01-05</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/celecte</loc>
+        <lastmod>2020-01-05</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/das-augustin</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/salzberg</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/vitaminstation-2</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/tofu-und-chili</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/otto-bauer</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/cafe-burggasse-24</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/cafe-caspar</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/kantine-mq-2</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/power-box</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/cafe-pierre</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/ramasuri</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/pars</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/wrenk</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/tian-bistro</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/biodeli</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/detail/cafe-frei-wien</loc>
+        <lastmod>2019-12-10</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
         <loc>https://www.goove.at/detail/karma-ramen</loc>
         <lastmod>2019-11-19</lastmod>
         <changefreq>weekly</changefreq>
@@ -361,46 +451,6 @@
         <changefreq>weekly</changefreq>
     </url>
     <url>
-        <loc>https://www.goove.at/detail/cafe-francais</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/cafe-casper</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/espresso</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/blueorange-1090</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/beaver-brewing-company</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/ands-mikes</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/amerling-beisl</loc>
-        <lastmod>2019-11-05</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
-        <loc>https://www.goove.at/detail/location-2</loc>
-        <lastmod>2019-10-19</lastmod>
-        <changefreq>weekly</changefreq>
-    </url>
-    <url>
         <loc>https://www.goove.at/blog/pizza-makes-anything-possible</loc>
         <lastmod>2019-11-26</lastmod>
         <changefreq>weekly</changefreq>
@@ -412,57 +462,62 @@
     </url>
     <url>
         <loc>https://www.goove.at/blog</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/home</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=1</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=2</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=3</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=4</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=5</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=6</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=7</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
     <url>
         <loc>https://www.goove.at/search?page=8</loc>
-        <lastmod>2019-12-01</lastmod>
+        <lastmod>2020-01-05</lastmod>
+        <changefreq>weekly</changefreq>
+    </url>
+    <url>
+        <loc>https://www.goove.at/search?page=9</loc>
+        <lastmod>2020-01-05</lastmod>
         <changefreq>weekly</changefreq>
     </url>
 </urlset>

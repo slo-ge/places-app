@@ -1,30 +1,44 @@
 @import 'style';
 
 :host {
-    input {
-        position: absolute;
-        left: -100vw;
+    .heart {
+        background-color: $grey-1;
+        display: inline-block;
+        height: 20px;
+        margin: 0 10px;
+        position: relative;
+        top: 20px;
+        transform: rotate(-45deg);
+        width: 20px;
 
-        &:checked + label {
-            color: $primary;
-            will-change: font-size;
-            animation: heart 1s cubic-bezier(.17, .89, .32, 1.49);
+        &:before,
+        &:after {
+            content: "";
+            background-color: $grey-1;
+            border-radius: 50%;
+            height: 20px;
+            position: absolute;
+            width: 20px;
+        }
+
+        &:before {
+            top: -10px;
+            left: 0;
+        }
+
+        &:after {
+            left: 10px;
+            top: 0;
+        }
+
+        &.checked {
+            background-color: $primary;
+
+            &:after,
+            &:before {
+                background: $primary;
+            }
         }
     }
-
-    label {
-        text-shadow: 1px 1px black;
-        align-self: center;
-        color: $grey-0;
-        font-size: 2.5em;
-        cursor: pointer;
-    }
-
-    @keyframes heart {
-        0%, 15% {
-            font-size: 0;
-        }
-    }
-
 }
 

@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {Popover} from "../../../popover/popover/popover.service";
+import {SimpleSettingsModalComponent} from "../../../popover/simple-settings-modal/simple-settings-modal.component";
 
 
 @Component({
@@ -7,12 +9,14 @@ import {Component} from '@angular/core';
     styleUrls: ['./sort-bar.component.scss']
 })
 export class SortBarComponent {
-    modalOpen = false;
-
-    constructor() {
+    constructor(private popper: Popover) {
     }
 
-    openModal() {
-        this.modalOpen = !this.modalOpen;
+    show(origin) {
+        this.popper.open({
+            content: SimpleSettingsModalComponent,
+            origin,
+            data: {title: 'Filter'}
+        });
     }
 }

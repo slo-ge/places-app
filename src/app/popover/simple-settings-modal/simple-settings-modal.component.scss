@@ -1,0 +1,54 @@
+@import 'style';
+
+:host {
+    bottom: 0;
+
+    &.not-applied {
+        padding: 10px;
+        display: block;
+        position: fixed;
+        top: 50px;
+        left: 5px;
+        right: 5px;
+        bottom: 55px;
+        border-radius: $common-border-radius;
+        border: 1px solid $grey-0;
+        background: white;
+        animation: fadein .5s;
+        animation-duration: 1s;
+        animation-fill-mode: both;
+        opacity: 0;
+        animation-name: fadeInUp;
+    }
+
+}
+
+.actions {
+    display: flex;
+    color: $grey-1;
+
+    > a {
+        margin-right: 10px;
+        cursor: pointer;
+
+    }
+
+    .active {
+        color: $primary;
+    }
+}
+
+.back {
+    margin-top: 20px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.sort-name {
+    color: $primary;
+    font-style: italic;
+    flex: 1;
+    text-align: center;
+}

@@ -1,9 +1,9 @@
-import {Component, EventEmitter, HostBinding, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {map} from "rxjs/operators";
-import {SortType} from "../results/results.component";
+import {SortType} from "../../modules/search/results/results.component";
 import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {TaxonomyService} from "../../../core/services/taxonomy.service";
+import {TaxonomyService} from "../../core/services/taxonomy.service";
 
 @Component({
     selector: 'app-simple-settings-modal',
@@ -11,20 +11,12 @@ import {TaxonomyService} from "../../../core/services/taxonomy.service";
     styleUrls: ['./simple-settings-modal.component.scss', './animation.scss']
 })
 export class SimpleSettingsModalComponent implements OnInit {
-    @HostBinding('class.visible')
-    @Input()
-    show: false;
-
-    @Output()
-    closed: EventEmitter<boolean> = new EventEmitter();
-    @Output()
-    dismissed: EventEmitter<boolean> = new EventEmitter();
-
     Sort = SortType;
-    activeSort$: Observable<SortType>
+    activeSort$: Observable<SortType>;
     tags$ = this.taxonomyService.getTags();
 
-    constructor(private route: ActivatedRoute, private taxonomyService: TaxonomyService) {
+    constructor(private route: ActivatedRoute,
+                private taxonomyService: TaxonomyService) {
     }
 
     ngOnInit() {
@@ -36,13 +28,5 @@ export class SimpleSettingsModalComponent implements OnInit {
                 return SortType.DEFAULT;
             })
         );
-    }
-
-    close() {
-        this.closed.emit(true);
-    }
-
-    dismiss() {
-        this.dismissed.emit(true);
     }
 }

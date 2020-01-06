@@ -32,6 +32,11 @@ export class Popover {
         return popoverRef;
     }
 
+    createInjector(popoverRef: PopoverRef, injector: Injector) {
+        const tokens = new WeakMap([[PopoverRef, popoverRef]]);
+        return new PortalInjector(injector, tokens);
+    }
+
     private getOverlayConfig({origin, width, height}): OverlayConfig {
         return new OverlayConfig({
             hasBackdrop: true,
@@ -44,19 +49,14 @@ export class Popover {
     }
 
     private getOverlayPosition(origin: HTMLElement): PositionStrategy {
-        const positionStrategy = this.overlay.position()
+        return this.overlay.position().global().centerHorizontally().centerVertically();
+        /*return this.overlay.position()
             .flexibleConnectedTo(origin)
             .withPositions(this.getPositions())
             .withFlexibleDimensions(false)
-            .withPush(false);
-
-        return positionStrategy;
+            .withPush(false);*/
     }
 
-    createInjector(popoverRef: PopoverRef, injector: Injector) {
-        const tokens = new WeakMap([[PopoverRef, popoverRef]]);
-        return new PortalInjector(injector, tokens);
-    }
 
     private getPositions(): ConnectionPositionPair[] {
         return [

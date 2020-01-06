@@ -16,7 +16,8 @@ export class SortBarComponent {
         this.popper.open({
             content: SimpleSettingsModalComponent,
             origin,
-            data: {title: 'Filter'}
+            data: {title: 'Filter'},
+            width: '90%'
         });
     }
 }

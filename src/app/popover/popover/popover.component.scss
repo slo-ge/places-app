@@ -1,4 +1,7 @@
+@import 'style';
+
 .popover {
+    border-radius: $common-border-radius;
     background-color: #fff;
     padding: 1rem;
     font-size: 14px;

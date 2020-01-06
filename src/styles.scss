@@ -4,27 +4,27 @@
 @import '~@angular/cdk/overlay-prebuilt.css';
 
 html, body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
 }
 
 a {
-  color: inherit; /* blue colors for links too */
-  text-decoration: inherit; /* no underline */
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: $item-font-color;
+    color: $item-font-color;
 }
 
 .button {
-  background-color: $primary;
-  padding: 10px 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: $common-border-radius;
-  color: white;
+    background-color: $primary;
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $common-border-radius;
+    color: white;
 }
 
 .card {
@@ -40,4 +40,8 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 30px;
         color: $primary;
     }
+}
+
+.popover-backdrop {
+    background-color: rgba(0, 0, 0, 0.7);
 }

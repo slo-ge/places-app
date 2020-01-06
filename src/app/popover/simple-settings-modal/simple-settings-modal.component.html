@@ -1,6 +1,6 @@
 <app-default-popover>
     <div>
-        <div class="title">Sorting <span class="sort-name">({{activeSort$ | async}})</span></div>
+        <div class="title">Sorting <span class="sort-name"></span></div>
         <div class="actions" *ngIf="activeSort$ | async as activeSort">
             <a class="latest"
                [class.active]="activeSort === Sort.DEFAULT"
@@ -8,6 +8,7 @@
                [queryParams]="{sort: 'default'}"
                queryParamsHandling="merge">
                 <app-icon class="large" name="sort-latest"></app-icon>
+                (latest)
             </a>
 
             <a class="geo"
@@ -16,6 +17,7 @@
                [queryParams]="{sort: 'geo'}"
                queryParamsHandling="merge">
                 <app-icon class="large" name="geo-search"></app-icon>
+                (near you)
             </a>
         </div>
     </div>

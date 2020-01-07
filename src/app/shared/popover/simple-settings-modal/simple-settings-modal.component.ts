@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {map} from "rxjs/operators";
-import {SortType} from "../../modules/search/results/results.component";
+import {SortType} from "../../../modules/search/results/results.component";
 import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {TaxonomyService} from "../../core/services/taxonomy.service";
+import {TaxonomyService} from "../../../core/services/taxonomy.service";
 
 @Component({
     selector: 'app-simple-settings-modal',

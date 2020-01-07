@@ -7,7 +7,6 @@ import {ResultsComponent} from './results/results.component';
 import {SortBarComponent} from './sort-bar/sort-bar.component';
 import {PaginationComponent} from './pagination/pagination.component';
 import {SharedModule} from '../../shared/shared.module';
-import {PopoverModule} from '../../popover/popover.module';
 
 
 @NgModule({
@@ -20,8 +19,7 @@ import {PopoverModule} from '../../popover/popover.module';
     imports: [
         CommonModule,
         SearchRoutingModule,
-        SharedModule,
-        PopoverModule
+        SharedModule
     ]
 })
 export class SearchModule {

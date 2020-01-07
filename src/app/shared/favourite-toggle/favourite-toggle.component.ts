@@ -5,6 +5,8 @@ import {Select, Store} from "@ngxs/store";
 import {ProfileState} from "../../modules/profile/store/profile.state";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {Popover} from "../popover/popover/popover.service";
+import {ToastrComponent, ToastrData} from "../popover/toastr/toastr.component";
 
 @Component({
     selector: 'app-favourite-toggle',
@@ -19,7 +21,7 @@ export class FavouriteToggleComponent implements OnInit {
     favouritePlaces$: Observable<number[]>;
     isFav$: Observable<boolean>;
 
-    constructor(private store: Store) {
+    constructor(private store: Store, private popper: Popover) {
     }
 
     ngOnInit(): void {
@@ -30,7 +32,14 @@ export class FavouriteToggleComponent implements OnInit {
         );
     }
 
-    toggle() {
+    toggle(origin) {
         this.store.dispatch(new ToggleFavouritePlace(this.place));
+        this.popper.open<ToastrData>({
+            content: ToastrComponent,
+            origin,
+            data: {message: 'Filter'},
+            width: '90%'
+        });
     }
+
 }

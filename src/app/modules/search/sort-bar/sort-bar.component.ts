@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Popover} from "../../../popover/popover/popover.service";
-import {SimpleSettingsModalComponent} from "../../../popover/simple-settings-modal/simple-settings-modal.component";
+import {Popover} from "../../../shared/popover/popover/popover.service";
+import {SimpleSettingsModalComponent} from "../../../shared/popover/simple-settings-modal/simple-settings-modal.component";
 
 
 @Component({

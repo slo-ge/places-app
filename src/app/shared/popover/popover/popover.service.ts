@@ -3,7 +3,7 @@ import {ConnectionPositionPair, Overlay, OverlayConfig, PositionStrategy} from '
 import {ComponentPortal, PortalInjector} from '@angular/cdk/portal';
 import {PopoverContent, PopoverRef} from './popover-ref';
 import {PopoverComponent} from './popover.component';
-import {PopoverModule} from "../popover.module";
+import {ShareModule} from "@ngx-share/core";
 
 // copy paste from https://netbasal.com/creating-powerful-components-with-angular-cdk-2cef53d81cea
 export type PopoverParams<T> = {
@@ -15,7 +15,7 @@ export type PopoverParams<T> = {
 }
 
 @Injectable({
-    providedIn: PopoverModule
+    providedIn: ShareModule
 })
 export class Popover {
     constructor(private overlay: Overlay,

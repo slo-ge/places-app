@@ -11,9 +11,21 @@ import {SocialShareComponent} from './social-share/social-share.component';
 import {ShareModule} from "@ngx-share/core";
 import {FavouriteToggleComponent} from './favourite-toggle/favourite-toggle.component';
 import {SelectedTagComponent} from "./selected-tag/selected-tag.component";
+import {PopoverComponent} from "./popover/popover/popover.component";
+import {InsidePopoverComponent} from "./popover/inside-popover/inside-popover.component";
+import {DefaultPopoverComponent} from "./popover/default-popover/default-popover.component";
+import {ToastrComponent} from "./popover/toastr/toastr.component";
+import {OverlayModule} from "@angular/cdk/overlay";
+import {SimpleSettingsModalComponent} from "./popover/simple-settings-modal/simple-settings-modal.component";
 
 
 @NgModule({
+    imports: [
+        CommonModule,
+        RouterModule,
+        ShareModule,
+        OverlayModule
+    ],
     declarations: [
         IconComponent,
         ActionBubbleComponent,
@@ -23,12 +35,12 @@ import {SelectedTagComponent} from "./selected-tag/selected-tag.component";
         LoadingComponent,
         SocialShareComponent,
         FavouriteToggleComponent,
-        SelectedTagComponent
-    ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        ShareModule
+        SelectedTagComponent,
+        PopoverComponent,
+        InsidePopoverComponent,
+        DefaultPopoverComponent,
+        SimpleSettingsModalComponent,
+        ToastrComponent
     ],
     exports: [
         IconComponent,
@@ -40,6 +52,11 @@ import {SelectedTagComponent} from "./selected-tag/selected-tag.component";
         SocialShareComponent,
         FavouriteToggleComponent,
         SelectedTagComponent
+    ],
+    entryComponents: [
+        PopoverComponent,
+        SimpleSettingsModalComponent,
+        ToastrComponent
     ]
 })
 export class SharedModule {

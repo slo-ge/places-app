@@ -17,6 +17,7 @@ import {DefaultPopoverComponent} from "./popover/default-popover/default-popover
 import {ToastrComponent} from "./popover/toastr/toastr.component";
 import {OverlayModule} from "@angular/cdk/overlay";
 import {SimpleSettingsModalComponent} from "./popover/simple-settings-modal/simple-settings-modal.component";
+import {MakeFavouriteToastrComponent} from './popover/toastr/make-favourite-toastr/make-favourite-toastr.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import {SimpleSettingsModalComponent} from "./popover/simple-settings-modal/simp
         InsidePopoverComponent,
         DefaultPopoverComponent,
         SimpleSettingsModalComponent,
-        ToastrComponent
+        ToastrComponent,
+        MakeFavouriteToastrComponent
     ],
     exports: [
         IconComponent,
@@ -56,7 +58,7 @@ import {SimpleSettingsModalComponent} from "./popover/simple-settings-modal/simp
     entryComponents: [
         PopoverComponent,
         SimpleSettingsModalComponent,
-        ToastrComponent
+        MakeFavouriteToastrComponent
     ]
 })
 export class SharedModule {

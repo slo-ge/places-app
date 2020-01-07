@@ -50,6 +50,7 @@ export class Popover {
 
     private getOverlayPosition(origin: HTMLElement): PositionStrategy {
         return this.overlay.position().global().centerHorizontally().centerVertically();
+        //return this.overlay.position().global().bottom('10px').right('10px');
         /*return this.overlay.position()
             .flexibleConnectedTo(origin)
             .withPositions(this.getPositions())

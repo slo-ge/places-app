@@ -6,7 +6,8 @@ import {ProfileState} from "../../modules/profile/store/profile.state";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {Popover} from "../popover/popover/popover.service";
-import {ToastrComponent, ToastrData} from "../popover/toastr/toastr.component";
+import {ToastrData} from "../popover/toastr/toastr.component";
+import {MakeFavouriteToastrComponent} from "../popover/toastr/make-favourite-toastr/make-favourite-toastr.component";
 
 @Component({
     selector: 'app-favourite-toggle',
@@ -32,14 +33,18 @@ export class FavouriteToggleComponent implements OnInit {
         );
     }
 
-    toggle(origin) {
+    toggle(origin, checked) {
         this.store.dispatch(new ToggleFavouritePlace(this.place));
+
+        const message = checked
+            ? `Remove <b>${this.place.title.rendered}</b> from loved places.`
+            : `Add <b>${this.place.title.rendered}</b> to loved places.`;
+
         this.popper.open<ToastrData>({
-            content: ToastrComponent,
+            content: MakeFavouriteToastrComponent,
             origin,
-            data: {message: 'Filter'},
+            data: {message},
             width: '90%'
         });
     }
-
 }

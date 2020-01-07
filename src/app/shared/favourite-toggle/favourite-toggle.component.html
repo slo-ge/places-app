@@ -1,1 +1,8 @@
-<div (click)="toggle(origin)" class="heart" [class.checked]="isFav$ | async" #origin></div>
+<ng-container *ngIf="isFav$ | async as fav; else notChecked">
+    <div (click)="toggle(origin, true)" class="heart checked" #origin></div>
+</ng-container>
+
+<ng-template #notChecked>
+    <div (click)="toggle(origin, false)" class="heart" #origin></div>
+</ng-template>
+

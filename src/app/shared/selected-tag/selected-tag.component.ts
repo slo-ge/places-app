@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
-import {Tag} from "../../../core/model/tags";
+import {Tag} from "../../core/model/tags";
 import {Router} from "@angular/router";
 import {Select} from "@ngxs/store";
-import {AppState} from "../../../store/app.state";
+import {AppState} from "../../store/app.state";
 
 @Component({
     selector: 'app-selected-tag',

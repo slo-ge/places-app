@@ -5,13 +5,16 @@ import {InsidePopoverComponent} from "./inside-popover/inside-popover.component"
 import {OverlayModule} from "@angular/cdk/overlay";
 import {DefaultPopoverComponent} from './default-popover/default-popover.component';
 import {SimpleSettingsModalComponent} from "./simple-settings-modal/simple-settings-modal.component";
+import {RouterModule} from "@angular/router";
+import {SharedModule} from "../shared/shared.module";
 
 
 @NgModule({
     declarations: [
         PopoverComponent,
         InsidePopoverComponent,
-        DefaultPopoverComponent
+        DefaultPopoverComponent,
+        SimpleSettingsModalComponent
     ],
     exports: [
         PopoverComponent,
@@ -20,7 +23,9 @@ import {SimpleSettingsModalComponent} from "./simple-settings-modal/simple-setti
     ],
     imports: [
         CommonModule,
-        OverlayModule
+        OverlayModule,
+        RouterModule,
+        SharedModule
     ],
     entryComponents: [
         PopoverComponent,

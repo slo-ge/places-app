@@ -10,6 +10,7 @@ import {LoadingComponent} from './loading/loading.component';
 import {SocialShareComponent} from './social-share/social-share.component';
 import {ShareModule} from "@ngx-share/core";
 import {FavouriteToggleComponent} from './favourite-toggle/favourite-toggle.component';
+import {SelectedTagComponent} from "./selected-tag/selected-tag.component";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {FavouriteToggleComponent} from './favourite-toggle/favourite-toggle.comp
         ActionBubbleBackComponent,
         LoadingComponent,
         SocialShareComponent,
-        FavouriteToggleComponent
+        FavouriteToggleComponent,
+        SelectedTagComponent
     ],
     imports: [
         CommonModule,
@@ -36,7 +38,8 @@ import {FavouriteToggleComponent} from './favourite-toggle/favourite-toggle.comp
         TagsComponent,
         LoadingComponent,
         SocialShareComponent,
-        FavouriteToggleComponent
+        FavouriteToggleComponent,
+        SelectedTagComponent
     ]
 })
 export class SharedModule {

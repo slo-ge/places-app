@@ -6,10 +6,8 @@ import {SearchComponent} from './search.component';
 import {ResultsComponent} from './results/results.component';
 import {SortBarComponent} from './sort-bar/sort-bar.component';
 import {PaginationComponent} from './pagination/pagination.component';
-import {SharedModule} from "../../shared/shared.module";
-import {SelectedTagComponent} from './selected-tag/selected-tag.component';
-import {SimpleSettingsModalComponent} from '../../popover/simple-settings-modal/simple-settings-modal.component';
-import {PopoverModule} from "../../popover/popover.module";
+import {SharedModule} from '../../shared/shared.module';
+import {PopoverModule} from '../../popover/popover.module';
 
 
 @NgModule({
@@ -18,8 +16,6 @@ import {PopoverModule} from "../../popover/popover.module";
         ResultsComponent,
         SortBarComponent,
         PaginationComponent,
-        SelectedTagComponent,
-        SimpleSettingsModalComponent
     ],
     imports: [
         CommonModule,

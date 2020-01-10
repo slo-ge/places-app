@@ -14,6 +14,7 @@ HOME = 'home'
 LOCATION = 'locations'
 TAGS = 'tags'
 BLOG_TYPE = 'posts'
+PAGE_TYPE = 'pages'
 
 
 def main():

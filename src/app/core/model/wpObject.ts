@@ -75,3 +75,6 @@ export interface Post extends WpObject {
         relatedPlaces: RelatedPlace[]
     }
 }
+
+export interface Page extends WpObject {
+}

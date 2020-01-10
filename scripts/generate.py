@@ -41,12 +41,13 @@ def main():
         writer.write(ET.tostring(url_set, encoding='utf8', method='xml'))
 
 
+# TODO: control _embed query param by a PARAMS DICT
 def get_wp_response(url):
-    wp_response = requests.get(url)
+    wp_response = requests.get(f'{url}?_embed')
     wp = wp_response.json()
     page_count = int(wp_response.headers.get('X-WP-TotalPages'))
     for page in range(2, page_count):
-        wp += requests.get(url + '?page={}'.format(page)).json()
+        wp += requests.get(url + '?page={}&_embed'.format(page)).json()
     return wp
 
 

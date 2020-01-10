@@ -12,8 +12,6 @@ import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProfileState} from "./modules/profile/store/profile.state";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
-import {WPContentService} from "./core/services/wpcontent.service";
-import {CONTENT_SERVICE} from "./core/model/content.service";
 
 
 @NgModule({
@@ -36,7 +34,7 @@ import {CONTENT_SERVICE} from "./core/model/content.service";
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [
-        {provide: CONTENT_SERVICE, useClass: WPContentService}
+        //{provide: CONTENT_SERVICE, useClass: CachedWPContentServiceService}
     ],
     bootstrap: [AppComponent]
 })

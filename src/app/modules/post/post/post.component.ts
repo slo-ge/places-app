@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {ACFLocation, Post} from "../../../core/model/wpObject";
 import {ActivatedRoute} from "@angular/router";
@@ -7,7 +7,7 @@ import {WpEmbed} from "../../../core/model/embed";
 import {LocationService} from "../../../core/services/location.service";
 import {finalize, switchMap, tap} from "rxjs/operators";
 import {SeoService} from "../../../core/services/seo.service";
-import {CONTENT_SERVICE, ContentService} from "../../../core/model/content.service";
+import {WPContentService} from "../../../core/services/wpcontent.service";
 
 
 @Component({
@@ -22,7 +22,7 @@ export class PostComponent implements OnInit {
 
     loading = true;
 
-    constructor(@Inject(CONTENT_SERVICE) private contentService: ContentService,
+    constructor(private contentService: WPContentService,
                 private locationService: LocationService,
                 private router: ActivatedRoute,
                 private seoService: SeoService) {

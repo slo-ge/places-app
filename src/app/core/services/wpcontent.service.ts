@@ -7,7 +7,9 @@ import {ContentService} from "../model/content.service";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class WPContentService implements ContentService {
 
     private readonly params = {

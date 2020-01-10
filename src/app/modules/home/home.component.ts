@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WpObject} from "../../core/model/wpObject";
 import {Observable} from "rxjs";
-import {CONTENT_SERVICE, ContentService} from "../../core/model/content.service";
+import {CachedWPContentServiceService} from "../../core/services/cached-wpcontent-service.service";
 
 @Component({
     selector: 'app-home',
@@ -10,8 +10,7 @@ import {CONTENT_SERVICE, ContentService} from "../../core/model/content.service"
 })
 export class HomeComponent implements OnInit {
 
-    constructor(@Inject(CONTENT_SERVICE) private contentService: ContentService) {
-        console.log(contentService);
+    constructor(private contentService: CachedWPContentServiceService) {
     }
 
     homePage$: Observable<WpObject>;
@@ -19,5 +18,4 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
         this.homePage$ = this.contentService.getPageBy('home');
     }
-
 }

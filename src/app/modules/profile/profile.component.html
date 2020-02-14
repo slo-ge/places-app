@@ -2,7 +2,7 @@
 
 <h2>Your loved Places:</h2>
 
-<div *ngIf="places | async as places; else loading">
+<div *ngIf="places$ | async as places; else loading">
     <div *ngIf="places.length > 0; else noPlaces">
         <app-place *ngFor="let place of places" [place]="place"></app-place>
     </div>

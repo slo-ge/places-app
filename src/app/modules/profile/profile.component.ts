@@ -16,13 +16,13 @@ export class ProfileComponent implements OnInit {
     name$: Observable<string>;
     @Select(ProfileState.selectPlaces)
     placeSlugs$: Observable<number[]>;
-    places: Observable<ACFLocation[]>;
+    places$: Observable<ACFLocation[]>;
 
     constructor(private locationService: LocationService) {
     }
 
     ngOnInit() {
-        this.places = this.placeSlugs$.pipe(
+        this.places$ = this.placeSlugs$.pipe(
             switchMap((ids) => {
                 if (ids.length > 0) {
                     return this.locationService.getPlaceByIds(ids)

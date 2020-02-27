@@ -5,6 +5,7 @@ import {DetailRoutingModule} from './detail-routing.module';
 import {DetailComponent} from './detail.component';
 import {FooterComponent} from './footer/footer.component';
 import {SharedModule} from "../../shared/shared.module";
+import {DetailResolver} from "./detail.resolver";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {SharedModule} from "../../shared/shared.module";
         CommonModule,
         DetailRoutingModule,
         SharedModule
-    ]
+    ],
+    providers: [DetailResolver]
 })
 export class DetailModule {
 }

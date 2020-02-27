@@ -1,0 +1,26 @@
+@import 'style';
+
+:host {
+    @include page-spacing;
+    display: block;
+}
+
+h1, h2 {
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 6em;
+}
+
+app-tags {
+    display: block;
+}
+
+h2,
+app-tags,
+.button {
+    margin-bottom: 20px;
+}

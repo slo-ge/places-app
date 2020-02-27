@@ -1,26 +1,45 @@
 @import 'style';
 
-:host {
-  line-height: 44px;
-  text-align: center;
-  position: sticky;
-  align-items: center;
-  top: 0;
-  background-color: $header-background;
-  color: $header-font-color;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  z-index: 100;
+nav {
+    line-height: 44px;
+    text-align: center;
+    position: sticky;
+    align-items: center;
+    top: 0;
+    background-color: $header-background;
+    color: $header-font-color;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    z-index: 100;
 
-  > div {
-    cursor: pointer;
-    justify-self: stretch;
-    align-self: stretch;
-    font-weight: bold;
+    > div {
+        cursor: pointer;
+        justify-self: stretch;
+        align-self: stretch;
+        font-weight: bold;
 
-    &.active {
-      background: $header-font-color;
-      color: $header-background;
+        &.active {
+            background: $header-font-color;
+            color: $header-background;
+        }
     }
-  }
+}
+
+.loading-wrapper {
+    z-index: 1010;
+    background-color: rgb(255, 255, 255, 0.4);
+}
+
+@keyframes rainbow {
+    0% { background-position: 0% 100%; }
+    50% { background-position: 100% 200%; }
+    100% {background-position: 0% 100%; }
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(124deg, $primary,  $primary-soft, white, $primary);
+    background-size: 900% 900%;
+    animation: rainbow 9s ease infinite;
 }

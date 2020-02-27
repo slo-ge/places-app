@@ -2,43 +2,44 @@
 
 .list,
 .hash {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 
-  > div {
-    margin: 2px;
-    cursor: pointer;
-  }
+    > div {
+        margin: 2px;
+        cursor: pointer;
+    }
 }
 
 .hash {
-  color: $primary;
-  font-weight: bold;
+    color: $primary;
+    font-weight: bold;
 
-  > div {
-    align-self: center;
+    > div {
+        align-self: center;
 
-    &:first-child {
-      margin-left: 0;
+        &:first-child {
+            margin-left: 0;
+        }
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
 }
 
 .list {
-  color: $item-font-color;
-  font-weight: normal;
-  font-size: 14px;
+    color: $item-font-color;
+    font-weight: normal;
+    font-size: 14px;
 
-  > div {
-    margin: 5px;
-  }
-  span {
-    font-weight: bold;
-    color: $primary;
-  }
+    > div {
+        margin: 5px;
+    }
+
+    span {
+        font-weight: bold;
+        color: $primary;
+    }
 }
 

@@ -19,10 +19,6 @@ export class AppComponent implements OnInit {
     constructor(private router: Router) {
     }
 
-    prepareRoute(outlet: RouterOutlet) {
-        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
-    }
-
     ngOnInit(): void {
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
@@ -30,4 +26,10 @@ export class AppComponent implements OnInit {
             }
         });
     }
+
+    prepareRoute(outlet: RouterOutlet) {
+        return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    }
+
+
 }

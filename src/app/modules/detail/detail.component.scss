@@ -9,7 +9,35 @@ img {
 
 :host {
     display: block;
-    margin: 10px 10px 0 10px;
+}
+
+.info-wrapper {
+    background-color: $background-place-tile;
+    border-top-right-radius: $common-border-radius*2;
+    border-top-left-radius: $common-border-radius*2;
+    margin-top: -$common-border-radius*2;
+    position: relative;
+    padding: $spacing;
+    height: 90vh;
+
+    h1 {
+        margin: 15px 0;
+        text-align: center;
+    }
+
+    .description {
+        margin-bottom: 30px;
+
+        ::ng-deep {
+            a {
+                color: $primary;
+            }
+        }
+    }
+}
+
+app-favourite-toggle {
+    display: block;
 }
 
 .loading {

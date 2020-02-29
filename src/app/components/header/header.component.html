@@ -3,6 +3,5 @@
     <div [routerLink]="['search']" routerLinkActive="active">Search</div>
     <div [routerLink]="['info']" routerLinkActive="active">Profile</div>
 </nav>
-<div *ngIf="isLoading$ | async" class="loading-wrapper">
-    <div class="progress-bar"></div>
-</div>
+
+<div *ngIf="isLoading$ | async" class="progress-bar"></div>

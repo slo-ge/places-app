@@ -1,16 +1,22 @@
 @import 'style';
 
+:host {
+    z-index: 100;
+    display: block;
+    position: sticky;
+    top: 0;
+}
+
 nav {
     line-height: 44px;
     text-align: center;
-    position: sticky;
     align-items: center;
-    top: 0;
+
     background-color: $header-background;
     color: $header-font-color;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    z-index: 100;
+
 
     > div {
         cursor: pointer;
@@ -25,21 +31,24 @@ nav {
     }
 }
 
-.loading-wrapper {
-    z-index: 1010;
-    background-color: rgb(255, 255, 255, 0.4);
-}
-
 @keyframes rainbow {
-    0% { background-position: 0% 100%; }
-    50% { background-position: 100% 200%; }
-    100% {background-position: 0% 100%; }
+    0% {
+        background-position: 0% 100%;
+    }
+    50% {
+        background-position: 100% 200%;
+    }
+    100% {
+        background-position: 0% 100%;
+    }
 }
 
 .progress-bar {
     width: 100%;
-    height: 4px;
-    background: linear-gradient(124deg, $primary,  $primary-soft, white, $primary);
+    height: 6px;
+    background: linear-gradient(124deg, $primary, $primary-soft, white, $primary);
     background-size: 900% 900%;
     animation: rainbow 9s ease infinite;
+    position: absolute;
+    z-index: 1010;
 }

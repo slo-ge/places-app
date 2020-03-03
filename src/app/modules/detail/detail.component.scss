@@ -18,7 +18,8 @@ img {
     margin-top: -$common-border-radius*2;
     position: relative;
     padding: $spacing;
-    height: 90vh;
+    min-height: 90vh;
+    height: 100%;
 
     h1 {
         margin: 15px 0;

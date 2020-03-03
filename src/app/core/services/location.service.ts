@@ -28,7 +28,7 @@ export class LocationService {
         _embed: '' // this options embeds the media data
     };
 
-    cachedPlaces = new Map<string, ACFLocation>();
+    _cachedPlaces = new Map<string, ACFLocation>();
 
     constructor(private httpClient: HttpClient) {
     }
@@ -39,13 +39,13 @@ export class LocationService {
         return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {observe: 'response', params: params}).pipe(
             tap(data => this.nextInfo(data.headers, params.page)),
             map(data => data.body),
-            tap(data => data.forEach(place => this.cachedPlaces.set(place.slug, place))) // add to cachedPlaced Map
+            tap(data => data.forEach(place => this._cachedPlaces.set(place.slug, place))) // add to cachedPlaced Map
         );
     }
 
     public getPlace(slug: string): Observable<ACFLocation[]> {
-        if (this.cachedPlaces.has(slug)) {
-            return of([this.cachedPlaces.get(slug)]);
+        if (this._cachedPlaces.has(slug)) {
+            return of([this._cachedPlaces.get(slug)]);
         }
         return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {params: {...this.paramOptions, slug: slug}})
     }

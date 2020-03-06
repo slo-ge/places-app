@@ -1,0 +1,12 @@
+:host {
+    map-info-window {
+        .title {
+            font-size: 30px;
+        }
+        img {
+            max-width: 300px;
+            max-height: 400px;
+            object-fit: cover;
+        }
+    }
+}

@@ -35,11 +35,10 @@ export class PlaceComponent implements OnInit {
 
     calcDistance(location: ACFLocation, myPos: GeoPosition) {
         return calculateDistance(
-            location.acf.place.lat,
+            +location.acf.place.lat,
             myPos.lat,
-            location.acf.place.lng,
+            +location.acf.place.lng,
             myPos.lng
         )
     }
-
 }

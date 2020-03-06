@@ -45,8 +45,8 @@ interface Description {
 
 interface Place {
     address: string;
-    lat: number;
-    lng: number;
+    lat: string;
+    lng: string;
 }
 
 export interface ACFLocation extends WpObject {

@@ -1,6 +1,7 @@
 export const enum MainRoutes {
-    HOME= '',
-    SEARCH= 'search',
+    HOME = '',
+    SEARCH = 'search',
+    MAP_SEARCH = 'search/map',
     DETAIL = 'detail',
     INFO = 'info',
     BLOG = 'blog',

@@ -11,6 +11,7 @@ export class DetailResolver implements Resolve<Observable<ACFLocation>> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
+
         return this.locationService.getPlace(route.paramMap.get('slug')).pipe(
             map(places => {
                 if(places?.length > 0) {

@@ -1,0 +1,20 @@
+<google-map #map
+            height="400px"
+            width="100%"
+            [center]="positionWithFallback$ | async"
+            [zoom]="zoom"
+            (mapDragend)="dragend(map)">
+    <map-marker #marker
+                *ngFor="let geoPlace of visiblePlaces$ | async"
+                [position]="geoPlace"
+                [options]="markerOptions"
+                (mapClick)="openInfoWindow(marker, geoPlace)"></map-marker>
+    <map-info-window>
+        <ng-container *ngIf="selection">
+            <div class="wrapper" [routerLink]="[DetailPath, selection.id]" queryParamsHandling="merge">
+            <div class="title" [innerHTML]="selection.title"></div>
+            <img [src]="selection.imgUrl" />
+            </div>
+        </ng-container>
+    </map-info-window>
+</google-map>

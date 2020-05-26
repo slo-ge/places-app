@@ -26,7 +26,7 @@ jobs:
       - run:
           name: push to ftp
           command: |
-            lftp ftp://${username}:${password}@${hostname}/goove/ -e "mirror -c -R -v --Remove-source-files --Remove-source-dirs dist/maskfun/.; bye";
+            lftp ftp://${username}:${password}@${hostname}/goove/ -e "mirror -c -R -v --Remove-source-files --Remove-source-dirs dist/goove/.; bye";
             lftp ftp://${username}:${password}@${hostname}/goove/ -e "put .htaccess; bye";
 
 

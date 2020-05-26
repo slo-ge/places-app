@@ -3,11 +3,11 @@ import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {GeoPosition} from "../../../core/model/wpObject";
 import {AppState} from "../../../store/app.state";
 import {Select} from "@ngxs/store";
-import {combineLatest, Observable} from "rxjs";
+import {combineLatest, Observable, of} from "rxjs";
 import {LocationService} from "../../../core/services/location.service";
 import {GeoPlace} from "../../../core/model/geo-place";
 import {calculateDistance} from "../../../core/services/geo-location.service";
-import {map} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {MainRoutes} from "../../../core/utils/routing";
 
 interface DistancedGeoPlaces extends GeoPlace {
@@ -26,13 +26,23 @@ export class MapComponent implements OnInit {
     infoWindow: MapInfoWindow;
     selection: GeoPlace = null;
 
-
     @Select(AppState.geoPosition)
     currentPosition$: Observable<GeoPosition>;
+
     positionWithFallback$: Observable<GeoPosition>;
     visiblePlaces$: Observable<DistancedGeoPlaces[]>;
+    allPlaces: DistancedGeoPlaces[];
 
-    markerOptions = {draggable: false};
+    markerOptions: google.maps.MarkerOptions = {
+        draggable: false,
+        icon: '/assets/marker/restaurant.png'
+    };
+
+    youMarker: google.maps.MarkerOptions = {
+        draggable: false,
+        icon: '/assets/marker/you.png'
+    };
+
     zoom = 15;
     showInRadiusKm = 3;
 
@@ -48,6 +58,7 @@ export class MapComponent implements OnInit {
         );
         this.visiblePlaces$ = combineLatest([this.positionWithFallback$, this.locationService.getGeoPlaces()]).pipe(
             map(([position, data]) => data.map(place => this.mapDistancedGeoPlace(place, position))),
+            tap(data => this.allPlaces = data),
             map(places => places.filter(place => place.distance < this.showInRadiusKm))
         );
     }
@@ -59,14 +70,24 @@ export class MapComponent implements OnInit {
         }
     }
 
+    /**
+     * On dragend event we calculate the new positions of every place and show only the locations
+     * which are in the map center.
+     * @param event
+     */
     dragend(event: GoogleMap) {
         const [lat, lng] = [event.getCenter().lat(), event.getCenter().lng()];
-        this.visiblePlaces$ = this.locationService.getGeoPlaces().pipe(
+
+        // fallback if allPlaces are empty
+        const allPlaces$ = this.allPlaces
+            ? of(this.allPlaces).pipe(tap(data => this.allPlaces = data))
+            : this.locationService.getGeoPlaces();
+
+        this.visiblePlaces$ = allPlaces$.pipe(
             map(data => data.map(place => this.mapDistancedGeoPlace(place, {lat, lng}))),
             map(places => places.filter(place => place.distance < this.showInRadiusKm))
         );
     }
-
 
     openInfoWindow(marker: MapMarker, geoPlace: GeoPlace) {
         this.selection = geoPlace;

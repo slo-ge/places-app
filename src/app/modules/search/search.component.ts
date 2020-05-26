@@ -7,13 +7,13 @@ import {ActivatedRoute} from "@angular/router";
     styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit{
-    view: 'list' | 'map' = 'list';
+    view: 'list' | 'map' = 'map';
 
     constructor(private route: ActivatedRoute,) {
     }
 
     ngOnInit(): void {
         // TODO:
-        this.view = this.route.snapshot.params['view'] ? this.route.snapshot.params['view'] : 'list';
+        // this.view = this.route.snapshot.params['view'] ? this.route.snapshot.params['view'] : 'list';
     }
 }

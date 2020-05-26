@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {combineLatest, EMPTY, Observable} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {finalize, map, switchMap, take, tap} from "rxjs/operators";
-import {ACFLocation} from "../../../core/model/wpObject";
+import {ACFLocation, GeoPosition} from "../../../core/model/wpObject";
 import {LocationService} from "../../../core/services/location.service";
-import {GeoLocationService} from "../../../core/services/geo-location.service";
 import {Select, Store} from "@ngxs/store";
-import {SelectGeoLoactionAction, SelectTagAction} from "../../../store/app.actions";
+import {SelectTagAction} from "../../../store/app.actions";
 import {TaxonomyService} from "../../../core/services/taxonomy.service";
 import {Tag} from "../../../core/model/tags";
 import {AppState} from "../../../store/app.state";
@@ -26,29 +25,28 @@ export enum SortType {
 export class ResultsComponent implements OnInit {
     @Select(AppState.selectedTag)
     tag$: Observable<Tag>;
+    @Select(AppState.geoPosition)
+    currentLocation$: Observable<GeoPosition>; // TODO:
 
     locations$: Observable<ACFLocation[]>;
-    geoLocation$: Promise<any>;
 
     params = {page: 1, geo_location: null};
     currentPage: 1;
     loading = true;
 
     constructor(private locationService: LocationService,
-                private geoLocation: GeoLocationService,
                 private route: ActivatedRoute,
                 private store: Store,
                 private tagService: TaxonomyService) {
     }
 
     ngOnInit() {
-        this.geoLocation$ = this.geoLocation.getPosition();
         this.initPaginated();
     }
 
     initPaginated() {
         const queryParams$ = this.route.queryParams;
-        this.locations$ = combineLatest([queryParams$, this.geoLocation$]).pipe(
+        this.locations$ = combineLatest([queryParams$, this.currentLocation$]).pipe(
             tap(() => this.loading = true),
             map(([params, location]) => this.buildPlacesResponseFrom(params, location)),
             switchMap(mappedParams => this.locationService.allLocations(mappedParams).pipe(
@@ -66,10 +64,6 @@ export class ResultsComponent implements OnInit {
     private buildPlacesResponseFrom(params: Params, geoLocation: { lat: number, lng: number }) {
         const sort = params.sort || SortType.DEFAULT;
         let httpParams: any = {page: params.page || 1};
-
-        if (!!geoLocation) {
-            this.store.dispatch(new SelectGeoLoactionAction(geoLocation));
-        }
 
         if (sort === SortType.GEO && geoLocation) {
             httpParams = {

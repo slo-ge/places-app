@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/goove
+    docker:
+      - image: circleci/node:12-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          command: |
+            npm install;
+            sudo apt-get update;
+            sudo apt-get install lftp;
+      - save_cache:
+          key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - "node_modules"
+      - run:
+          name: show directorry
+          command: ls -a
+      - run:
+          name: build app
+          command: xvfb-run -a npm run build
+      - run:
+          name: push to ftp
+          command: |
+            lftp ftp://${username}:${password}@${hostname}/goove/ -e "mirror -c -R -v --Remove-source-files --Remove-source-dirs dist/maskfun/.; bye";
+            lftp ftp://${username}:${password}@${hostname}/goove/ -e "put .htaccess; bye";
+
+

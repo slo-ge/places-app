@@ -13,7 +13,7 @@ jobs:
             npm install;
             sudo apt-get update;
             sudo apt-get install lftp;
-              echo 'ENV: ${ENV} Deployment dir: ${DEPLOY_DIR}';
+                echo "ENV: $ENV Deployment dir: $DEPLOY_DIR";
       - save_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
           paths:

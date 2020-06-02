@@ -13,6 +13,7 @@ jobs:
             npm install;
             sudo apt-get update;
             sudo apt-get install lftp;
+              echo 'ENV: ${ENV} Deployment dir: ${DEPLOY_DIR}';
       - save_cache:
           key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
@@ -27,6 +28,6 @@ jobs:
           name: push to ftp
           command: |
               lftp ftp://${username}:${password}@${hostname}/${DEPLOY_DIR}/ -e "mirror -c -R -v --Remove-source-files --Remove-source-dirs dist/goove/.; bye";
-              lftp ftp://${username}:${password}@${hostname}/${DEPLOY_DIR}/ -e "put .htaccess; bye";
+              lftp ftp://${username}:${password}@${hostname}/${DEPLOY_DIR}/ -e "put .deployment/${ENV}/.htaccess; bye";
 
 

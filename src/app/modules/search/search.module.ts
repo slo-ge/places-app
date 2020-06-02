@@ -7,6 +7,8 @@ import {ResultsComponent} from './results/results.component';
 import {SortBarComponent} from './sort-bar/sort-bar.component';
 import {PaginationComponent} from './pagination/pagination.component';
 import {SharedModule} from '../../shared/shared.module';
+import { MapComponent } from './map/map.component';
+import {GoogleMapsModule} from "@angular/google-maps";
 
 
 @NgModule({
@@ -15,10 +17,12 @@ import {SharedModule} from '../../shared/shared.module';
         ResultsComponent,
         SortBarComponent,
         PaginationComponent,
+        MapComponent,
     ],
     imports: [
         CommonModule,
         SearchRoutingModule,
+        GoogleMapsModule,
         SharedModule
     ]
 })

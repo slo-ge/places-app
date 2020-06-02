@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {SwUpdate, UpdateAvailableEvent} from "@angular/service-worker";
 import {Observable} from "rxjs";
 import {VERSION} from "version";
+import {SelectGeoLoactionAction} from "../../store/app.actions";
+import {Store} from "@ngxs/store";
+import {GeoLocationService} from "../../core/services/geo-location.service";
 
 @Component({
     selector: 'app-info',
@@ -13,7 +16,8 @@ export class InfoComponent implements OnInit {
     isSwUpdateAvailable = false;
     availableUpdate$: Observable<UpdateAvailableEvent>;
 
-    constructor(private swUpdate: SwUpdate) {}
+    constructor(private swUpdate: SwUpdate, private store: Store, private geoLocation: GeoLocationService) {
+    }
 
     ngOnInit() {
         this.isSwUpdateAvailable = this.swUpdate.isEnabled;
@@ -28,5 +32,13 @@ export class InfoComponent implements OnInit {
 
     get version(){
         return VERSION.build;
+    }
+
+    activateGeoLocation() {
+        this.geoLocation.getPosition().then(
+            data => {
+                this.store.dispatch(new SelectGeoLoactionAction(data))
+            }
+        );
     }
 }

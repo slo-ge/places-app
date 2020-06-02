@@ -11,7 +11,16 @@ export class DetailResolver implements Resolve<Observable<ACFLocation>> {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        return this.locationService.getPlace(route.paramMap.get('slug')).pipe(
+        let places$: Observable<ACFLocation[]> = null;
+
+        const slugOrId = route.paramMap.get('slug');
+        if (!isNaN(+slugOrId)) {
+            places$ = this.locationService.getPlaceByIds([+slugOrId]);
+        } else {
+            places$ = this.locationService.getPlace(slugOrId);
+        }
+
+        return places$.pipe(
             map(places => {
                 if(places?.length > 0) {
                     return places[0];
@@ -19,7 +28,6 @@ export class DetailResolver implements Resolve<Observable<ACFLocation>> {
                 this.router.navigate(["/404-not-found"]);
                 return EMPTY;
             }),
-
         );
     }
 }

@@ -4,7 +4,7 @@ import {ContentType, Page, Post} from "../model/wpObject";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 
-const BASE_URL = './assets/cached'
+export const ASSETS_CACHED_PATH = './assets/cached'
 
 // TODO: this service is WIP
 @Injectable({
@@ -25,13 +25,13 @@ export class CachedWPContentServiceService implements ContentService {
 
     getPosts(): Observable<Post[]> {
         return this.httpClient.get<Post[]>(
-            `${BASE_URL}/${ContentType.POST}.json`,
+            `${ASSETS_CACHED_PATH}/${ContentType.POST}.json`,
         );
     }
 
     private getBySlug<T>(type: ContentType, slug: string): Observable<T> {
         return this.httpClient.get<T>(
-            `${BASE_URL}/${type}/${slug}.json`,
+            `${ASSETS_CACHED_PATH}/${type}/${slug}.json`,
         );
     }
 }

@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 import {ACFLocation, ContentType} from "../model/wpObject";
 import {map, take, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
+import {GeoPlace} from "../model/geo-place";
+import {ASSETS_CACHED_PATH} from "./cached-wpcontent-service.service";
 
 
 export interface Params {
@@ -53,6 +55,18 @@ export class LocationService {
     public getPlaceByIds(ids: number[]) {
         const params = {...this.paramOptions, include: ids.join(',')};
         return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {params});
+    }
+
+    public getPlaceById(id: number): Observable<ACFLocation> {
+        return this.getPlaceByIds([id]).pipe(map(data =>data[0]));
+    }
+
+    /**
+     * get light weight geo places for map,
+     * the geo are pre fetched to assets
+     */
+    public getGeoPlaces(): Observable<GeoPlace[]> {
+        return this.httpClient.get<GeoPlace[]>(`${ASSETS_CACHED_PATH}/geo-places.json`);
     }
 
     public getInfo() {

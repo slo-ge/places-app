@@ -1,29 +1,9 @@
-<ng-container [ngTemplateOutlet]="loadings" *ngIf="loading"></ng-container>
+<app-selected-tag></app-selected-tag>
 
-<ng-container *ngIf="locations$ | async as locations">
-    <app-selected-tag></app-selected-tag>
-    <div class="places">
-        <ng-container *ngFor="let place of locations">
-            <app-place [place]="place"></app-place>
-        </ng-container>
-    </div>
-</ng-container>
-
-<ng-template #loadings>
-    <div *ngFor="let i of [1,1]" class="place-holder">
-        <div class="linear-background">
-            <div class="placeholder-logo"></div>
-            <div class="divider-line">
-                <div class="placeholder-geo"></div>
-                <div class="divider-text"></div>
-                <div class="divider-tags">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</ng-template>
+<div class="places">
+    <ng-container *ngFor="let place of locations$ | async">
+        <app-place [place]="place"></app-place>
+    </ng-container>
+</div>
 
 <app-pagination></app-pagination>

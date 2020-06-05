@@ -28,6 +28,13 @@
   }
 }
 
+:host-context(.x-large) {
+    svg {
+        width: 55px;
+        height: 55px;
+    }
+}
+
 :host-context(.turn){
   svg {
     transform: rotate(180deg);

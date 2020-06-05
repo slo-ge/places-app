@@ -1,7 +1,15 @@
+<div class="card tag-cloud">
+    <div class="heading">
+        <h2>YUMMY</h2>
+        <app-icon class="yummy large" name="yummy"></app-icon>
+    </div>
+    <app-tags view="cloud" [cloudSize]="{fontMin: 13, fontMax: 20}"></app-tags>
+</div>
 <ng-container *ngIf="homePage$ | async as homePage">
-  <div [innerHTML]="homePage.content.rendered"></div>
+
+    <div [innerHTML]="homePage.content.rendered"></div>
 
     <a class="blog-link" [routerLink]="['blog']">
-    <h1>Goove Blog</h1>
-  </a>
+        <h1>Blog</h1>
+    </a>
 </ng-container>

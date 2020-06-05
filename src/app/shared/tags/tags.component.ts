@@ -4,8 +4,27 @@ import {map, tap} from "rxjs/operators";
 import {Tag} from "../../core/model/tags";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
 
+export function shuffle(array: any[]) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 // TODO calculate
-const MAX_COUNTS = 30;
+const MAX_COUNTS = 20;
 const MIN_COUNTS = 1;
 
 // SIZES
@@ -23,27 +42,34 @@ export class TagsComponent implements OnInit {
     tags$: Observable<Tag[]>;
     @Input()
     view: 'hash' | 'cloud' | 'list' = 'hash';
+    @Input()
+    cloudSize: {
+        fontMin: number,
+        fontMax: number
+    } = {
+        fontMin: FONT_MIN,
+        fontMax: FONT_MAX
+    };
 
     constructor(private taxonomyService: TaxonomyService) {
     }
 
     ngOnInit(): void {
         // if no tags are set we are going to fetch them directly
-        if(!this.tags$) {
+        if (!this.tags$) {
             this.tags$ = this.taxonomyService.getTags();
         }
 
-        if (this.view === 'list') {
-            this.tags$ = this.tags$.pipe(
-                tap(tags => tags.sort((a, b) => b.count - a.count)),
-                map(data => data.slice(0, 20))
-            );
-        }
+        this.tags$ = this.tags$.pipe(
+            tap(tags => tags.sort((a, b) => b.count - a.count)),
+            map(data => data.slice(0, 20)),
+            tap(tags => this.view === 'cloud' ? shuffle(tags) : tags)
+        );
     }
 
     calculateSize(tag: Tag) {
         return tag.count == MIN_COUNTS
-            ? `${FONT_MIN}px`
-            : `${(tag.count / MAX_COUNTS) * (FONT_MAX - FONT_MIN) + FONT_MIN}px`;
+            ? `${this.cloudSize.fontMin}px`
+            : `${(tag.count / MAX_COUNTS) * (this.cloudSize.fontMax - this.cloudSize.fontMin) + this.cloudSize.fontMin}px`;
     }
 }

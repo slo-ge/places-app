@@ -1,3 +1,5 @@
+@import 'style';
+
 :host {
     padding: 10px;
     display: block;
@@ -13,4 +15,31 @@
 .blog-link {
     font-size: 30px;
     text-align: center;
+}
+
+.tag-cloud {
+    margin-top: 0;
+    display: block;
+}
+
+.heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    h2 {
+        font-size: 25px;
+        color: $grey-2;
+        margin: 0 10px 0 0;
+        padding: 0;
+    }
+}
+
+.yummy {
+    color: $grey-2;
+}
+
+
+app-tags {
+    display: block;
 }

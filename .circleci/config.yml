@@ -37,7 +37,7 @@ jobs:
             ENV: 'qa'
             DEPLOY_DIRECTORY: 'goove/'
         docker:
-            -   image: circleci/node:12-browsers
+            - image: circleci/node:12-browsers
         steps: *steps
 
 
@@ -47,7 +47,7 @@ jobs:
             ENV: 'prod'
             DEPLOY_DIRECTORY: 'locations/app/'
         docker:
-            -   image: circleci/node:12-browsers
+            - image: circleci/node:12-browsers
         steps: *steps
 
 

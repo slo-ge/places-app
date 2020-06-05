@@ -26,7 +26,7 @@ export class InfoComponent implements OnInit {
         window.location.reload();
     }
 
-    get version(){
-        return VERSION.build;
+    get buildDate() {
+        return VERSION.buildDate;
     }
 }

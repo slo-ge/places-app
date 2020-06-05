@@ -1,0 +1,117 @@
+{
+    "id": 401,
+    "date": "2019-11-20T21:53:50",
+    "date_gmt": "2019-11-20T20:53:50",
+    "guid": {
+        "rendered": "https://locations.phipluspi.com/?page_id=401"
+    },
+    "modified": "2019-12-10T18:22:59",
+    "modified_gmt": "2019-12-10T17:22:59",
+    "slug": "home",
+    "status": "publish",
+    "type": "page",
+    "link": "https://locations.phipluspi.com/home/",
+    "title": {
+        "rendered": "Welcome"
+    },
+    "content": {
+        "rendered": "<p><img src=\"https://locations.phipluspi.com/wp-content/uploads/2019/12/header.jpg\" alt=\"goove stage image\"></p>\n<div class=\"card\">\n<h2>GOOD AND LOVELY IN WIEN</h2>\n<p>Unser Team aus Feinspitzen, Nachtschw\u00e4rmern und Hobbykulturellen sucht und sammelt das Beste, das Wien zu bieten hat und bringt das Ganze h\u00fcbsch verpackt auf eure Smartphones. Egal ob du mal wieder richtig sch\u00f6n essen, dein kulturelles Ich wiederbeleben oder einfach nur einen Kaffee trinken gehen m\u00f6chtest &#8211; mit goove erlebst du das Beste, das dir Wien zu bieten hat und verliebst dich t\u00e4glich neu in deine Stadt!</p>\n</div>\n<p><a href=\"./search\"><br />\n<img src=\"https://locations.phipluspi.com/wp-content/uploads/2019/11/all-places.jpg\" alt=\"\" width=\"100%\"><br />\n</a></p>\n<div class=\"card\">\n<h2>FIND THE PERFECT LOCATIONS</h2>\n<p>Durch ein ansprechendes Design und sch\u00f6ne Fotografien findest du bestimmt dein neues Stammlokal noch heute. Wir bieten dir verschiedene Kategorien &#8211; aus denen du deine Favoriten w\u00e4hlen kannst. F\u00fchlst du dich von unserem gro\u00dfen Angebot \u00fcberfordert &#8211; kannst du auch die Suchfunktion verwenden (rechts oben im Bild). Des Weiteren hilft dir unsere Filterfunktion gewisse Sortierungsm\u00f6glichkeiten&nbsp;anzuwenden. Eine GPS-basierte Suche zeigt&nbsp;dir Locations in deiner nahen Umgebung.</p>\n</div>\n<div class=\"card\">\n<h2>SEE WHATS NEAR YOU &amp; SHARE WITH FRIENDS</h2>\n<p>Wir bieten dir auch eine interaktive Navigationsm\u00f6glichkeit an. Hierbei kannst du dich auf einer Stra\u00dfenkarte durch Wien navigieren. Jeder Marker (die schwarezen Dinger) zeigt eine bestimmte Location an. Nat\u00fcrlich gelangst du von einem &#8222;Marker&#8220; direkt zur Location. &nbsp;Hast du die coolste Location der Stadt gefunden, dann kannst du sie nat\u00fcrlich mit deinen Freunden teilen.</p>\n</div>\n<div class=\"card\">\n<h2>Kooperation?</h2>\n<div class=\"wp-block-button is-style-outline\"><a class=\"wp-block-button__link\" href=\"mailto:office@goove.at\">office@goove.at</a></div>\n<p>Du hast ein Restaurant, eine Bar oder ein Cafe, das zu uns passen k\u00f6nnte und willst in unserer App gelistet werden. Kein Problem, folge einfach dem Link unterhalb</p>\n</div>\n",
+        "protected": false
+    },
+    "excerpt": {
+        "rendered": "<p>GOOD AND LOVELY IN WIEN Unser Team aus Feinspitzen, Nachtschw\u00e4rmern und Hobbykulturellen sucht und sammelt das Beste, das Wien zu bieten hat und bringt das Ganze h\u00fcbsch verpackt auf eure Smartphones. Egal ob du mal wieder richtig sch\u00f6n essen, dein kulturelles Ich wiederbeleben oder einfach nur einen Kaffee trinken gehen m\u00f6chtest &#8211; mit goove erlebst [&hellip;]</p>\n",
+        "protected": false
+    },
+    "author": 1,
+    "featured_media": 0,
+    "parent": 0,
+    "menu_order": 0,
+    "comment_status": "closed",
+    "ping_status": "closed",
+    "template": "",
+    "meta": [],
+    "acf": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/pages/401"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/pages"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/types/page"
+            }
+        ],
+        "author": [
+            {
+                "embeddable": true,
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/users/1"
+            }
+        ],
+        "replies": [
+            {
+                "embeddable": true,
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/comments?post=401"
+            }
+        ],
+        "version-history": [
+            {
+                "count": 15,
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/pages/401/revisions"
+            }
+        ],
+        "predecessor-version": [
+            {
+                "id": 438,
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/pages/401/revisions/438"
+            }
+        ],
+        "wp:attachment": [
+            {
+                "href": "https://locations.phipluspi.com/wp-json/wp/v2/media?parent=401"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    },
+    "_embedded": {
+        "author": [
+            {
+                "id": 1,
+                "name": "philipp",
+                "url": "",
+                "description": "",
+                "link": "https://locations.phipluspi.com/author/philipp/",
+                "slug": "philipp",
+                "avatar_urls": {
+                    "24": "https://secure.gravatar.com/avatar/15fbc2cdcca7d31c4033389f01f4b128?s=24&d=mm&r=g",
+                    "48": "https://secure.gravatar.com/avatar/15fbc2cdcca7d31c4033389f01f4b128?s=48&d=mm&r=g",
+                    "96": "https://secure.gravatar.com/avatar/15fbc2cdcca7d31c4033389f01f4b128?s=96&d=mm&r=g"
+                },
+                "acf": [],
+                "_links": {
+                    "self": [
+                        {
+                            "href": "https://locations.phipluspi.com/wp-json/wp/v2/users/1"
+                        }
+                    ],
+                    "collection": [
+                        {
+                            "href": "https://locations.phipluspi.com/wp-json/wp/v2/users"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

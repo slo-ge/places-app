@@ -1,7 +1,7 @@
 fs = require('fs');
-versions = require('./versions.js');
-new_version = version.build+1;
-versionString = JSON.stringify({build: new_version});
+
+new_version = new Date();
+versionString = JSON.stringify({buildDate: new_version});
 
 // write js file
 fs.writeFile('scripts/versions.js',

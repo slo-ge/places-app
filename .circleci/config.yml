@@ -1,5 +1,6 @@
 deployment-steps: &steps
       - checkout
+      - setup_remote_docker
       - restore_cache:
             key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
@@ -7,10 +8,8 @@ deployment-steps: &steps
             command: echo ${CIRCLE_BRANCH}
       - run:
             command: |
-                echo "ENV: $ENV Deployment dir: $DEPLOY_DIR"
                 npm install
                 sudo apt-get update
-                sudo apt-get install lftp
       - save_cache:
             key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
             paths:
@@ -20,14 +19,13 @@ deployment-steps: &steps
             command: ls -a
       - run:
               name: build app
-              command: xvfb-run -a npm run build
+              command: xvfb-run -a npm run build:ssr
       - run:
-            name: Push to FTP QA
+            name: BUILD DOCKER
             command: |
-                echo "deploying QA, to: ${DEPLOY_DIRECTORY}"
-                lftp ftp://${username}:${password}@${hostname}/${DEPLOY_DIRECTORY} -e "mirror -c -R -v --Remove-source-files --Remove-source-dirs dist/goove/.; bye";
-                lftp ftp://${username}:${password}@${hostname}/${DEPLOY_DIRECTORY} -e "put .deployment/${ENV}/.htaccess; bye";
-
+                docker build -t sloge/goove:$CIRCLE_BUILD_NUM .
+                echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+                docker push sloge/goove:$CIRCLE_BUILD_NUM
 
 
 jobs:
@@ -35,7 +33,6 @@ jobs:
         working_directory: ~/goove
         environment:
             ENV: 'qa'
-            DEPLOY_DIRECTORY: 'goove/'
         docker:
             - image: circleci/node:12-browsers
         steps: *steps
@@ -45,7 +42,6 @@ jobs:
         working_directory: ~/goove
         environment:
             ENV: 'prod'
-            DEPLOY_DIRECTORY: 'locations/app/'
         docker:
             - image: circleci/node:12-browsers
         steps: *steps

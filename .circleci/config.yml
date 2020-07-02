@@ -1,5 +1,8 @@
 deployment-steps: &steps
       - checkout
+      - attach_workspace:
+            at: /tmp/workspace
+
       - setup_remote_docker
       - restore_cache:
             key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
@@ -19,7 +22,15 @@ deployment-steps: &steps
             command: ls -a
       - run:
               name: build app
-              command: xvfb-run -a npm run build:ssr
+              command: |
+                  xvfb-run -a npm run increase:version
+                  xvfb-run -a npm run build:ssr
+      -   run:
+              name: copy important files
+              command: |
+                  cp dist/goove/browser/assets/google05fe7ee3897b21a6.html dist/goove/browser
+                  cp /tmp/workspace/sitemap.xml dist/goove/browser
+
       - run:
             name: BUILD DOCKER
             command: |
@@ -29,6 +40,25 @@ deployment-steps: &steps
 
 
 jobs:
+    build-sitemap:
+        working_directory: ~/goove
+        docker:
+            -   image: circleci/python:3.7.8
+        steps:
+            - checkout
+            - run:
+                  name: building sitemap
+                  command: |
+                      mkdir -p /tmp/workspace
+                      pip install requests
+                      python scripts/generate.py
+                      cp sitemap.xml /tmp/workspace/
+                      ls /tmp/workspace/
+
+            - persist_to_workspace:
+                  root: /tmp/workspace
+                  paths:
+                      - sitemap.xml
     build-qa:
         working_directory: ~/goove
         environment:
@@ -51,11 +81,16 @@ workflows:
     version: 2
     build:
         jobs:
+            - build-sitemap
             - build-qa:
+                requires:
+                    - build-sitemap
                 filters:
                     branches:
                         ignore: master
             - build-prod:
+                requires:
+                    - build-sitemap
                 filters:
                     branches:
                         only: master

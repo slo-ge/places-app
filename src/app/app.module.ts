@@ -13,6 +13,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ProfileState} from "./modules/profile/store/profile.state";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
+import {TransferHttpCacheModule} from '@nguniversal/common';
 
 
 @NgModule({
@@ -21,13 +22,14 @@ import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
         HeaderComponent
     ],
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        TransferHttpCacheModule,
         AppRoutingModule,
         HttpClientModule,
         NgxsModule.forRoot([
             AppState,
             ProfileState
-        ]),
+        ], {developmentMode: !environment.production}),
         NgxsStoragePluginModule.forRoot({
             key: ProfileState
         }),

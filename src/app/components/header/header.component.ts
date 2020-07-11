@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoadingService} from "../../core/services/loading.service";
 import {Observable} from "rxjs";
 
@@ -18,7 +18,4 @@ export class HeaderComponent implements OnInit{
     ngOnInit(): void {
         this.isLoading$ = this.loading.getLoadingState();
     }
-
-
-
 }

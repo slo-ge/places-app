@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
-import {WpObject} from "../model/wpObject";
+import {ACFLocation, WpObject} from "../model/wpObject";
 import {environment} from "../../../environments/environment";
 import {getFeaturedImage} from "../utils/media";
 import {decodeHTMLEntities} from "../utils/html";
@@ -20,13 +20,24 @@ export class SeoService {
                 private title: Title) {
     }
 
-    public setMetaFrom(wpObject: WpObject) {
-        const meta: MetaData = {
+    private getDefaultMeta(wpObject: WpObject): MetaData {
+        return {
             title: `${wpObject.title.rendered} | ${environment.seoTitlePostFix}`,
             imageUrl: getFeaturedImage(wpObject._embedded)
         };
+    }
 
-        this.setMeta(meta);
+    public setMetaFrom(wpObject: WpObject) {
+        this.setMeta(this.getDefaultMeta(wpObject));
+    }
+
+    public setMetaFromLocation(acfLocation: ACFLocation) {
+        const meta = this.getDefaultMeta(acfLocation);
+
+        let description = acfLocation.acf.description[0].text;
+        description = description.replace(/<\/?[^>]+(>|$)/g, "");
+        meta.description = `${description.slice(0, 120)}...`;
+        this.setMeta(meta)
     }
 
     public setDefaults() {

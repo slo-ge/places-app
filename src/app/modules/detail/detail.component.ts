@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {map, switchMap, tap} from "rxjs/operators";
+import {tap} from "rxjs/operators";
 import {LocationService} from "../../core/services/location.service";
 import {ACFLocation} from "../../core/model/wpObject";
 import {SeoService} from "../../core/services/seo.service";
@@ -25,8 +25,10 @@ export class DetailComponent implements OnInit {
     ngOnInit() {
         // from resolver
         this.location$ = of(this.route.snapshot.data['place']).pipe(
-            tap((data: ACFLocation) => this.seoService.setMetaFrom(data)),
-            tap((data: ACFLocation) => this.imgUrl = getFeaturedImage(data._embedded))
+            tap(data => {
+                this.seoService.setMetaFromLocation(data);
+                this.imgUrl = getFeaturedImage(data._embedded);
+            })
         );
     }
 }

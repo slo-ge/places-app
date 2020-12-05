@@ -2,9 +2,8 @@
     <ng-container *ngSwitchCase="'list'">
         <div class="list">
             <div *ngFor="let tag of tags$ | async"
-                 [routerLink]="['/search']"
-                 [queryParams]="{tags: tag.id, page: null}"
-                 queryParamsHandling="merge">{{tag.name}} <span class="count">({{tag.count}})</span></div>
+                 (click)="queryParamsHandler.addTag(tag.id)">{{tag.name}} <span class="count">({{tag.count}})</span>
+            </div>
         </div>
     </ng-container>
 
@@ -12,9 +11,7 @@
         <div class="hash">
             <div *ngFor="let tag of tags$ | async"
                  [style.fontSize]="view === 'cloud' ? calculateSize(tag) : null"
-                 [routerLink]="['/search']"
-                 [queryParams]="{tags: tag.id, page: null}"
-                 queryParamsHandling="merge">#{{tag.name}}</div>
+                 (click)="queryParamsHandler.addTag(tag.id)">#{{tag.name}}</div>
         </div>
     </ng-container>
 </ng-container>

@@ -3,6 +3,7 @@ import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
 import {Tag} from "../../core/model/tags";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
+import {QueryParamsHandlerService} from "../../core/services/query-params-handler.service";
 
 export function shuffle(array: any[]) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -51,7 +52,8 @@ export class TagsComponent implements OnInit {
         fontMax: FONT_MAX
     };
 
-    constructor(private taxonomyService: TaxonomyService) {
+    constructor(private taxonomyService: TaxonomyService,
+                public queryParamsHandler: QueryParamsHandlerService) {
     }
 
     ngOnInit(): void {

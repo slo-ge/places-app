@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {combineLatest, EMPTY, Observable} from "rxjs";
+import {combineLatest, Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {finalize, map, switchMap, take, tap} from "rxjs/operators";
 import {ACFLocation} from "../../../core/model/wpObject";
 import {LocationService} from "../../../core/services/location.service";
 import {GeoLocationService} from "../../../core/services/geo-location.service";
 import {Select, Store} from "@ngxs/store";
-import {SelectGeoLoactionAction, SelectTagAction} from "../../../store/app.actions";
+import {SelectFullTextQuery, SelectGeoLoactionAction, SelectTagAction} from "../../../store/app.actions";
 import {TaxonomyService} from "../../../core/services/taxonomy.service";
 import {Tag} from "../../../core/model/tags";
 import {AppState} from "../../../store/app.state";
@@ -79,8 +79,8 @@ export class ResultsComponent implements OnInit {
         }
 
         // TODO: improve
+        // TODO: maybe we can handle this in query params handler
         if (params.tags) {
-
             // TODO: make a nicer dispatch service
             this.tagService.getTagFrom(params.tags)
                 .pipe(take(1))
@@ -92,6 +92,20 @@ export class ResultsComponent implements OnInit {
             };
         } else {
             this.store.dispatch(new SelectTagAction(null));
+        }
+
+        // map fullTextQuery query param to wordpress search param
+        // TODO: move this to a different search service
+        // TODO: may we can handle this in query params handler
+        if (params.fullTextQuery) {
+            // TODO: this should be also handled more nice
+            this.store.dispatch(new SelectFullTextQuery(params.fullTextQuery));
+            httpParams = {
+                ...httpParams,
+                search: params.fullTextQuery
+            }
+        } else {
+            this.store.dispatch(new SelectFullTextQuery(null));
         }
 
         return httpParams;

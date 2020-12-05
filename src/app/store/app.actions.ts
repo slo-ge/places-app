@@ -11,3 +11,10 @@ export class SelectTagAction {
   static readonly  type = '[Tag] Select new Tag'
   constructor(public tag: Tag) {}
 }
+
+export class SelectFullTextQuery {
+    static readonly type = '[FullTextQuery] Select FullText query'
+
+    constructor(public queryFullText: string) {
+    }
+}

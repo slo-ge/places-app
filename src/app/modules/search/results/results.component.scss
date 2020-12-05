@@ -1,26 +1,35 @@
 @import 'style';
 
 :host {
-  display: block;
+    display: block;
 }
 
 app-place {
-  display: block;
-  margin-bottom: 30px;
+    display: block;
+    margin-bottom: 30px;
 }
 
 .places {
-  @media screen and (min-width: 768px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 3%;
-  }
+    @media screen and (min-width: 768px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 3%;
+    }
 
-  @media screen and (min-width: 1024px) {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+    @media screen and (min-width: 1024px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 app-pagination {
-  display: block;
+    display: block;
+}
+
+.selected-filters {
+    display: flex;
+    justify-content: center;
+
+    > * {
+        margin: 0 5px;
+    }
 }

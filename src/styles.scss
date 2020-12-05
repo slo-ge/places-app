@@ -45,3 +45,13 @@ h1, h2, h3, h4, h5, h6 {
 .popover-backdrop {
     background-color: rgba(0, 0, 0, 0.7);
 }
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid $primary;
+    border-radius: $common-border-radius;
+    box-sizing: border-box;
+    font-size: 18px;
+}

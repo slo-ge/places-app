@@ -1,0 +1,18 @@
+@import 'style';
+
+.selection {
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+    margin: 22px auto;
+}
+
+.tag {
+    background: $primary;
+    border: 2px solid $primary;
+    border-radius: $common-border-radius;
+    padding: 4px 16px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}

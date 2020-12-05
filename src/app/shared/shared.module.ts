@@ -18,6 +18,9 @@ import {ToastrComponent} from "./popover/toastr/toastr.component";
 import {OverlayModule} from "@angular/cdk/overlay";
 import {SimpleSettingsModalComponent} from "./popover/simple-settings-modal/simple-settings-modal.component";
 import {MakeFavouriteToastrComponent} from './popover/toastr/make-favourite-toastr/make-favourite-toastr.component';
+import {FullTextSearchComponent} from './full-text-search/full-text-search.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import {FullTextSearchBubbleComponent} from './full-text-search-bubble/full-text-search-bubble.component';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import {MakeFavouriteToastrComponent} from './popover/toastr/make-favourite-toas
         CommonModule,
         RouterModule,
         ShareModule,
-        OverlayModule
+        OverlayModule,
+        ReactiveFormsModule
     ],
     declarations: [
         IconComponent,
@@ -42,7 +46,9 @@ import {MakeFavouriteToastrComponent} from './popover/toastr/make-favourite-toas
         DefaultPopoverComponent,
         SimpleSettingsModalComponent,
         ToastrComponent,
-        MakeFavouriteToastrComponent
+        MakeFavouriteToastrComponent,
+        FullTextSearchComponent,
+        FullTextSearchBubbleComponent
     ],
     exports: [
         IconComponent,
@@ -53,7 +59,9 @@ import {MakeFavouriteToastrComponent} from './popover/toastr/make-favourite-toas
         LoadingComponent,
         SocialShareComponent,
         FavouriteToggleComponent,
-        SelectedTagComponent
+        SelectedTagComponent,
+        FullTextSearchComponent,
+        FullTextSearchBubbleComponent
     ],
     entryComponents: [
         PopoverComponent,

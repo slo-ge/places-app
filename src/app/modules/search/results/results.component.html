@@ -1,7 +1,10 @@
 <ng-container [ngTemplateOutlet]="loadings" *ngIf="loading"></ng-container>
 
 <ng-container *ngIf="locations$ | async as locations">
-    <app-selected-tag></app-selected-tag>
+    <div class="selected-filters">
+        <app-selected-tag></app-selected-tag>
+        <app-full-text-search-bubble></app-full-text-search-bubble>
+    </div>
     <div class="places">
         <ng-container *ngFor="let place of locations">
             <app-place [place]="place"></app-place>

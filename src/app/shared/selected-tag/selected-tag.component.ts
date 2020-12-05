@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {Tag} from "../../core/model/tags";
-import {Router} from "@angular/router";
 import {Select} from "@ngxs/store";
 import {AppState} from "../../store/app.state";
+import {QueryParamsHandlerService} from "../../core/services/query-params-handler.service";
 
 @Component({
     selector: 'app-selected-tag',
@@ -14,16 +14,6 @@ export class SelectedTagComponent {
     @Select(AppState.selectedTag)
     tag$: Observable<Tag>;
 
-    constructor(private router: Router) {
+    constructor(public queryParamsHandler: QueryParamsHandlerService) {
     }
-
-    removeTag() {
-        this.router.navigate([], {
-            queryParams: {
-                tags: null
-            },
-            queryParamsHandling: 'merge'
-        });
-    }
-
 }

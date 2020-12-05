@@ -49,7 +49,8 @@ const routes: Routes = [
     anchorScrolling: 'enabled',
     scrollOffset: [0, 64] // [x, y]
     ,
-    initialNavigation: 'enabled'
+        initialNavigation: 'enabled',
+        relativeLinkResolution: 'legacy'
 })],
     exports: [RouterModule]
 })

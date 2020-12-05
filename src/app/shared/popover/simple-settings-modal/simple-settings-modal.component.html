@@ -1,6 +1,6 @@
 <app-default-popover>
     <div>
-        <div class="title">Sorting <span class="sort-name"></span></div>
+        <h3 class="title">Sorting <span class="sort-name"></span></h3>
         <div class="actions" *ngIf="activeSort$ | async as activeSort">
             <a class="latest"
                [class.active]="activeSort === Sort.DEFAULT"

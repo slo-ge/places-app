@@ -2,14 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {combineLatest, Observable} from "rxjs";
 import {ActivatedRoute, Params} from "@angular/router";
 import {finalize, map, switchMap, take, tap} from "rxjs/operators";
-import {ACFLocation} from "../../../core/model/wpObject";
-import {LocationService} from "../../../core/services/location.service";
-import {GeoLocationService} from "../../../core/services/geo-location.service";
+import {ACFLocation} from "@places/core/model/wpObject";
+import {LocationService} from "@places/core/services/location.service";
+import {GeoLocationService} from "@places/core/services/geo-location.service";
 import {Select, Store} from "@ngxs/store";
-import {SelectFullTextQuery, SelectGeoLoactionAction, SelectTagAction} from "../../../store/app.actions";
-import {TaxonomyService} from "../../../core/services/taxonomy.service";
-import {Tag} from "../../../core/model/tags";
-import {AppState} from "../../../store/app.state";
+import {SelectFullTextQuery, SelectGeoLoactionAction, SelectTagAction} from "@places/store/app.actions";
+import {TaxonomyService} from "@places/core/services/taxonomy.service";
+import {Tag} from "@places/core/model/tags";
+import {AppState} from "@places/store/app.state";
 
 
 export enum SortType {
@@ -90,8 +90,6 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 tags: params.tags
             };
-        } else {
-            this.store.dispatch(new SelectTagAction(null));
         }
 
         // map fullTextQuery query param to wordpress search param
@@ -104,10 +102,7 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 search: params.fullTextQuery
             }
-        } else {
-            this.store.dispatch(new SelectFullTextQuery(null));
         }
-
         return httpParams;
     }
 }

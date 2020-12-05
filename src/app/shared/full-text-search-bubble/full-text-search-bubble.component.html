@@ -1,3 +1,3 @@
 <div class="selection" *ngIf="queryString$ | async as text">
-    <div class="tag" (click)="queryParamsHandler.removeFullTextQuery()">Search: {{text}}</div>
+    <div class="tag" (click)="queryParamsHandler.removeFullTextQuery(); removeFromState()">Search: {{text}}</div>
 </div>

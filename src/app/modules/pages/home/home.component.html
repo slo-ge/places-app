@@ -1,9 +1,9 @@
-<h2>Insert CMS URL:</h2>
+<h2>Insert API URL</h2>
 <div>
   <form [formGroup]="baseURLForm">
-   <input formControlName="url"  type="text">
+   <input name="apiUrl" formControlName="url"  type="text">
   </form>
 </div>
 <div>
-  <button [routerLink]="['/result-list']" [queryParams]="{apiUrl: baseURLForm.get('url').value}">check</button>
+  <button [routerLink]="['/result-list']" [queryParams]="{adapter: 'wordpress', apiUrl: baseURLForm.get('url')?.value}">check</button>
 </div>

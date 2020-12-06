@@ -1,1 +1,1 @@
-<app-canvas [canvasSettings]="setting$ | async"></app-canvas>
+<app-canvas *ngIf="setting$ | async as setting" [canvasSettings]="setting"></app-canvas>

@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@511&display=swap');
+@import 'style';
+
 body {
   font-family: 'Space Grotesk', sans-serif;
 }
@@ -12,9 +14,12 @@ input[type=text] {
 }
 
 button {
-  height: 30px;
   width: 200px;
   border-radius: 6px;
-  border: 1px solid black;
+  border: 1px solid #434c61;
   font-size: 20px;
+  background-color: $primary-blue;
+  color: white;
+  height: 40px;
+  cursor: pointer;
 }

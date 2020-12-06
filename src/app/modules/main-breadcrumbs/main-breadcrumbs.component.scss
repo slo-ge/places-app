@@ -1,7 +1,9 @@
+@import 'style';
+
 $base: 25px;
 
 $background-color: #f8faff;
-$active-color: #6683eb;
+$active-color: $primary-blue;
 $font-color: #747a8e;
 
 :host {

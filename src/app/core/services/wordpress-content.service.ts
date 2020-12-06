@@ -5,8 +5,7 @@ import {map} from "rxjs/operators";
 import {ContentService} from "../model/content.service";
 import {ContentType, Page, Post, WpObject} from "@app/core/model/wpObject";
 
-//export const BASE_URL = 'https://www.les-nouveaux-riches.com/wp-json/wp/v2';
-export const BASE_URL = '/assets/posts';
+
 
 @Injectable({
     providedIn: 'root'
@@ -20,21 +19,21 @@ export class WordpressContentService implements ContentService {
     constructor(private httpClient: HttpClient) {
     }
 
-    public getPageBy(slug: string): Observable<WpObject> {
-        return this.getBySlug<Page>(slug, ContentType.PAGE);
+    public getPageBy(slug: string, url: string): Observable<WpObject> {
+        return this.getBySlug<Page>(slug, ContentType.PAGE, url);
     }
 
-    public getPostBy(slug: string): Observable<Post> {
-        return this.getBySlug<Post>(slug, ContentType.POST);
+    public getPostBy(slug: string, url: string): Observable<Post> {
+        return this.getBySlug<Post>(slug, ContentType.POST, url);
     }
 
-    public getPosts(): Observable<Post[]> {
-        return this.httpClient.get<Post[]>(`${BASE_URL}/${ContentType.POST}`, {params: this.params});
+    public getPosts(url: string): Observable<Post[]> {
+        return this.httpClient.get<Post[]>(`${url}/${ContentType.POST}`, {params: this.params});
     }
 
-    private getBySlug<T>(slug: string, contentType: ContentType): Observable<T> {
+    private getBySlug<T>(slug: string, contentType: ContentType, url: string): Observable<T> {
         return this.httpClient.get<T[]>(
-            `${BASE_URL}/${contentType}`,
+            `${url}/${contentType}`,
             {params: {...this.params, slug: slug}}
         ).pipe(map(data => data[0]));
     }

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="breadcrumb">
+    <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+			<span class="breadcrumb__inner">
+				<span class="breadcrumb__title">URL</span>
+			</span>
+    </a>
+    <a [routerLink]="['/result-list']" routerLinkActive="active">
+			<span class="breadcrumb__inner">
+				<span class="breadcrumb__title">Select Entry</span>
+			</span>
+    </a>
+    <a [routerLink]="['/editor']" routerLinkActive="active">
+			<span class="breadcrumb__inner">
+				<span class="breadcrumb__title">Editor</span>
+			</span>
+    </a>
+  </div>
+</div>

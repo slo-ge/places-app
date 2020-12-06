@@ -1,3 +1,9 @@
-<label>Check Url</label>
-<input type="text">
-<button [routerLink]="['/result-list']">check</button>
+<h2>Insert CMS URL:</h2>
+<div>
+  <form [formGroup]="baseURLForm">
+   <input formControlName="url"  type="text">
+  </form>
+</div>
+<div>
+  <button [routerLink]="['/result-list']" [queryParams]="{apiUrl: baseURLForm.get('url').value}">check</button>
+</div>

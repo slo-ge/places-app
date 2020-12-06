@@ -36,16 +36,18 @@ export class CanvasComponent implements OnChanges {
 
   addTexts(img1: any) {
     const textOffset = img1?.lineCoords?.bl?.y + 30 || 0;
-    const text = new fabric.Textbox(
+    const padding = 10;
+    let text = new fabric.Textbox(
       this.canvasSettings.title,
-      {fontSize: 40, top: textOffset, width: this.canvas.width}
+      {fontSize: 40, left: padding, top: textOffset, width: this.canvas.width - 2*padding}
     ) as any;
-
+    text = text.centerH();
     this.canvas.add(text);
     this.canvas.add(new fabric.Textbox(this.canvasSettings.description, {
       fontSize: 18,
-      width: this.canvas.width,
-      top: text.lineCoords.bl.y + 30
+      left: padding,
+      width: this.canvas.width - 2*padding,
+      top: text.lineCoords.bl.y + 30,
     }));
   }
 

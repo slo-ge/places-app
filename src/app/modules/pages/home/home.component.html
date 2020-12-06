@@ -1,9 +1,19 @@
-<h2>Insert API URL</h2>
+<h2>Link to website</h2>
 <div>
   <form [formGroup]="baseURLForm">
-   <input name="apiUrl" formControlName="url"  type="text">
+    <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url" type="text">
   </form>
 </div>
 <div>
-  <button [routerLink]="['/result-list']" [queryParams]="{adapter: 'wordpress', apiUrl: baseURLForm.get('url')?.value}">check</button>
+</div>
+
+<div *ngIf="adapter">
+  <div class="found-adapter">Detected: {{adapter}}</div>
+  <button [routerLink]="['/result-list']" [queryParams]="{adapter: 'wordpress', apiUrl: baseURLForm.get('url')?.value}">
+    Open
+  </button>
+</div>
+
+<div *ngIf="adapter == false">
+  <div>There was a problem detection any framework / API</div>
 </div>

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
+import {AdapterService} from "@app/core/services/adapter.service";
+import {ApiAdapter} from "@app/core/model/content.service";
 
 @Component({
   selector: 'app-home',
@@ -11,9 +13,18 @@ export class HomeComponent implements OnInit {
     url: new FormControl(''),
   });
 
-  constructor() { }
+  adapter: ApiAdapter | null | false = null;
 
-  ngOnInit(): void {
+  constructor(private adapterService: AdapterService) {
   }
 
+  ngOnInit(): void {
+    this.baseURLForm.get('url')?.valueChanges.subscribe(() => {
+      this.check();
+    })
+  }
+
+  async check() {
+    this.adapter = await this.adapterService.findAdapter(this.baseURLForm.get('url')?.value).catch(() => false);
+  }
 }

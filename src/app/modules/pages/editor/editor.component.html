@@ -1,1 +1,2 @@
-<app-canvas *ngIf="setting$ | async as setting" [canvasSettings]="setting"></app-canvas>
+<app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+<app-canvas *ngIf="setting$ | async as setting" [canvasSettings]="setting" [layoutSetting]="this.layout"></app-canvas>

@@ -1,0 +1,6 @@
+<form [formGroup]="layoutSelectForm" (ngSubmit)="onSubmit()">
+  <select formControlName="layoutName" (change)="changeLayoutSetting($event)">
+    <option value="">Choose layout</option>
+    <option *ngFor="let setting of settings$ | async" [ngValue]="setting">{{setting.title}}</option>
+  </select>
+</form>

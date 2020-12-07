@@ -3,6 +3,7 @@ import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapter.service";
+import {LayoutSetting} from "@app/core/model/layout-setting";
 
 
 @Component({
@@ -13,6 +14,7 @@ import {AdapterService} from "@app/core/services/adapter.service";
 export class EditorComponent implements OnInit {
   canvas: any;
   setting$: Observable<SimplePreviewCanvasSetting> = EMPTY;
+  layout: LayoutSetting = {} as any;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute) {
@@ -25,4 +27,7 @@ export class EditorComponent implements OnInit {
     this.setting$ = contentService.getEditorPreviewSettings(data as string);
   }
 
+  setLayout($event: LayoutSetting) {
+    this.layout = $event;
+  }
 }

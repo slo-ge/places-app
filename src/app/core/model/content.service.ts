@@ -19,7 +19,6 @@ export interface EditorPreviewInfoService {
   getEditorPreviewSettings(identifier: any): Observable<SimplePreviewCanvasSetting>;
 }
 
-
 export enum ApiAdapter {
   WORDPRESS = 'wordpress',
   METADATA = 'meta_data'

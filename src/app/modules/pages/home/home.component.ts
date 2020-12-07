@@ -9,11 +9,17 @@ import {ApiAdapter} from "@app/core/model/content.service";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  adapterInfoText = {
+    [ApiAdapter.WORDPRESS]: 'Select Content from Wordpress',
+    [ApiAdapter.METADATA]: 'Found meta data of selected Website'
+  };
+
   baseURLForm = new FormGroup({
     url: new FormControl(''),
   });
 
   adapter: ApiAdapter | null | false = null;
+  ApiAdapter = ApiAdapter;
 
   constructor(private adapterService: AdapterService) {
   }
@@ -27,4 +33,6 @@ export class HomeComponent implements OnInit {
   async check() {
     this.adapter = await this.adapterService.findAdapter(this.baseURLForm.get('url')?.value).catch(() => false);
   }
+
+
 }

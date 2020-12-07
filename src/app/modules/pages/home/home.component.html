@@ -1,4 +1,4 @@
-<h2>Link to website</h2>
+<h2>Insert Link</h2>
 <div>
   <form [formGroup]="baseURLForm">
     <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url" type="text">
@@ -8,12 +8,17 @@
 </div>
 
 <div *ngIf="adapter">
-  <div class="found-adapter">Detected: {{adapter}}</div>
-  <button [routerLink]="['/result-list']" [queryParams]="{adapter: 'wordpress', apiUrl: baseURLForm.get('url')?.value}">
-    Open
+  <div class="found-adapter">{{adapterInfoText[adapter]}}</div>
+  <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']" [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
+    Select Post
+  </button>
+
+  <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']" [queryParams]="
+  {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
+    Open Editor
   </button>
 </div>
 
 <div *ngIf="adapter == false">
-  <div>There was a problem detection any framework / API</div>
+  <div>There was a problem detection any framework or meta data, may the selected link is incorrect</div>
 </div>

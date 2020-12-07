@@ -1,14 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {WordpressContentService} from "@app/core/services/wordpress-content.service";
-import {map} from "rxjs/operators";
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
-import {WpObject} from "@app/core/model/wpObject";
-import {EMPTY, Observable, of} from "rxjs";
+import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";
 import {AdapterService} from "@app/core/services/adapter.service";
-
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
 
 
 @Component({
@@ -28,23 +22,7 @@ export class EditorComponent implements OnInit {
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
     // TODO: guess data
-    this.setting$ = contentService.getPosts().pipe(
-      map(items => items.filter(item => String(item.id) == data)[0]),
-      map(this.mapWordpressObjectToSimpleSetting)
-    );
+    this.setting$ = contentService.getEditorPreviewSettings(data as string);
   }
 
-
-  mapWordpressObjectToSimpleSetting(wordpressObject: WpObject): SimplePreviewCanvasSetting {
-    const imgUrl = wordpressObject._embedded["wp:featuredmedia"]?.[0]?.source_url;
-    const proxiedURL = imgUrl ? `${PROXY_URL}/${imgUrl}` : null;
-    const description = sanitizeHtml(decodeHTMLEntities(wordpressObject.excerpt.rendered));
-    const title = sanitizeHtml(decodeHTMLEntities(wordpressObject.title.rendered));
-
-    return {
-      title,
-      description,
-      image: proxiedURL
-    }
-  }
 }

@@ -5,29 +5,30 @@ import {LayoutSetting} from "@app/core/model/layout-setting";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
 
 
-
 const DEFAULT_SETTING: LayoutSetting = {
   height: 1600,
   width: 900,
-  fontHeadingSizePixel: 40,
-  fontTextSizePixel: 20
+  fontHeadingSizePixel: 80,
+  fontTextSizePixel: 40
 };
 
 function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
-  return {
+  const config = {
     ...DEFAULT_SETTING,
     ...layout,
-    fontHeadingSizePixel: layout.fontHeadingSizePixel || defaultLayout.fontTextSizePixel,
+    fontHeadingSizePixel: layout.fontHeadingSizePixel || defaultLayout.fontHeadingSizePixel,
     fontTextSizePixel: layout.fontTextSizePixel || defaultLayout.fontTextSizePixel
-  }
+  };
+  console.log(config);
+  return config;
 }
 
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
 const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
-function proxiedUrl(url: string):string {
-  return `${PROXY_URL}/${url}`
 
+function proxiedUrl(url: string): string {
+  return `${PROXY_URL}/${url}`
 }
 
 /**
@@ -37,6 +38,33 @@ function proxiedUrl(url: string):string {
 function cmsApiUrl(url: string): string {
   // url always starts with "/"
   return `${CMS_API_URL}${url}`;
+}
+
+
+function appendStyle(url: string) {
+  url = cmsApiUrl(url);
+  console.log(url);
+  //url = 'https://fonts.gstatic.com/s/nerkoone/v1/m8JQjfZSc7OXlB3ZMOjDeZRAVmo.woff2';
+  const CSS = `
+@font-face {
+  font-family: 'test';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(${url}) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+body {
+  font-family: 'test', Garamond, serif !important;
+}
+`;
+
+  const head = document.getElementsByTagName('head')[0];
+  const style = document.createElement('style');
+  style.type = 'text/css';
+  style.appendChild(document.createTextNode(CSS));
+  head.appendChild(style);
 }
 
 @Component({
@@ -51,12 +79,17 @@ export class CanvasComponent implements OnChanges {
   layoutSetting: LayoutSetting = {} as any;
   canvas: any;
 
+  paddingSides = 40;
+  paddingTop = 80;
+
   constructor() {
   }
 
   ngOnChanges(data: SimpleChanges): void {
     if (this.canvas == null) {
       this.canvas = new fabric.Canvas('myCanvas');
+    } else {
+      this.canvas.clear();
     }
 
     this.layoutSetting = mergeLayouts(this.layoutSetting);
@@ -67,13 +100,13 @@ export class CanvasComponent implements OnChanges {
       this.canvas.renderAll();
 
       if (this.layoutSetting.backgroundImage) {
-        this.setImage(cmsApiUrl(this.layoutSetting.backgroundImage.url));
+        this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
       }
 
       if (this.canvasSettings.image) {
         fabric.Image.fromURL(proxiedUrl(this.canvasSettings.image), (myImg) => {
-          const img1 = myImg.set({left: 0, top: 0}) as any;
-          img1.scaleToWidth(this.canvas.width);
+          const img1 = myImg.set({left: this.paddingSides, top: this.paddingTop}) as any;
+          img1.scaleToWidth(this.canvas.width - 2 * this.paddingSides);
           this.canvas.add(img1);
           this.addTexts(img1);
         }, {crossOrigin: "*"});
@@ -83,7 +116,7 @@ export class CanvasComponent implements OnChanges {
     }
   }
 
-  setImage(url: string) {
+  setBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {
       const img1 = myImg.set({left: 0, top: 0}) as any;
       img1.scaleToWidth(this.canvas.width);
@@ -93,26 +126,39 @@ export class CanvasComponent implements OnChanges {
 
   addTexts(img1: any) {
     const textOffset = img1?.lineCoords?.bl?.y + 30 || 0;
-    const padding = 10;
-    let text = new fabric.Textbox(
+    const headingText = this.addText(
+      this.canvasSettings.title,
+      textOffset,
+      this.layoutSetting.fontHeadingSizePixel,
+      this.layoutSetting.fontFamilyHeadingCSS
+    );
+
+    this.addText(
+      this.canvasSettings.description,
+      headingText.lineCoords.bl.y + this.paddingTop,
+      this.layoutSetting.fontTextSizePixel,
+      this.layoutSetting.fontFamilyTextCSS
+    );
+  }
+
+  addText(text: string, yPosition: number, fontSize: number, fontFamily?: string) {
+    const padding = this.paddingSides;
+    let fabricText = new fabric.Textbox(
       this.canvasSettings.title,
       {
-        'fontFamily': 'Open Sans',
-        fontSize: this.layoutSetting.fontHeadingSizePixel,
+        fontSize: fontSize,
         left: padding,
-        top: textOffset,
+        top: yPosition,
         width: this.canvas.width - 2 * padding
       }
     ) as any;
-    text = text.centerH();
 
-    this.canvas.add(text);
-    this.canvas.add(new fabric.Textbox(this.canvasSettings.description, {
-      fontSize: this.layoutSetting.fontTextSizePixel,
-      left: padding,
-      width: this.canvas.width - 2 * padding,
-      top: text.lineCoords.bl.y + 30,
-    }));
+    if (fontFamily) {
+      fabricText.set('fontFamily', fontFamily);
+    }
+    this.canvas.add(fabricText);
+
+    return fabricText;
   }
 
   download() {

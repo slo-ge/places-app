@@ -2,12 +2,42 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {LayoutSetting} from "@app/core/model/layout-setting";
-import {LAYOUT_CONFIG_BASE_URL} from "@app/core/services/layout-setting.service";
+import {CMS_API_URL} from "@app/core/services/layout-setting.service";
+
+
 
 const DEFAULT_SETTING: LayoutSetting = {
   height: 1600,
-  width: 900
+  width: 900,
+  fontHeadingSizePixel: 40,
+  fontTextSizePixel: 20
 };
+
+function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
+  return {
+    ...DEFAULT_SETTING,
+    ...layout,
+    fontHeadingSizePixel: layout.fontHeadingSizePixel || defaultLayout.fontTextSizePixel,
+    fontTextSizePixel: layout.fontTextSizePixel || defaultLayout.fontTextSizePixel
+  }
+}
+
+// This proxy proxies any url and sets the cors origin to * to make
+// every content access by browser
+const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
+function proxiedUrl(url: string):string {
+  return `${PROXY_URL}/${url}`
+
+}
+
+/**
+ * because every CMS URL is relative to CMS, so we need to append the api url
+ * @param url
+ */
+function cmsApiUrl(url: string): string {
+  // url always starts with "/"
+  return `${CMS_API_URL}${url}`;
+}
 
 @Component({
   selector: 'app-canvas',
@@ -19,7 +49,6 @@ export class CanvasComponent implements OnChanges {
   canvasSettings: SimplePreviewCanvasSetting = {} as any;
   @Input()
   layoutSetting: LayoutSetting = {} as any;
-
   canvas: any;
 
   constructor() {
@@ -30,22 +59,19 @@ export class CanvasComponent implements OnChanges {
       this.canvas = new fabric.Canvas('myCanvas');
     }
 
-    const setting = {
-      ...DEFAULT_SETTING,
-      ...this.layoutSetting
-    };
+    this.layoutSetting = mergeLayouts(this.layoutSetting);
 
     if (this.canvasSettings) {
-      this.canvas.setHeight(setting.height);
-      this.canvas.setWidth(setting.width);
+      this.canvas.setHeight(this.layoutSetting.height);
+      this.canvas.setWidth(this.layoutSetting.width);
       this.canvas.renderAll();
 
-      if (setting.backgroundImage) {
-        this.setImage(`${LAYOUT_CONFIG_BASE_URL}${setting.backgroundImage.url}`);
+      if (this.layoutSetting.backgroundImage) {
+        this.setImage(cmsApiUrl(this.layoutSetting.backgroundImage.url));
       }
 
       if (this.canvasSettings.image) {
-        fabric.Image.fromURL(this.canvasSettings.image, (myImg) => {
+        fabric.Image.fromURL(proxiedUrl(this.canvasSettings.image), (myImg) => {
           const img1 = myImg.set({left: 0, top: 0}) as any;
           img1.scaleToWidth(this.canvas.width);
           this.canvas.add(img1);
@@ -62,7 +88,7 @@ export class CanvasComponent implements OnChanges {
       const img1 = myImg.set({left: 0, top: 0}) as any;
       img1.scaleToWidth(this.canvas.width);
       this.canvas.sendToBack(img1);
-    });
+    }, {crossOrigin: "*"});
   }
 
   addTexts(img1: any) {
@@ -72,7 +98,7 @@ export class CanvasComponent implements OnChanges {
       this.canvasSettings.title,
       {
         'fontFamily': 'Open Sans',
-        fontSize: 40,
+        fontSize: this.layoutSetting.fontHeadingSizePixel,
         left: padding,
         top: textOffset,
         width: this.canvas.width - 2 * padding
@@ -82,7 +108,7 @@ export class CanvasComponent implements OnChanges {
 
     this.canvas.add(text);
     this.canvas.add(new fabric.Textbox(this.canvasSettings.description, {
-      fontSize: 18,
+      fontSize: this.layoutSetting.fontTextSizePixel,
       left: padding,
       width: this.canvas.width - 2 * padding,
       top: text.lineCoords.bl.y + 30,

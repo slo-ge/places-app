@@ -36,6 +36,10 @@ export interface BackgroundImage {
   updated_at: Date;
 }
 
+export interface Font {
+  url: string;
+}
+
 export interface LayoutSetting {
   id?: number;
   width: number;
@@ -44,5 +48,9 @@ export interface LayoutSetting {
   created_at?: Date;
   updated_at?: Date;
   backgroundImage?: BackgroundImage;
+  fontHeadingSizePixel: number;
+  fontTextSizePixel: number;
+  fontHeadingWoff?: Font;
+  fontTextWoff?: Font;
 }
 

@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ContentService, PROXY_URL} from "../model/content.service";
+import {ContentService} from "../model/content.service";
 import {ContentType, Page, Post, WpObject} from "@app/core/model/wpObject";
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";
@@ -44,14 +44,13 @@ export class WordpressContentService implements ContentService {
 
   private static mapWordpressObjectToSimpleSetting(wordpressObject: WpObject): SimplePreviewCanvasSetting {
     const imgUrl = wordpressObject._embedded["wp:featuredmedia"]?.[0]?.source_url;
-    const proxiedURL = imgUrl ? `${PROXY_URL}/${imgUrl}` : null;
     const description = sanitizeHtml(decodeHTMLEntities(wordpressObject.excerpt.rendered));
     const title = sanitizeHtml(decodeHTMLEntities(wordpressObject.title.rendered));
 
     return {
       title,
       description,
-      image: proxiedURL
+      image: imgUrl
     }
   }
 }

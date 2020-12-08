@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {LayoutSetting} from "@app/core/model/layout-setting";
 import {Observable} from "rxjs";
 
-export const LAYOUT_CONFIG_BASE_URL = 'http://dev-tools.at:1337';
+export const CMS_API_URL = 'http://dev-tools.at:1337';
 const LAYOUT_CONFIG_API = 'http://dev-tools.at:1337/export-latest-layouts';
 
 @Injectable({
@@ -17,5 +17,4 @@ export class LayoutSettingService {
   public getLayoutSetting(): Observable<LayoutSetting[]> {
     return this.httpClient.get<LayoutSetting[]>(LAYOUT_CONFIG_API);
   }
-
 }

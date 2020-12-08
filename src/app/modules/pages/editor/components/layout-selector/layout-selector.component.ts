@@ -28,10 +28,6 @@ export class LayoutSelectorComponent implements OnInit {
     this.settings$ = this.layoutSettingsService.getLayoutSetting();
   }
 
-  onSubmit() {
-
-  }
-
   changeLayoutSetting($event: Event) {
     this.layout.emit(this.layoutSelectForm.value['layoutName']);
   }

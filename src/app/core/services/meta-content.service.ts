@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {EMPTY, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ContentService, PROXY_URL} from "../model/content.service";
+import {ContentService} from "../model/content.service";
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 
 export interface MetaData {
@@ -39,7 +39,7 @@ export class MetaContentService implements ContentService {
       map(data => ({
         title: data.title,
         description: data.metaDescription,
-        image: `${PROXY_URL}/${data.ogImage}`
+        image: data.ogImage
       }))
     );
   }

@@ -25,6 +25,11 @@ deployment-steps: &steps
         docker build -t sloge/export-latest:$CIRCLE_BUILD_NUM .
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
         docker push sloge/export-latest:$CIRCLE_BUILD_NUM
+
+  - run:
+      name: DEPLOY DOCKER
+      command: |
+        ssh -oStrictHostKeyChecking=no -v $DROPLET_USER@$DROPLET_IP "ls"
 jobs:
   build-prod:
     working_directory: ~/export-latest

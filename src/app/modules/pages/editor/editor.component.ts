@@ -14,7 +14,6 @@ import {LayoutSetting} from "@app/core/model/layout-setting";
 export class EditorComponent implements OnInit {
   canvas: any;
   setting$: Observable<SimplePreviewCanvasSetting> = EMPTY;
-  layout: LayoutSetting = {} as any;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute) {
@@ -25,9 +24,5 @@ export class EditorComponent implements OnInit {
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
     // TODO: guess data
     this.setting$ = contentService.getEditorPreviewSettings(data as string);
-  }
-
-  setLayout($event: LayoutSetting) {
-    this.layout = $event;
   }
 }

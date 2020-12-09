@@ -75,7 +75,6 @@ body {
 export class CanvasComponent implements OnChanges {
   @Input()
   canvasSettings: SimplePreviewCanvasSetting = {} as any;
-  @Input()
   layoutSetting: LayoutSetting = {} as any;
   canvas: any;
 
@@ -86,6 +85,15 @@ export class CanvasComponent implements OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges): void {
+    this.refreshCanvas();
+  }
+
+  setLayout($event: LayoutSetting) {
+    this.layoutSetting = $event;
+    this.refreshCanvas();
+  }
+
+  refreshCanvas() {
     if (this.canvas == null) {
       this.canvas = new fabric.Canvas('myCanvas');
     } else {
@@ -115,6 +123,7 @@ export class CanvasComponent implements OnChanges {
       }
     }
   }
+
 
   setBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {

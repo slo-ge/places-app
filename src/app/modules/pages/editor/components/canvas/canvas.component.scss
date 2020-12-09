@@ -10,6 +10,18 @@ canvas {
 
 button {
   width: 100%;
+  height: 50px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
   max-width: 600px;
-  margin-top: 20px;
+
+   > * {
+    width: 100%;
+    margin: 0 10px;
+  }
 }

@@ -23,8 +23,9 @@ deployment-steps: &steps
       name: BUILD DOCKER
       command: |
         docker build -t sloge/export-latest:$CIRCLE_BUILD_NUM .
+        docker tag sloge/export-latest:$CIRCLE_BUILD_NUM  sloge/export-latest:latest
         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-        docker push sloge/export-latest:$CIRCLE_BUILD_NUM
+        docker push sloge/export-latest
 
   - run:
       name: DEPLOY DOCKER

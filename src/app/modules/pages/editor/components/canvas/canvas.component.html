@@ -1,6 +1,10 @@
 <div class="actions">
   <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
   <button (click)="download()">Download</button>
+  <div>
+    <div (click)="actionCenterV()">CenterV</div>
+    <div (click)="actionCenterH()">CenterH</div>
+  </div>
 </div>
 <div class="preview">
   <canvas id="myCanvas"></canvas>

@@ -1,8 +1,9 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {LayoutSetting} from "@app/core/model/layout-setting";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
+import {Object} from "fabric/fabric-impl";
 
 
 const DEFAULT_SETTING: LayoutSetting = {
@@ -81,7 +82,7 @@ export class CanvasComponent implements OnChanges {
   paddingSides = 40;
   paddingTop = 80;
 
-  constructor() {
+  constructor(private currentComponentElemRef: ElementRef) {
   }
 
   ngOnChanges(data: SimpleChanges): void {
@@ -125,16 +126,29 @@ export class CanvasComponent implements OnChanges {
   }
 
 
+  /**
+   * Set the background image to the whole canvas layer,
+   * the background image is not selectable and so, it can not be
+   * removed
+   * @param url
+   */
   setBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {
-      const img1 = myImg.set({left: 0, top: 0}) as any;
+      const img1 = myImg.set({left: 0, top: 0, selectable: false}) as any;
       img1.scaleToWidth(this.canvas.width);
+      img1.lockMovementX = true;
+      img1.lockMovement = true;
       this.canvas.sendToBack(img1);
     }, {crossOrigin: "*"});
   }
 
-  addTexts(img1: any) {
-    const textOffset = img1?.lineCoords?.bl?.y + 30 || 0;
+  /**
+   * This function adds the text layers and calculats
+   * the y position be a given object
+   * @param fabricJsObject
+   */
+  addTexts(fabricJsObject: any) {
+    const textOffset = fabricJsObject?.lineCoords?.bl?.y + 30 || 0;
     const headingText = this.addText(
       this.canvasSettings.title,
       textOffset,
@@ -150,6 +164,14 @@ export class CanvasComponent implements OnChanges {
     );
   }
 
+  /**
+   * This function renders the fabricJs text to the canvas with given
+   * parameters.
+   * @param text
+   * @param yPosition
+   * @param fontSize
+   * @param fontFamily
+   */
   addText(text: string, yPosition: number, fontSize: number, fontFamily?: string) {
     const padding = this.paddingSides;
     let fabricText = new fabric.Textbox(
@@ -170,6 +192,17 @@ export class CanvasComponent implements OnChanges {
     return fabricText;
   }
 
+  actionCenterV() {
+    this.canvas.getActiveObject().centerV();
+  }
+
+  actionCenterH() {
+    this.canvas.getActiveObject().centerH();
+  }
+
+  /**
+   * Generate a downloadable image
+   */
   download() {
     let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
     const link = document.createElement('a');
@@ -177,4 +210,17 @@ export class CanvasComponent implements OnChanges {
     link.href = canvas.toDataURL();
     link.click();
   }
+
+  @HostListener('document:keydown.delete', ['$event'])
+  keyEventDelete(event: KeyboardEvent) {
+    this.canvas.remove(this.canvas.getActiveObject());
+  }
+
+  @HostListener('document:click', ['$event'])
+  deselectListener(event$: any) {
+    if (!this.currentComponentElemRef.nativeElement.contains(event?.target)) {
+      this.canvas.discardActiveObject().renderAll();
+    }
+  }
+
 }

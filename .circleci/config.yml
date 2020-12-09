@@ -30,7 +30,7 @@ deployment-steps: &steps
   - run:
       name: DEPLOY DOCKER
       command: |
-        ssh -oStrictHostKeyChecking=no  $DROPLET_USER@$DROPLET_IP "/bin/bash docker-compose up -d --force-recreate"
+        ssh -oStrictHostKeyChecking=no  $DROPLET_USER@$DROPLET_IP "./start.sh"
 jobs:
   build-prod:
     working_directory: ~/export-latest

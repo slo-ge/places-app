@@ -40,8 +40,6 @@ workflows:
   build:
     jobs:
       - build-prod:
-          requires:
-            - build-sitemap
           filters:
             branches:
               only: master

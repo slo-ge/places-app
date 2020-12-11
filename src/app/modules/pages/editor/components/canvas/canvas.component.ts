@@ -3,7 +3,6 @@ import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {LayoutSetting} from "@app/core/model/layout-setting";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
-import {Object} from "fabric/fabric-impl";
 
 
 const DEFAULT_SETTING: LayoutSetting = {
@@ -26,7 +25,7 @@ function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
 
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
-const PROXY_URL = 'https://cors-anywhere.herokuapp.com';
+const PROXY_URL = 'https://dev-tools.at/proxy';
 
 function proxiedUrl(url: string): string {
   return `${PROXY_URL}/${url}`
@@ -188,17 +187,9 @@ export class CanvasComponent implements OnChanges {
       fabricText.set('fontFamily', fontFamily);
     }
     this.canvas.add(fabricText);
-
     return fabricText;
   }
 
-  actionCenterV() {
-    this.canvas.getActiveObject().centerV();
-  }
-
-  actionCenterH() {
-    this.canvas.getActiveObject().centerH();
-  }
 
   /**
    * Generate a downloadable image
@@ -211,10 +202,6 @@ export class CanvasComponent implements OnChanges {
     link.click();
   }
 
-  @HostListener('document:keydown.delete', ['$event'])
-  keyEventDelete(event: KeyboardEvent) {
-    this.canvas.remove(this.canvas.getActiveObject());
-  }
 
   @HostListener('document:click', ['$event'])
   deselectListener(event$: any) {

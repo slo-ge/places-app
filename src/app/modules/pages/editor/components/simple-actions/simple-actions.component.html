@@ -1,0 +1,7 @@
+<div class="actions">
+  <div (click)="actionCenterV()">CenterV</div>
+  <div (click)="actionCenterH()">CenterH</div>
+  <div (click)="removeActiveObject()">Remove</div>
+  <div (click)="addNewTextBox()">AddTextBox</div>
+  <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax" (valueChange)="changeSize($event)"></app-range-slider>
+</div>

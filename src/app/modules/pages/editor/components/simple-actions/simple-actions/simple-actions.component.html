@@ -1,0 +1,8 @@
+<div class="object-actions">
+  <div class="align-actions">
+    <div (click)="removeActiveObject()"><fa-icon [icon]="iconRemove"></fa-icon></div>
+    <div (click)="actionCenterH()"><fa-icon [icon]="iconCenterHorizontal"></fa-icon></div>
+    <div (click)="actionCenterV()"><fa-icon [icon]="iconCenterVertical"></fa-icon></div>
+  </div>
+  <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax" (valueChange)="changeSize($event)"></app-range-slider>
+</div>

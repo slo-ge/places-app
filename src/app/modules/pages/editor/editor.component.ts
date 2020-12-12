@@ -3,7 +3,6 @@ import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapter.service";
-import {LayoutSetting} from "@app/core/model/layout-setting";
 
 
 @Component({
@@ -12,7 +11,6 @@ import {LayoutSetting} from "@app/core/model/layout-setting";
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  canvas: any;
   setting$: Observable<SimplePreviewCanvasSetting> = EMPTY;
 
   constructor(private adapterService: AdapterService,

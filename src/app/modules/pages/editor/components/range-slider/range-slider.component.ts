@@ -19,6 +19,7 @@ export class RangeSliderComponent {
   constructor() { }
 
   valueChanged(value: string) {
+    this.value = Number(value);
     this.valueChange.emit(Number(value));
   }
 }

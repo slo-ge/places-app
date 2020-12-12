@@ -1,0 +1,15 @@
+@import 'style';
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  padding: 10px;
+  background: $grey-0;
+  border-radius: 10px;
+
+  > * {
+    margin-right: 20px;
+  }
+}

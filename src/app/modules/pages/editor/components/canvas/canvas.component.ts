@@ -1,8 +1,9 @@
-import {Component, ElementRef, HostListener, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {LayoutSetting} from "@app/core/model/layout-setting";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
+import {EditorService} from "@app/modules/pages/editor/editor.service";
 
 
 const DEFAULT_SETTING: LayoutSetting = {
@@ -19,7 +20,7 @@ function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
     fontHeadingSizePixel: layout.fontHeadingSizePixel || defaultLayout.fontHeadingSizePixel,
     fontTextSizePixel: layout.fontTextSizePixel || defaultLayout.fontTextSizePixel
   };
-  console.log(config);
+  console.log('Layout', config);
   return config;
 }
 
@@ -81,7 +82,8 @@ export class CanvasComponent implements OnChanges {
   paddingSides = 40;
   paddingTop = 80;
 
-  constructor(private currentComponentElemRef: ElementRef) {
+  constructor(private currentComponentElemRef: ElementRef,
+              private editorService: EditorService) {
   }
 
   ngOnChanges(data: SimpleChanges): void {
@@ -96,6 +98,7 @@ export class CanvasComponent implements OnChanges {
   refreshCanvas() {
     if (this.canvas == null) {
       this.canvas = new fabric.Canvas('myCanvas');
+      this.editorService.setCanvas(this.canvas);
     } else {
       this.canvas.clear();
     }
@@ -195,7 +198,7 @@ export class CanvasComponent implements OnChanges {
    * Generate a downloadable image
    */
   download() {
-    let canvas = document.getElementById('myCanvas') as HTMLCanvasElement;
+    let canvas = this.canvas;
     const link = document.createElement('a');
     link.download = 'filename.png';
     link.href = canvas.toDataURL();
@@ -203,11 +206,11 @@ export class CanvasComponent implements OnChanges {
   }
 
 
-  @HostListener('document:click', ['$event'])
+  /*@HostListener('document:click', ['$event'])
   deselectListener(event$: any) {
     if (!this.currentComponentElemRef.nativeElement.contains(event?.target)) {
       this.canvas.discardActiveObject().renderAll();
     }
-  }
+  }*/
 
 }

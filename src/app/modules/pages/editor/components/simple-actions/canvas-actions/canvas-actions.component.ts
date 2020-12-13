@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {fabric} from "fabric";
-import {EditorService} from "@app/modules/pages/editor/editor.service";
+import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {take} from "rxjs/operators";
 import {Canvas} from "fabric/fabric-impl";
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SimplePreviewCanvasSetting} from "@app/modules/pages/editor/models";
+import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapter.service";
@@ -11,7 +11,7 @@ import {AdapterService} from "@app/core/services/adapter.service";
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  setting$: Observable<SimplePreviewCanvasSetting> = EMPTY;
+  setting$: Observable<ObjectDisplayProperties> = EMPTY;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute) {

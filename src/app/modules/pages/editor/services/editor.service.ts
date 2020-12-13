@@ -7,7 +7,7 @@ import {Canvas} from "fabric/fabric-impl";
   providedIn: 'root'
 })
 export class EditorService {
-  canvas: ReplaySubject<any | Canvas> = new ReplaySubject(1);
+  private canvas: ReplaySubject<any | Canvas> = new ReplaySubject(1);
 
   constructor() {
   }

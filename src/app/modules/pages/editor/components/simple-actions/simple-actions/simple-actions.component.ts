@@ -1,15 +1,8 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object} from "fabric/fabric-impl";
 import {fabric} from "fabric";
-import {EditorService} from "@app/modules/pages/editor/editor.service";
-import {take} from "rxjs/operators";
-import {
-  faAlignCenter,
-  faGripLines,
-  faGripLinesVertical,
-  faRemoveFormat,
-  faTrashAlt
-} from "@fortawesome/free-solid-svg-icons";
+import {EditorService} from "@app/modules/pages/editor/services/editor.service";
+import {faAlignCenter, faGripLines, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -31,6 +24,7 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // TODO: kill subscription in onDestroy!
     this.editorService.getCanvas().subscribe(canvas => {
       this.canvas = canvas;
       this.canvas.on(

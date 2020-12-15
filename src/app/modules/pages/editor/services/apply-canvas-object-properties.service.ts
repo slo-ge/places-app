@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {LayoutSetting} from "@app/core/model/layout-setting";
-import {Canvas} from "fabric/fabric-impl";
+import {Canvas, Image} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
 
 // This proxy proxies any url and sets the cors origin to * to make
@@ -21,13 +21,20 @@ function cmsApiUrl(url: string): string {
   return `${CMS_API_URL}${url}`;
 }
 
+/**
+ * This is a simple cache which does only cache the images,
+ * and nothing else, to prevent the app doing multiple calls
+ * against the rest-api
+ */
+const imageCache: { [key: string]: Image } = {};
 
 export class ApplyCanvasObjectPropertiesService {
-  paddingSides = 40;
-  paddingTop = 80;
-  canvasSettings: ObjectDisplayProperties;
-  layoutSetting: LayoutSetting;
-  canvas: Canvas;
+  private readonly paddingSides = 40;
+  private readonly paddingTop = 80;
+  private readonly canvasSettings: ObjectDisplayProperties;
+  private readonly layoutSetting: LayoutSetting;
+  private readonly canvas: Canvas;
+
 
   constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: LayoutSetting) {
     this.canvas = canvas;
@@ -43,16 +50,35 @@ export class ApplyCanvasObjectPropertiesService {
       this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
     }
 
+
     if (this.canvasSettings.image) {
-      fabric.Image.fromURL(proxiedUrl(this.canvasSettings.image), (myImg) => {
-        const previewImage = myImg.set({left: this.paddingSides, top: this.paddingTop}) as any;
-        previewImage.scaleToWidth((this.canvas.width || 0) - 2 * this.paddingSides);
-        this.canvas.add(previewImage);
-        this.addTexts(previewImage);
-      }, {crossOrigin: "*"});
+      const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
+
+      // Try to get image from cache
+      if (imageCache[proxiedImageUrl]) {
+        this.addImageAndTexts(imageCache[proxiedImageUrl]);
+      } else {
+        fabric.Image.fromURL(proxiedImageUrl, (image) => {
+          imageCache[proxiedImageUrl] = image;
+          this.addImageAndTexts(image);
+        }, {crossOrigin: "*"});
+      }
+
     } else {
       this.addTexts(null);
     }
+  }
+
+  /**
+   * render the image on the canvas and then
+   * render the texts to the canvas
+   * @param image
+   */
+  addImageAndTexts(image: Image) {
+    const previewImage = image.set({left: this.paddingSides, top: this.paddingTop}) as any;
+    previewImage.scaleToWidth((this.canvas.width || 0) - 2 * this.paddingSides);
+    this.canvas.add(previewImage);
+    this.addTexts(previewImage);
   }
 
   /**
@@ -104,7 +130,7 @@ export class ApplyCanvasObjectPropertiesService {
   addText(text: string, yPosition: number, fontSize: number, fontFamily?: string) {
     const padding = this.paddingSides;
     let fabricText = new fabric.Textbox(
-      this.canvasSettings.title,
+      text,
       {
         fontSize: fontSize,
         left: padding,

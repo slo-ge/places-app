@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object} from "fabric/fabric-impl";
 import {fabric} from "fabric";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {faAlignCenter, faGripLines, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faAlignCenter, faGripLines, faSync, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -18,6 +18,7 @@ export class SimpleActionsComponent implements OnInit {
   iconRemove = faTrashAlt;
   iconCenterHorizontal = faAlignCenter;
   iconCenterVertical = faGripLines;
+  iconRotate = faSync;
 
 
   constructor(private  editorService: EditorService) {
@@ -78,5 +79,14 @@ export class SimpleActionsComponent implements OnInit {
       console.error('changeSize, can not change size of object:', activeObject)
     }
     this.canvas.renderAll();
+  }
+
+  turn90() {
+    const activeObject = this.canvas.getActiveObject();
+    if (activeObject) {
+      activeObject.centeredRotation = true;
+      activeObject.rotate(activeObject.angle + 90) ;
+      this.canvas.renderAll();
+    }
   }
 }

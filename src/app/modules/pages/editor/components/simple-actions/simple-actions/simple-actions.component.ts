@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object} from "fabric/fabric-impl";
 import {fabric} from "fabric";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {faAlignCenter, faGripLines, faSync, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {faAlignCenter, faGripLines, faSync, faTh, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -19,6 +19,7 @@ export class SimpleActionsComponent implements OnInit {
   iconCenterHorizontal = faAlignCenter;
   iconCenterVertical = faGripLines;
   iconRotate = faSync;
+  iconRasta = faTh;
 
 
   constructor(private  editorService: EditorService) {
@@ -85,7 +86,7 @@ export class SimpleActionsComponent implements OnInit {
     const activeObject = this.canvas.getActiveObject();
     if (activeObject) {
       activeObject.centeredRotation = true;
-      activeObject.rotate(activeObject.angle + 90) ;
+      activeObject.rotate(activeObject.angle + 90);
       this.canvas.renderAll();
     }
   }

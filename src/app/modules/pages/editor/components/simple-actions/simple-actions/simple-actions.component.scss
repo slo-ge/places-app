@@ -1,3 +1,4 @@
+@import 'style';
 :host {
   font-size: 16px;
 }
@@ -14,5 +15,36 @@
 
   > div {
     margin-right: 10px;
+  }
+}
+
+.grid-alignment {
+  position: relative;
+
+  &:hover {
+    .align-classes {
+      position: absolute;
+      border: 1px solid $grey-1;
+      border-radius: 6px;
+      padding: 10px;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 2px;
+      background: white;
+
+      > div {
+        background-color: $grey-1;
+        width: 30px;
+        height: 25px;
+
+        &:hover {
+          background: $primary-blue;
+        }
+      }
+
+    }
+  }
+  .align-classes {
+    display: none;
   }
 }

@@ -4,6 +4,20 @@
     <div (click)="actionCenterH()"><fa-icon [icon]="iconCenterHorizontal"></fa-icon></div>
     <div (click)="actionCenterV()"><fa-icon [icon]="iconCenterVertical"></fa-icon></div>
     <div (click)="turn90()"><fa-icon [icon]="iconRotate"></fa-icon></div>
+    <div class="grid-alignment">
+      <fa-icon [icon]="iconRasta"></fa-icon>
+      <div class="align-classes">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
   </div>
   <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax" (valueChange)="changeSize($event)"></app-range-slider>
 </div>

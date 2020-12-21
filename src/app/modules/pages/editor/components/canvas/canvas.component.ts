@@ -11,8 +11,15 @@ import {faDownload} from "@fortawesome/free-solid-svg-icons";
 const DEFAULT_SETTING: LayoutSetting = {
   height: 1600,
   width: 900,
-  fontHeadingSizePixel: 80,
-  fontTextSizePixel: 40
+  fontHeadingSizePixel: 90,
+  fontTextSizePixel: 40,
+
+  fontLineHeight: '1',
+  fontLetterSpacing: '1.1',
+
+  offsetTop: 75,
+  offsetSides: 55,
+  offsetImageBottom: 40
 };
 
 function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {

@@ -48,6 +48,7 @@ export interface LayoutSetting {
   created_at?: Date;
   updated_at?: Date;
   backgroundImage?: BackgroundImage;
+
   fontHeadingSizePixel: number;
   fontTextSizePixel: number;
   fontHeadingWoff?: Font;
@@ -55,5 +56,15 @@ export interface LayoutSetting {
   fontFamilyHeadingCSS?: string;
   fontFamilyTextCSS?: string;
   fontFaceCSS?: string;
+
+  fontLineHeight?: string;
+  fontLetterSpacing?: string;
+
+  showTitle?: boolean;
+  showDescription?: boolean;
+
+  offsetTop?: number;
+  offsetSides?: number;
+  offsetImageBottom?: number;
 }
 

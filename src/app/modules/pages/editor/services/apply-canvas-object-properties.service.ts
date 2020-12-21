@@ -31,6 +31,7 @@ const imageCache: { [key: string]: Image } = {};
 export class ApplyCanvasObjectPropertiesService {
   private readonly paddingSides = 40;
   private readonly paddingTop = 80;
+
   private readonly canvasSettings: ObjectDisplayProperties;
   private readonly layoutSetting: LayoutSetting;
   private readonly canvas: Canvas;
@@ -75,8 +76,13 @@ export class ApplyCanvasObjectPropertiesService {
    * @param image
    */
   addImageAndTexts(image: Image) {
-    const previewImage = image.set({left: this.paddingSides, top: this.paddingTop}) as any;
-    previewImage.scaleToWidth((this.canvas.width || 0) - 2 * this.paddingSides);
+    const previewImage = image.set({
+      left: this.layoutSetting.offsetSides,
+      top: this.layoutSetting.offsetTop || this.paddingTop
+    }) as any;
+    previewImage.scaleToWidth(
+      (this.canvas.width || 0) - 2 * (this.layoutSetting.offsetSides || 0)
+    );
     this.canvas.add(previewImage);
     this.addTexts(previewImage);
   }
@@ -103,7 +109,7 @@ export class ApplyCanvasObjectPropertiesService {
    * @param fabricJsObject
    */
   addTexts(fabricJsObject: any) {
-    const textOffset = fabricJsObject?.lineCoords?.bl?.y + 30 || 0;
+    const textOffset = fabricJsObject?.lineCoords?.bl?.y + this.layoutSetting.offsetImageBottom;
     const headingText = this.addText(
       this.canvasSettings.title,
       textOffset,
@@ -114,7 +120,7 @@ export class ApplyCanvasObjectPropertiesService {
 
     this.addText(
       this.canvasSettings.description,
-      headingText.lineCoords.bl.y + this.paddingTop,
+      headingText.lineCoords.bl.y + this.layoutSetting.offsetImageBottom,
       this.layoutSetting.fontTextSizePixel,
       this.layoutSetting.fontFamilyTextCSS
     );
@@ -130,7 +136,7 @@ export class ApplyCanvasObjectPropertiesService {
    * @param fontWeight
    */
   addText(text: string, yPosition: number, fontSize: number, fontFamily?: string, fontWeight?: string) {
-    const padding = this.paddingSides;
+    const padding = this.layoutSetting.offsetSides || 0;
     let fabricText = new fabric.Textbox(
       text,
       {
@@ -148,6 +154,15 @@ export class ApplyCanvasObjectPropertiesService {
     if (fontWeight) {
       fabricText.set('fontWeight', fontWeight);
     }
+
+    if(this.layoutSetting.fontLineHeight) {
+      fabricText.set('lineHeight', this.layoutSetting.fontLineHeight);
+    }
+
+    if(this.layoutSetting.fontLetterSpacing) {
+      fabricText.set('charSpacing', this.layoutSetting.fontLetterSpacing);
+    }
+
     this.canvas.add(fabricText);
     return fabricText;
   }

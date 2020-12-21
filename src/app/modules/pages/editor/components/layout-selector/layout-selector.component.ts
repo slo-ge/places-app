@@ -27,7 +27,14 @@ export class LayoutSelectorComponent implements OnInit {
     fontHeadingSizePixel: ['',],
     fontTextSizePixel: ['',],
     fontFamilyHeadingCSS: ['',],
-    fontFamilyTextCSS: ['',]
+    fontFamilyTextCSS:  ['',],
+
+    fontLineHeight:  ['',],
+    fontLetterSpacing:  ['',],
+
+    offsetTop:  ['',],
+    offsetSides:  ['',],
+    offsetImageBottom:  ['',],
   });
 
 

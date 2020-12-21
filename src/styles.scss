@@ -7,7 +7,7 @@ body {
   margin: 0;
 }
 
-input[type=text], select {
+input[type=text], select, input {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -34,4 +34,10 @@ button {
   color: white;
   height: 40px;
   cursor: pointer;
+}
+
+button.secondary {
+  background-color: white;
+  color: darkblue;
+  border-color: 1px solid $primary-blue;
 }

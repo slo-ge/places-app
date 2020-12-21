@@ -10,3 +10,21 @@ select {
   text-align: right;
   margin-bottom: 10px;
 }
+
+.values {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-gap: 5px;
+
+  label {
+    align-self: center;
+  }
+}
+
+button {
+ width: 100%;
+}
+
+.values-container {
+  margin-bottom: 15px;
+}

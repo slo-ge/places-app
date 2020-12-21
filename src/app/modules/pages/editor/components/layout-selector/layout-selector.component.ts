@@ -48,4 +48,9 @@ export class LayoutSelectorComponent implements OnInit {
     console.log(this.layout);
     this.showLayout = !this.showLayout;
   }
+
+  updateValues() {
+    const tempLayout = this.layoutSelectForm.value['layoutName'] || {};
+    this.layout.emit({...tempLayout, ...this.detailForm.value})
+  }
 }

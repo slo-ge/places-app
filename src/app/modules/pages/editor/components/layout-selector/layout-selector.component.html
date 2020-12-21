@@ -5,6 +5,27 @@
   </select>
 </form>
 <div class="show-layout" (click)="layoutToggle()">Show Values</div>
-<div *ngIf="showLayout==false">
-width: {{detailForm.get('width') }}
+<div class="values-container" *ngIf="showLayout">
+  <form class="values" [formGroup]="detailForm">
+    <label>Width px</label>
+    <input disabled formControlName="width">
+
+    <label>Height px</label>
+    <input disabled formControlName="height">
+
+    <label>fontHeadingSizePixel</label>
+    <input type="number"  formControlName="fontHeadingSizePixel">
+
+    <label>fontTextSizePixel</label>
+    <input type="number" formControlName="fontTextSizePixel">
+
+    <label>fontFamilyHeadingCSS</label>
+    <input formControlName="fontFamilyHeadingCSS">
+
+    <label>fontFamilyTextCSS</label>
+    <input formControlName="fontFamilyTextCSS">
+
+    <div></div>
+    <button (click)="updateValues()" class="secondary">Update Values</button>
+  </form>
 </div>

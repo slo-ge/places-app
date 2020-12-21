@@ -108,7 +108,8 @@ export class ApplyCanvasObjectPropertiesService {
       this.canvasSettings.title,
       textOffset,
       this.layoutSetting.fontHeadingSizePixel,
-      this.layoutSetting.fontFamilyHeadingCSS
+      this.layoutSetting.fontFamilyHeadingCSS,
+      'bold'
     );
 
     this.addText(
@@ -126,8 +127,9 @@ export class ApplyCanvasObjectPropertiesService {
    * @param yPosition
    * @param fontSize
    * @param fontFamily
+   * @param fontWeight
    */
-  addText(text: string, yPosition: number, fontSize: number, fontFamily?: string) {
+  addText(text: string, yPosition: number, fontSize: number, fontFamily?: string, fontWeight?: string) {
     const padding = this.paddingSides;
     let fabricText = new fabric.Textbox(
       text,
@@ -141,6 +143,10 @@ export class ApplyCanvasObjectPropertiesService {
 
     if (fontFamily) {
       fabricText.set('fontFamily', fontFamily);
+    }
+
+    if (fontWeight) {
+      fabricText.set('fontWeight', fontWeight);
     }
     this.canvas.add(fabricText);
     return fabricText;

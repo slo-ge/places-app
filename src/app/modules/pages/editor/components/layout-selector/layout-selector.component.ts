@@ -17,7 +17,17 @@ export class LayoutSelectorComponent implements OnInit {
   showLayout = false;
 
   layoutSelectForm = this.fb.group({
-    layoutName: ['',]
+    layoutName: ['',],
+  });
+
+  detailForm = this.fb.group({
+    width: ['',],
+    height : ['',],
+    title: ['',],
+    fontHeadingSizePixel: ['',],
+    fontTextSizePixel: ['',],
+    fontFamilyHeadingCSS: ['',],
+    fontFamilyTextCSS: ['',]
   });
 
 
@@ -31,6 +41,7 @@ export class LayoutSelectorComponent implements OnInit {
 
   changeLayoutSetting($event: Event) {
     this.layout.emit(this.layoutSelectForm.value['layoutName']);
+    this.detailForm.patchValue({...this.layoutSelectForm.value['layoutName']});
   }
 
   layoutToggle() {

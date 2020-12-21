@@ -5,4 +5,6 @@
   </select>
 </form>
 <div class="show-layout" (click)="layoutToggle()">Show Values</div>
-<div *ngIf="showLayout"> {{layoutSelectForm.value['layoutName'] | json}} </div>
+<div *ngIf="showLayout==false">
+width: {{detailForm.get('width') }}
+</div>

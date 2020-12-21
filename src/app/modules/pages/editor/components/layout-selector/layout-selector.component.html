@@ -4,3 +4,5 @@
     <option *ngFor="let setting of settings$ | async" [ngValue]="setting">{{setting.title}}</option>
   </select>
 </form>
+<div class="show-layout" (click)="layoutToggle()">Show Values</div>
+<div *ngIf="showLayout"> {{layoutSelectForm.value['layoutName'] | json}} </div>

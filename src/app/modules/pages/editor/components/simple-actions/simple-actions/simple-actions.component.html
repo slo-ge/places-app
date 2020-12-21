@@ -1,23 +1,25 @@
-<div class="object-actions">
+<div class="object-actions"  *ngIf="showActiveObjectActions">
   <div class="align-actions">
-    <div (click)="removeActiveObject()"><fa-icon [icon]="iconRemove"></fa-icon></div>
-    <div (click)="actionCenterH()"><fa-icon [icon]="iconCenterHorizontal"></fa-icon></div>
-    <div (click)="actionCenterV()"><fa-icon [icon]="iconCenterVertical"></fa-icon></div>
-    <div (click)="turn90()"><fa-icon [icon]="iconRotate"></fa-icon></div>
+    <div (click)="removeActiveObject()">
+      <fa-icon [icon]="iconRemove"></fa-icon>
+    </div>
+    <div (click)="turn90()">
+      <fa-icon [icon]="iconRotate"></fa-icon>
+    </div>
     <div class="grid-alignment">
       <fa-icon [icon]="iconRasta"></fa-icon>
       <div class="align-classes">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div class="simple-aligners">
+          <span (click)="alignmentAction(simpleAlignments.Left)"><fa-icon [icon]="iconLeft"></fa-icon></span>
+          <span (click)="alignmentAction(simpleAlignments.Center)"><fa-icon [icon]="iconCenter"></fa-icon></span>
+          <span (click)="alignmentAction(simpleAlignments.Right)"><fa-icon [icon]="iconRight"></fa-icon></span>
+        </div>
+        <div class="grid">
+          <div *ngFor="let item of objectAlignments" (click)="alignmentAction(item)"></div>
+        </div>
       </div>
     </div>
   </div>
-  <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax" (valueChange)="changeSize($event)"></app-range-slider>
+  <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"
+                    (valueChange)="changeSize($event)"></app-range-slider>
 </div>

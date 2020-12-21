@@ -5,6 +5,7 @@ import {LayoutSetting} from "@app/core/model/layout-setting";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {ApplyCanvasObjectPropertiesService} from "@app/modules/pages/editor/services/apply-canvas-object-properties.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
+import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 
 const DEFAULT_SETTING: LayoutSetting = {
@@ -36,6 +37,8 @@ export class CanvasComponent implements OnChanges {
   canvasSettings: ObjectDisplayProperties = {} as any;
   layoutSetting: LayoutSetting = {} as any;
   canvas: any;
+
+  downloadIcon = faDownload;
 
   constructor(private currentComponentElemRef: ElementRef,
               private editorService: EditorService,
@@ -76,15 +79,6 @@ export class CanvasComponent implements OnChanges {
     }
   }
 
-
-  /**
-   * Generate a downloadable image
-   */
-  download() {
-    this.downloadService.download();
-  }
-
-
   /*@HostListener('document:click', ['$event'])
   deselectListener(event$: any) {
     if (!this.currentComponentElemRef.nativeElement.contains(event?.target)) {
@@ -92,4 +86,7 @@ export class CanvasComponent implements OnChanges {
     }
   }*/
 
+  download() {
+    this.downloadService.download();
+  }
 }

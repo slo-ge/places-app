@@ -22,7 +22,7 @@ $font-color: #747a8e;
 
 .breadcrumb {
   display: flex;
-  border-radius: 6px;
+  border-radius: $common-border-radius;
   overflow: hidden;
   margin: auto;
   text-align: center;

@@ -1,11 +1,21 @@
+@import 'style';
+
 .preview {
-  padding: 10px;
-  background: darkgrey;
+  background: $grey-0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+
+  min-width: 1200px;
+  overflow-x: auto;
+  border-radius: $common-border-radius;
+  padding: 20px;
 }
 
 canvas {
   background: white;
-  //transform: scale(0.5);
+  position: absolute;
 }
 
 button {
@@ -13,15 +23,15 @@ button {
   height: 50px;
 }
 
-.actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px 0;
-  max-width: 600px;
+.canvas-wrapper {
+  transform-origin: left top;
+}
 
-   > * {
-    width: 100%;
-    margin: 0 10px;
-  }
+aside {
+  border-radius: $common-border-radius;
+  margin-left: 5px;
+  padding: 20px;
+  background: white;
+  width: 100%;
+  height: 60vh;
 }

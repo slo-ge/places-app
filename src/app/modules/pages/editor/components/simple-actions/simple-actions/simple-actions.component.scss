@@ -23,24 +23,41 @@
 
   &:hover {
     .align-classes {
+      display: block !important;
       position: absolute;
       border: 1px solid $grey-1;
-      border-radius: 6px;
+      border-radius: $common-border-radius;
       padding: 10px;
-      display: grid !important;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-gap: 2px;
+      z-index: 1010;
+
       background: white;
 
-      > div {
-        background-color: $grey-1;
-        width: 30px;
-        height: 25px;
+      .simple-aligners {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        &:hover {
-          background: $primary-blue;
+        span {
+          margin: 0 10px;
+          //width: 40px;
         }
       }
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 2px;
+
+        > div {
+          background-color: $grey-1;
+          //width: 30px;
+          height: 20px;
+
+          &:hover {
+            background: $primary-blue;
+          }
+        }
+      }
+
 
     }
   }

@@ -14,6 +14,7 @@ export class LayoutSelectorComponent implements OnInit {
   layout = new EventEmitter<LayoutSetting>();
 
   settings$: Observable<LayoutSetting[]> = EMPTY;
+  showLayout = false;
 
   layoutSelectForm = this.fb.group({
     layoutName: ['',]
@@ -30,5 +31,10 @@ export class LayoutSelectorComponent implements OnInit {
 
   changeLayoutSetting($event: Event) {
     this.layout.emit(this.layoutSelectForm.value['layoutName']);
+  }
+
+  layoutToggle() {
+    console.log(this.layout);
+    this.showLayout = !this.showLayout;
   }
 }

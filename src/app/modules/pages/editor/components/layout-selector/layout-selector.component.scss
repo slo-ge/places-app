@@ -1,0 +1,12 @@
+@import 'style';
+select {
+  border: 2px solid $grey-1;
+  width: 100%;
+}
+
+.show-layout {
+  font-size: 12px;
+  color: $grey-1;
+  text-align: right;
+  margin-bottom: 10px;
+}

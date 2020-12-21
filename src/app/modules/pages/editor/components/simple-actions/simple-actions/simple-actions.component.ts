@@ -1,8 +1,21 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {Canvas, IEvent, Object} from "fabric/fabric-impl";
+import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
 import {fabric} from "fabric";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {faAlignCenter, faGripLines, faSync, faTh, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {
+  faAlignCenter,
+  faCaretSquareLeft,
+  faCaretSquareRight,
+  faSync,
+  faTh,
+  faTrashAlt
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  AlignmentService,
+  dictToKeys,
+  ObjectAlignments,
+  SimpleAlignments
+} from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
 
 
 @Component({
@@ -16,13 +29,17 @@ export class SimpleActionsComponent implements OnInit {
   activeRangeSliderMax = 100;
   activeRangeSliderCurrentValue = 50;
   iconRemove = faTrashAlt;
-  iconCenterHorizontal = faAlignCenter;
-  iconCenterVertical = faGripLines;
+  iconLeft = faCaretSquareLeft;
+  iconRight = faCaretSquareRight;
+  iconCenter = faAlignCenter;
   iconRotate = faSync;
   iconRasta = faTh;
+  objectAlignments = dictToKeys(ObjectAlignments);
+  simpleAlignments = SimpleAlignments;
+  showActiveObjectActions = false;
 
-
-  constructor(private  editorService: EditorService) {
+  constructor(private  editorService: EditorService,
+              private alignmentService: AlignmentService) {
   }
 
   ngOnInit(): void {
@@ -31,8 +48,9 @@ export class SimpleActionsComponent implements OnInit {
       this.canvas = canvas;
       this.canvas.on(
         {
-          'selection:created': (event: any) => this.onCanvasEvent(event),
-          'selection:updated': (event: any) => this.onCanvasEvent(event)
+          'selection:created': (event: any) => this.selectionEvent(event),
+          'selection:updated': (event: any) => this.selectionEvent(event),
+          'selection:cleared': (event: any) => this.selectionEndEvent(event),
         },
       );
     });
@@ -47,7 +65,9 @@ export class SimpleActionsComponent implements OnInit {
     this.canvas.remove(this.canvas.getActiveObject());
   }
 
-  onCanvasEvent(e: IEvent & { selected: Object[] }) {
+  selectionEvent(e: IEvent & { selected: FabricObject[] }) {
+    this.showActiveObjectActions = true;
+
     const activeObject = e.selected[0];
     if (activeObject instanceof fabric.Textbox) {
       console.log('selected Textbox');
@@ -62,12 +82,8 @@ export class SimpleActionsComponent implements OnInit {
     }
   }
 
-  actionCenterV() {
-    this.canvas.getActiveObject().centerV();
-  }
-
-  actionCenterH() {
-    this.canvas.getActiveObject().centerH();
+  selectionEndEvent(e: IEvent & { selected: FabricObject[] }) {
+    this.showActiveObjectActions = false;
   }
 
   changeSize(newWidth: number) {
@@ -89,5 +105,9 @@ export class SimpleActionsComponent implements OnInit {
       activeObject.rotate(activeObject.angle + 90);
       this.canvas.renderAll();
     }
+  }
+
+  alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
+    this.alignmentService.move(aligner, this.canvas, this.canvas.getActiveObject());
   }
 }

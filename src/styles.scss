@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 body {
   font-family: 'Open Sans', sans-serif;
+  margin: 0;
 }
 
 input[type=text], select {
@@ -11,7 +12,7 @@ input[type=text], select {
   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: $common-border-radius;
   border: 2px solid $grey-0;
 }
 
@@ -21,13 +22,12 @@ select {
   background: transparent url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat;
   background-position-x: 99%;
   background-position-y: 11px;
-  margin-right: 2rem;
   padding: 1rem 2rem 1rem 1rem;
 }
 
 button {
   width: 200px;
-  border-radius: 6px;
+  border-radius: $common-border-radius;
   border: 1px solid #434c61;
   font-size: 20px;
   background-color: $primary-blue;

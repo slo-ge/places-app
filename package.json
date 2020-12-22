@@ -23,7 +23,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@types/fabric": "^4.2.0",
+    "@types/fontfaceobserver": "0.0.6",
     "fabric": "^4.2.0",
+    "fontfaceobserver": "^2.1.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

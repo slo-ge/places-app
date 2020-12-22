@@ -51,8 +51,7 @@ export interface LayoutSetting {
 
   fontHeadingSizePixel: number;
   fontTextSizePixel: number;
-  fontHeadingWoff?: Font;
-  fontTextWoff?: Font;
+  fontFileWoff?: Font;
   fontFamilyHeadingCSS?: string;
   fontFamilyTextCSS?: string;
   fontFaceCSS?: string;

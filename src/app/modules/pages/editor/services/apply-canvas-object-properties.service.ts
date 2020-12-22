@@ -3,6 +3,8 @@ import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {LayoutSetting} from "@app/core/model/layout-setting";
 import {Canvas, Image} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
+import * as FontFaceObserver from 'fontfaceobserver'
+
 
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
@@ -28,8 +30,26 @@ function cmsApiUrl(url: string): string {
  */
 const imageCache: { [key: string]: Image } = {};
 
+
+/**
+ * this functions appends a new font face to the app
+ * @param fontFileUrl
+ * @param fontFamily
+ */
+function appendFontToDom(fontFileUrl: string, fontFamily: string) {
+  const absoluteFontFileUrl = cmsApiUrl(fontFileUrl);
+  const CSS = `@font-face {
+  font-family: '${fontFamily}';
+  src: url('${absoluteFontFileUrl}') format('woff'),
+       url('${absoluteFontFileUrl}') format('woff2');
+  }`;
+  const head = document.getElementsByTagName('head')[0];
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(CSS));
+  head.appendChild(style);
+}
+
 export class ApplyCanvasObjectPropertiesService {
-  private readonly paddingSides = 40;
   private readonly paddingTop = 80;
 
   private readonly canvasSettings: ObjectDisplayProperties;
@@ -50,7 +70,6 @@ export class ApplyCanvasObjectPropertiesService {
     if (this.layoutSetting.backgroundImage) {
       this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
     }
-
 
     if (this.canvasSettings.image) {
       const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
@@ -108,7 +127,17 @@ export class ApplyCanvasObjectPropertiesService {
    * the y position be a given object
    * @param fabricJsObject
    */
-  addTexts(fabricJsObject: any) {
+  async addTexts(fabricJsObject: any) {
+    if (this.layoutSetting.fontFamilyHeadingCSS && this.layoutSetting.fontFileWoff) {
+      appendFontToDom(
+        this.layoutSetting.fontFileWoff.url,
+        this.layoutSetting.fontFamilyHeadingCSS
+      );
+
+      const font = new FontFaceObserver(this.layoutSetting.fontFamilyHeadingCSS);
+      await font.load(null, 5000);
+    }
+
     const textOffset = fabricJsObject?.lineCoords?.bl?.y + this.layoutSetting.offsetImageBottom;
     const headingText = this.addText(
       this.canvasSettings.title,
@@ -155,11 +184,11 @@ export class ApplyCanvasObjectPropertiesService {
       fabricText.set('fontWeight', fontWeight);
     }
 
-    if(this.layoutSetting.fontLineHeight) {
+    if (this.layoutSetting.fontLineHeight) {
       fabricText.set('lineHeight', this.layoutSetting.fontLineHeight);
     }
 
-    if(this.layoutSetting.fontLetterSpacing) {
+    if (this.layoutSetting.fontLetterSpacing) {
       fabricText.set('charSpacing', this.layoutSetting.fontLetterSpacing);
     }
 

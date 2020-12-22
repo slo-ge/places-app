@@ -138,7 +138,7 @@ export class ApplyCanvasObjectPropertiesService {
       await font.load(null, 5000);
     }
 
-    const textOffset = fabricJsObject?.lineCoords?.bl?.y + this.layoutSetting.offsetImageBottom;
+    const textOffset = (fabricJsObject?.lineCoords?.bl?.y || 0) + this.layoutSetting.offsetImageBottom;
     const headingText = this.addText(
       this.canvasSettings.title,
       textOffset,

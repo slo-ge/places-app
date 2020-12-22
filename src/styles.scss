@@ -39,5 +39,11 @@ button {
 button.secondary {
   background-color: white;
   color: darkblue;
-  border-color: 1px solid $primary-blue;
+  border: 1px solid $primary-blue;
+}
+
+app-loading-animation {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }

@@ -10,6 +10,7 @@ import {SimpleActionsComponent} from './components/simple-actions/simple-actions
 import {RangeSliderComponent} from './components/range-slider/range-slider.component';
 import {CanvasActionsComponent} from './components/simple-actions/canvas-actions/canvas-actions.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-animation.module";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
     EditorRoutingModule,
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    LoadingAnimationModule
   ]
 })
 export class EditorModule {

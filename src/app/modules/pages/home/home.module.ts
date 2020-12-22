@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-animation.module";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     CommonModule,
     HomeRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingAnimationModule
   ]
 })
 export class HomeModule { }

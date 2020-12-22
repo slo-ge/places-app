@@ -1,14 +1,26 @@
 <h2>Select Post</h2>
-<div class="selection-grid">
-  <div>Title</div>
-  <div>Autor</div>
-  <div>Excerpt</div>
-  <div>Action</div>
-  <ng-container *ngFor="let post of posts$ | async">
-    <div>{{post.title.rendered}}</div>
-    <div>{{post.author}}</div>
-    <div>{{post.excerpt.rendered | slice:0:30}}</div>
-    <div [routerLink]="['/editor']" [queryParams]="{data: post.slug}" [queryParamsHandling]="'merge'">generate post</div>
-  </ng-container>
+<table *ngIf="posts$ | async as posts; else loading ">
+  <thead>
+  <tr>
+    <td class="heading">Title</td>
+    <td class="heading">Excerpt</td>
+    <td class="heading">Action</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let post of posts">
+    <td>{{post.title.rendered}}</td>
+    <td>{{post.excerpt.rendered | slice:0:30}}</td>
+    <td class="actions">
+      <span class="generate-posting" [routerLink]="['/editor']" [queryParams]="{data: post.slug}"
+            [queryParamsHandling]="'merge'">
+        <fa-icon [icon]="faPhotoVideo"></fa-icon>
+      </span>
+    </td>
+  </tr>
+  </tbody>
+</table>
 
-</div>
+<ng-template #loading>
+  <app-loading-animation></app-loading-animation>
+</ng-template>

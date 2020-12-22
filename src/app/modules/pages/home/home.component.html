@@ -2,6 +2,7 @@
 <div>
   <form [formGroup]="baseURLForm">
     <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url" type="text">
+    <button class="secondary" (click)="check()">Search</button>
   </form>
 </div>
 <div>
@@ -21,4 +22,8 @@
 
 <div *ngIf="adapter == false">
   <div>There was a problem detection any framework or meta data, may the selected link is incorrect</div>
+</div>
+
+<div *ngIf="loading">
+  <app-loading-animation></app-loading-animation>
 </div>

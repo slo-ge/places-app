@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AdapterService} from "@app/core/services/adapter.service";
 import {ApiAdapter} from "@app/core/model/content.service";
@@ -8,7 +8,7 @@ import {ApiAdapter} from "@app/core/model/content.service";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   adapterInfoText = {
     [ApiAdapter.WORDPRESS]: 'Select Content from Wordpress',
     [ApiAdapter.METADATA]: 'Found meta data of selected Website'
@@ -18,21 +18,21 @@ export class HomeComponent implements OnInit {
     url: new FormControl(''),
   });
 
+  loading = false;
   adapter: ApiAdapter | null | false = null;
   ApiAdapter = ApiAdapter;
 
   constructor(private adapterService: AdapterService) {
   }
 
-  ngOnInit(): void {
-    this.baseURLForm.get('url')?.valueChanges.subscribe(() => {
-      this.check();
-    })
+  @HostListener('document:keydown.enter', ['$event'])
+  enterHandler() {
+    this.check();
   }
 
   async check() {
+    this.loading = true;
     this.adapter = await this.adapterService.findAdapter(this.baseURLForm.get('url')?.value).catch(() => false);
+    this.loading = false;
   }
-
-
 }

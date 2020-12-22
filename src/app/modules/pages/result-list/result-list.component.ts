@@ -3,6 +3,7 @@ import {EMPTY, Observable} from "rxjs";
 import {Post} from "@app/core/model/wpObject";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapter.service";
+import {faPhotoVideo} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-result-list',
@@ -11,7 +12,7 @@ import {AdapterService} from "@app/core/services/adapter.service";
 })
 export class ResultListComponent implements OnInit {
   posts$: Observable<Post[]> = EMPTY;
-
+  faPhotoVideo = faPhotoVideo;
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute) {
   }

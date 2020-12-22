@@ -1,6 +1,55 @@
-.selection-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+@import 'style';
+
+:host {
+  display: block;
+  width: 800px;
+  margin: 0 auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+
+  thead > tr {
+    height: 60px;
+    background: $secondary-blue;
+    color: white;
+    td {
+      text-align: center;
+    }
+  }
+
+  tbody > tr {
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: unset;
+    min-height: 20px;
+
+    &:nth-child(2n) {
+      background-color: $grey-0;
+    }
+
+    td {
+      padding: 10px;
+      font-size: 16px;
+      width: 260px;
+      padding-left: 40px;
+    }
+  }
+}
+.heading {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size:1.2em;
+}
+
+.actions {
+  text-align: center;
+  .generate-posting {
+    cursor: pointer;
+  }
 }

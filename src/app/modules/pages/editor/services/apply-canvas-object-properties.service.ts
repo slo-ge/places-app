@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
-import {LayoutSetting} from "@app/core/model/layout-setting";
+import {LayoutItems, LayoutItemType, LayoutSetting} from "@app/core/model/layout-setting";
 import {Canvas, Image} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
 import * as FontFaceObserver from 'fontfaceobserver'
@@ -49,9 +49,15 @@ function appendFontToDom(fontFileUrl: string, fontFamily: string) {
   head.appendChild(style);
 }
 
-export class ApplyCanvasObjectPropertiesService {
-  private readonly paddingTop = 80;
+/**
+ * get the baseline y coord of fabric object
+ * @param obj
+ */
+function getYPos(obj: any): number {
+  return obj?.lineCoords?.bl?.y || 0
+}
 
+export class ApplyCanvasObjectPropertiesService {
   private readonly canvasSettings: ObjectDisplayProperties;
   private readonly layoutSetting: LayoutSetting;
   private readonly canvas: Canvas;
@@ -66,44 +72,58 @@ export class ApplyCanvasObjectPropertiesService {
   /**
    * This is the main entry point which draws all layer to the canvas
    */
-  initObjectsOnCanvas() {
+  async initObjectsOnCanvas() {
     if (this.layoutSetting.backgroundImage) {
       this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
+      await this.loadFont();
     }
 
-    if (this.canvasSettings.image) {
-      const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
+    if (this.layoutSetting.items && this.layoutSetting.items.length > 0) {
+      let posLastObjectY = 0; // the position of the last item in canvas
 
-      // Try to get image from cache
-      if (imageCache[proxiedImageUrl]) {
-        this.addImageAndTexts(imageCache[proxiedImageUrl]);
-      } else {
-        fabric.Image.fromURL(proxiedImageUrl, (image) => {
-          imageCache[proxiedImageUrl] = image;
-          this.addImageAndTexts(image);
-        }, {crossOrigin: "*"});
+      for (const item of this.layoutSetting.items.sort((a, b) => a < b ? -1 : 1)) {
+        if (item.type === LayoutItemType.TITLE) {
+          const obj = this.addText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
+          posLastObjectY = getYPos(obj);
+
+        } else if (item.type === LayoutItemType.DESCRIPTION) {
+          const obj = this.addText(this.canvasSettings.description, item, item.offsetTop + posLastObjectY);
+          posLastObjectY = getYPos(obj);
+
+        } else if (item.type === LayoutItemType.IMAGE && this.canvasSettings.image) {
+          const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
+          if (!(proxiedImageUrl in imageCache)) {
+            const prom = new Promise<Image>((resolve, _reject) => {
+              fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
+            });
+            imageCache[proxiedImageUrl] = await prom;
+          }
+          const obj = this.setImage(imageCache[proxiedImageUrl], item.offsetTop + posLastObjectY, item.offsetLeft);
+          posLastObjectY = getYPos(obj);
+        }
       }
-
     } else {
-      this.addTexts(null);
+      console.error('no items to show');
     }
   }
 
   /**
-   * render the image on the canvas and then
-   * render the texts to the canvas
+   * Sets a given preview image with offset
+   *
    * @param image
+   * @param offsetTop
+   * @param offsetLeft
    */
-  addImageAndTexts(image: Image) {
+  setImage(image: Image, offsetTop: number, offsetLeft: number) {
     const previewImage = image.set({
-      left: this.layoutSetting.offsetSides,
-      top: this.layoutSetting.offsetTop || this.paddingTop
+      left: offsetLeft,
+      top: offsetTop
     }) as any;
     previewImage.scaleToWidth(
-      (this.canvas.width || 0) - 2 * (this.layoutSetting.offsetSides || 0)
+      (this.canvas.width || 0) - (2 * offsetLeft)
     );
     this.canvas.add(previewImage);
-    this.addTexts(previewImage);
+    return previewImage;
   }
 
   /**
@@ -123,11 +143,9 @@ export class ApplyCanvasObjectPropertiesService {
   }
 
   /**
-   * This function adds the text layers and calculats
-   * the y position be a given object
-   * @param fabricJsObject
+   * check if a certain font is set and load the font
    */
-  async addTexts(fabricJsObject: any) {
+  async loadFont() {
     if (this.layoutSetting.fontFamilyHeadingCSS && this.layoutSetting.fontFileWoff) {
       appendFontToDom(
         this.layoutSetting.fontFileWoff.url,
@@ -136,64 +154,47 @@ export class ApplyCanvasObjectPropertiesService {
 
       const font = new FontFaceObserver(this.layoutSetting.fontFamilyHeadingCSS);
       await font.load(null, 5000);
+      console.log('loaded font', this.layoutSetting.fontFamilyHeadingCSS,
+        'from file', this.layoutSetting.fontFileWoff)
     }
-
-    const textOffset = (fabricJsObject?.lineCoords?.bl?.y || 0) + this.layoutSetting.offsetImageBottom;
-    const headingText = this.addText(
-      this.canvasSettings.title,
-      textOffset,
-      this.layoutSetting.fontHeadingSizePixel,
-      this.layoutSetting.fontFamilyHeadingCSS,
-      'bold'
-    );
-
-    this.addText(
-      this.canvasSettings.description,
-      headingText.lineCoords.bl.y + this.layoutSetting.offsetImageBottom,
-      this.layoutSetting.fontTextSizePixel,
-      this.layoutSetting.fontFamilyTextCSS
-    );
   }
 
   /**
    * This function renders the fabricJs text to the canvas with given
    * parameters.
-   * @param text
-   * @param yPosition
-   * @param fontSize
-   * @param fontFamily
-   * @param fontWeight
+   * @param text, the text from preview
+   * @param item, the config from item
+   * @param offsetTop
    */
-  addText(text: string, yPosition: number, fontSize: number, fontFamily?: string, fontWeight?: string) {
-    const padding = this.layoutSetting.offsetSides || 0;
+  addText(text: string, item: LayoutItems, offsetTop: number) {
+
     let fabricText = new fabric.Textbox(
       text,
       {
-        fontSize: fontSize,
-        left: padding,
-        top: yPosition,
-        width: (this.canvas.width || 0) - 2 * padding
+        fontSize: item.fontSize,
+        left: item.offsetLeft,
+        top: offsetTop,
+        width: (this.canvas.width || 0) - (2 * item.offsetLeft)
       }
     ) as any;
 
-    if (fontFamily) {
-      fabricText.set('fontFamily', fontFamily);
+    if (this.layoutSetting.fontFamilyHeadingCSS) {
+      fabricText.set('fontFamily', this.layoutSetting.fontFamilyHeadingCSS);
     }
 
-    if (fontWeight) {
-      fabricText.set('fontWeight', fontWeight);
+    if (item.fontWeight) {
+      fabricText.set('fontWeight', item.fontWeight);
     }
 
-    if (this.layoutSetting.fontLineHeight) {
-      fabricText.set('lineHeight', this.layoutSetting.fontLineHeight);
+    if (item.fontLineHeight) {
+      fabricText.set('lineHeight', item.fontLineHeight);
     }
 
-    if (this.layoutSetting.fontLetterSpacing) {
-      fabricText.set('charSpacing', this.layoutSetting.fontLetterSpacing);
+    if (item.fontLetterSpacing) {
+      fabricText.set('charSpacing', item.fontLetterSpacing);
     }
 
     this.canvas.add(fabricText);
     return fabricText;
   }
-
 }

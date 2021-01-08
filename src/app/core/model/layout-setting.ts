@@ -49,21 +49,28 @@ export interface LayoutSetting {
   updated_at?: Date;
   backgroundImage?: BackgroundImage;
 
-  fontHeadingSizePixel: number;
-  fontTextSizePixel: number;
   fontFileWoff?: Font;
   fontFamilyHeadingCSS?: string;
-  fontFamilyTextCSS?: string;
-  fontFaceCSS?: string;
 
-  fontLineHeight?: string;
-  fontLetterSpacing?: string;
+  items?: LayoutItems[]; // new API
+}
 
-  showTitle?: boolean;
-  showDescription?: boolean;
+export interface LayoutItems {
+  id: number,
+  fontSize: number,
+  fontLineHeight: string,
+  fontLetterSpacing: string,
+  offsetTop: number,
+  offsetLeft: number,
+  type: LayoutItemType,
+  title: string,
+  position: number;
+  fontWeight: null | 'bold';
+}
 
-  offsetTop?: number;
-  offsetSides?: number;
-  offsetImageBottom?: number;
+export enum LayoutItemType {
+  TITLE = 'title',
+  DESCRIPTION = 'description',
+  IMAGE = 'image'
 }
 

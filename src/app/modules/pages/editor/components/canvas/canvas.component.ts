@@ -10,24 +10,13 @@ import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 const DEFAULT_SETTING: LayoutSetting = {
   height: 1600,
-  width: 900,
-  fontHeadingSizePixel: 90,
-  fontTextSizePixel: 40,
-
-  fontLineHeight: '1',
-  fontLetterSpacing: '1.1',
-
-  offsetTop: 75,
-  offsetSides: 55,
-  offsetImageBottom: 40
+  width: 900
 };
 
 function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
   const config = {
     ...DEFAULT_SETTING,
     ...layout,
-    fontHeadingSizePixel: layout.fontHeadingSizePixel || defaultLayout.fontHeadingSizePixel,
-    fontTextSizePixel: layout.fontTextSizePixel || defaultLayout.fontTextSizePixel
   };
   console.log('Layout', config);
   return config;

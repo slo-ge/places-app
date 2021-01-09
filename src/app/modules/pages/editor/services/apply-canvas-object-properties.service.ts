@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
-import {LayoutItems, LayoutItemType, LayoutSetting} from "@app/core/model/layout-setting";
+import {ExportLatestPresetObject, LayoutItemType, ExportLatestPreset} from "@app/core/model/export-latest-preset";
 import {Canvas, Image} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
 import * as FontFaceObserver from 'fontfaceobserver'
@@ -59,11 +59,11 @@ function getYPos(obj: any): number {
 
 export class ApplyCanvasObjectPropertiesService {
   private readonly canvasSettings: ObjectDisplayProperties;
-  private readonly layoutSetting: LayoutSetting;
+  private readonly layoutSetting: ExportLatestPreset;
   private readonly canvas: Canvas;
 
 
-  constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: LayoutSetting) {
+  constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: ExportLatestPreset) {
     this.canvas = canvas;
     this.layoutSetting = layoutSetting;
     this.canvasSettings = canvasSettings;
@@ -166,7 +166,7 @@ export class ApplyCanvasObjectPropertiesService {
    * @param item, the config from item
    * @param offsetTop
    */
-  addText(text: string, item: LayoutItems, offsetTop: number) {
+  addText(text: string, item: ExportLatestPresetObject, offsetTop: number) {
 
     let fabricText = new fabric.Textbox(
       text,

@@ -19,6 +19,15 @@ select {
   label {
     align-self: center;
   }
+
+  .sub-control-heading {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    font-weight: bold;
+
+    border-top: 1px solid $grey-0;
+    padding-top: 10px;
+  }
 }
 
 button {

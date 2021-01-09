@@ -13,34 +13,28 @@
     <label>Height px</label>
     <input formControlName="height">
 
-    <label>fontHeadingSizePixel</label>
-    <input type="number"  formControlName="fontHeadingSizePixel">
-
-    <label>fontTextSizePixel</label>
-    <input type="number" formControlName="fontTextSizePixel">
-
     <label>fontFamilyHeadingCSS</label>
     <input formControlName="fontFamilyHeadingCSS">
 
-    <label>fontFamilyTextCSS</label>
-    <input formControlName="fontFamilyTextCSS">
 
-    <label>fontLineHeight</label>
-    <input formControlName="fontLineHeight">
-
-    <label>fontLetterSpacing</label>
-    <input formControlName="fontLetterSpacing">
-
-    <label>offsetTop</label>
-    <input  type="number"  formControlName="offsetTop">
-
-    <label>offsetSides</label>
-    <input  type="number"  formControlName="offsetSides">
-
-    <label>offsetImageBottom</label>
-    <input type="number"  formControlName="offsetImageBottom">
-
-    <div></div>
+    <ng-container formArrayName="items" *ngFor="let item of itemsForm; let i = index;">
+      <div class="sub-control-heading">
+        <span>{{item.get('title')?.value}} </span>
+        <span>(Type: {{item.get('type')?.value}})</span>
+      </div>
+      <ng-container [formGroupName]="i">
+        <label>fontLineHeight</label>
+        <input formControlName="fontLineHeight">
+        <label>fontLetterSpacing</label>
+        <input formControlName="fontLetterSpacing">
+        <label>fontSize</label>
+        <input type="number" formControlName="fontSize">
+        <label>offsetTop</label>
+        <input type="number"  formControlName="offsetTop" placeholder="Item offsetTop">
+        <label>offsetLeft</label>
+        <input  type="number" formControlName="offsetLeft" placeholder="Item offsetLeft">
+      </ng-container>
+    </ng-container>
     <button (click)="updateValues()" class="secondary">Update Values</button>
   </form>
 </div>

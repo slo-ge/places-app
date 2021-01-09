@@ -1,21 +1,30 @@
 import {Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
-import {LayoutSetting} from "@app/core/model/layout-setting";
+import {ExportLatestPreset, LayoutItemType} from "@app/core/model/export-latest-preset";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {ApplyCanvasObjectPropertiesService} from "@app/modules/pages/editor/services/apply-canvas-object-properties.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 
 
-const DEFAULT_SETTING: LayoutSetting = {
-  height: 1600,
-  width: 900
+const DEFAULT_SETTING: ExportLatestPreset = {
+  height: 900,
+  width: 900,
+  items: [
+    {
+      type: LayoutItemType.TITLE,
+      offsetTop: 30,
+      offsetLeft: 30,
+      fontSize: 50,
+      fontWeight: 'bold'
+    }
+  ]
 };
 
-function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
+function mergeLayouts(layout: ExportLatestPreset, defaultLayout = DEFAULT_SETTING) {
   const config = {
-    ...DEFAULT_SETTING,
+    ...defaultLayout,
     ...layout,
   };
   console.log('Layout', config);
@@ -31,7 +40,7 @@ function mergeLayouts(layout: LayoutSetting, defaultLayout = DEFAULT_SETTING) {
 export class CanvasComponent implements OnChanges {
   @Input()
   canvasSettings: ObjectDisplayProperties = {} as any;
-  layoutSetting: LayoutSetting = {} as any;
+  layoutSetting: ExportLatestPreset = {} as any;
   canvas: any;
 
   downloadIcon = faDownload;
@@ -45,7 +54,7 @@ export class CanvasComponent implements OnChanges {
     this.refreshCanvas();
   }
 
-  setLayout($event: LayoutSetting) {
+  setLayout($event: ExportLatestPreset) {
     this.layoutSetting = $event;
     this.refreshCanvas();
   }

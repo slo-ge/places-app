@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LayoutSetting} from "@app/core/model/layout-setting";
+import {ExportLatestPreset} from "@app/core/model/export-latest-preset";
 import {Observable} from "rxjs";
 
 export const CMS_API_URL = 'http://dev-tools.at:1337';
@@ -14,7 +14,7 @@ export class LayoutSettingService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getLayoutSetting(): Observable<LayoutSetting[]> {
-    return this.httpClient.get<LayoutSetting[]>(LAYOUT_CONFIG_API);
+  public getLayoutSetting(): Observable<ExportLatestPreset[]> {
+    return this.httpClient.get<ExportLatestPreset[]>(LAYOUT_CONFIG_API);
   }
 }

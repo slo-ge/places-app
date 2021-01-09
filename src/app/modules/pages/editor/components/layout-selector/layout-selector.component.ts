@@ -1,8 +1,8 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LayoutSettingService} from "@app/core/services/layout-setting.service";
 import {EMPTY, Observable} from "rxjs";
-import {LayoutSetting} from "@app/core/model/layout-setting";
-import {FormBuilder} from "@angular/forms";
+import {ExportLatestPresetObject, ExportLatestPreset} from "@app/core/model/export-latest-preset";
+import {FormArray, FormBuilder} from "@angular/forms";
 
 @Component({
   selector: 'app-layout-selector',
@@ -11,9 +11,9 @@ import {FormBuilder} from "@angular/forms";
 })
 export class LayoutSelectorComponent implements OnInit {
   @Output()
-  layout = new EventEmitter<LayoutSetting>();
+  layout = new EventEmitter<ExportLatestPreset>();
 
-  settings$: Observable<LayoutSetting[]> = EMPTY;
+  settings$: Observable<ExportLatestPreset[]> = EMPTY;
   showLayout = false;
 
   layoutSelectForm = this.fb.group({
@@ -22,19 +22,20 @@ export class LayoutSelectorComponent implements OnInit {
 
   detailForm = this.fb.group({
     width: ['',],
-    height : ['',],
+    height: ['',],
     title: ['',],
     fontHeadingSizePixel: ['',],
     fontTextSizePixel: ['',],
     fontFamilyHeadingCSS: ['',],
-    fontFamilyTextCSS:  ['',],
+    fontFamilyTextCSS: ['',],
 
-    fontLineHeight:  ['',],
-    fontLetterSpacing:  ['',],
+    fontLineHeight: ['',],
+    fontLetterSpacing: ['',],
 
-    offsetTop:  ['',],
-    offsetSides:  ['',],
-    offsetImageBottom:  ['',],
+    offsetTop: ['',],
+    offsetSides: ['',],
+    offsetImageBottom: ['',],
+    items: this.fb.array([])
   });
 
 
@@ -46,18 +47,43 @@ export class LayoutSelectorComponent implements OnInit {
     this.settings$ = this.layoutSettingsService.getLayoutSetting();
   }
 
-  changeLayoutSetting($event: Event) {
+  changeLayoutSetting(_event: Event) {
     this.layout.emit(this.layoutSelectForm.value['layoutName']);
     this.detailForm.patchValue({...this.layoutSelectForm.value['layoutName']});
+    const values = this.layoutSelectForm.value['layoutName'];
+    const items = this.detailForm.get('items') as FormArray;
+
+    for (let item of values.items) {
+      items?.push(this.createItems(item));
+    }
   }
 
   layoutToggle() {
-    console.log(this.layout);
     this.showLayout = !this.showLayout;
   }
 
   updateValues() {
     const tempLayout = this.layoutSelectForm.value['layoutName'] || {};
     this.layout.emit({...tempLayout, ...this.detailForm.value})
+  }
+
+  get itemsForm() {
+    return (this.detailForm.get('items') as FormArray).controls;
+  }
+
+  createItems(item: ExportLatestPresetObject) {
+    return this.fb.group({
+      fontSize: [item.fontSize],
+      fontLineHeight: [item.fontLineHeight,],
+      fontLetterSpacing: [item.fontLetterSpacing,],
+
+      offsetTop: [item.offsetTop,],
+      offsetLeft: [item.offsetLeft,],
+
+      type: [item.type,],
+      title: [item.title,],
+      position: [item.position],
+      fontWeight: [item.fontWeight]
+    });
   }
 }

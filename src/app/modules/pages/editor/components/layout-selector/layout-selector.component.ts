@@ -45,9 +45,17 @@ export class LayoutSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.settings$ = this.layoutSettingsService.getLayoutSetting();
+
+    this.detailForm.valueChanges.subscribe(() => this.updateValues());
   }
 
-  changeLayoutSetting(_event: Event) {
+  /**
+   * After selecting an preset this method will be called
+   * Also fills all forms with values from preset
+   *
+   * @param _event
+   */
+  changeLayoutSetting(_event?: Event) {
     this.layout.emit(this.layoutSelectForm.value['layoutName']);
     this.detailForm.patchValue({...this.layoutSelectForm.value['layoutName']});
     const values = this.layoutSelectForm.value['layoutName'];

@@ -46,7 +46,9 @@ export class LayoutSelectorComponent implements OnInit {
   ngOnInit(): void {
     this.settings$ = this.layoutSettingsService.getLayoutSetting();
 
-    this.detailForm.valueChanges.subscribe(() => this.updateValues());
+    // TODO: this can not be used, because the filling the inner
+    // TODO: form leads to trigger the subscription multiple times
+    //this.detailForm.valueChanges.subscribe(() => this.updateValues());
   }
 
   /**
@@ -60,8 +62,9 @@ export class LayoutSelectorComponent implements OnInit {
     this.detailForm.patchValue({...this.layoutSelectForm.value['layoutName']});
     const values = this.layoutSelectForm.value['layoutName'];
     const items = this.detailForm.get('items') as FormArray;
-
+    items.clear();
     for (let item of values.items) {
+      // triggers multiple valueChanges
       items?.push(this.createItems(item));
     }
   }

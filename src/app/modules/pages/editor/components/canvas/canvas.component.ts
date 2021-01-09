@@ -23,12 +23,10 @@ const DEFAULT_SETTING: ExportLatestPreset = {
 };
 
 function mergeLayouts(layout: ExportLatestPreset, defaultLayout = DEFAULT_SETTING) {
-  const config = {
+  return {
     ...defaultLayout,
     ...layout,
   };
-  console.log('Layout', config);
-  return config;
 }
 
 
@@ -57,6 +55,7 @@ export class CanvasComponent implements OnChanges {
   setLayout($event: ExportLatestPreset) {
     this.layoutSetting = $event;
     this.refreshCanvas();
+    console.log('layout selected');
   }
 
   refreshCanvas() {
@@ -83,13 +82,6 @@ export class CanvasComponent implements OnChanges {
       applyObjectService.initObjectsOnCanvas();
     }
   }
-
-  /*@HostListener('document:click', ['$event'])
-  deselectListener(event$: any) {
-    if (!this.currentComponentElemRef.nativeElement.contains(event?.target)) {
-      this.canvas.discardActiveObject().renderAll();
-    }
-  }*/
 
   download() {
     this.downloadService.download();

@@ -17,7 +17,6 @@ import {
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
 
-
 @Component({
   selector: 'app-simple-actions',
   templateUrl: './simple-actions.component.html',
@@ -70,11 +69,9 @@ export class SimpleActionsComponent implements OnInit {
 
     const activeObject = e.selected[0];
     if (activeObject instanceof fabric.Textbox) {
-      console.log('selected Textbox');
       this.activeRangeSliderCurrentValue = Number(activeObject.fontSize);
       this.activeRangeSliderMax = 300;
     } else if (activeObject instanceof fabric.Image) {
-      console.log('selected Image');
       this.activeRangeSliderCurrentValue = Number(activeObject.getScaledWidth());
       this.activeRangeSliderMax = Number(1200);
     } else {
@@ -82,7 +79,7 @@ export class SimpleActionsComponent implements OnInit {
     }
   }
 
-  selectionEndEvent(e: IEvent & { selected: FabricObject[] }) {
+  selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.showActiveObjectActions = false;
   }
 

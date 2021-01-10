@@ -35,7 +35,9 @@ export class SimpleActionsComponent implements OnInit {
   iconRasta = faTh;
   objectAlignments = dictToKeys(ObjectAlignments);
   simpleAlignments = SimpleAlignments;
+
   showActiveObjectActions = false;
+  showActiveObjectImageActions = false;
 
   constructor(private  editorService: EditorService,
               private alignmentService: AlignmentService) {
@@ -74,6 +76,8 @@ export class SimpleActionsComponent implements OnInit {
     } else if (activeObject instanceof fabric.Image) {
       this.activeRangeSliderCurrentValue = Number(activeObject.getScaledWidth());
       this.activeRangeSliderMax = Number(1200);
+      this.showActiveObjectImageActions = true;
+
     } else {
       console.error('onCanvasEvent could not found Object:', activeObject)
     }
@@ -81,6 +85,7 @@ export class SimpleActionsComponent implements OnInit {
 
   selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.showActiveObjectActions = false;
+    this.showActiveObjectImageActions = false;
   }
 
   changeSize(newWidth: number) {

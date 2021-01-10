@@ -64,7 +64,7 @@ export interface ExportLatestPresetObject {
   offsetLeft: number,
   type: LayoutItemType,
   title?: string,
-  position?: number;
+  position: number;
   fontWeight?: null | 'bold';
 }
 

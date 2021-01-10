@@ -18,7 +18,7 @@ function proxiedUrl(url: string): string {
  * because every CMS URL is relative to CMS, so we need to append the api url
  * @param url
  */
-function cmsApiUrl(url: string): string {
+export function cmsApiUrl(url: string): string {
   // url always starts with "/"
   return `${CMS_API_URL}${url}`;
 }
@@ -81,7 +81,7 @@ export class ApplyCanvasObjectPropertiesService {
     if (this.layoutSetting.items && this.layoutSetting.items.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
 
-      for (const item of this.layoutSetting.items.sort((a, b) => a < b ? -1 : 1)) {
+      for (const item of this.layoutSetting.items.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (item.type === LayoutItemType.TITLE) {
           const obj = this.addText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
           posLastObjectY = getYPos(obj);

@@ -1,4 +1,5 @@
 @import 'style';
+
 select {
   border: 2px solid $grey-1;
   width: 100%;
@@ -31,9 +32,49 @@ select {
 }
 
 button {
- width: 100%;
+  width: 100%;
 }
 
 .values-container {
   margin-bottom: 15px;
+}
+
+
+.preview {
+  max-height: 60vh;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 120px 120px;
+  grid-template-rows: 160px;
+  grid-gap: 10px;
+
+  &-tile {
+    position: relative;
+    cursor: pointer;
+
+
+    &-title {
+      position: absolute;
+      text-align: center;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+
+      font-weight: bold;
+      background-color: white;
+      opacity: 0;
+      transition: 0.4s;
+    }
+
+    &:hover &-title {
+      opacity: 0.9;
+    }
+
+    img {
+      object-fit: cover;
+      width: 120px;
+      height: 160px;
+      border-radius: $common-border-radius;
+    }
+  }
 }

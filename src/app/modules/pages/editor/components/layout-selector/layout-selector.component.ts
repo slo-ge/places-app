@@ -3,6 +3,7 @@ import {LayoutSettingService} from "@app/core/services/layout-setting.service";
 import {EMPTY, Observable} from "rxjs";
 import {ExportLatestPresetObject, ExportLatestPreset} from "@app/core/model/export-latest-preset";
 import {FormArray, FormBuilder} from "@angular/forms";
+import {cmsApiUrl} from "@app/modules/pages/editor/services/apply-canvas-object-properties.service";
 
 @Component({
   selector: 'app-layout-selector',
@@ -56,17 +57,21 @@ export class LayoutSelectorComponent implements OnInit {
    * Also fills all forms with values from preset
    *
    * @param _event
+   * @param preset
    */
-  changeLayoutSetting(_event?: Event) {
-    this.layout.emit(this.layoutSelectForm.value['layoutName']);
-    this.detailForm.patchValue({...this.layoutSelectForm.value['layoutName']});
-    const values = this.layoutSelectForm.value['layoutName'];
+  changeLayoutSetting(_event?: Event, preset = this.layoutSelectForm.value['layoutName']) {
+    this.layout.emit(preset);
+    this.detailForm.patchValue({...preset});
     const items = this.detailForm.get('items') as FormArray;
     items.clear();
-    for (let item of values.items) {
+    for (let item of preset.items) {
       // triggers multiple valueChanges
       items?.push(this.createItems(item));
     }
+  }
+
+  selectPreset(setting: ExportLatestPreset) {
+    this.changeLayoutSetting({} as any, setting)
   }
 
   layoutToggle() {
@@ -97,4 +102,10 @@ export class LayoutSelectorComponent implements OnInit {
       fontWeight: [item.fontWeight]
     });
   }
+
+  cmsApiUrl(url: string) {
+    return cmsApiUrl(url)
+  }
+
+
 }

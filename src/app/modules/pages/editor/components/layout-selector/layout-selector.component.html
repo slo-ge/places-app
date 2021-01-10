@@ -1,9 +1,16 @@
-<form [formGroup]="layoutSelectForm">
+<!--<form [formGroup]="layoutSelectForm">
   <select formControlName="layoutName" (change)="changeLayoutSetting($event)">
     <option value="">Choose layout</option>
     <option *ngFor="let setting of settings$ | async" [ngValue]="setting">{{setting.title}}</option>
   </select>
-</form>
+</form> -->
+<div class="preview">
+  <div (click)="selectPreset(setting)" *ngFor="let setting of settings$ | async" class="preview-tile">
+    <div class="preview-tile-title">{{setting.title}}</div>
+    <img [src]="cmsApiUrl(setting.backgroundImage?.formats?.thumbnail?.url || '')">
+  </div>
+</div>
+
 <div class="show-layout" (click)="layoutToggle()">Show Values</div>
 <div class="values-container" *ngIf="showLayout">
   <form class="values" [formGroup]="detailForm">
@@ -29,9 +36,9 @@
         <label>fontSize</label>
         <input type="number" formControlName="fontSize">
         <label>offsetTop</label>
-        <input type="number"  formControlName="offsetTop" placeholder="Item offsetTop">
+        <input type="number" formControlName="offsetTop" placeholder="Item offsetTop">
         <label>offsetLeft</label>
-        <input  type="number" formControlName="offsetLeft" placeholder="Item offsetLeft">
+        <input type="number" formControlName="offsetLeft" placeholder="Item offsetLeft">
       </ng-container>
     </ng-container>
     <button (click)="updateValues()" class="secondary">Update Values</button>

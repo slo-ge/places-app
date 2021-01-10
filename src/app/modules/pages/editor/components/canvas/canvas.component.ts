@@ -17,7 +17,8 @@ const DEFAULT_SETTING: ExportLatestPreset = {
       offsetTop: 30,
       offsetLeft: 30,
       fontSize: 50,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
+      position: 1
     }
   ]
 };

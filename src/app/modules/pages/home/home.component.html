@@ -1,8 +1,9 @@
 <h2>Insert Link</h2>
 <div>
   <form [formGroup]="baseURLForm">
-    <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url" type="text">
-    <button class="secondary" (click)="check()">Search</button>
+    <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url"
+           type="text">
+    <button class="secondary" (click)="check()">Check Domain</button>
   </form>
 </div>
 <div>
@@ -10,7 +11,8 @@
 
 <div *ngIf="adapter">
   <div class="found-adapter">{{adapterInfoText[adapter]}}</div>
-  <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']" [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
+  <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
+          [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
     Select Post
   </button>
 
@@ -26,4 +28,12 @@
 
 <div *ngIf="loading">
   <app-loading-animation></app-loading-animation>
+</div>
+
+
+<div class="examples">
+  <h3>Try with:</h3>
+  <ul>
+    <li *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}</li>
+  </ul>
 </div>

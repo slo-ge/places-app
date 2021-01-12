@@ -18,3 +18,21 @@ h2 {
   margin-top: 140px;
   margin-bottom: 5px;
 }
+
+.examples {
+  h3 {
+    font-size: 20px;
+    color: #9d9d9d;
+    margin-bottom: 5px;
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    list-style-type: none;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}

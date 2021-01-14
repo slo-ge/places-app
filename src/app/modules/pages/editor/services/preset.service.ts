@@ -1,9 +1,14 @@
 import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
-import {ExportLatestPresetObject, LayoutItemType, ExportLatestPreset} from "@app/core/model/export-latest-preset";
+import {PresetObject, LayoutItemType, Preset} from "@app/core/model/preset";
 import {Canvas, Image} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/layout-setting.service";
 import * as FontFaceObserver from 'fontfaceobserver'
+import {
+  fabricObjectToPresetObject,
+  getYPos,
+  ObjectPreset
+} from "@app/modules/pages/editor/services/fabric-object.utils";
 
 
 // This proxy proxies any url and sets the cors origin to * to make
@@ -49,21 +54,18 @@ function appendFontToDom(fontFileUrl: string, fontFamily: string) {
   head.appendChild(style);
 }
 
-/**
- * get the baseline y coord of fabric object
- * @param obj
- */
-function getYPos(obj: any): number {
-  return obj?.lineCoords?.bl?.y || 0
-}
 
-export class ApplyCanvasObjectPropertiesService {
+export class PresetService {
   private readonly canvasSettings: ObjectDisplayProperties;
-  private readonly layoutSetting: ExportLatestPreset;
+  private readonly layoutSetting: Preset;
   private readonly canvas: Canvas;
+  /**
+   * currentObjects which the current canvas holds,
+   * this is needed to change and update data for updating presets
+   */
+  private currentObjects: ObjectPreset[] = [];
 
-
-  constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: ExportLatestPreset) {
+  constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: Preset) {
     this.canvas = canvas;
     this.layoutSetting = layoutSetting;
     this.canvasSettings = canvasSettings;
@@ -78,19 +80,27 @@ export class ApplyCanvasObjectPropertiesService {
       await this.loadFont();
     }
 
+    // clear current items
+    if (this.currentObjects.length > 0) {
+      this.currentObjects = [];
+    }
+
     if (this.layoutSetting.items && this.layoutSetting.items.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
 
       for (const item of this.layoutSetting.items.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (item.type === LayoutItemType.TITLE) {
-          const obj = this.addText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
+          const obj = this.createText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
+          this.addObjectToCanvas(obj, item);
           posLastObjectY = getYPos(obj);
 
         } else if (item.type === LayoutItemType.DESCRIPTION) {
-          const obj = this.addText(this.canvasSettings.description, item, item.offsetTop + posLastObjectY);
+          const obj = this.createText(this.canvasSettings.description, item, item.offsetTop + posLastObjectY);
+          this.addObjectToCanvas(obj, item);
           posLastObjectY = getYPos(obj);
 
         } else if (item.type === LayoutItemType.IMAGE && this.canvasSettings.image) {
+          // TODO: refactore this code
           const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
           if (!(proxiedImageUrl in imageCache)) {
             const prom = new Promise<Image>((resolve, _reject) => {
@@ -98,7 +108,8 @@ export class ApplyCanvasObjectPropertiesService {
             });
             imageCache[proxiedImageUrl] = await prom;
           }
-          const obj = this.setImage(imageCache[proxiedImageUrl], item.offsetTop + posLastObjectY, item.offsetLeft);
+          const obj = this.createImage(imageCache[proxiedImageUrl], item.offsetTop + posLastObjectY, item);
+          this.addObjectToCanvas(obj, item);
           posLastObjectY = getYPos(obj);
         }
       }
@@ -107,24 +118,6 @@ export class ApplyCanvasObjectPropertiesService {
     }
   }
 
-  /**
-   * Sets a given preview image with offset
-   *
-   * @param image
-   * @param offsetTop
-   * @param offsetLeft
-   */
-  setImage(image: Image, offsetTop: number, offsetLeft: number) {
-    const previewImage = image.set({
-      left: offsetLeft,
-      top: offsetTop
-    }) as any;
-    previewImage.scaleToWidth(
-      (this.canvas.width || 0) - (2 * offsetLeft)
-    );
-    this.canvas.add(previewImage);
-    return previewImage;
-  }
 
   /**
    * Set the background image to the whole canvas layer,
@@ -166,8 +159,7 @@ export class ApplyCanvasObjectPropertiesService {
    * @param item, the config from item
    * @param offsetTop
    */
-  addText(text: string, item: ExportLatestPresetObject, offsetTop: number) {
-
+  createText(text: string, item: PresetObject, offsetTop: number) {
     let fabricText = new fabric.Textbox(
       text,
       {
@@ -194,7 +186,58 @@ export class ApplyCanvasObjectPropertiesService {
       fabricText.set('charSpacing', item.fontLetterSpacing);
     }
 
-    this.canvas.add(fabricText);
     return fabricText;
+  }
+
+  /**
+   * Sets a given preview image with offset
+   *
+   * @param image
+   * @param offsetTop: the offset always depends on previous item
+   * @param item
+   */
+  createImage(image: Image, offsetTop: number, item: PresetObject) {
+    const previewImage = image.set({
+      left: item.offsetLeft,
+      top: offsetTop
+    }) as any;
+    previewImage.scaleToWidth(
+      (this.canvas.width || 0) - (2 * item.offsetLeft)
+    );
+
+    return previewImage;
+  }
+
+  /**
+   * Adds the object to the canvas
+   * Also adds object and item to a list
+   */
+  addObjectToCanvas(object: fabric.Image | fabric.Textbox, item: PresetObject) {
+    this.canvas.add(object);
+    this.currentObjects.push({object, item})
+  }
+
+  /**
+   * returns the current items and
+   */
+  getCurrentItems() {
+    if (this.currentObjects.length === 0) {
+      console.error('No  items set to canvas');
+    }
+
+    const items = this.currentObjects;
+    let posLastObjectY = 0;
+    /**
+     * always take the bottom line und sub from the top of the object to get a relative
+     * space between the items,
+     * TODO: please refactor these code to own method
+     */
+    for (let item of items.sort((a, b) => a.item.position < b.item.position ? -1 : 1)) {
+      if (item.object.top) {
+        item.object.top = item.object.top - posLastObjectY;
+        posLastObjectY = getYPos(item.object);
+      }
+    }
+    return items.map(fabricObjectToPresetObject);
   }
 }

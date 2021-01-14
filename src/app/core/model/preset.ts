@@ -40,7 +40,7 @@ export interface Font {
   url: string;
 }
 
-export interface ExportLatestPreset {
+export interface Preset {
   id?: number;
   width: number;
   height: number;
@@ -52,14 +52,14 @@ export interface ExportLatestPreset {
   fontFileWoff?: Font;
   fontFamilyHeadingCSS?: string;
 
-  items?: ExportLatestPresetObject[]; // new API
+  items?: PresetObject[]; // new API
 }
 
-export interface ExportLatestPresetObject {
+export interface PresetObject {
   id?: number,
   fontSize?: number,
-  fontLineHeight?: string,
-  fontLetterSpacing?: string,
+  fontLineHeight?: string | number,
+  fontLetterSpacing?: string | number,
   offsetTop: number,
   offsetLeft: number,
   type: LayoutItemType,

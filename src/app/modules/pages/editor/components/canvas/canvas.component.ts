@@ -1,14 +1,15 @@
 import {Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
-import {ExportLatestPreset, LayoutItemType} from "@app/core/model/export-latest-preset";
+import {LayoutItemType, Preset} from "@app/core/model/preset";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {ApplyCanvasObjectPropertiesService} from "@app/modules/pages/editor/services/apply-canvas-object-properties.service";
+import {PresetService} from "@app/modules/pages/editor/services/preset.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
-import {faDownload} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faSave} from "@fortawesome/free-solid-svg-icons";
+import {LayoutSettingService} from "@app/core/services/layout-setting.service";
 
 
-const DEFAULT_SETTING: ExportLatestPreset = {
+const DEFAULT_SETTING: Preset = {
   height: 900,
   width: 900,
   items: [
@@ -23,7 +24,7 @@ const DEFAULT_SETTING: ExportLatestPreset = {
   ]
 };
 
-function mergeLayouts(layout: ExportLatestPreset, defaultLayout = DEFAULT_SETTING) {
+function mergeLayouts(layout: Preset, defaultLayout = DEFAULT_SETTING) {
   return {
     ...defaultLayout,
     ...layout,
@@ -39,21 +40,24 @@ function mergeLayouts(layout: ExportLatestPreset, defaultLayout = DEFAULT_SETTIN
 export class CanvasComponent implements OnChanges {
   @Input()
   canvasSettings: ObjectDisplayProperties = {} as any;
-  layoutSetting: ExportLatestPreset = {} as any;
+  layoutSetting: Preset = {} as any;
   canvas: any;
+  currentPresetService: PresetService | null = null;
 
   downloadIcon = faDownload;
+  saveChangesIcon = faSave;
 
   constructor(private currentComponentElemRef: ElementRef,
               private editorService: EditorService,
-              private downloadService: DownloadCanvasService) {
+              private downloadService: DownloadCanvasService,
+              private layoutSettingService: LayoutSettingService) {
   }
 
   ngOnChanges(data: SimpleChanges): void {
     this.refreshCanvas();
   }
 
-  setLayout($event: ExportLatestPreset) {
+  setLayout($event: Preset) {
     this.layoutSetting = $event;
     this.refreshCanvas();
     console.log('layout selected');
@@ -70,7 +74,7 @@ export class CanvasComponent implements OnChanges {
     this.layoutSetting = mergeLayouts(this.layoutSetting);
 
     if (this.canvasSettings) {
-      const applyObjectService = new ApplyCanvasObjectPropertiesService(
+      this.currentPresetService = new PresetService(
         this.canvas,
         this.canvasSettings,
         this.layoutSetting
@@ -80,11 +84,17 @@ export class CanvasComponent implements OnChanges {
       this.canvas.setWidth(this.layoutSetting.width);
       this.canvas.renderAll();
 
-      applyObjectService.initObjectsOnCanvas();
+      this.currentPresetService.initObjectsOnCanvas();
     }
   }
 
   download() {
     this.downloadService.download();
+  }
+
+  updateValues() {
+    if (this.currentPresetService) {
+      this.layoutSettingService.update(this.currentPresetService.getCurrentItems());
+    }
   }
 }

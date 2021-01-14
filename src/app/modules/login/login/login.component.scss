@@ -1,0 +1,29 @@
+@import 'style';
+
+:host {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+
+  .login-toggle {
+    color: $primary-blue;
+    cursor: pointer;
+  }
+
+  > * {
+    margin-right: 10px;
+  }
+
+  form {
+    display: block;
+  }
+
+  input, button {
+    margin-left: 10px;
+    max-width: 100px;
+  }
+
+  .logged-in{
+    font-size: 12px;
+  }
+}

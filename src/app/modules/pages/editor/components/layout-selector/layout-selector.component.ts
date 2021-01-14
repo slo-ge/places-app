@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LayoutSettingService} from "@app/core/services/layout-setting.service";
 import {EMPTY, Observable} from "rxjs";
-import {ExportLatestPresetObject, ExportLatestPreset} from "@app/core/model/export-latest-preset";
+import {PresetObject, Preset} from "@app/core/model/preset";
 import {FormArray, FormBuilder} from "@angular/forms";
-import {cmsApiUrl} from "@app/modules/pages/editor/services/apply-canvas-object-properties.service";
+import {cmsApiUrl} from "@app/modules/pages/editor/services/preset.service";
 
 @Component({
   selector: 'app-layout-selector',
@@ -12,9 +12,9 @@ import {cmsApiUrl} from "@app/modules/pages/editor/services/apply-canvas-object-
 })
 export class LayoutSelectorComponent implements OnInit {
   @Output()
-  layout = new EventEmitter<ExportLatestPreset>();
+  layout = new EventEmitter<Preset>();
 
-  settings$: Observable<ExportLatestPreset[]> = EMPTY;
+  settings$: Observable<Preset[]> = EMPTY;
   showLayout = false;
 
   layoutSelectForm = this.fb.group({
@@ -70,7 +70,7 @@ export class LayoutSelectorComponent implements OnInit {
     }
   }
 
-  selectPreset(setting: ExportLatestPreset) {
+  selectPreset(setting: Preset) {
     this.changeLayoutSetting({} as any, setting)
   }
 
@@ -80,14 +80,14 @@ export class LayoutSelectorComponent implements OnInit {
 
   updateValues() {
     const tempLayout = this.layoutSelectForm.value['layoutName'] || {};
-    this.layout.emit({...tempLayout, ...this.detailForm.value})
+    this.layout.emit({...this.detailForm.value, ...tempLayout });
   }
 
   get itemsForm() {
     return (this.detailForm.get('items') as FormArray).controls;
   }
 
-  createItems(item: ExportLatestPresetObject) {
+  createItems(item: PresetObject) {
     return this.fb.group({
       fontSize: [item.fontSize],
       fontLineHeight: [item.fontLineHeight,],
@@ -106,6 +106,4 @@ export class LayoutSelectorComponent implements OnInit {
   cmsApiUrl(url: string) {
     return cmsApiUrl(url)
   }
-
-
 }

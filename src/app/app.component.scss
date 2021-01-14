@@ -19,6 +19,18 @@ app-main-breadcrumbs {
 }
 
 .header-bar {
+  background-color: $grey-0;
+  border-bottom: 1px $grey-1 solid;
+  margin-bottom: 15px;
+  padding:10px 0;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header-left {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -26,9 +38,4 @@ app-main-breadcrumbs {
   > * {
     margin-left: 50px;
   }
-
-  background-color: $grey-0;
-  border-bottom: 1px $grey-1 solid;
-  margin-bottom: 15px;
-  padding:10px 0;
 }

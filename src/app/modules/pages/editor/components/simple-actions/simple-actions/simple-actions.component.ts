@@ -43,6 +43,7 @@ export class SimpleActionsComponent implements OnInit {
               private alignmentService: AlignmentService) {
   }
 
+
   ngOnInit(): void {
     // TODO: kill subscription in onDestroy!
     this.editorService.getCanvas().subscribe(canvas => {
@@ -111,5 +112,16 @@ export class SimpleActionsComponent implements OnInit {
 
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
     this.alignmentService.move(aligner, this.canvas, this.canvas.getActiveObject());
+  }
+
+  changeColor(colorCode: string) {
+    const activeObject = this.canvas.getActiveObject();
+    if (activeObject) {
+      // Please use canvas.getActiveObject().set('fill', color)
+      // This will automatically invalidate the cache and at next
+      // redraw you will get color change.
+      activeObject.set('fill', colorCode);
+      this.canvas.renderAll();
+    }
   }
 }

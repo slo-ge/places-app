@@ -11,6 +11,7 @@ import {RangeSliderComponent} from './components/range-slider/range-slider.compo
 import {CanvasActionsComponent} from './components/simple-actions/canvas-actions/canvas-actions.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-animation.module";
+import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-ani
     LayoutSelectorComponent,
     SimpleActionsComponent,
     RangeSliderComponent,
-    CanvasActionsComponent
+    CanvasActionsComponent,
+    ColorPickerComponent
   ],
   imports: [
     CommonModule,

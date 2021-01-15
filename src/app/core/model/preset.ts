@@ -66,6 +66,8 @@ export interface PresetObject {
   title?: string,
   position: number;
   fontWeight?: null | 'bold';
+  fontColor?: string;
+  objectAngle?: number;
 }
 
 export enum LayoutItemType {

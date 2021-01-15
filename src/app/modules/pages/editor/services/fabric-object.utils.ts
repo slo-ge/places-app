@@ -28,6 +28,14 @@ export function fabricObjectToPresetObject(item: ObjectPreset): PresetObject {
     type: item.item.type
   };
 
+  if (fabricObject.fill) {
+    tmp.fontColor = fabricObject.fill as string;
+  }
+
+  if (fabricObject.angle != 360) {
+    tmp.objectAngle = fabricObject.angle;
+  }
+
   if (fabricObject.fontWeight) {
     //tmp.fontWeight = fabricObject.fontWeight;
   }

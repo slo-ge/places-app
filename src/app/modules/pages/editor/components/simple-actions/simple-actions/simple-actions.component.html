@@ -22,4 +22,5 @@
   </div>
   <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"
                     (valueChange)="changeSize($event)"></app-range-slider>
+  <app-color-picker (color)="changeColor($event)"></app-color-picker>
 </div>

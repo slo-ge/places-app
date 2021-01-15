@@ -171,6 +171,14 @@ export class PresetService {
       }
     ) as any;
 
+    if (item.fontColor) {
+      fabricText.set('fill', item.fontColor);
+    }
+
+    if (item.objectAngle) {
+      fabricText.set('angle', item.objectAngle);
+    }
+
     if (this.layoutSetting.fontFamilyHeadingCSS) {
       fabricText.set('fontFamily', this.layoutSetting.fontFamilyHeadingCSS);
     }

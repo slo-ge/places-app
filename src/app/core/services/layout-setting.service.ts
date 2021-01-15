@@ -1,14 +1,15 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Preset, PresetObject} from "@app/core/model/preset";
-import {Observable} from "rxjs";
+import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
 import {tap} from "rxjs/operators";
+import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
 
 export const CMS_API_URL = 'http://dev-tools.at:1337';
 const LAYOUT_CONFIG_API = 'http://dev-tools.at:1337/export-latest-layouts';
 const AUTH_URL = 'http://dev-tools.at:1337/admin/auth/local';
 
-interface AuthResponse {
+export interface AuthResponse {
   jwt: string,
   user: {
     id: number,
@@ -23,10 +24,10 @@ interface AuthResponse {
   providedIn: 'root'
 })
 export class LayoutSettingService {
-  private jwt: string | null = null; // TODO: use observable
-  private currentUser: string | null = null; // TODO: make this correct
+  private currentUser: BehaviorSubject<AuthResponse | null> = new BehaviorSubject<AuthResponse | null>(null);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private simpleLocalCacheService: SimpleLocalCacheService) {
   }
 
   public getLayoutSetting(): Observable<Preset[]> {
@@ -36,17 +37,16 @@ export class LayoutSettingService {
   public update(items: PresetObject[]) {
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Bearer ${this.jwt}`
     };
 
     for (let item of items) {
-      const url = `http://dev-tools.at:1337/export-latest-items/${item.id}`;
+      const url = `${CMS_API_URL}/export-latest-items/${item.id}`;
       const body = new URLSearchParams(item as any);
       this.httpClient.put(url, body.toString(), {headers}).subscribe(console.log);
     }
   }
 
-  public auth(user: string, password: string): Observable<AuthResponse> {
+  public token(user: string, password: string): Observable<AuthResponse> {
     let body = new URLSearchParams();
 
     body.set('identifier', user);
@@ -58,11 +58,23 @@ export class LayoutSettingService {
     };
 
     return this.httpClient.post<AuthResponse>(AUTH_URL, body.toString(), {headers}).pipe(
-      tap(data => {this.jwt = data.jwt; this.currentUser = data.user.username})
+      tap(data => {
+        this.currentUser.next(data);
+        this.simpleLocalCacheService.setUser(data);
+      })
     );
   }
 
-  public logout(){
-    this.jwt = null;
+  public getUser(): Observable<AuthResponse | null> {
+    if (this.simpleLocalCacheService.getUser()) {
+      return of(this.simpleLocalCacheService.getUser());
+    }
+
+    return this.currentUser.asObservable();
+  }
+
+  public logout() {
+    this.currentUser.next(null);
+    this.simpleLocalCacheService.clearUser();
   }
 }

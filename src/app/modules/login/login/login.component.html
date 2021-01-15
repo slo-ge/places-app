@@ -1,4 +1,4 @@
-<ng-container *ngIf="!loggedIn; else username">
+<ng-container *ngIf="!(currentUser | async); else username">
   <form *ngIf="show" class="values" [formGroup]="userForm">
     <label>User</label>
     <input formControlName="username" type="text">
@@ -9,8 +9,9 @@
   </form>
   <button class=" secondary login-toggle" (click)="toggleLogin()">Sign In</button>
 </ng-container>
+
 <ng-template #username>
-  <div class="logged-in">
-  {{loggedIn}}
+  <div class="logged-in" *ngIf="currentUser | async as user">
+    {{user.user.username}} / {{user.user.email}}
   </div>
 </ng-template>

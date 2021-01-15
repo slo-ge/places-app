@@ -10,9 +10,10 @@ import {CmsService} from "@app/core/services/cms.service";
 
 
 const DEFAULT_SETTING: Preset = {
+  id: 9999,
   height: 900,
   width: 900,
-  items: [
+  itemsJson: [
     {
       type: LayoutItemType.TITLE,
       offsetTop: 30,
@@ -94,7 +95,7 @@ export class CanvasComponent implements OnChanges {
 
   updateValues() {
     if (this.currentPresetService) {
-      this.cmsService.update(this.currentPresetService.getCurrentItems());
+      this.cmsService.update(this.currentPresetService.getCurrentItems(), this.layoutSetting.id);
     }
   }
 }

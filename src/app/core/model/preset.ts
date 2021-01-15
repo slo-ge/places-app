@@ -41,7 +41,7 @@ export interface Font {
 }
 
 export interface Preset {
-  id?: number;
+  id: number;
   width: number;
   height: number;
   title?: string;
@@ -52,7 +52,7 @@ export interface Preset {
   fontFileWoff?: Font;
   fontFamilyHeadingCSS?: string;
 
-  items?: PresetObject[]; // new API
+  itemsJson?: PresetObject[];
 }
 
 export interface PresetObject {

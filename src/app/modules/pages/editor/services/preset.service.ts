@@ -57,7 +57,7 @@ function appendFontToDom(fontFileUrl: string, fontFamily: string) {
 
 export class PresetService {
   private readonly canvasSettings: ObjectDisplayProperties;
-  private readonly layoutSetting: Preset;
+  public readonly layoutSetting: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
   /**
    * currentObjects which the current canvas holds,
@@ -70,6 +70,7 @@ export class PresetService {
     this.layoutSetting = layoutSetting;
     this.canvasSettings = canvasSettings;
   }
+
 
   /**
    * This is the main entry point which draws all layer to the canvas
@@ -85,10 +86,10 @@ export class PresetService {
       this.currentObjects = [];
     }
 
-    if (this.layoutSetting.items && this.layoutSetting.items.length > 0) {
+    if (this.layoutSetting.itemsJson && this.layoutSetting.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
 
-      for (const item of this.layoutSetting.items.sort((a, b) => a.position < b.position ? -1 : 1)) {
+      for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (item.type === LayoutItemType.TITLE) {
           const obj = this.createText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
           this.addObjectToCanvas(obj, item);

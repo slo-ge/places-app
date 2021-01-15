@@ -30,20 +30,23 @@ export class CmsService {
               private simpleLocalCacheService: SimpleLocalCacheService) {
   }
 
+  /**
+   *
+   */
   public getLayoutSetting(): Observable<Preset[]> {
     return this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API);
   }
 
-  public update(items: PresetObject[]) {
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
-
-    for (let item of items) {
-      const url = `${CMS_API_URL}/export-latest-items/${item.id}`;
-      const body = new URLSearchParams(item as any);
-      this.httpClient.put(url, body.toString(), {headers}).subscribe(console.log);
-    }
+  /**
+   *
+   * @param items
+   * @param presetId
+   */
+  public update(items: PresetObject[], presetId: number) {
+    const formData = new FormData();
+    formData.append('data', JSON.stringify({itemsJson: items}));
+    const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
+    this.httpClient.put(url, formData).subscribe(console.log);
   }
 
   public token(user: string, password: string): Observable<AuthResponse> {

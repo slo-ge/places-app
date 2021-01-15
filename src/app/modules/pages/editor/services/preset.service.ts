@@ -2,7 +2,7 @@ import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {PresetObject, LayoutItemType, Preset} from "@app/core/model/preset";
 import {Canvas, Image} from "fabric/fabric-impl";
-import {CMS_API_URL} from "@app/core/services/layout-setting.service";
+import {CMS_API_URL} from "@app/core/services/cms.service";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
   fabricObjectToPresetObject,

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {LayoutSettingService} from "@app/core/services/layout-setting.service";
+import {CmsService} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
 import {PresetObject, Preset} from "@app/core/model/preset";
 import {FormArray, FormBuilder} from "@angular/forms";
@@ -40,12 +40,12 @@ export class LayoutSelectorComponent implements OnInit {
   });
 
 
-  constructor(private layoutSettingsService: LayoutSettingService,
-              public fb: FormBuilder) {
+  constructor(private cmsService: CmsService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.settings$ = this.layoutSettingsService.getLayoutSetting();
+    this.settings$ = this.cmsService.getLayoutSetting();
 
     // TODO: this can not be used, because the filling the inner
     // TODO: form leads to trigger the subscription multiple times

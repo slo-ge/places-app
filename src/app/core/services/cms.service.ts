@@ -23,7 +23,7 @@ export interface AuthResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class LayoutSettingService {
+export class CmsService {
   private currentUser: BehaviorSubject<AuthResponse | null> = new BehaviorSubject<AuthResponse | null>(null);
 
   constructor(private httpClient: HttpClient,

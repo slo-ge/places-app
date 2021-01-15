@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {AuthResponse, LayoutSettingService} from "@app/core/services/layout-setting.service";
+import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {take} from "rxjs/operators";
 import {EMPTY, Observable} from "rxjs";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
@@ -17,11 +17,10 @@ export class LoginComponent implements OnInit {
   });
   show: boolean = false;
   error = '';
-  loggedIn: null | string = null;
   currentUser: Observable<AuthResponse | null> = EMPTY;
 
   constructor(private fb: FormBuilder,
-              private authService: LayoutSettingService) {
+              private authService: CmsService) {
   }
 
   ngOnInit(): void {

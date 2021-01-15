@@ -1,13 +1,20 @@
 import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {CMS_API_URL, LayoutSettingService} from "@app/core/services/layout-setting.service";
+import {CMS_API_URL, CmsService} from "@app/core/services/cms.service";
 import {catchError, mergeMap} from "rxjs/operators";
 
 
+/**
+ * Sets the JWT if it is available,
+ * if CMS responds with 403, we do a logout:
+ *  - because the session could be expired
+ *  - because the token or something else is incorrect
+ *
+ */
 @Injectable()
 export class JWTAuthInterceptor implements HttpInterceptor {
-  constructor(private layoutSettingService: LayoutSettingService) {
+  constructor(private cmsService: CmsService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -16,7 +23,7 @@ export class JWTAuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    return this.layoutSettingService.getUser().pipe(
+    return this.cmsService.getUser().pipe(
       mergeMap(user => {
         if (user) {
           request = request.clone({
@@ -30,7 +37,7 @@ export class JWTAuthInterceptor implements HttpInterceptor {
           catchError((error: HttpErrorResponse) => {
             debugger;
             if (error.status === 403) {
-              this.layoutSettingService.logout();
+              this.cmsService.logout();
             }
             return throwError(error);
           })

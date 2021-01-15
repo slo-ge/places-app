@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AuthResponse} from "@app/core/services/layout-setting.service";
+import {AuthResponse} from "@app/core/services/cms.service";
 
 const USER_KEY = 'strapi-user';
 

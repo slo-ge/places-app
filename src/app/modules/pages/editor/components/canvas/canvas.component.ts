@@ -6,7 +6,7 @@ import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {PresetService} from "@app/modules/pages/editor/services/preset.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
 import {faDownload, faSave} from "@fortawesome/free-solid-svg-icons";
-import {LayoutSettingService} from "@app/core/services/layout-setting.service";
+import {CmsService} from "@app/core/services/cms.service";
 
 
 const DEFAULT_SETTING: Preset = {
@@ -50,7 +50,7 @@ export class CanvasComponent implements OnChanges {
   constructor(private currentComponentElemRef: ElementRef,
               private editorService: EditorService,
               private downloadService: DownloadCanvasService,
-              private layoutSettingService: LayoutSettingService) {
+              private cmsService: CmsService) {
   }
 
   ngOnChanges(data: SimpleChanges): void {
@@ -94,7 +94,7 @@ export class CanvasComponent implements OnChanges {
 
   updateValues() {
     if (this.currentPresetService) {
-      this.layoutSettingService.update(this.currentPresetService.getCurrentItems());
+      this.cmsService.update(this.currentPresetService.getCurrentItems());
     }
   }
 }

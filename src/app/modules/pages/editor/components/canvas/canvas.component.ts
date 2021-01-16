@@ -1,12 +1,14 @@
 import {Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
-import {LayoutItemType, Preset} from "@app/core/model/preset";
+import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {PresetService} from "@app/modules/pages/editor/services/preset.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
 import {faDownload, faSave} from "@fortawesome/free-solid-svg-icons";
-import {CmsService} from "@app/core/services/cms.service";
+import {AuthResponse, CmsService} from "@app/core/services/cms.service";
+import {getPresetItem} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {EMPTY, Observable} from "rxjs";
 
 
 const DEFAULT_SETTING: Preset = {
@@ -24,6 +26,36 @@ const DEFAULT_SETTING: Preset = {
     }
   ]
 };
+
+const DEFAULT_ITEMS: PresetObject[]  = [
+  {
+    "offsetTop": 120,
+    "position": 1,
+    "fontLineHeight": "1",
+    "fontLetterSpacing": "1.1",
+    "fontSize": 90,
+    "type": LayoutItemType.TITLE,
+    "offsetLeft": 40,
+  },
+  {
+    "offsetTop": 80,
+    "position": 2,
+    "fontLineHeight": "1",
+    "fontLetterSpacing": "1.1",
+    "fontSize": 50,
+    "type": LayoutItemType.DESCRIPTION,
+    "offsetLeft": 80,
+  },
+  {
+    "offsetTop": 80,
+    "position": 3,
+    "fontLineHeight": "1",
+    "fontLetterSpacing": "1.1",
+    "fontSize": 0,
+    "type": LayoutItemType.IMAGE,
+    "offsetLeft": 40,
+  }
+];
 
 function mergeLayouts(layout: Preset, defaultLayout = DEFAULT_SETTING) {
   return {
@@ -44,7 +76,7 @@ export class CanvasComponent implements OnChanges {
   layoutSetting: Preset = {} as any;
   canvas: any;
   currentPresetService: PresetService | null = null;
-
+  loggedInUser: Observable<AuthResponse | null> = EMPTY;
   downloadIcon = faDownload;
   saveChangesIcon = faSave;
 
@@ -56,6 +88,7 @@ export class CanvasComponent implements OnChanges {
 
   ngOnChanges(data: SimpleChanges): void {
     this.refreshCanvas();
+    this.loggedInUser = this.cmsService.getUser();
   }
 
   setLayout($event: Preset) {
@@ -64,6 +97,10 @@ export class CanvasComponent implements OnChanges {
     console.log('layout selected');
   }
 
+  /**
+   * after selection of a new layout,
+   * we need to refresh the canvas;
+   */
   refreshCanvas() {
     if (this.canvas == null) {
       this.canvas = new fabric.Canvas('myCanvas');
@@ -93,9 +130,22 @@ export class CanvasComponent implements OnChanges {
     this.downloadService.download();
   }
 
-  updateValues() {
-    if (this.currentPresetService) {
-      this.cmsService.update(this.currentPresetService.getCurrentItems(), this.layoutSetting.id);
+  /**
+   * update on server
+   */
+  updateValues(defaults?: PresetObject[] | null) {
+    defaults = defaults || getPresetItem(this.canvas);
+
+    if (defaults) {
+      this.cmsService.update(defaults, this.layoutSetting.id);
     }
+  }
+
+  /**
+   * resets the template to given defaults
+   */
+  resetTemplate() {
+    this.layoutSetting.itemsJson = DEFAULT_ITEMS;
+    this.setLayout(this.layoutSetting);
   }
 }

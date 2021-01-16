@@ -65,7 +65,7 @@ export interface PresetObject {
   type: LayoutItemType,
   title?: string,
   position: number;
-  fontWeight?: null | 'bold';
+  fontWeight?: string | number;
   fontColor?: string;
   objectAngle?: number;
 }

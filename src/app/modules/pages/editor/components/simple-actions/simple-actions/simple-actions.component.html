@@ -22,5 +22,8 @@
   </div>
   <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"
                     (valueChange)="changeSize($event)"></app-range-slider>
-  <app-color-picker (color)="changeColor($event)"></app-color-picker>
+
+  <div class="type-settings" [ngSwitch]="selectedType">
+      <app-text-settings *ngSwitchCase="fabricType.TEXTBOX" [textBox]="canvas.getActiveObject()"></app-text-settings>
+  </div>
 </div>

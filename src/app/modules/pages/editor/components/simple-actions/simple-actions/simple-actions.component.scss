@@ -1,10 +1,21 @@
 @import 'style';
+
 :host {
   font-size: 16px;
+  position: absolute;
+  display: block;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: $grey-0;
+
 }
 
 .object-actions {
   display: flex;
+  width: 100%;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  padding: 5px;
 }
 
 .align-actions {
@@ -42,6 +53,7 @@
           //width: 40px;
         }
       }
+
       .grid {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -61,7 +73,21 @@
 
     }
   }
+
   .align-classes {
     display: none;
+  }
+
+}
+
+
+.type-settings {
+  > * {
+    display: flex;
+    &::before {
+      margin-right: 12px;
+      border-right: 1px solid $grey-1;
+      content: '';
+    }
   }
 }

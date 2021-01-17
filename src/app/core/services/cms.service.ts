@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Preset, PresetObject} from "@app/core/model/preset";
-import {BehaviorSubject, EMPTY, Observable, of} from "rxjs";
+import {BehaviorSubject, Observable, of} from "rxjs";
 import {tap} from "rxjs/operators";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
 
@@ -46,7 +46,7 @@ export class CmsService {
     const formData = new FormData();
     formData.append('data', JSON.stringify({itemsJson: items}));
     const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
-    this.httpClient.put(url, formData).subscribe(console.log);
+    return this.httpClient.put<Preset>(url, formData);
   }
 
   public token(user: string, password: string): Observable<AuthResponse> {

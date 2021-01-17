@@ -5,10 +5,12 @@ import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {PresetService} from "@app/modules/pages/editor/services/preset.service";
 import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
-import {faDownload, faSave} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/modules/pages/editor/services/fabric-object.utils";
 import {EMPTY, Observable} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
+import {take} from "rxjs/operators";
 
 
 const DEFAULT_SETTING: Preset = {
@@ -27,7 +29,7 @@ const DEFAULT_SETTING: Preset = {
   ]
 };
 
-const DEFAULT_ITEMS: PresetObject[]  = [
+const DEFAULT_ITEMS: PresetObject[] = [
   {
     "offsetTop": 120,
     "position": 1,
@@ -79,6 +81,8 @@ export class CanvasComponent implements OnChanges {
   loggedInUser: Observable<AuthResponse | null> = EMPTY;
   downloadIcon = faDownload;
   saveChangesIcon = faSave;
+  undoIcon = faUndo;
+  sentUpdateResponse: string | null = '';
 
   constructor(private currentComponentElemRef: ElementRef,
               private editorService: EditorService,
@@ -136,9 +140,15 @@ export class CanvasComponent implements OnChanges {
   updateValues(defaults?: PresetObject[] | null) {
     defaults = defaults || getPresetItem(this.canvas);
 
-    if (defaults) {
-      this.cmsService.update(defaults, this.layoutSetting.id);
+    if (!defaults) {
+      return;
     }
+    this.cmsService.update(defaults, this.layoutSetting.id)
+      .pipe(take(1))
+      .subscribe(
+        res => this.sentUpdateResponse = `updated at: ${res.updated_at?.toString() || null}`,
+        (err: HttpErrorResponse) => this.sentUpdateResponse = err.message
+      );
   }
 
   /**

@@ -1,1 +1,2 @@
-<input type="text" #input (keyup.enter)="addColor(input)" placeholder="font color">
+<label>Color</label>
+<input type="color"  [value]="currentColor" #input (change)="addColor(input)" placeholder="font color">

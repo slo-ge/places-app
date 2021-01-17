@@ -1,7 +1,5 @@
-<div class="actions">
-  <app-simple-actions></app-simple-actions>
-  <app-canvas-actions></app-canvas-actions>
-</div>
+<app-canvas-actions></app-canvas-actions>
+<app-simple-actions></app-simple-actions>
 <app-canvas *ngIf="setting$ | async as setting; else loading" [canvasSettings]="setting"></app-canvas>
 <ng-template #loading>
   <app-loading-animation></app-loading-animation>

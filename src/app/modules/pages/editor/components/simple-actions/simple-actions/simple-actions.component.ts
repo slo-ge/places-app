@@ -17,6 +17,11 @@ import {
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
 
+enum FabricType {
+  TEXTBOX = 'textbox',
+  IMAGE = 'image'
+}
+
 @Component({
   selector: 'app-simple-actions',
   templateUrl: './simple-actions.component.html',
@@ -37,7 +42,9 @@ export class SimpleActionsComponent implements OnInit {
   simpleAlignments = SimpleAlignments;
 
   showActiveObjectActions = false;
-  showActiveObjectImageActions = false;
+
+  fabricType = FabricType;
+  selectedType: FabricType | null = null;
 
   constructor(private  editorService: EditorService,
               private alignmentService: AlignmentService) {
@@ -69,16 +76,16 @@ export class SimpleActionsComponent implements OnInit {
 
   selectionEvent(e: IEvent & { selected: FabricObject[] }) {
     this.showActiveObjectActions = true;
-
     const activeObject = e.selected[0];
+
     if (activeObject instanceof fabric.Textbox) {
       this.activeRangeSliderCurrentValue = Number(activeObject.fontSize);
       this.activeRangeSliderMax = 300;
+      this.selectedType = FabricType.TEXTBOX;
     } else if (activeObject instanceof fabric.Image) {
       this.activeRangeSliderCurrentValue = Number(activeObject.getScaledWidth());
       this.activeRangeSliderMax = Number(1200);
-      this.showActiveObjectImageActions = true;
-
+      this.selectedType = FabricType.IMAGE;
     } else {
       console.error('onCanvasEvent could not found Object:', activeObject)
     }
@@ -86,7 +93,7 @@ export class SimpleActionsComponent implements OnInit {
 
   selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.showActiveObjectActions = false;
-    this.showActiveObjectImageActions = false;
+    this.selectedType = null;
   }
 
   changeSize(newWidth: number) {
@@ -112,16 +119,5 @@ export class SimpleActionsComponent implements OnInit {
 
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
     this.alignmentService.move(aligner, this.canvas, this.canvas.getActiveObject());
-  }
-
-  changeColor(colorCode: string) {
-    const activeObject = this.canvas.getActiveObject();
-    if (activeObject) {
-      // Please use canvas.getActiveObject().set('fill', color)
-      // This will automatically invalidate the cache and at next
-      // redraw you will get color change.
-      activeObject.set('fill', colorCode);
-      this.canvas.renderAll();
-    }
   }
 }

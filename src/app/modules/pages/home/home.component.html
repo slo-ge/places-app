@@ -33,7 +33,5 @@
 
 <div class="examples">
   <h3>Try with:</h3>
-  <ul>
-    <li *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}</li>
-  </ul>
+    <span *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}, </span>
 </div>

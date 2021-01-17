@@ -25,14 +25,18 @@ h2 {
     color: #9d9d9d;
     margin-bottom: 5px;
   }
+
   ul {
     padding: 0;
     margin: 0;
   }
 
-  li {
+  span {
     list-style-type: none;
-    text-decoration: underline;
     cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

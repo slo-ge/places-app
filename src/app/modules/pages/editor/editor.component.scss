@@ -1,7 +1,9 @@
 @import 'style';
 :host {
-  margin: 0 10px;
   display: block;
+  background-color: $grey-dark-0;
+  min-height: calc(100vh - 60px);
+  color: $grey-0;
 }
 .actions {
   display: flex;
@@ -9,7 +11,6 @@
   align-items: center;
   height: 40px;
   padding: 10px;
-  background: $grey-0;
   border-radius: 10px;
 
   > * {

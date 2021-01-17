@@ -13,12 +13,12 @@
   </ng-container>
 </div>
 <div class="preview">
+  <aside>
+    <h3>Select Layouts</h3>
+    <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+  </aside>
   <main class="canvas-wrapper">
     <canvas id="myCanvas"></canvas>
   </main>
-  <aside>
-    <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
-
-  </aside>
 </div>
 

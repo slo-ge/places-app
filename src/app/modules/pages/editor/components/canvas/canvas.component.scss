@@ -1,7 +1,9 @@
 @import 'style';
 
 $border: 2px solid $grey-dark-1;
-
+:host {
+  color: $grey-0;
+}
 .preview {
   display: flex;
   justify-content: flex-start;

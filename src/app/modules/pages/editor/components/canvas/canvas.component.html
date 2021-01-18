@@ -1,24 +1,34 @@
-<div class="main-actions">
-  <button (click)="download()">Download
-    <fa-icon [icon]="downloadIcon"></fa-icon>
-  </button>
-  <ng-container *ngIf="loggedInUser | async">
-    <button class="save-change secondary" (click)="resetTemplate()">Reset Template
-      <fa-icon [icon]="undoIcon"></fa-icon>
-    </button>
-    <button class="save-change secondary" (click)="updateValues()">Save Template
-      <fa-icon [icon]="saveChangesIcon"></fa-icon>
-    </button>
-    <div>{{sentUpdateResponse}}</div>
-  </ng-container>
-</div>
+
 <div class="preview">
   <aside>
     <h3>Select Layouts</h3>
     <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+    <ng-container *ngIf="loggedInUser | async">
+      <button class="save-change secondary" (click)="resetTemplate()">Reset Template
+        <fa-icon [icon]="undoIcon"></fa-icon>
+      </button>
+      <button class="save-change secondary" (click)="updateValues()">Save Template
+        <fa-icon [icon]="saveChangesIcon"></fa-icon>
+      </button>
+      <div>{{sentUpdateResponse}}</div>
+    </ng-container>
   </aside>
-  <main class="canvas-wrapper">
-    <canvas id="myCanvas"></canvas>
+  <main>
+    <div class="canvas-actions">
+      <div class="actions-row">
+        <app-canvas-actions></app-canvas-actions>
+        <button (click)="download()">Download
+          <fa-icon [icon]="downloadIcon"></fa-icon>
+        </button>
+      </div>
+
+      <app-simple-actions></app-simple-actions>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="myCanvas"></canvas>
+    </div>
+
   </main>
 </div>
 

@@ -1,18 +1,6 @@
 @import 'style';
 :host {
   display: block;
-  background-color: $grey-dark-0;
+  background-color: $grey-0;
   min-height: calc(100vh - 60px);
-}
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  height: 40px;
-  padding: 10px;
-  border-radius: 10px;
-
-  > * {
-    margin-right: 20px;
-  }
 }

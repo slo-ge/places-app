@@ -1,9 +1,7 @@
 @import 'style';
 
-$border: 2px solid $grey-dark-1;
-:host {
-  color: $grey-0;
-}
+$border: 1px solid $grey-1;
+
 .preview {
   display: flex;
   justify-content: flex-start;
@@ -17,39 +15,62 @@ canvas {
   background: white;
 }
 
-.canvas-wrapper {
-  padding: 40px 0;
-  min-height: 100vh;
+main {
+
+  position: relative;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $grey-dark-1;
-}
+
+  .canvas-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1010;
+    background-color: white;
+    padding: 12px;
+    opacity: 0.8;
+
+    .actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    button {
+      height: 35px;
+      font-size: 14px;
+      max-width: 150px;
+      border-radius: 3px;
+      margin-right: 5px;
+      margin-left: 5px;
+      border: 0;
+    }
 
 
-.main-actions {
-  display: flex;
-  align-items: center;
-  border-bottom: $border;
-  margin: 10px 0 0 0;
-  padding-bottom: 5px;
+    app-canvas-actions,
+    app-simple-actions {
+      display: block;
+    }
+  }
 
-  button {
-    height: 35px;
-    font-size: 14px;
-    max-width: 150px;
-    border-radius: 3px;
-    margin-right: 5px;
-    margin-left: 5px;
-    border: 0;
+  .canvas-wrapper {
+    padding: 60px 0;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $grey-dark-0;
   }
 }
+
+
 
 
 aside {
   padding: 20px;
   min-height: 80vh;
+  max-width: 265px;
 
   h3 {
     margin-top: 0;
@@ -60,5 +81,9 @@ aside {
   app-layout-selector {
     width: 280px;
     display: block;
+  }
+  button {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }

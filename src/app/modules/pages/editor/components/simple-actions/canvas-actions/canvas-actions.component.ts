@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {fabric} from "fabric";
 import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {take} from "rxjs/operators";
 import {Canvas} from "fabric/fabric-impl";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-canvas-actions',
@@ -11,6 +11,7 @@ import {Canvas} from "fabric/fabric-impl";
 })
 export class CanvasActionsComponent implements OnInit {
   canvas: any | Canvas;
+  iconPlus = faPlus;
 
   constructor(private  editorService: EditorService) {
   }

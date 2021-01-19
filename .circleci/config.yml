@@ -41,7 +41,7 @@ deployment-steps: &steps
       -   run:
               name: DEPLOY DOCKER
               command: |
-                  ssh -oStrictHostKeyChecking=no  $DROPLET_USER@$DROPLET_IP "./start.sh"
+                  ssh -oStrictHostKeyChecking=no  $DROPLET_USER@$DROPLET_IP "./goove.sh"
 
 
 jobs:

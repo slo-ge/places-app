@@ -27,7 +27,7 @@ export class QueryParamsHandlerService {
     }
 
     addTag(tag: number) {
-        this.router.navigate([], {
+        this.router.navigate(['/search'], {
             queryParams: {
                 tags: tag
             },

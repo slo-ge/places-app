@@ -35,8 +35,13 @@ deployment-steps: &steps
             name: BUILD DOCKER
             command: |
                 docker build -t sloge/goove:$CIRCLE_BUILD_NUM .
+                docker tag sloge/goove:$CIRCLE_BUILD_NUM  sloge/goove:latest
                 echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-                docker push sloge/goove:$CIRCLE_BUILD_NUM
+                docker push sloge/goove
+      -   run:
+              name: DEPLOY DOCKER
+              command: |
+                  ssh -oStrictHostKeyChecking=no  $DROPLET_USER@$DROPLET_IP "./start.sh"
 
 
 jobs:

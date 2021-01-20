@@ -1,37 +1,56 @@
-<h2>Insert Link</h2>
-<div>
-  <form [formGroup]="baseURLForm">
-    <input placeholder="https://www.wordpress.example.com" pattern="url" name="apiUrl" formControlName="url"
-           type="text">
-    <button class="secondary" (click)="check()">Check Domain</button>
-  </form>
-</div>
-<div>
-</div>
+<div class="content">
+  <div class="top-wrapper">
+    <h2>Create beatuiful images from any web address.</h2>
+    <div></div>
+  </div>
 
-<div *ngIf="adapter">
-  <div class="found-adapter">{{adapterInfoText[adapter]}}</div>
-  <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
-          [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
-    Select Post
-  </button>
+  <div class="search-wrapper">
+    <div class="inner">
+      <div class="search-box">
+        <h2>Insert any address</h2>
+        <div>
+          <form [formGroup]="baseURLForm">
+            <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url"
+                   type="text">
+            <button class="primary" (click)="check()">Search</button>
+          </form>
+        </div>
+        <div>
+        </div>
+      </div>
 
-  <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']" [queryParams]="
+      <div *ngIf="adapter">
+        <div class="found-adapter">{{adapterInfoText[adapter]}}</div>
+
+        <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
+                [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
+          Select Post
+        </button>
+
+        <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']" [queryParams]="
   {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
-    Open Editor
-  </button>
-</div>
+          Open Editor
+        </button>
+      </div>
 
-<div *ngIf="adapter == false">
-  <div>There was a problem detection any framework or meta data, may the selected link is incorrect</div>
-</div>
+      <div *ngIf="adapter == false">
+        <div>There was a problem detection any framework or meta data, may the selected link is incorrect</div>
+      </div>
 
-<div *ngIf="loading">
-  <app-loading-animation></app-loading-animation>
-</div>
+      <div *ngIf="loading">
+        <app-loading-animation></app-loading-animation>
+      </div>
 
 
-<div class="examples">
-  <h3>Try with:</h3>
-    <span *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}, </span>
+      <div class="examples">
+        <h2>Or try with one of the following addresses</h2>
+        <span *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}, </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="top-wrapper">
+    <h2>How does it work...</h2>
+    <div></div>
+  </div>
 </div>

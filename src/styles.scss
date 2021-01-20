@@ -6,6 +6,11 @@ body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
 }
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+h1, h2 {
+  font-family: 'Archivo Black', sans-serif;
+}
+
 
 input[type=text], select {
   width: 100%;
@@ -30,7 +35,7 @@ button {
   border-radius: $common-border-radius;
   border: 1px solid #434c61;
   font-size: 20px;
-  background-color: $primary-blue;
+  background-color: $primary-dark;
   color: white;
   height: 40px;
   cursor: pointer;
@@ -38,8 +43,8 @@ button {
 
 button.secondary {
   background-color: white;
-  color: darkblue;
-  border: 1px solid $primary-blue;
+  color: $primary-dark;
+  border: 1px solid $primary-dark;
 }
 
 app-loading-animation {

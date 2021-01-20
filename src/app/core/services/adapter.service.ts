@@ -11,7 +11,6 @@ import {of} from "rxjs";
   providedIn: 'root'
 })
 export class AdapterService {
-
   constructor(private httpClient: HttpClient) {
   }
 

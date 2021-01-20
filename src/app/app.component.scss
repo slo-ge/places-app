@@ -4,13 +4,13 @@ header {
   text-align: center;
   font-size: 25px;
   font-weight: bold;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Archivo Black', sans-serif;
 
   span:nth-child(1) {
-    color: darkblue;
+    color: $primary-dark;
   }
   span:nth-child(2) {
-    color: darkred;
+    color: $primary;
   }
 }
 

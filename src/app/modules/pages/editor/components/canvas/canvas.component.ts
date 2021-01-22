@@ -14,19 +14,104 @@ import {take} from "rxjs/operators";
 
 
 const DEFAULT_SETTING: Preset = {
-  id: 9999,
-  height: 900,
-  width: 900,
-  itemsJson: [
+  "id": 23,
+  "width": 900,
+  "height": 1600,
+  "title": "MetaMapper 9:16",
+  "fontFamilyHeadingCSS": "Archivo Black, sans-serif",
+  "itemsJson": [
     {
-      type: LayoutItemType.TITLE,
-      offsetTop: 30,
-      offsetLeft: 30,
-      fontSize: 50,
-      fontWeight: 'bold',
-      position: 1
+      "type": "title" as LayoutItemType.TITLE,
+      "offsetTop": 221,
+      "offsetLeft": 123,
+      "position": 0,
+      "objectAngle": 0,
+      "fontSize": 90,
+      "fontColor": "#ffffff",
+      "fontWeight": "normal",
+      "fontLineHeight": "1",
+      "fontLetterSpacing": "1.1"
+    },
+    {
+      "type": "image" as LayoutItemType.IMAGE,
+      "offsetTop": 10,
+      "offsetLeft": 77,
+      "position": 1,
+      "objectAngle": 0
+    },
+    {
+      "type": "description" as LayoutItemType.DESCRIPTION,
+      "offsetTop": 62,
+      "offsetLeft": 113,
+      "position": 2,
+      "objectAngle": 0,
+      "fontSize": 29,
+      "fontColor": "#ffffff",
+      "fontWeight": "normal",
+      "fontLineHeight": "1",
+      "fontLetterSpacing": "1.1"
     }
-  ]
+  ],
+  "backgroundImage": {
+    "id": 39,
+    "name": "MetaMapper",
+    "alternativeText": "",
+    "caption": "",
+    "width": 900,
+    "height": 1600,
+    "formats": {
+      "thumbnail": {
+        "hash": "thumbnail_Meta_Mapper_c2604b32f5",
+        "ext": ".png",
+        "mime": "image/png",
+        "width": 88,
+        "height": 156,
+        "size": 1.84,
+        "path": null,
+        "url": "/uploads/thumbnail_Meta_Mapper_c2604b32f5.png"
+      },
+      "large": {
+        "hash": "large_Meta_Mapper_c2604b32f5",
+        "ext": ".png",
+        "mime": "image/png",
+        "width": 563,
+        "height": 1000,
+        "size": 19.19,
+        "path": null,
+        "url": "/uploads/large_Meta_Mapper_c2604b32f5.png"
+      },
+      "medium": {
+        "hash": "medium_Meta_Mapper_c2604b32f5",
+        "ext": ".png",
+        "mime": "image/png",
+        "width": 422,
+        "height": 750,
+        "size": 13.62,
+        "path": null,
+        "url": "/uploads/medium_Meta_Mapper_c2604b32f5.png"
+      },
+      "small": {
+        "hash": "small_Meta_Mapper_c2604b32f5",
+        "ext": ".png",
+        "mime": "image/png",
+        "width": 281,
+        "height": 500,
+        "size": 8.34,
+        "path": null,
+        "url": "/uploads/small_Meta_Mapper_c2604b32f5.png"
+      }
+    },
+    "hash": "Meta_Mapper_c2604b32f5",
+    "ext": ".png",
+    "mime": "image/png",
+    "size": 16.12,
+    "url": "/uploads/Meta_Mapper_c2604b32f5.png",
+    "previewUrl": null,
+    "provider": "local",
+    "provider_metadata": null,
+    "created_at": new Date(),
+    "updated_at": new Date()
+  },
 };
 
 const DEFAULT_ITEMS: PresetObject[] = [

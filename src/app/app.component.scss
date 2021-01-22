@@ -71,3 +71,25 @@ app-main-breadcrumbs {
     display: none;
   }
 }
+
+main {
+  min-height: calc(100vh - #{$header-height});
+}
+
+.background {
+  background: linear-gradient(200deg, $primary-soft 0%, $primary 100%);
+}
+
+
+footer {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 12px;
+  padding: 10px;
+
+  span {
+    margin-right: 20px;
+  }
+}

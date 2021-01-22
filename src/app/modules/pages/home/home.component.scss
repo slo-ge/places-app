@@ -1,14 +1,16 @@
 @import 'style';
 
-:host {
-  display: block;
+.background {
   background: linear-gradient(200deg, $primary-soft 0%, $primary 100%);
-  min-height: calc(100vh - 60px);
 }
-.content{
-  max-width: 1280px;
-  margin: 0 auto;
 
+section {
+  display: block;
+  min-height: calc(100vh - 60px);
+  > *  {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
 }
 
 .top-wrapper {
@@ -73,4 +75,13 @@
       text-decoration: underline;
     }
   }
+}
+
+.description {
+  h2 {
+    margin-top: 40px;
+    font-size: 30px;
+  }
+
+  font-size: 18px;
 }

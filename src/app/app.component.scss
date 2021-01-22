@@ -2,13 +2,24 @@
 
 header {
   text-align: center;
-  font-size: 25px;
+
   font-weight: bold;
   font-family: 'Archivo Black', sans-serif;
+
+  h1 {
+    font-size: 25px;
+    padding: 0;
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
 
   span:nth-child(1) {
     color: $primary-dark;
   }
+
   span:nth-child(2) {
     color: $primary;
   }
@@ -21,7 +32,7 @@ app-main-breadcrumbs {
 .header-bar {
   background-color: $grey-0;
   border-bottom: 1px $grey-1 solid;
-  padding:10px 0;
+  padding: 10px 0;
 }
 
 .header-bar {

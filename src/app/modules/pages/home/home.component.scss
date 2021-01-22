@@ -6,16 +6,17 @@
 
 section {
   display: block;
-  padding: 0 10px;
+  padding: 10px;
   min-height: calc(100vh - 60px);
+
   > *  {
     max-width: 1280px;
     margin: 0 auto;
   }
 }
 
-.top-wrapper {
-  padding: 30px;
+.inner-wrapper {
+  padding: 20px;
 
   h2 {
     font-size: 60px;

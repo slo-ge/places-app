@@ -1,0 +1,9 @@
+{
+  "/cms/*": {
+    "target": "http://dev-tools.at:1337",
+    "secure": false,
+    "pathRewrite": {
+      "^/cms": ""
+    }
+  }
+}

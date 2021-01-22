@@ -5,9 +5,9 @@ import {BehaviorSubject, Observable, of} from "rxjs";
 import {tap} from "rxjs/operators";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
 
-export const CMS_API_URL = 'http://dev-tools.at:1337';
-const LAYOUT_CONFIG_API = 'http://dev-tools.at:1337/export-latest-layouts';
-const AUTH_URL = 'http://dev-tools.at:1337/admin/auth/local';
+export const CMS_API_URL = '/cms';
+const LAYOUT_CONFIG_API = '/cms/export-latest-layouts';
+const AUTH_URL = '/cms/admin/auth/local';
 
 export interface AuthResponse {
   jwt: string,

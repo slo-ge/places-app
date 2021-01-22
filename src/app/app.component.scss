@@ -1,8 +1,6 @@
 @import "style";
 
 header {
-  text-align: center;
-
   font-weight: bold;
   font-family: 'Archivo Black', sans-serif;
 
@@ -33,6 +31,7 @@ app-main-breadcrumbs {
   background-color: $grey-0;
   border-bottom: 1px $grey-1 solid;
   padding: 10px 0;
+  flex-wrap: wrap;
 }
 
 .header-bar {
@@ -47,5 +46,28 @@ app-main-breadcrumbs {
 
   > * {
     margin-left: 50px;
+  }
+
+
+}
+
+@media screen and (max-width: 768px) {
+  .header-bar {
+    display: block;
+  }
+
+  .header-left {
+    display: block;
+  }
+
+  header {
+    margin-left: 5px;
+  }
+  app-login {
+    display: none;
+  }
+
+  app-main-breadcrumbs {
+    display: none;
   }
 }

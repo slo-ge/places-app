@@ -35,6 +35,7 @@ export class MetaContentService implements ContentService {
   }
 
   getEditorPreviewSettings(url: string): Observable<ObjectDisplayProperties> {
+    url = btoa(url);
     return this.httpClient.get<MetaData>(`${this.apiUrl}/${url}`).pipe(
       map(data => ({
         title: data.title,

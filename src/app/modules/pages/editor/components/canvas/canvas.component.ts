@@ -183,7 +183,6 @@ export class CanvasComponent implements OnChanges {
   setLayout($event: Preset) {
     this.layoutSetting = $event;
     this.refreshCanvas();
-    console.log('layout selected');
   }
 
   /**

@@ -5,10 +5,11 @@ import {ApiAdapter} from "@app/core/model/content.service";
 
 export const PREDEFINED_TEST_URL: { name: string, url: string }[] = [
   {name: 'Any Restaurant', url: 'https://goove.at/detail/pizza-senza-danza'},
-  {name: 'A WordPress Blog', url: 'https://www.les-nouveaux-riches.com'},
-  {name: 'A Spotify Album', url: 'https://open.spotify.com/album/5jQuMxOb3r5BPmSDke93hy'},
-  {name: 'A Spotify Playlist', url: 'https://open.spotify.com/playlist/37i9dQZF1DXcTieYAg7jq1'},
-  {name: 'A Pinterest Entry', url: 'https://www.pinterest.at/pin/207376757830118362/'},
+  {name: 'WordPress Blog', url: 'https://www.les-nouveaux-riches.com'},
+  {name: 'Spotify Album', url: 'https://open.spotify.com/album/5jQuMxOb3r5BPmSDke93hy'},
+  {name: 'Spotify Playlist', url: 'https://open.spotify.com/playlist/37i9dQZF1DXcTieYAg7jq1'},
+  {name: 'Youtube Video', url: 'https://www.youtube.com/watch?v=bdneye4pzMw'},
+  {name: 'Pinterest Entry', url: 'https://www.pinterest.at/pin/207376757830118362/'},
   {name: 'Techcrunch Blog', url: 'https://techcrunch.com'},
   {name: 'Wired Magazine Article', url: 'https://www.wired.com/story/job-screening-service-halts-facial-analysis-applicants/'},
   {name: 'Medium  Article', url: 'https://medium.com/the-ascent/my-overly-simple-rules-for-a-good-life-16553b9987fd'},

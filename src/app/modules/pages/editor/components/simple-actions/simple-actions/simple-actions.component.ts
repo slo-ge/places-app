@@ -5,7 +5,7 @@ import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {
   faAlignCenter,
   faCaretSquareLeft,
-  faCaretSquareRight,
+  faCaretSquareRight, faLayerGroup,
   faSync,
   faTh,
   faTrashAlt
@@ -37,6 +37,7 @@ export class SimpleActionsComponent implements OnInit {
   iconRight = faCaretSquareRight;
   iconCenter = faAlignCenter;
   iconRotate = faSync;
+  iconLayer = faLayerGroup;
   iconRasta = faTh;
   objectAlignments = dictToKeys(ObjectAlignments);
   simpleAlignments = SimpleAlignments;
@@ -119,5 +120,19 @@ export class SimpleActionsComponent implements OnInit {
 
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
     this.alignmentService.move(aligner, this.canvas, this.canvas.getActiveObject());
+  }
+
+  moveToBack() {
+    const activeObject = this.canvas.getActiveObject();
+    const position = this.canvas.getObjects().indexOf(activeObject);
+    if (position > 1) {
+      this.canvas.moveTo(activeObject, position -1);
+    }
+  }
+
+  moveToFront() {
+    const activeObject = this.canvas.getActiveObject();
+    const position = this.canvas.getObjects().indexOf(activeObject);
+    this.canvas.moveTo(activeObject, position + 1);
   }
 }

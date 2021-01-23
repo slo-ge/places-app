@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
 import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
-import {Canvas, Image} from "fabric/fabric-impl";
+import {Canvas, Image, Object} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
@@ -51,6 +51,10 @@ function appendFontToDom(fontFileUrl: string, fontFamily: string) {
   head.appendChild(style);
 }
 
+interface FabricObjectAndPreset {
+  object: any,
+  preset: PresetObject
+}
 
 export class PresetService {
   private readonly canvasSettings: ObjectDisplayProperties;
@@ -78,22 +82,26 @@ export class PresetService {
       await this.loadFont();
     }
 
+    const renderedItems: FabricObjectAndPreset[] = [];
+
     if (this.layoutSetting.itemsJson && this.layoutSetting.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
 
       for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
-        if (item.type === LayoutItemType.TITLE) {
-          const obj = this.createText(this.canvasSettings.title, item, item.offsetTop + posLastObjectY);
-          this.addObjectToCanvas(obj);
-          posLastObjectY = getYPos(obj);
+        if (item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION) {
 
-        } else if (item.type === LayoutItemType.DESCRIPTION) {
-          const obj = this.createText(this.canvasSettings.description, item, item.offsetTop + posLastObjectY);
+          const text = item.type === LayoutItemType.TITLE
+            ? this.canvasSettings.title
+            : this.canvasSettings.description;
+
+          const obj = this.createText(text, item, item.offsetTop + posLastObjectY);
           this.addObjectToCanvas(obj);
+          renderedItems.push({object: obj, preset: item});
+
           posLastObjectY = getYPos(obj);
 
         } else if (item.type === LayoutItemType.IMAGE && this.canvasSettings.image) {
-          // TODO: refactore this code
+          // TODO: refactor this code
           const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
           if (!(proxiedImageUrl in imageCache)) {
             const prom = new Promise<Image>((resolve, _reject) => {
@@ -101,13 +109,30 @@ export class PresetService {
             });
             imageCache[proxiedImageUrl] = await prom;
           }
-          const obj = this.createImage(imageCache[proxiedImageUrl], item.offsetTop + posLastObjectY, item);
+          const image = fabric.util.object.clone(imageCache[proxiedImageUrl]);
+          const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
           this.addObjectToCanvas(obj);
+          renderedItems.push({object: obj, preset: item});
+
           posLastObjectY = getYPos(obj);
         }
       }
     } else {
       console.error('no items to show');
+    }
+
+    /**
+     * after adding all objects to the canvas, we can now change the zIndex of every layer.
+     * This can only be done, when all objects in the canvas, otherwise, we would automatically
+     * adjust all the zIndex of created objects.
+     * If no objects on canvas, we can not set the zIndex to i.e. level=3
+     * But if 3 items on canvas, we can change it to 3, so we need to render first, and also
+     * keep the order of the zIndex if available
+     */
+    for (const item of renderedItems.sort((a,b) =>
+      (a.preset.zIndex || 0) < (b.preset.zIndex || 0) ? -1 : 1)
+      ) {
+      this.afterAddToCanvasAttributes(item.object, item.preset);
     }
   }
 
@@ -124,7 +149,7 @@ export class PresetService {
       bgImage.scaleToWidth(this.canvas.width);
       bgImage.lockMovementX = true;
       bgImage.lockMovement = true;
-      this.canvas.sendToBack(bgImage);
+      this.canvas.moveTo(bgImage, 0);
     }, {crossOrigin: "*"});
   }
 
@@ -163,15 +188,14 @@ export class PresetService {
       }
     ) as any;
 
+    this.setObjectAttributes(fabricText, item);
+
     fabricText[PRESET_TYPE_KEY] = item.type;
 
     if (item.fontColor) {
       fabricText.set('fill', item.fontColor);
     }
 
-    if (item.objectAngle) {
-      fabricText.set('angle', item.objectAngle);
-    }
 
     if (this.layoutSetting.fontFamilyHeadingCSS) {
       fabricText.set('fontFamily', this.layoutSetting.fontFamilyHeadingCSS);
@@ -200,16 +224,42 @@ export class PresetService {
    * @param item
    */
   createImage(image: Image, offsetTop: number, item: PresetObject) {
-    const previewImage = image.set({
+    const fabricImage = image.set({
       left: item.offsetLeft,
       top: offsetTop
     }) as any;
-    previewImage.scaleToWidth(
+    this.setObjectAttributes(fabricImage, item);
+    fabricImage.scaleToWidth(
       (this.canvas.width || 0) - (2 * item.offsetLeft)
     );
-    previewImage[PRESET_TYPE_KEY] = item.type;
+    fabricImage[PRESET_TYPE_KEY] = item.type;
 
-    return previewImage;
+    return fabricImage;
+  }
+
+  /**
+   * Set object overlapping attributes
+   *
+   * @param fabricObject can be text or image
+   * @param item
+   */
+  setObjectAttributes(fabricObject: Object, item: PresetObject) {
+    if (item.objectAngle) {
+      fabricObject.set('angle', item.objectAngle);
+    }
+  }
+
+  /**
+   * some object operations can only be done after object is painted on canvas
+   * @param fabricObject
+   * @param item
+   */
+  afterAddToCanvasAttributes(fabricObject: Object, item: PresetObject) {
+    if (item.zIndex) {
+      this.canvas.moveTo(fabricObject, item.zIndex);
+      fabricObject.moveTo(item.zIndex);
+      this.canvas.renderAll();
+    }
   }
 
   /**

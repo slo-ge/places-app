@@ -23,9 +23,9 @@ type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
  *
  * @param fabricObject
  * @param position
+ * @param canvas
  */
-function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number): PresetObject {
-  console.log(position);
+function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number, canvas: Canvas): PresetObject {
   let tmp: PresetObject = {
     type: fabricObject.presetType || LayoutItemType.TITLE,
     // TODO: calculate offset correct, it is not possible to use the current offset of the canvas because it is not relative to the size of the text
@@ -36,6 +36,11 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
 
   if (fabricObject.angle != 360) {
     tmp.objectAngle = fabricObject.angle;
+  }
+
+  const zIndex = canvas.getObjects().indexOf(fabricObject);
+  if (zIndex > 0) {
+    tmp.zIndex = zIndex;
   }
 
   if (fabricObject.presetType === LayoutItemType.TITLE
@@ -87,5 +92,5 @@ export function getPresetItem(canvas: Canvas) {
     posLastObjectY = getYPos(item);
   }
 
-  return items.map((item, index) => fabricObjectToPresetObject(item as any, index));
+  return items.map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
 }

@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {ContentService} from "../model/content.service";
 import {ContentType, Page, Post, WpObject} from "@app/core/model/wpObject";
-import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";
 
 
@@ -36,13 +36,13 @@ export class WordpressContentService implements ContentService {
     ).pipe(map(data => data[0]));
   }
 
-  public getEditorPreviewSettings(data: string): Observable<ObjectDisplayProperties> {
+  public getEditorPreviewSettings(data: string): Observable<MetaProperties> {
     return this.getBySlug<Post>(data, ContentType.POST).pipe(
       map(WordpressContentService.mapWordpressObjectToSimpleSetting)
     );
   }
 
-  private static mapWordpressObjectToSimpleSetting(wordpressObject: WpObject): ObjectDisplayProperties {
+  private static mapWordpressObjectToSimpleSetting(wordpressObject: WpObject): MetaProperties {
     const imgUrl = wordpressObject._embedded["wp:featuredmedia"]?.[0]?.source_url;
     const description = sanitizeHtml(decodeHTMLEntities(wordpressObject.excerpt.rendered));
     const title = sanitizeHtml(decodeHTMLEntities(wordpressObject.title.rendered));

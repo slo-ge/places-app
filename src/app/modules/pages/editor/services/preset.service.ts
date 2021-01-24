@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/cms.service";
@@ -57,7 +57,7 @@ interface FabricObjectAndPreset {
 }
 
 export class PresetService {
-  private readonly canvasSettings: ObjectDisplayProperties;
+  private readonly canvasSettings: MetaProperties;
   public readonly layoutSetting: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
 
@@ -66,7 +66,7 @@ export class PresetService {
    * this is needed to change and update data for updating presets
    */
 
-  constructor(canvas: Canvas, canvasSettings: ObjectDisplayProperties, layoutSetting: Preset) {
+  constructor(canvas: Canvas, canvasSettings: MetaProperties, layoutSetting: Preset) {
     this.canvas = canvas;
     this.layoutSetting = layoutSetting;
     this.canvasSettings = canvasSettings;

@@ -17,19 +17,20 @@
         <div class="grid">
           <div *ngFor="let item of objectAlignments" (click)="alignmentAction(item)"></div>
         </div>
+
+        <div class="zindex-move">
+          <div (click)="moveToBack()">
+            <fa-icon [icon]="iconLayer"></fa-icon>
+            Bring Backward
+          </div>
+          <div (click)="moveToFront()">
+            <fa-icon [icon]="iconLayer"></fa-icon>
+            Bring Forward
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="zindex-move">
-      <div (click)="moveToBack()">
-        <fa-icon [icon]="iconLayer"></fa-icon>
-        back
-      </div>
-      <div (click)="moveToFront()">
-        <fa-icon [icon]="iconLayer"></fa-icon>
-        front
-      </div>
-    </div>
 
   </div>
   <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"

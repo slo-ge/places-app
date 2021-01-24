@@ -19,11 +19,11 @@ type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
 type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
 
 /**
- * maps the new canvas object to the export latest preset object format
+ * Maps the new canvas object to the export latest preset object format
  *
- * @param fabricObject
- * @param position
- * @param canvas
+ * @param fabricObject, the fabricObject which should be saved
+ * @param position, position in layout, always calculated from previous object
+ * @param canvas, current canvas
  */
 function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number, canvas: Canvas): PresetObject {
   let tmp: PresetObject = {
@@ -77,7 +77,13 @@ export function getYPos(obj: any): number {
 }
 
 
-function sortCanvasObject(a: Object, b: Object) {
+/**
+ * position sort function
+ *
+ * @param a
+ * @param b
+ */
+export function sortCanvasObject(a: Object, b: Object) {
   return getYPos(a) < getYPos(b) ? -1 : 1;
 }
 

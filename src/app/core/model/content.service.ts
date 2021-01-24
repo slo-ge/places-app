@@ -1,7 +1,7 @@
 import {Observable} from "rxjs";
 import {Page, Post} from "./wpObject";
 import {InjectionToken} from "@angular/core";
-import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 
 export const CONTENT_SERVICE = new InjectionToken<ContentService>('content.service');
 
@@ -14,7 +14,7 @@ export interface ContentService extends EditorPreviewInfoService{
 }
 
 export interface EditorPreviewInfoService {
-  getEditorPreviewSettings(identifier: any): Observable<ObjectDisplayProperties>;
+  getEditorPreviewSettings(identifier: any): Observable<MetaProperties>;
 }
 
 export enum ApiAdapter {

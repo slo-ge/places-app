@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapter.service";
@@ -12,7 +12,7 @@ import {DownloadCanvasService} from "@app/modules/pages/editor/services/download
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  setting$: Observable<ObjectDisplayProperties> = EMPTY;
+  setting$: Observable<MetaProperties> = EMPTY;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute,

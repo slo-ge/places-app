@@ -2,7 +2,7 @@ import {HttpClient} from "@angular/common/http";
 import {EMPTY, Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {ContentService} from "../model/content.service";
-import {ObjectDisplayProperties} from "@app/modules/pages/editor/models";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 
 export interface MetaData {
   metaDescription: string;
@@ -34,7 +34,7 @@ export class MetaContentService implements ContentService {
     return EMPTY;
   }
 
-  getEditorPreviewSettings(url: string): Observable<ObjectDisplayProperties> {
+  getEditorPreviewSettings(url: string): Observable<MetaProperties> {
     url = btoa(url);
     return this.httpClient.get<MetaData>(`${this.apiUrl}/${url}`).pipe(
       map(data => ({

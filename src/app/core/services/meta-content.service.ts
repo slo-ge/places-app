@@ -10,6 +10,7 @@ export interface MetaData {
   ogImage: string;
   ogTitle: string;
   title: string;
+  iconUrl?: string;
 }
 
 export class MetaContentService implements ContentService {
@@ -40,7 +41,8 @@ export class MetaContentService implements ContentService {
       map(data => ({
         title: data.title,
         description: data.metaDescription,
-        image: data.ogImage
+        image: data.ogImage,
+        iconUrl: data.iconUrl
       }))
     );
   }

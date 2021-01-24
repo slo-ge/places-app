@@ -74,6 +74,7 @@ export interface PresetObject {
 export enum LayoutItemType {
   TITLE = 'title',
   DESCRIPTION = 'description',
-  IMAGE = 'image'
+  IMAGE = 'image',
+  ICON = 'icon'
 }
 

@@ -4,8 +4,7 @@ import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import * as FontFaceObserver from 'fontfaceobserver'
-import {getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
-import {of} from "rxjs";
+import {getMetaField, getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
 
 
 // This proxy proxies any url and sets the cors origin to * to make
@@ -91,17 +90,16 @@ export class PresetService {
       for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION) {
 
-          const text = item.type === LayoutItemType.TITLE
-            ? this.metaProperties.title
-            : this.metaProperties.description;
-
+          const text = getMetaField(this.metaProperties, item.type);
           const obj = this.createText(text, item, item.offsetTop + posLastObjectY);
+
           this.addObjectToCanvas(obj);
           renderedItems.push({object: obj, preset: item});
           posLastObjectY = getYPos(obj);
 
-        } else if (item.type === LayoutItemType.IMAGE && this.metaProperties.image) {
-          const image = fabric.util.object.clone(await this.getImage());
+        } else if (item.type === LayoutItemType.IMAGE || item.type === LayoutItemType.ICON) {
+          const url = getMetaField(this.metaProperties, item.type);
+          const image = fabric.util.object.clone(await this.getImage(url));
           const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
           this.addObjectToCanvas(obj);
           renderedItems.push({object: obj, preset: item});
@@ -210,17 +208,18 @@ export class PresetService {
   /**
    * returns image from cache or null
    */
-  public async getImage() {
-    if (this.metaProperties.image) {
-      const proxiedImageUrl = proxiedUrl(this.metaProperties.image);
+  public async getImage(url: string) {
+    if (url) {
+      const proxiedImageUrl = proxiedUrl(url);
       if (!(proxiedImageUrl in imageCache)) {
         const prom = new Promise<Image>((resolve, _reject) => {
           fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
         });
         imageCache[proxiedImageUrl] = await prom;
-
       }
       return imageCache[proxiedImageUrl];
+    } else {
+      console.error('Can not create image, if no URL is set, returning NULL');
     }
     return null;
   }

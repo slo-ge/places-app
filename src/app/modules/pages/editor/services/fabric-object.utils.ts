@@ -1,6 +1,7 @@
 import {fabric} from "fabric";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
+import {MetaProperties} from "@app/modules/pages/editor/models";
 
 /**
  * TODO: please make extend the fabric.Textbox stuff
@@ -99,4 +100,30 @@ export function getPresetItem(canvas: Canvas) {
   }
 
   return items.map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
+}
+
+
+/**
+ * This methods returns the correct value to a given metaProperty type
+ *
+ * It returns also a default value, if one of the meta tags is not found
+ *
+ * @param metaProperties
+ * @param type
+ */
+export function getMetaField(metaProperties: MetaProperties, type: LayoutItemType) {
+  switch (type) {
+    case LayoutItemType.TITLE: {
+      return metaProperties.title || 'empty title';
+    }
+    case LayoutItemType.DESCRIPTION: {
+      return metaProperties.description || 'empty description';
+    }
+    case LayoutItemType.ICON: {
+      return metaProperties.iconUrl || 'https://via.placeholder.com/150/000000/FFFFFF/?text=Icon NotFound';
+    }
+    case LayoutItemType.IMAGE: {
+      return metaProperties.image || 'https://via.placeholder.com/150/000000/FFFFFF/?text=ogImage Not Found';
+    }
+  }
 }

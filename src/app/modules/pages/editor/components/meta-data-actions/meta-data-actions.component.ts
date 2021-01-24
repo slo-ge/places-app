@@ -3,7 +3,8 @@ import {PresetService} from "@app/modules/pages/editor/services/preset.service";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
 import {fabric} from "fabric";
-import {faArrowDown, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {getMetaField} from "@app/modules/pages/editor/services/fabric-object.utils";
 
 @Component({
   selector: 'app-meta-data-actions',
@@ -17,8 +18,8 @@ export class MetaDataActionsComponent implements OnInit {
   metaProperties: MetaProperties | any;
 
   LayoutItemType = LayoutItemType;
-  arrowDown = faArrowDown;
   plusIcon = faPlus;
+
   constructor() {
   }
 
@@ -35,17 +36,15 @@ export class MetaDataActionsComponent implements OnInit {
         position: 9999
       };
       if (type === LayoutItemType.TITLE || type === LayoutItemType.DESCRIPTION) {
-        const text = type === LayoutItemType.TITLE
-          ? this.metaProperties.title
-          : this.metaProperties.description;
-
+        const text = getMetaField(this.metaProperties, type);
         const obj = this.presetService.createText(text, preset, 50);
         this.presetService.addObjectToCanvas(obj);
       }
 
       // TODO: refactor this stuff
-      if (type === LayoutItemType.IMAGE) {
-        const image = fabric.util.object.clone(await this.presetService.getImage());
+      if (type === LayoutItemType.IMAGE || type === LayoutItemType.ICON) {
+        const imageUrl = getMetaField(this.metaProperties, type);
+        const image = fabric.util.object.clone(await this.presetService.getImage(imageUrl));
         const obj = this.presetService.createImage(image, 50, preset);
         this.presetService.addObjectToCanvas(obj);
       }

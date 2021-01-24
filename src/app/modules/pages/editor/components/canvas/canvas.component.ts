@@ -22,7 +22,7 @@ import {Canvas} from "fabric/fabric-impl";
 })
 export class CanvasComponent implements OnChanges {
   @Input()
-  canvasSettings: MetaProperties = {} as any;
+  metaProperties: MetaProperties = {} as any;
   layoutSetting: Preset = {} as any;
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;
@@ -61,10 +61,10 @@ export class CanvasComponent implements OnChanges {
 
     this.layoutSetting = mergeLayouts(this.layoutSetting);
 
-    if (this.canvasSettings) {
+    if (this.metaProperties) {
       this.currentPresetService = new PresetService(
         this.canvas,
-        this.canvasSettings,
+        this.metaProperties,
         this.layoutSetting
       );
 

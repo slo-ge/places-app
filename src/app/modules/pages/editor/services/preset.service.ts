@@ -5,6 +5,7 @@ import {Canvas, Image, Object} from "fabric/fabric-impl";
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {of} from "rxjs";
 
 
 // This proxy proxies any url and sets the cors origin to * to make
@@ -57,7 +58,7 @@ interface FabricObjectAndPreset {
 }
 
 export class PresetService {
-  private readonly canvasSettings: MetaProperties;
+  private readonly metaProperties: MetaProperties;
   public readonly layoutSetting: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
 
@@ -66,10 +67,10 @@ export class PresetService {
    * this is needed to change and update data for updating presets
    */
 
-  constructor(canvas: Canvas, canvasSettings: MetaProperties, layoutSetting: Preset) {
+  constructor(canvas: Canvas, metaProperties: MetaProperties, layoutSetting: Preset) {
     this.canvas = canvas;
     this.layoutSetting = layoutSetting;
-    this.canvasSettings = canvasSettings;
+    this.metaProperties = metaProperties;
   }
 
 
@@ -91,29 +92,19 @@ export class PresetService {
         if (item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION) {
 
           const text = item.type === LayoutItemType.TITLE
-            ? this.canvasSettings.title
-            : this.canvasSettings.description;
+            ? this.metaProperties.title
+            : this.metaProperties.description;
 
           const obj = this.createText(text, item, item.offsetTop + posLastObjectY);
           this.addObjectToCanvas(obj);
           renderedItems.push({object: obj, preset: item});
-
           posLastObjectY = getYPos(obj);
 
-        } else if (item.type === LayoutItemType.IMAGE && this.canvasSettings.image) {
-          // TODO: refactor this code
-          const proxiedImageUrl = proxiedUrl(this.canvasSettings.image);
-          if (!(proxiedImageUrl in imageCache)) {
-            const prom = new Promise<Image>((resolve, _reject) => {
-              fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
-            });
-            imageCache[proxiedImageUrl] = await prom;
-          }
-          const image = fabric.util.object.clone(imageCache[proxiedImageUrl]);
+        } else if (item.type === LayoutItemType.IMAGE && this.metaProperties.image) {
+          const image = fabric.util.object.clone(await this.getImage());
           const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
           this.addObjectToCanvas(obj);
           renderedItems.push({object: obj, preset: item});
-
           posLastObjectY = getYPos(obj);
         }
       }
@@ -129,7 +120,7 @@ export class PresetService {
      * But if 3 items on canvas, we can change it to 3, so we need to render first, and also
      * keep the order of the zIndex if available
      */
-    for (const item of renderedItems.sort((a,b) =>
+    for (const item of renderedItems.sort((a, b) =>
       (a.preset.zIndex || 0) < (b.preset.zIndex || 0) ? -1 : 1)
       ) {
       this.afterAddToCanvasAttributes(item.object, item.preset);
@@ -217,13 +208,32 @@ export class PresetService {
   }
 
   /**
+   * returns image from cache or null
+   */
+  public async getImage() {
+    if (this.metaProperties.image) {
+      const proxiedImageUrl = proxiedUrl(this.metaProperties.image);
+      if (!(proxiedImageUrl in imageCache)) {
+        const prom = new Promise<Image>((resolve, _reject) => {
+          fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
+        });
+        imageCache[proxiedImageUrl] = await prom;
+
+      }
+      return imageCache[proxiedImageUrl];
+    }
+    return null;
+  }
+
+  /**
    * Sets a given preview image with offset
+   * TODO: maybe this can be refactored
    *
    * @param image
    * @param offsetTop: the offset always depends on previous item
    * @param item
    */
-  createImage(image: Image, offsetTop: number, item: PresetObject) {
+  public createImage(image: Image, offsetTop: number, item: PresetObject) {
     const fabricImage = image.set({
       left: item.offsetLeft,
       top: offsetTop

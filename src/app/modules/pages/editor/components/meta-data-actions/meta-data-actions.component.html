@@ -1,0 +1,11 @@
+<div class="toggle">
+  <span><fa-icon [icon]="plusIcon"></fa-icon>  Insert</span>
+  <div class="toggle-content">
+    <div class="actions">
+      <div (click)="addText(LayoutItemType.TITLE)"><fa-icon [icon]="plusIcon"></fa-icon> meta title</div>
+      <div (click)="addText(LayoutItemType.DESCRIPTION)"><fa-icon [icon]="plusIcon"></fa-icon>  meta description</div>
+      <div (click)="addText(LayoutItemType.IMAGE)"><fa-icon [icon]="plusIcon"></fa-icon>  meta image</div>
+    </div>
+  </div>
+</div>
+

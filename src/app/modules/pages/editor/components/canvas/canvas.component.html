@@ -1,4 +1,3 @@
-
 <div class="preview">
   <aside>
     <h3>Select Layouts</h3>
@@ -16,7 +15,10 @@
   <main>
     <div class="canvas-actions">
       <div class="actions-row">
-        <app-canvas-actions></app-canvas-actions>
+        <app-meta-data-actions *ngIf="this.currentPresetService"
+                               [presetService]="this.currentPresetService"
+                               [metaProperties]="metaProperties">
+        </app-meta-data-actions>
         <button (click)="download()">Download
           <fa-icon [icon]="downloadIcon"></fa-icon>
         </button>

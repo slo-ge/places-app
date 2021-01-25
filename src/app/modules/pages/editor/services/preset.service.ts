@@ -2,28 +2,10 @@ import {fabric} from "fabric";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
-import {CMS_API_URL} from "@app/core/services/cms.service";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {getMetaField, getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {appendFontToDom, cmsApiUrl, proxiedUrl} from "@app/modules/pages/editor/services/utils";
 
-
-// This proxy proxies any url and sets the cors origin to * to make
-// every content access by browser
-const PROXY_URL = 'https://dev-tools.at/proxy';
-
-
-function proxiedUrl(url: string): string {
-  return `${PROXY_URL}/${url}`
-}
-
-/**
- * because every CMS URL is relative to CMS, so we need to append the api url
- * @param url
- */
-export function cmsApiUrl(url: string): string {
-  // url always starts with "/"
-  return `${CMS_API_URL}${url}`;
-}
 
 /**
  * This is a simple cache which does only cache the images,
@@ -32,24 +14,6 @@ export function cmsApiUrl(url: string): string {
  */
 const imageCache: { [key: string]: Image } = {};
 
-
-/**
- * this functions appends a new font face to the app
- * @param fontFileUrl
- * @param fontFamily
- */
-function appendFontToDom(fontFileUrl: string, fontFamily: string) {
-  const absoluteFontFileUrl = cmsApiUrl(fontFileUrl);
-  const CSS = `@font-face {
-  font-family: '${fontFamily}';
-  src: url('${absoluteFontFileUrl}') format('woff'),
-       url('${absoluteFontFileUrl}') format('woff2');
-  }`;
-  const head = document.getElementsByTagName('head')[0];
-  const style = document.createElement('style');
-  style.appendChild(document.createTextNode(CSS));
-  head.appendChild(style);
-}
 
 interface FabricObjectAndPreset {
   object: any,

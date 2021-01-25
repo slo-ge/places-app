@@ -1,9 +1,9 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CmsService} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
-import {PresetObject, Preset} from "@app/core/model/preset";
+import {Preset, PresetObject} from "@app/core/model/preset";
 import {FormArray, FormBuilder} from "@angular/forms";
-import {cmsApiUrl} from "@app/modules/pages/editor/services/preset.service";
+import {cmsApiUrl} from "@app/modules/pages/editor/services/utils";
 
 @Component({
   selector: 'app-layout-selector',

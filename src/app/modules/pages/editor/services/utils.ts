@@ -1,0 +1,43 @@
+// This proxy proxies any url and sets the cors origin to * to make
+// every content access by browser
+import {CMS_API_URL} from "@app/core/services/cms.service";
+
+export const PROXY_URL = 'https://dev-tools.at/proxy';
+//export const PROXY_URL = 'http://localhost:5000/proxy';
+
+
+/**
+ * proxy API to get proxied URL for images
+ *
+ * @param url
+ */
+export function proxiedUrl(url: string): string {
+  return `${PROXY_URL}/${btoa(url)}`
+}
+
+/**
+ * because every CMS URL is relative to CMS, so we need to append the api url
+ * @param url
+ */
+export function cmsApiUrl(url: string): string {
+  // url always starts with "/"
+  return `${CMS_API_URL}${url}`;
+}
+
+/**
+ * this functions appends a new font face to the app
+ * @param fontFileUrl
+ * @param fontFamily
+ */
+export function appendFontToDom(fontFileUrl: string, fontFamily: string) {
+  const absoluteFontFileUrl = cmsApiUrl(fontFileUrl);
+  const CSS = `@font-face {
+  font-family: '${fontFamily}';
+  src: url('${absoluteFontFileUrl}') format('woff'),
+       url('${absoluteFontFileUrl}') format('woff2');
+  }`;
+  const head = document.getElementsByTagName('head')[0];
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(CSS));
+  head.appendChild(style);
+}

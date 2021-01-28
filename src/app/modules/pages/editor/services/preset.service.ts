@@ -57,7 +57,6 @@ export class PresetService {
 
     if (this.layoutSetting.itemsJson && this.layoutSetting.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
-
       for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (isText(item)) {
 
@@ -144,8 +143,7 @@ export class PresetService {
         fontSize: item.fontSize
       }
     ) as any;
-    item.offsetTop = offsetTop;
-    this.setObjectAttributes(fabricText, item);
+    this.setObjectAttributes(fabricText, item, offsetTop);
 
     if (item.fontColor) {
       fabricText.set('fill', item.fontColor);
@@ -198,9 +196,7 @@ export class PresetService {
    * @param item
    */
   public createImage(image: Image, offsetTop: number, item: PresetObject) {
-    item.offsetTop =  offsetTop;
-    this.setObjectAttributes(image, item);
-
+    this.setObjectAttributes(image, item, offsetTop);
     return image;
   }
 
@@ -209,10 +205,11 @@ export class PresetService {
    *
    * @param fabricObject can be text or image
    * @param item
+   * @param offsetTop
    */
-  setObjectAttributes(fabricObject: Object | any, item: PresetObject) {
+  private setObjectAttributes(fabricObject: Object | any, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
-    fabricObject.set('top', item.offsetTop);
+    fabricObject.set('top', offsetTop);
 
 
     fabricObject[PRESET_TYPE_KEY] = item.type;

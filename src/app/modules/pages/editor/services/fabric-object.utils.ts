@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {LayoutItemType, PresetObject} from "@app/core/model/preset";
+import {LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 
@@ -9,11 +9,13 @@ import {MetaProperties} from "@app/modules/pages/editor/models";
  * hacky `any`-casting;
  */
 export const PRESET_TYPE_KEY = 'presetType';
-const PRESET_OFFSET_TOP_KEY = 'presetOffsetTop';
+export const PRESET_OFFSET_TOP_KEY = 'presetOffsetTop';
+export const PRESET_OBJECT_POSITION = 'presetObjectPosition';
 
 interface CustomFabricObjectFields {
   presetType?: LayoutItemType;
   presetOffsetTop?: number;
+  presetObjectPosition?: ObjectPosition;
 }
 
 type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
@@ -37,6 +39,12 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
 
   if (fabricObject.angle != 360) {
     tmp.objectAngle = fabricObject.angle;
+  }
+
+  if (fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE) {
+    tmp.objectPosition = fabricObject.presetObjectPosition;
+    // @ts-ignore
+    tmp.offsetRight = canvas.width - fabricObject.getScaledWidth()  - fabricObject.left;
   }
 
   const zIndex = canvas.getObjects().indexOf(fabricObject);
@@ -126,4 +134,12 @@ export function getMetaField(metaProperties: MetaProperties, type: LayoutItemTyp
       return metaProperties.image || 'https://via.placeholder.com/150/000000/FFFFFF/?text=ogImage Not Found';
     }
   }
+}
+
+export function isImage(item: PresetObject) {
+  return item.type === LayoutItemType.IMAGE || item.type === LayoutItemType.ICON;
+}
+
+export function isText(item: PresetObject) {
+  return item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION;
 }

@@ -62,6 +62,8 @@ export interface PresetObject {
   fontLetterSpacing?: string | number,
   offsetTop: number,
   offsetLeft: number,
+  offsetRight?: number,
+  offsetBottom?: number,
   type: LayoutItemType,
   title?: string,
   position: number;
@@ -69,6 +71,11 @@ export interface PresetObject {
   fontColor?: string;
   objectAngle?: number;
   zIndex?: number;
+  objectPosition?: ObjectPosition;
+}
+
+export enum ObjectPosition {
+  STATIC = 'static', RELATIVE= 'relative', ABSOLUTE = 'absolute'
 }
 
 export enum LayoutItemType {

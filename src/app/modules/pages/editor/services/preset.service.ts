@@ -1,9 +1,16 @@
 import {fabric} from "fabric";
 import {MetaProperties} from "@app/modules/pages/editor/models";
-import {LayoutItemType, Preset, PresetObject} from "@app/core/model/preset";
+import {ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
-import {getMetaField, getYPos, PRESET_TYPE_KEY} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {
+  getMetaField,
+  getYPos,
+  isImage,
+  isText,
+  PRESET_OBJECT_POSITION,
+  PRESET_TYPE_KEY
+} from "@app/modules/pages/editor/services/fabric-object.utils";
 import {appendFontToDom, cmsApiUrl, proxiedUrl} from "@app/modules/pages/editor/services/utils";
 
 
@@ -52,7 +59,7 @@ export class PresetService {
       let posLastObjectY = 0; // the position of the last item in canvas
 
       for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
-        if (item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION) {
+        if (isText(item)) {
 
           const text = getMetaField(this.metaProperties, item.type);
           const obj = this.createText(text, item, item.offsetTop + posLastObjectY);
@@ -61,7 +68,7 @@ export class PresetService {
           renderedItems.push({object: obj, preset: item});
           posLastObjectY = getYPos(obj);
 
-        } else if (item.type === LayoutItemType.IMAGE || item.type === LayoutItemType.ICON) {
+        } else if (isImage(item)) {
           const url = getMetaField(this.metaProperties, item.type);
           const image = fabric.util.object.clone(await this.getImage(url));
           const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
@@ -134,21 +141,15 @@ export class PresetService {
     let fabricText = new fabric.Textbox(
       text,
       {
-        fontSize: item.fontSize,
-        left: item.offsetLeft,
-        top: offsetTop,
-        width: (this.canvas.width || 0) - (2 * item.offsetLeft),
+        fontSize: item.fontSize
       }
     ) as any;
-
+    item.offsetTop = offsetTop;
     this.setObjectAttributes(fabricText, item);
-
-    fabricText[PRESET_TYPE_KEY] = item.type;
 
     if (item.fontColor) {
       fabricText.set('fill', item.fontColor);
     }
-
 
     if (this.layoutSetting.fontFamilyHeadingCSS) {
       fabricText.set('fontFamily', this.layoutSetting.fontFamilyHeadingCSS);
@@ -197,17 +198,10 @@ export class PresetService {
    * @param item
    */
   public createImage(image: Image, offsetTop: number, item: PresetObject) {
-    const fabricImage = image.set({
-      left: item.offsetLeft,
-      top: offsetTop
-    }) as any;
-    this.setObjectAttributes(fabricImage, item);
-    fabricImage.scaleToWidth(
-      (this.canvas.width || 0) - (2 * item.offsetLeft)
-    );
-    fabricImage[PRESET_TYPE_KEY] = item.type;
+    item.offsetTop =  offsetTop;
+    this.setObjectAttributes(image, item);
 
-    return fabricImage;
+    return image;
   }
 
   /**
@@ -216,10 +210,32 @@ export class PresetService {
    * @param fabricObject can be text or image
    * @param item
    */
-  setObjectAttributes(fabricObject: Object, item: PresetObject) {
+  setObjectAttributes(fabricObject: Object | any, item: PresetObject) {
+    fabricObject.set('left', item.offsetLeft);
+    fabricObject.set('top', item.offsetTop);
+
+
+    fabricObject[PRESET_TYPE_KEY] = item.type;
+    fabricObject[PRESET_OBJECT_POSITION] = item.objectPosition || ObjectPosition.RELATIVE;
+
+    let width = (this.canvas.width || 0) - (2 * item.offsetLeft);
+    if (item.objectPosition === ObjectPosition.ABSOLUTE) {
+      let offsetRight = item.offsetRight || item.offsetLeft;
+      fabricObject.set('right', offsetRight);
+      width = (this.canvas.width || 0) - item.offsetLeft - offsetRight;
+    }
+
+    if (isImage(item)) {
+      fabricObject.scaleToWidth(width);
+    } else {
+      fabricObject.set('width', width);
+    }
+
+
     if (item.objectAngle) {
       fabricObject.set('angle', item.objectAngle);
     }
+
   }
 
   /**

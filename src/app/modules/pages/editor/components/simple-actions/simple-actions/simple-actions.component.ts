@@ -16,6 +16,8 @@ import {
   ObjectAlignments,
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
+import {PRESET_OBJECT_POSITION} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {ObjectPosition} from "@app/core/model/preset";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -46,6 +48,8 @@ export class SimpleActionsComponent implements OnInit {
 
   fabricType = FabricType;
   selectedType: FabricType | null = null;
+
+  ObjectPosition = ObjectPosition;
 
   constructor(private  editorService: EditorService,
               private alignmentService: AlignmentService) {
@@ -131,8 +135,17 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   moveToFront() {
-    const activeObject = this.canvas.getActiveObject();
+    const activeObject = this.canvas.getActiveObject() as any;
     const position = this.canvas.getObjects().indexOf(activeObject);
     this.canvas.moveTo(activeObject, position + 1);
+  }
+
+  /**
+   * set the position to absolute or relative
+   * @param position
+   */
+  position(position: ObjectPosition) {
+    const activeObject = this.canvas.getActiveObject() as any;
+    activeObject[PRESET_OBJECT_POSITION] = position;
   }
 }

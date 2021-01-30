@@ -28,15 +28,19 @@
             Bring Forward
           </div>
         </div>
+
+        <div class="fixed-position">
+          <div>Position:</div>
+          <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="canvas.getActiveObject().presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
+          <div (click)="position(ObjectPosition.ABSOLUTE)" [class.active]="canvas.getActiveObject().presetObjectPosition === ObjectPosition.ABSOLUTE">absolute</div>
+        </div>
+
       </div>
     </div>
   </div>
   <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"
                     (valueChange)="changeSize($event)"></app-range-slider>
-  <div>
-    <div (click)="position(ObjectPosition.RELATIVE)">relative</div>
-    <div (click)="position(ObjectPosition.ABSOLUTE)">absolute</div>
-  </div>
+
   <div class="type-settings" [ngSwitch]="selectedType">
     <app-text-settings *ngSwitchCase="fabricType.TEXTBOX" [textBox]="canvas.getActiveObject()"></app-text-settings>
   </div>

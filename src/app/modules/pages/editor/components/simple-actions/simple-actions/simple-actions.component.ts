@@ -5,7 +5,8 @@ import {EditorService} from "@app/modules/pages/editor/services/editor.service";
 import {
   faAlignCenter,
   faCaretSquareLeft,
-  faCaretSquareRight, faLayerGroup,
+  faCaretSquareRight,
+  faLayerGroup,
   faSync,
   faTh,
   faTrashAlt
@@ -16,7 +17,7 @@ import {
   ObjectAlignments,
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
-import {PRESET_OBJECT_POSITION} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {CustomObject} from "@app/modules/pages/editor/services/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 
 enum FabricType {
@@ -145,7 +146,7 @@ export class SimpleActionsComponent implements OnInit {
    * @param position
    */
   position(position: ObjectPosition) {
-    const activeObject = this.canvas.getActiveObject() as any;
-    activeObject[PRESET_OBJECT_POSITION] = position;
+    const activeObject = this.canvas.getActiveObject() as CustomObject;
+    activeObject.presetObjectPosition= position;
   }
 }

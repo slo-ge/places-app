@@ -3,14 +3,6 @@ import {LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/pres
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 
-/**
- * TODO: please make extend the fabric.Textbox stuff
- * with the following keys (presetType / presetOffsetTop) to avoid this
- * hacky `any`-casting;
- */
-export const PRESET_TYPE_KEY = 'presetType';
-export const PRESET_OFFSET_TOP_KEY = 'presetOffsetTop';
-export const PRESET_OBJECT_POSITION = 'presetObjectPosition';
 
 interface CustomFabricObjectFields {
   presetType?: LayoutItemType;
@@ -18,8 +10,10 @@ interface CustomFabricObjectFields {
   presetObjectPosition?: ObjectPosition;
 }
 
-type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
-type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
+export type  CustomObject = fabric.Object & CustomFabricObjectFields;
+export type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
+export type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
+
 
 /**
  * Maps the new canvas object to the export latest preset object format
@@ -32,7 +26,7 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
   let tmp: PresetObject = {
     type: fabricObject.presetType || LayoutItemType.TITLE,
     // TODO: calculate offset correct, it is not possible to use the current offset of the canvas because it is not relative to the size of the text
-    offsetTop: Math.round(fabricObject[PRESET_OFFSET_TOP_KEY] || 0),
+    offsetTop: Math.round(fabricObject.presetOffsetTop || 0),
     offsetLeft: Math.round(fabricObject.left || 0),
     position: position
   };
@@ -44,7 +38,7 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
   if (fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE) {
     tmp.objectPosition = fabricObject.presetObjectPosition;
     // @ts-ignore
-    tmp.offsetRight = canvas.width - fabricObject.getScaledWidth()  - fabricObject.left;
+    tmp.offsetRight = canvas.width - fabricObject.getScaledWidth() - fabricObject.left;
   }
 
   const zIndex = canvas.getObjects().indexOf(fabricObject);
@@ -100,10 +94,10 @@ export function sortCanvasObject(a: Object, b: Object) {
  * returns the current items and
  */
 export function getPresetItem(canvas: Canvas) {
-  const items = canvas.getObjects().filter(object => (object as any)[PRESET_TYPE_KEY] != null);
+  const items = canvas.getObjects().filter(object => (object as CustomObject).presetType != null);
   let posLastObjectY = 0;
   for (let item of items.sort(sortCanvasObject)) {
-    (item as any)[PRESET_OFFSET_TOP_KEY] = (item as any).top - posLastObjectY;
+    (item as CustomObject).presetOffsetTop = (item as any).top - posLastObjectY;
     posLastObjectY = getYPos(item);
   }
 

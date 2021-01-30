@@ -4,12 +4,11 @@ import {ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
+  CustomObject,
   getMetaField,
   getYPos,
   isImage,
-  isText,
-  PRESET_OBJECT_POSITION,
-  PRESET_TYPE_KEY
+  isText
 } from "@app/modules/pages/editor/services/fabric-object.utils";
 import {appendFontToDom, cmsApiUrl, proxiedUrl} from "@app/modules/pages/editor/services/utils";
 
@@ -207,18 +206,17 @@ export class PresetService {
    * @param item
    * @param offsetTop
    */
-  private setObjectAttributes(fabricObject: Object | any, item: PresetObject, offsetTop: number) {
+  private setObjectAttributes(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
     fabricObject.set('top', offsetTop);
 
 
-    fabricObject[PRESET_TYPE_KEY] = item.type;
-    fabricObject[PRESET_OBJECT_POSITION] = item.objectPosition || ObjectPosition.RELATIVE;
+    fabricObject.presetType = item.type;
+    fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE;
 
     let width = (this.canvas.width || 0) - (2 * item.offsetLeft);
     if (item.objectPosition === ObjectPosition.ABSOLUTE) {
       let offsetRight = item.offsetRight || item.offsetLeft;
-      fabricObject.set('right', offsetRight);
       width = (this.canvas.width || 0) - item.offsetLeft - offsetRight;
     }
 

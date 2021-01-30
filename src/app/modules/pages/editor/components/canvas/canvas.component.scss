@@ -2,6 +2,7 @@
 
 $border: 1px solid $grey-1;
 
+
 .preview {
   display: flex;
   justify-content: flex-start;
@@ -28,7 +29,7 @@ main {
     z-index: 1010;
     background-color: white;
     padding: 12px;
-    opacity: 0.8;
+    // opacity: 0.8;
 
     .actions-row {
       display: flex;
@@ -46,15 +47,13 @@ main {
       border: 0;
     }
 
-
-    app-canvas-actions,
     app-simple-actions {
       display: block;
     }
   }
 
   .canvas-wrapper {
-    padding: 60px 0;
+    padding: 120px 0;
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -63,9 +62,6 @@ main {
     background-color: $grey-dark-0;
   }
 }
-
-
-
 
 aside {
   padding: 20px;

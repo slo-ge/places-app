@@ -1,7 +1,7 @@
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
 import {CMS_API_URL} from "@app/core/services/cms.service";
-import {Font} from "@app/modules/pages/editor/components/font-selector/font-selector.component";
+import {Font} from "@app/core/model/preset";
 
 export const PROXY_URL = 'https://dev-tools.at/proxy';
 //export const PROXY_URL = 'http://localhost:5000/proxy';

@@ -36,7 +36,7 @@ export interface BackgroundImage {
   updated_at: Date;
 }
 
-export interface Font {
+export interface GlobalFont {
   url: string;
 }
 
@@ -49,7 +49,7 @@ export interface Preset {
   updated_at?: Date;
   backgroundImage?: BackgroundImage;
 
-  fontFileWoff?: Font;
+  fontFileWoff?: GlobalFont;
   fontFamilyHeadingCSS?: string;
 
   itemsJson?: PresetObject[];
@@ -72,10 +72,51 @@ export interface PresetObject {
   objectAngle?: number;
   zIndex?: number;
   objectPosition?: ObjectPosition;
+  font?: Font;
 }
 
+export interface Font {
+  importPath: string;
+  fontFamily: string;
+  fontName: string;
+}
+
+export const FONTS: Font[] = [
+  {
+    fontFamily: "'Montserrat', sans-serif",
+    importPath: 'https://fonts.googleapis.com/css2?family=Montserrat&display=swap',
+    fontName: 'Montserrat'
+  },
+  {
+    fontFamily: "'Noto Serif', serif",
+    importPath: 'https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Serif&display=swap',
+    fontName: 'Noto Serif'
+  },
+  {
+    fontFamily: '"Archivo Black", sans-serif',
+    importPath: 'https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap',
+    fontName: 'Archivo Black'
+  },
+  {
+    fontFamily: "'Fraunces', serif",
+    importPath: 'https://fonts.googleapis.com/css2?family=Fraunces&display=swap',
+    fontName: 'Fraunces'
+  },
+  {
+    fontFamily: "'Lobster', cursive",
+    importPath: 'https://fonts.googleapis.com/css2?family=Lobster&display=swap',
+    fontName: 'Lobster'
+  },
+  {
+    fontFamily: "'Abril Fatface', cursive",
+    importPath: 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap',
+    fontName: 'Abril Fatface'
+  }
+];
+
+
 export enum ObjectPosition {
-  STATIC = 'static', RELATIVE= 'relative', ABSOLUTE = 'absolute'
+  STATIC = 'static', RELATIVE = 'relative', ABSOLUTE = 'absolute'
 }
 
 export enum LayoutItemType {

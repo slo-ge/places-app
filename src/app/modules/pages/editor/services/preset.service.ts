@@ -10,7 +10,7 @@ import {
   isImage,
   isText
 } from "@app/modules/pages/editor/services/fabric-object.utils";
-import {appendFontToDom, cmsApiUrl, proxiedUrl} from "@app/modules/pages/editor/services/utils";
+import {appendFontToDom, cmsApiUrl, importFontInDom, proxiedUrl} from "@app/modules/pages/editor/services/utils";
 
 
 /**
@@ -123,8 +123,6 @@ export class PresetService {
 
       const font = new FontFaceObserver(this.layoutSetting.fontFamilyHeadingCSS);
       await font.load(null, 5000);
-      console.log('loaded font', this.layoutSetting.fontFamilyHeadingCSS,
-        'from file', this.layoutSetting.fontFileWoff)
     }
   }
 
@@ -162,6 +160,15 @@ export class PresetService {
 
     if (item.fontLetterSpacing) {
       fabricText.set('charSpacing', item.fontLetterSpacing);
+    }
+
+    if (item.font){
+      const fontObserver = new FontFaceObserver(item.font.fontName);
+      importFontInDom(item.font);
+      fontObserver.load(item.font.fontFamily, 5000).then(
+        () => fabricText.set('fontFamily', item.font?.fontFamily),
+        (e) => console.error(e)
+      );
     }
 
     return fabricText;

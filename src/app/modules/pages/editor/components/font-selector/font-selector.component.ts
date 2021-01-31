@@ -3,35 +3,8 @@ import {FormBuilder} from "@angular/forms";
 import {CustomTextBox} from "@app/modules/pages/editor/services/fabric-object.utils";
 import {importFontInDom} from "@app/modules/pages/editor/services/utils";
 import * as FontFaceObserver from "fontfaceobserver";
+import {Font, FONTS} from "@app/core/model/preset";
 
-export interface Font {
-  importPath: string;
-  fontFamily: string;
-  fontName: string;
-}
-
-const FONTS: Font[] = [
-  {
-    fontFamily: "'Montserrat', sans-serif",
-    importPath: 'https://fonts.googleapis.com/css2?family=Montserrat&display=swap',
-    fontName: 'Montserrat'
-  },
-  {
-    fontFamily: "'Noto Serif', serif",
-    importPath: 'https://fonts.googleapis.com/css2?family=Montserrat&family=Noto+Serif&display=swap',
-    fontName: 'Noto Serif'
-  },
-  {
-    fontFamily: '"Archivo Black", sans-serif',
-    importPath: 'https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap',
-    fontName: 'Archivo Black'
-  },
-  {
-    fontFamily: "'Fraunces', serif",
-    importPath: 'https://fonts.googleapis.com/css2?family=Fraunces&display=swap',
-    fontName: 'Fraunces'
-  }
-];
 
 @Component({
   selector: 'app-font-selector',
@@ -46,7 +19,7 @@ export class FontSelectorComponent implements OnInit {
   @Input()
   activeObject: CustomTextBox | any;
 
-  FONTS = FONTS;
+  fonts = FONTS;
 
   constructor(private fb: FormBuilder) {
   }
@@ -60,14 +33,14 @@ export class FontSelectorComponent implements OnInit {
    * @param font
    */
   async addFont(font: Font) {
-    if(!font) {
+    if (!font) {
       return;
     }
     const fontObserver = new FontFaceObserver(font.fontName);
     importFontInDom(font);
     await fontObserver.load(font.fontFamily, 5000);
-    console.log('loaded font', font);
     this.activeObject.set('fontFamily', font.fontFamily);
     this.activeObject.canvas.renderAll();
+    this.activeObject.presetFont = font;
   }
 }

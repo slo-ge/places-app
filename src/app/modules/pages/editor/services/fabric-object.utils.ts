@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/preset";
+import {Font, LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 
@@ -10,6 +10,7 @@ interface CustomFabricObjectFields {
   presetType?: LayoutItemType;
   presetOffsetTop?: number;
   presetObjectPosition?: ObjectPosition;
+  presetFont?: Font;
 }
 
 export type  CustomObject = fabric.Object & CustomFabricObjectFields;
@@ -68,6 +69,11 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     if (fabricObject.charSpacing) {
       tmp.fontLetterSpacing = fabricObject.charSpacing;
     }
+
+    if (fabricObject.presetFont) {
+      tmp.font = fabricObject.presetFont;
+    }
+
   }
 
   return tmp;

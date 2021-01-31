@@ -13,7 +13,6 @@ export class TextSettingsComponent {
   }
 
   changeColor(colorCode: string) {
-
       // Please use canvas.getActiveObject().set('fill', color)
       // This will automatically invalidate the cache and at next
       // redraw you will get color change.

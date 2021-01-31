@@ -1,4 +1,4 @@
-<div class="object-actions" *ngIf="showActiveObjectActions">
+<div class="object-actions" *ngIf="activeObject">
   <div class="align-actions">
     <div (click)="removeActiveObject()">
       <fa-icon [icon]="iconRemove"></fa-icon>
@@ -31,8 +31,8 @@
 
         <div class="fixed-position">
           <div>Position:</div>
-          <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="canvas.getActiveObject().presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
-          <div (click)="position(ObjectPosition.ABSOLUTE)" [class.active]="canvas.getActiveObject().presetObjectPosition === ObjectPosition.ABSOLUTE">absolute</div>
+          <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
+          <div (click)="position(ObjectPosition.ABSOLUTE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE">absolute</div>
         </div>
 
       </div>

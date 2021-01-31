@@ -13,6 +13,7 @@ import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-ani
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { TextSettingsComponent } from './components/simple-actions/simple-actions/text-settings/text-settings.component';
 import { MetaDataActionsComponent } from './components/meta-data-actions/meta-data-actions.component';
+import { FontSelectorComponent } from './components/font-selector/font-selector.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MetaDataActionsComponent } from './components/meta-data-actions/meta-da
     RangeSliderComponent,
     ColorPickerComponent,
     TextSettingsComponent,
-    MetaDataActionsComponent
+    MetaDataActionsComponent,
+    FontSelectorComponent
   ],
   imports: [
     CommonModule,

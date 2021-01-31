@@ -1,6 +1,7 @@
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
 import {CMS_API_URL} from "@app/core/services/cms.service";
+import {Font} from "@app/modules/pages/editor/components/font-selector/font-selector.component";
 
 export const PROXY_URL = 'https://dev-tools.at/proxy';
 //export const PROXY_URL = 'http://localhost:5000/proxy';
@@ -36,6 +37,21 @@ export function appendFontToDom(fontFileUrl: string, fontFamily: string) {
   src: url('${absoluteFontFileUrl}') format('woff'),
        url('${absoluteFontFileUrl}') format('woff2');
   }`;
+  const head = document.getElementsByTagName('head')[0];
+  const style = document.createElement('style');
+  style.appendChild(document.createTextNode(CSS));
+  head.appendChild(style);
+}
+
+/**
+ * using the @import annotation instead of providing certain file
+ */
+export function importFontInDom(font: Font) {
+  const CSS = `@import url('${font.importPath}');
+  @font-face {
+  font-family: ${font.fontFamily};
+  }
+  `;
   const head = document.getElementsByTagName('head')[0];
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(CSS));

@@ -17,7 +17,7 @@ import {
   ObjectAlignments,
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
-import {CustomObject} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {CustomImageBox, CustomObject, CustomTextBox} from "@app/modules/pages/editor/services/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 
 enum FabricType {
@@ -45,12 +45,16 @@ export class SimpleActionsComponent implements OnInit {
   objectAlignments = dictToKeys(ObjectAlignments);
   simpleAlignments = SimpleAlignments;
 
-  showActiveObjectActions = false;
 
   fabricType = FabricType;
   selectedType: FabricType | null = null;
 
   ObjectPosition = ObjectPosition;
+
+  /**
+   * holds the selected Object, if it is selected
+   */
+  activeObject: CustomObject | CustomImageBox | CustomTextBox | any = null;
 
   constructor(private  editorService: EditorService,
               private alignmentService: AlignmentService) {
@@ -77,33 +81,37 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   removeActiveObject() {
-    this.canvas.remove(this.canvas.getActiveObject());
+    this.canvas.remove(this.activeObject);
   }
 
-  selectionEvent(e: IEvent & { selected: FabricObject[] }) {
-    this.showActiveObjectActions = true;
-    const activeObject = e.selected[0];
+  selectionEvent(_e: IEvent) {
+    this.activeObject = this.canvas.getActiveObject();
+    this.activeObject.set({
+      borderColor: '#20bfa9',
+      cornerColor: '#20bfa9',
+      borderScaleFactor: 2
+    });
 
-    if (activeObject instanceof fabric.Textbox) {
-      this.activeRangeSliderCurrentValue = Number(activeObject.fontSize);
+    if (this.activeObject instanceof fabric.Textbox) {
+      this.activeRangeSliderCurrentValue = Number(this.activeObject.fontSize);
       this.activeRangeSliderMax = 300;
       this.selectedType = FabricType.TEXTBOX;
-    } else if (activeObject instanceof fabric.Image) {
-      this.activeRangeSliderCurrentValue = Number(activeObject.getScaledWidth());
+    } else if (this.activeObject instanceof fabric.Image) {
+      this.activeRangeSliderCurrentValue = Number(this.activeObject.getScaledWidth());
       this.activeRangeSliderMax = Number(1200);
       this.selectedType = FabricType.IMAGE;
     } else {
-      console.error('onCanvasEvent could not found Object:', activeObject)
+      console.error('onCanvasEvent could not found Object:', this.activeObject)
     }
   }
 
   selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
-    this.showActiveObjectActions = false;
+    this.activeObject = null;
     this.selectedType = null;
   }
 
   changeSize(newWidth: number) {
-    const activeObject = this.canvas.getActiveObject();
+    const activeObject = this.activeObject;
     if (activeObject instanceof fabric.Textbox) {
       activeObject.fontSize = newWidth;
     } else if (activeObject instanceof fabric.Image) {
@@ -115,7 +123,7 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   turn90() {
-    const activeObject = this.canvas.getActiveObject();
+    const activeObject = this.activeObject;
     if (activeObject) {
       activeObject.centeredRotation = true;
       activeObject.rotate(activeObject.angle + 90);
@@ -124,19 +132,19 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
-    this.alignmentService.move(aligner, this.canvas, this.canvas.getActiveObject());
+    this.alignmentService.move(aligner, this.canvas, this.activeObject);
   }
 
   moveToBack() {
-    const activeObject = this.canvas.getActiveObject();
+    const activeObject = this.activeObject;
     const position = this.canvas.getObjects().indexOf(activeObject);
     if (position > 1) {
-      this.canvas.moveTo(activeObject, position -1);
+      this.canvas.moveTo(activeObject, position - 1);
     }
   }
 
   moveToFront() {
-    const activeObject = this.canvas.getActiveObject() as any;
+    const activeObject = this.activeObject as any;
     const position = this.canvas.getObjects().indexOf(activeObject);
     this.canvas.moveTo(activeObject, position + 1);
   }
@@ -146,7 +154,7 @@ export class SimpleActionsComponent implements OnInit {
    * @param position
    */
   position(position: ObjectPosition) {
-    const activeObject = this.canvas.getActiveObject() as CustomObject;
-    activeObject.presetObjectPosition= position;
+    const activeObject = this.activeObject as CustomObject;
+    activeObject.presetObjectPosition = position;
   }
 }

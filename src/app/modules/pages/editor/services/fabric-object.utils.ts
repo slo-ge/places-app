@@ -3,7 +3,9 @@ import {LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/pres
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 
-
+/**
+ * Extra information which can a fabric object hold
+ */
 interface CustomFabricObjectFields {
   presetType?: LayoutItemType;
   presetOffsetTop?: number;

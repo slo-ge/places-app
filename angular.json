@@ -28,7 +28,8 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/google05fe7ee3897b21a6.html"
             ],
             "styles": [
               "src/styles.scss"

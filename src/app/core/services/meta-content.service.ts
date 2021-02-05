@@ -17,7 +17,7 @@ export class MetaContentService implements ContentService {
   private readonly apiUrl: string;
 
   constructor(private httpClient: HttpClient) {
-    this.apiUrl = 'https://dev-tools.at/meta';
+    this.apiUrl = '/api/meta';
   }
 
   public getPageBy(slug: string): Observable<any> {

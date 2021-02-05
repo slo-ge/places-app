@@ -14,12 +14,13 @@ export class AdapterService {
   constructor(private httpClient: HttpClient) {
   }
 
-
   getService(queryParamsSnapshot: any): ContentService {
-    const apiUrl = queryParamsSnapshot.get('apiUrl');
+    let apiUrl = queryParamsSnapshot.get('apiUrl');
     const adapterName: ApiAdapter = queryParamsSnapshot.get('adapter');
 
     if (adapterName === ApiAdapter.WORDPRESS && apiUrl) {
+      // this is hacky af
+      apiUrl = apiUrl.replace('wordpress://', '');
       return new WordpressContentService(this.httpClient, apiUrl);
     }
 
@@ -35,13 +36,16 @@ export class AdapterService {
 
   async findAdapter(url: string): Promise<ApiAdapter> {
 
-    const isWordpress = await this.httpClient.get(url + '/wp-json/').pipe(
-      map(() => true),
-      catchError(() => of(false))
-    ).toPromise();
+    if (url.startsWith('wordpress://')) { // this is hacky af
+      url = url.replace('wordpress://', '');
+      const isWordpress = await this.httpClient.get(url + '/wp-json/').pipe(
+        map(() => true),
+        catchError(() => of(false))
+      ).toPromise();
 
-    if (isWordpress) {
-      return ApiAdapter.WORDPRESS;
+      if (isWordpress) {
+        return ApiAdapter.WORDPRESS;
+      }
     }
 
     const metaService = new MetaContentService(this.httpClient);

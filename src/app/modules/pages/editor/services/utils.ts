@@ -3,7 +3,7 @@
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import {Font} from "@app/core/model/preset";
 
-export const PROXY_URL = 'https://dev-tools.at/proxy';
+export const PROXY_URL = '/api/proxy';
 //export const PROXY_URL = 'http://localhost:5000/proxy';
 
 

@@ -5,5 +5,11 @@
     "pathRewrite": {
       "^/cms": ""
     }
+  },
+  "/api/*": {
+    "target": "https://dev-tools.at",
+    "pathRewrite": {
+      "^/api": ""
+    }
   }
 }

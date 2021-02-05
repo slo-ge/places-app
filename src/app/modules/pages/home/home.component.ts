@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
 import {AdapterService} from "@app/core/services/adapter.service";
 import {ApiAdapter} from "@app/core/model/content.service";
+import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
 
 export const PREDEFINED_TEST_URL: { name: string, url: string }[] = [
   {name: 'Any Restaurant', url: 'https://goove.at/detail/pizza-senza-danza'},
@@ -28,8 +29,8 @@ export const PREDEFINED_TEST_URL: { name: string, url: string }[] = [
 })
 export class HomeComponent {
   adapterInfoText = {
-    [ApiAdapter.WORDPRESS]: 'Select Content from Wordpress',
-    [ApiAdapter.METADATA]: 'Found meta data of selected Website'
+    [ApiAdapter.WORDPRESS]: 'Found Wordpress Blog, start with selecting a blog post.',
+    [ApiAdapter.METADATA]: 'Website meta data available. Start generating beautiful thumbnails.'
   };
 
   baseURLForm = new FormGroup({
@@ -40,6 +41,8 @@ export class HomeComponent {
   loading = false;
   adapter: ApiAdapter | null | false = null;
   ApiAdapter = ApiAdapter;
+  faSearch = faSearch;
+  faCheckCircle = faCheckCircle;
 
   constructor(private adapterService: AdapterService) {
   }

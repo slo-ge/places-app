@@ -9,17 +9,20 @@
         <h2>Insert any address</h2>
         <div>
           <form [formGroup]="baseURLForm">
-            <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url"
-                   type="text">
-            <button class="primary" (click)="check()">Search</button>
+            <div class="input-wrapper">
+              <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url" type="text">
+              <div class="search" (click)="check()">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </div>
+            </div>
           </form>
         </div>
         <div>
         </div>
       </div>
 
-      <div *ngIf="adapter">
-        <div class="found-adapter">{{adapterInfoText[adapter]}}</div>
+      <div *ngIf="adapter && !loading" class="adapter">
+        <div class="adapter-info"><fa-icon class="success" [icon]="faCheckCircle"></fa-icon> {{adapterInfoText[adapter]}}</div>
 
         <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
                 [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
@@ -28,7 +31,7 @@
 
         <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']" [queryParams]="
   {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
-          Open Editor
+          Generate
         </button>
       </div>
 

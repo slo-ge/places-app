@@ -39,30 +39,56 @@ section {
     font-size: 20px;
     margin: 5px 0;
   }
+}
 
-  input  {
-    border: 0;
-    font-size: 20px;
+input  {
+  border: 0;
+  font-size: 20px;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  background: $grey-0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  width: 40px;
+  color: white;
+  background: black;
+  border-radius: $common-border-radius;
+  padding: 5px;
+}
+
+.adapter {
+  button {
+    margin: 10px 0 20px 0;
   }
+}
 
+.adapter-info {
+  font-size: 14px;
+}
+
+.success {
+  font-size: 16px;
+  color: $primary;
 }
 
 .inner {
   padding: 30px;
-
-  .search-box {
-    margin-bottom: 20px;
-  }
 }
-
-.found-adapter {
-  margin: 20px 0;
-}
-
 
 
 .examples {
-
   ul {
     padding: 0;
     margin: 0;

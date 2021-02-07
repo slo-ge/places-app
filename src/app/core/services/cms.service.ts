@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Preset, PresetObject} from "@app/core/model/preset";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {tap} from "rxjs/operators";
@@ -34,7 +34,9 @@ export class CmsService {
    *
    */
   public getLayoutSetting(): Observable<Preset[]> {
-    return this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API);
+    let params = new HttpParams().set('highlighted', 'true');
+
+    return this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, {params});
   }
 
   /**

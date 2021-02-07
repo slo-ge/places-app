@@ -8,6 +8,7 @@
   },
   "/api/*": {
     "target": "https://dev-tools.at",
+    "secure": false,
     "pathRewrite": {
       "^/api": ""
     }

@@ -30,6 +30,12 @@ export class CmsService {
               private simpleLocalCacheService: SimpleLocalCacheService) {
   }
 
+
+  public getPreset(id: string): Observable<Preset> {
+    const url = `${CMS_API_URL}/export-latest-layouts/${id}`;
+    return this.httpClient.get<Preset>(url);
+  }
+
   /**
    *
    */

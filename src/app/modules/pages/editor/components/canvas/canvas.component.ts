@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
@@ -13,6 +13,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {DEFAULT_ITEMS, mergeLayouts} from "@app/modules/pages/editor/components/canvas/defaults";
 import {Canvas} from "fabric/fabric-impl";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -20,7 +21,7 @@ import {Canvas} from "fabric/fabric-impl";
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.scss']
 })
-export class CanvasComponent implements OnChanges {
+export class CanvasComponent implements OnInit, OnChanges {
   @Input()
   metaProperties: MetaProperties = {} as any;
   layoutSetting: Preset = {} as any;
@@ -34,11 +35,23 @@ export class CanvasComponent implements OnChanges {
 
   constructor(private editorService: EditorService,
               private downloadService: DownloadCanvasService,
-              private cmsService: CmsService) {
+              private cmsService: CmsService,
+              private activatedRoute: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    // check if presetId is set, if its set, just apply it
+    // from preset resolver otherwise
+    // the default template is applied
+    const preset = this.activatedRoute.snapshot.data.preset;
+    if (preset) {
+      this.setLayout(preset);
+    } else {
+      this.refreshCanvas();
+    }
   }
 
   ngOnChanges(data: SimpleChanges): void {
-    this.refreshCanvas();
     this.loggedInUser = this.cmsService.getUser();
   }
 

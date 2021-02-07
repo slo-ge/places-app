@@ -4,7 +4,7 @@ import {ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
-  CustomObject,
+  CustomObject, CustomTextBox,
   getMetaField,
   getYPos,
   isImage,
@@ -139,7 +139,7 @@ export class PresetService {
       {
         fontSize: item.fontSize
       }
-    ) as any;
+    ) as any | CustomTextBox;
     this.setObjectAttributes(fabricText, item, offsetTop);
 
     if (item.fontColor) {
@@ -162,7 +162,9 @@ export class PresetService {
       fabricText.set('charSpacing', item.fontLetterSpacing);
     }
 
-    if (item.font){
+    if (item.font) {
+      fabricText.presetFont = item.font;
+
       const fontObserver = new FontFaceObserver(item.font.fontName);
       importFontInDom(item.font);
       fontObserver.load(item.font.fontFamily, 5000).then(

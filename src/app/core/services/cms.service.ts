@@ -34,7 +34,9 @@ export class CmsService {
    *
    */
   public getLayoutSetting(): Observable<Preset[]> {
-    let params = new HttpParams().set('highlighted', 'true');
+    let params = new HttpParams()
+      .set('highlighted', 'true') // show only highlighted
+      .set('_sort', 'updated_at:desc'); // show last edited first
 
     return this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, {params});
   }

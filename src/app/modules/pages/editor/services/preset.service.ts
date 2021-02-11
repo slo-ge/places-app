@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {MetaProperties} from "@app/modules/pages/editor/models";
-import {ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
+import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
@@ -49,7 +49,7 @@ export class PresetService {
   async initObjectsOnCanvas() {
     if (this.layoutSetting.backgroundImage) {
       this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
-      await this.loadFont();
+      await this.loadGlobalFontFromLayoutSetting();
     }
 
     const renderedItems: FabricObjectAndPreset[] = [];
@@ -114,7 +114,7 @@ export class PresetService {
   /**
    * check if a certain font is set and load the font
    */
-  async loadFont() {
+  async loadGlobalFontFromLayoutSetting() {
     if (this.layoutSetting.fontFamilyHeadingCSS && this.layoutSetting.fontFileWoff) {
       appendFontToDom(
         this.layoutSetting.fontFileWoff.url,
@@ -164,16 +164,19 @@ export class PresetService {
 
     if (item.font) {
       fabricText.presetFont = item.font;
-
-      const fontObserver = new FontFaceObserver(item.font.fontName);
-      importFontInDom(item.font);
-      fontObserver.load(item.font.fontFamily, 5000).then(
-        () => fabricText.set('fontFamily', item.font?.fontFamily),
-        (e) => console.error(e)
-      );
+      this.loadFontFromPresetItem(item.font, fabricText);
     }
 
     return fabricText;
+  }
+
+  async loadFontFromPresetItem(font: Font, fabricText: CustomTextBox) {
+    const fontObserver = new FontFaceObserver(font.fontName);
+    await importFontInDom(font);
+    fontObserver.load(font.fontFamily, 5000).then(
+      () => fabricText.set('fontFamily', font?.fontFamily),
+      (e) => console.error(e)
+    );
   }
 
   /**

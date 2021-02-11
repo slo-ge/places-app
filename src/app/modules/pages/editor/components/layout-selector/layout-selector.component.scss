@@ -5,32 +5,6 @@ select {
   width: 100%;
 }
 
-.show-layout {
-  font-size: 12px;
-  color: $grey-1;
-  text-align: right;
-  margin-bottom: 10px;
-}
-
-.values {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  grid-gap: 5px;
-
-  label {
-    align-self: center;
-  }
-
-  .sub-control-heading {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    font-weight: bold;
-
-    border-top: 1px solid $grey-0;
-    padding-top: 10px;
-  }
-}
-
 button {
   width: 100%;
 }

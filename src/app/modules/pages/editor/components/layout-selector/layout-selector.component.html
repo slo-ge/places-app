@@ -1,46 +1,6 @@
-<!--<form [formGroup]="layoutSelectForm">
-  <select formControlName="layoutName" (change)="changeLayoutSetting($event)">
-    <option value="">Choose layout</option>
-    <option *ngFor="let setting of settings$ | async" [ngValue]="setting">{{setting.title}}</option>
-  </select>
-</form> -->
 <div class="preview">
-  <div (click)="selectPreset(setting)" *ngFor="let setting of settings$ | async" class="preview-tile">
+  <a (click)="selectPreset(setting)"  [routerLink]="['./']" [queryParams]="{presetId: setting.id}" [queryParamsHandling]="'merge'" *ngFor="let setting of settings$ | async" class="preview-tile">
     <div class="preview-tile-title">{{setting.title}}</div>
-    <img [src]="cmsApiUrl(setting.backgroundImage?.formats?.thumbnail?.url || '')">
-  </div>
-</div>
-
-<div class="show-layout" (click)="layoutToggle()">Show Values</div>
-<div class="values-container" *ngIf="showLayout">
-  <form class="values" [formGroup]="detailForm">
-    <label>Width px</label>
-    <input formControlName="width">
-
-    <label>Height px</label>
-    <input formControlName="height">
-
-    <label>fontFamilyHeadingCSS</label>
-    <input formControlName="fontFamilyHeadingCSS">
-
-    <ng-container formArrayName="items" *ngFor="let item of itemsForm; let i = index;">
-      <div class="sub-control-heading">
-        <span>{{item.get('title')?.value}} </span>
-        <span>(Type: {{item.get('type')?.value}})</span>
-      </div>
-      <ng-container [formGroupName]="i">
-        <label>fontLineHeight</label>
-        <input formControlName="fontLineHeight">
-        <label>fontLetterSpacing</label>
-        <input formControlName="fontLetterSpacing">
-        <label>fontSize</label>
-        <input type="number" formControlName="fontSize">
-        <label>offsetTop</label>
-        <input type="number" formControlName="offsetTop" placeholder="Item offsetTop">
-        <label>offsetLeft</label>
-        <input type="number" formControlName="offsetLeft" placeholder="Item offsetLeft">
-      </ng-container>
-    </ng-container>
-    <button (click)="updateValues()" class="secondary">Update Values</button>
-  </form>
+    <img [alt]="setting.title" [src]="cmsApiUrl(setting.backgroundImage?.formats?.thumbnail?.url || '')">
+  </a>
 </div>

@@ -10,7 +10,7 @@ import {
   isImage,
   isText
 } from "@app/modules/pages/editor/services/fabric-object.utils";
-import {appendFontToDom, cmsApiUrl, importFontInDom, proxiedUrl} from "@app/modules/pages/editor/services/utils";
+import {appendFontToDom, toAbsoluteCMSUrl, importFontInDom, proxiedUrl} from "@app/modules/pages/editor/services/utils";
 
 
 /**
@@ -48,7 +48,7 @@ export class PresetService {
    */
   async initObjectsOnCanvas() {
     if (this.layoutSetting.backgroundImage) {
-      this.setBackground(cmsApiUrl(this.layoutSetting.backgroundImage.url));
+      this.setBackground(toAbsoluteCMSUrl(this.layoutSetting.backgroundImage.url));
       await this.loadGlobalFontFromLayoutSetting();
     }
 

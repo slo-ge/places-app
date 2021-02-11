@@ -20,7 +20,7 @@ export function proxiedUrl(url: string): string {
  * because every CMS URL is relative to CMS, so we need to append the api url
  * @param url
  */
-export function cmsApiUrl(url: string): string {
+export function toAbsoluteCMSUrl(url: string): string {
   // url always starts with "/"
   return `${CMS_API_URL}${url}`;
 }
@@ -31,7 +31,7 @@ export function cmsApiUrl(url: string): string {
  * @param fontFamily
  */
 export function appendFontToDom(fontFileUrl: string, fontFamily: string) {
-  const absoluteFontFileUrl = cmsApiUrl(fontFileUrl);
+  const absoluteFontFileUrl = toAbsoluteCMSUrl(fontFileUrl);
   const CSS = `@font-face {
   font-family: '${fontFamily}';
   src: url('${absoluteFontFileUrl}') format('woff'),

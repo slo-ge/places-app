@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {WpObject} from "../../core/model/wpObject";
 import {Observable} from "rxjs";
-import {CachedWPContentServiceService} from "../../core/services/cached-wpcontent-service.service";
+import {WPContentService} from "@places/core/services/wpcontent.service";
 
 @Component({
     selector: 'app-home',
@@ -11,7 +11,7 @@ import {CachedWPContentServiceService} from "../../core/services/cached-wpconten
 })
 export class HomeComponent implements OnInit {
 
-    constructor(private contentService: CachedWPContentServiceService) {
+    constructor(private contentService: WPContentService) {
     }
 
     homePage$: Observable<WpObject> = null;

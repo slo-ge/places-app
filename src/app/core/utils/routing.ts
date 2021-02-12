@@ -1,6 +1,6 @@
-export const enum MainRoutes {
+export enum MainRoutes {
     HOME= '',
-    SEARCH= 'search',
+    SEARCH = 's',
     DETAIL = 'detail',
     INFO = 'info',
     BLOG = 'blog',

@@ -2,7 +2,8 @@
     <ng-container *ngSwitchCase="'list'">
         <div class="list">
             <div *ngFor="let tag of tags$ | async"
-                 (click)="queryParamsHandler.addTag(tag.id)">{{tag.name}} <span class="count">({{tag.count}})</span>
+                 (click)="queryParamsHandler.addTagToSearchPath(tag.slug)">{{tag.name}} <span
+                class="count">({{tag.count}})</span>
             </div>
         </div>
     </ng-container>
@@ -11,8 +12,7 @@
         <div class="hash">
             <div *ngFor="let tag of tags$ | async"
                  [style.fontSize]="view === 'cloud' ? calculateSize(tag) : null"
-                 (click)="queryParamsHandler.addTag(tag.id)">#{{tag.name}}</div>
+                 (click)="queryParamsHandler.addTagToSearchPath(tag.slug)">#{{tag.name}}</div>
         </div>
     </ng-container>
 </ng-container>
-

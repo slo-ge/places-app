@@ -4,6 +4,7 @@ import {SortType} from "../../../modules/search/results/results.component";
 import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {TaxonomyService} from "../../../core/services/taxonomy.service";
+import {MainRoutes} from "@places/core/utils/routing";
 
 @Component({
     selector: 'app-simple-settings-modal',
@@ -14,6 +15,7 @@ export class SimpleSettingsModalComponent implements OnInit {
     Sort = SortType;
     activeSort$: Observable<SortType>;
     tags$ = this.taxonomyService.getTags();
+    readonly MainRoutes = MainRoutes;
 
     constructor(private route: ActivatedRoute,
                 private taxonomyService: TaxonomyService) {

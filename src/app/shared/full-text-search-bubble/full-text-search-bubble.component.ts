@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Select, Store} from "@ngxs/store";
 import {Observable} from "rxjs";
 import {AppState} from "@places/store/app.state";
-import {QueryParamsHandlerService} from "@places/core/services/query-params-handler.service";
+import {RouteHandlerService} from "@places/core/services/route-handler.service";
 import {SelectFullTextQuery} from "@places/store/app.actions";
 
 @Component({
@@ -14,7 +14,7 @@ export class FullTextSearchBubbleComponent {
     @Select(AppState.selectedFullTextQuery)
     queryString$: Observable<string>;
 
-    constructor(public queryParamsHandler: QueryParamsHandlerService,
+    constructor(public queryParamsHandler: RouteHandlerService,
                 private store: Store) {
     }
 

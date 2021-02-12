@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
+import {MainRoutes} from "@places/core/utils/routing";
+
+const queryParamsHandling = 'merge';
 
 @Injectable({
     providedIn: 'root'
 })
-export class QueryParamsHandlerService {
+export class RouteHandlerService {
     constructor(private router: Router) {
     }
 
@@ -13,7 +16,7 @@ export class QueryParamsHandlerService {
             queryParams: {
                 fullTextQuery: queryString
             },
-            queryParamsHandling: 'merge'
+            queryParamsHandling
         });
     }
 
@@ -22,25 +25,15 @@ export class QueryParamsHandlerService {
             queryParams: {
                 fullTextQuery: null
             },
-            queryParamsHandling: 'merge'
+            queryParamsHandling
         });
     }
 
-    addTag(tag: number) {
-        this.router.navigate(['/search'], {
-            queryParams: {
-                tags: tag
-            },
-            queryParamsHandling: 'merge'
-        });
+    addTagToSearchPath(tag: string) {
+        this.router.navigate([`/${MainRoutes.SEARCH}/${tag}`], {queryParamsHandling})
     }
 
-    removeTag() {
-        this.router.navigate([], {
-            queryParams: {
-                tags: null
-            },
-            queryParamsHandling: 'merge'
-        });
+    removeTagFromSearchPath() {
+        this.router.navigate([`/${MainRoutes.SEARCH}/`], {queryParamsHandling});
     }
 }

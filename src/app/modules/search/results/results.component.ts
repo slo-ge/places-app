@@ -6,7 +6,7 @@ import {ACFLocation} from "@places/core/model/wpObject";
 import {LocationService} from "@places/core/services/location.service";
 import {GeoLocationService} from "@places/core/services/geo-location.service";
 import {Select, Store} from "@ngxs/store";
-import {SelectFullTextQuery, SelectGeoLoactionAction, SelectTagAction} from "@places/store/app.actions";
+import {SelectFullTextQuery, SelectTagAction} from "@places/store/app.actions";
 import {TaxonomyService} from "@places/core/services/taxonomy.service";
 import {Tag} from "@places/core/model/tags";
 import {AppState} from "@places/store/app.state";
@@ -17,6 +17,9 @@ export enum SortType {
     GEO = 'geo'
 }
 
+interface RouteParam {
+    slug: string;
+}
 
 @Component({
     selector: 'app-results',
@@ -28,11 +31,11 @@ export class ResultsComponent implements OnInit {
     tag$: Observable<Tag>;
 
     locations$: Observable<ACFLocation[]>;
-    geoLocation$: Promise<any>;
+    geoLocation$: Promise<any> | any;
 
     params = {page: 1, geo_location: null};
     currentPage: 1;
-    loading = true;
+    loading = false;
 
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService,
@@ -42,15 +45,17 @@ export class ResultsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.geoLocation$ = this.geoLocation.getPosition();
         this.initPaginated();
     }
 
     initPaginated() {
         const queryParams$ = this.route.queryParams;
-        this.locations$ = combineLatest([queryParams$, this.geoLocation$]).pipe(
+        const paths$ = this.route.params as Observable<RouteParam>;
+        const tags$ = this.tagService.getTags();
+
+        this.locations$ = combineLatest([queryParams$, paths$, tags$]).pipe(
             tap(() => this.loading = true),
-            map(([params, location]) => this.buildPlacesResponseFrom(params, location)),
+            map(([queryParams, params, tags]) => this.buildPlacesResponseFrom(queryParams, params, tags)),
             switchMap(mappedParams => this.locationService.allLocations(mappedParams).pipe(
                 finalize(() => this.loading = false)
             ))
@@ -60,14 +65,15 @@ export class ResultsComponent implements OnInit {
     /**
      * Query parameter mapping for rest call.
      * Buildingi
+     * @param queryParams
      * @param params
-     * @param geoLocation
+     * @param tags
      */
-    private buildPlacesResponseFrom(params: Params, geoLocation: { lat: number, lng: number }) {
-        const sort = params.sort || SortType.DEFAULT;
-        let httpParams: any = {page: params.page || 1};
+    private buildPlacesResponseFrom(queryParams: Params, params: RouteParam, tags: Tag[]) {
+        const sort = queryParams.sort || SortType.DEFAULT;
+        let httpParams: any = {page: queryParams.page || 1};
 
-        if (!!geoLocation) {
+        /*if (!!geoLocation) {
             this.store.dispatch(new SelectGeoLoactionAction(geoLocation));
         }
 
@@ -76,31 +82,32 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 geo_location: `{"lat":"${geoLocation.lat}","lng":"${geoLocation.lng}","radius":"50"}`
             };
-        }
+        }*/
 
         // TODO: improve
-        // TODO: maybe we can handle this in query params handler
-        if (params.tags) {
-            // TODO: make a nicer dispatch service
-            this.tagService.getTagFrom(params.tags)
+        // TODO: maybe we can handle this in query queryParams handler
+        // TODO: make a nicer dispatch service
+        // this behavior sets the new tag for frontend
+        if (params.slug) {
+            this.tagService.getTagFromString(params.slug)
                 .pipe(take(1))
                 .subscribe(tag => this.store.dispatch(new SelectTagAction(tag)));
 
             httpParams = {
                 ...httpParams,
-                tags: params.tags
+                tag: tags.find(tag => tag.slug == params.slug)
             };
         }
 
         // map fullTextQuery query param to wordpress search param
         // TODO: move this to a different search service
-        // TODO: may we can handle this in query params handler
-        if (params.fullTextQuery) {
+        // TODO: may we can handle this in query queryParams handler
+        if (queryParams.fullTextQuery) {
             // TODO: this should be also handled more nice
-            this.store.dispatch(new SelectFullTextQuery(params.fullTextQuery));
+            this.store.dispatch(new SelectFullTextQuery(queryParams.fullTextQuery));
             httpParams = {
                 ...httpParams,
-                search: params.fullTextQuery
+                search: queryParams.fullTextQuery
             }
         }
         return httpParams;

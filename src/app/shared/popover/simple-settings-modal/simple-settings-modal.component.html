@@ -4,7 +4,7 @@
         <div class="actions" *ngIf="activeSort$ | async as activeSort">
             <a class="latest"
                [class.active]="activeSort === Sort.DEFAULT"
-               [routerLink]="['/search']"
+               [routerLink]="['/', MainRoutes.SEARCH]"
                [queryParams]="{sort: 'default'}"
                queryParamsHandling="merge">
                 <app-icon class="large" name="sort-latest"></app-icon>
@@ -13,7 +13,7 @@
 
             <a class="geo"
                [class.active]="activeSort === Sort.GEO"
-               [routerLink]="['/search']"
+               [routerLink]="['/', MainRoutes.SEARCH]"
                [queryParams]="{sort: 'geo'}"
                queryParamsHandling="merge">
                 <app-icon class="large" name="geo-search"></app-icon>

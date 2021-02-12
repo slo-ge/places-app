@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
+import {MainRoutes} from "@places/core/utils/routing";
 
 @Component({
     selector: 'app-action-bubble-back',
@@ -20,7 +21,7 @@ export class ActionBubbleBackComponent {
     }
 
     backUrlMappingTable: { from: string[], to: string[] }[] = [
-        {from: ['', 'detail'], to: ['', 'search']}
+        {from: ['', MainRoutes.DETAIL], to: ['', MainRoutes.SEARCH]}
     ];
 
     /**

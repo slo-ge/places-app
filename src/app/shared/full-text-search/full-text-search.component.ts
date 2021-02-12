@@ -4,7 +4,7 @@ import {AppState} from "../../store/app.state";
 import {Observable} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {SelectFullTextQuery} from "../../store/app.actions";
-import {QueryParamsHandlerService} from "../../core/services/query-params-handler.service";
+import {RouteHandlerService} from "../../core/services/route-handler.service";
 
 @Component({
     selector: 'app-full-text-search',
@@ -20,7 +20,7 @@ export class FullTextSearchComponent implements OnInit {
     });
 
     constructor(private store: Store,
-                private queryParamsHandler: QueryParamsHandlerService) {
+                private queryParamsHandler: RouteHandlerService) {
     }
 
     // TODO: subscriptions kill

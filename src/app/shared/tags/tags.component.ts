@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
 import {Tag} from "../../core/model/tags";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
-import {QueryParamsHandlerService} from "../../core/services/query-params-handler.service";
+import {RouteHandlerService} from "../../core/services/route-handler.service";
 
 export function shuffle(array: any[]) {
     let currentIndex = array.length, temporaryValue, randomIndex;
@@ -53,7 +53,7 @@ export class TagsComponent implements OnInit {
     };
 
     constructor(private taxonomyService: TaxonomyService,
-                public queryParamsHandler: QueryParamsHandlerService) {
+                public queryParamsHandler: RouteHandlerService) {
     }
 
     ngOnInit(): void {

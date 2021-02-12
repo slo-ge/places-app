@@ -3,7 +3,7 @@ import {Observable} from "rxjs";
 import {Select, Store} from "@ngxs/store";
 import {AppState} from "@places/store/app.state";
 import {Tag} from "@places/core/model/tags";
-import {QueryParamsHandlerService} from "@places/core/services/query-params-handler.service";
+import {RouteHandlerService} from "@places/core/services/route-handler.service";
 import {SelectTagAction} from "@places/store/app.actions";
 
 @Component({
@@ -15,7 +15,7 @@ export class SelectedTagComponent {
     @Select(AppState.selectedTag)
     tag$: Observable<Tag>;
 
-    constructor(public queryParamsHandler: QueryParamsHandlerService, private store: Store) {
+    constructor(public queryParamsHandler: RouteHandlerService, private store: Store) {
     }
 
     removeTagFromState() {

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, ReplaySubject} from "rxjs";
 import {Tag} from "../model/tags";
-import {map, take} from "rxjs/operators";
+import {map, take, tap} from "rxjs/operators";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
 
@@ -11,10 +11,11 @@ export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
 })
 export class TaxonomyService {
     private _tags$: ReplaySubject<Tag[]> = new ReplaySubject();
+    private _tagCache: Tag[] = [];
 
     constructor(private httpClient: HttpClient) {
         this.fetchTags()
-            .pipe(take(1))
+            .pipe(take(1), tap(ts => this._tagCache = ts))
             .subscribe(data => this._tags$.next(data))
     }
 
@@ -36,9 +37,19 @@ export class TaxonomyService {
         );
     }
 
-    public getTagFrom(id: string): Observable<Tag> {
+    public getTagFromId(id: string): Observable<Tag> {
         return this._tags$.pipe(
             map(tags => tags.find(tag => tag.id === Number(id)))
         );
+    }
+
+    public getTagFromString(slug: string): Observable<Tag> {
+        return this._tags$.pipe(
+            map(tags => tags.find(tag => tag.slug === slug))
+        );
+    }
+
+    public getTagFromCacheBySlug(slug) {
+        return this._tagCache.find(tag => tag.slug === slug)
     }
 }

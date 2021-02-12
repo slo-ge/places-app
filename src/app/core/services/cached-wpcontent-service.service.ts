@@ -3,8 +3,9 @@ import {ContentService} from "../model/content.service";
 import {ContentType, Page, Post} from "../model/wpObject";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 
-const BASE_URL = './assets/cached'
+const BASE_URL = `${environment.baseUrl}/assets/cached`;
 
 // TODO: this service is WIP
 @Injectable({

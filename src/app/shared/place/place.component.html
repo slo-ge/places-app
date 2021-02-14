@@ -1,12 +1,14 @@
 <div class="place">
-    <header [routerLink]="detailPagePaths" queryParamsHandling="merge">
-        <div class="title">
-            <div class="cat">Restaurant</div>
-            <h2 [innerHTML]=" place.title.rendered"></h2>
-        </div>
-        <div class="image">
-            <img [src]="featureImageUrl">
-        </div>
+    <header>
+        <a [routerLink]="detailPagePaths" queryParamsHandling="merge">
+            <div class="title">
+                <div class="cat">Restaurant</div>
+                <h2 [innerHTML]=" place.title.rendered"></h2>
+            </div>
+            <div class="image">
+                <img [src]="featureImageUrl">
+            </div>
+        </a>
     </header>
     <section>
         <div class="details">

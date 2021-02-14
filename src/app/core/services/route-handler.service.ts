@@ -33,6 +33,14 @@ export class RouteHandlerService {
         this.router.navigate([`/${MainRoutes.SEARCH}/${tag}`], {queryParamsHandling})
     }
 
+    getSearchPathOfTag(tag) {
+        return `/${MainRoutes.SEARCH}/${tag}`;
+    }
+
+    getDefaultSearchPathUrl() {
+        return `/${MainRoutes.SEARCH}/`;
+    }
+
     removeTagFromSearchPath() {
         this.router.navigate([`/${MainRoutes.SEARCH}/`], {queryParamsHandling});
     }

@@ -8,6 +8,7 @@ export interface Tag {
     taxonomy: string;
     meta: any[];
     _links: Links;
+    acf?: ExtendedInfos;
 }
 
 interface Links {
@@ -26,4 +27,10 @@ interface Cury {
 
 interface Self {
     href: string;
+}
+
+interface ExtendedInfos {
+    seoTitle: string;
+    seoDescription: string;
+    seoImage: any;
 }

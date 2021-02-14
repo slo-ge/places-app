@@ -95,7 +95,7 @@ export class ResultsComponent implements OnInit {
 
             httpParams = {
                 ...httpParams,
-                tag: tags.find(tag => tag.slug == params.slug)
+                tags: tags.find(tag => tag.slug == params.slug).id
             };
         }
 

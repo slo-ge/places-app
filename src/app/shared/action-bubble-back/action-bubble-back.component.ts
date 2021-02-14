@@ -1,18 +1,28 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Location} from "@angular/common";
 import {Router} from "@angular/router";
 import {MainRoutes} from "@places/core/utils/routing";
+import {Store} from "@ngxs/store";
+import {AppState} from "@places/store/app.state";
 
 @Component({
     selector: 'app-action-bubble-back',
     templateUrl: './action-bubble-back.component.html'
 })
-export class ActionBubbleBackComponent {
+export class ActionBubbleBackComponent implements OnInit {
 
     currentUrl: string = '';
+    currentTag = '';
 
-    constructor(private location: Location, private router: Router) {
+    constructor(private location: Location, private router: Router, private store: Store) {
     }
+
+
+    ngOnInit(): void {
+        this.currentTag = this.store.selectSnapshot(AppState.selectedTag)?.slug;
+        console.log(this.currentTag);
+    }
+
 
     back() {
         let path: string[] = this.location.path().split("/");
@@ -20,9 +30,6 @@ export class ActionBubbleBackComponent {
         this.router.navigate(this.getCorrectBackPath(path), {queryParamsHandling: 'merge'});
     }
 
-    backUrlMappingTable: { from: string[], to: string[] }[] = [
-        {from: ['', MainRoutes.DETAIL], to: ['', MainRoutes.SEARCH]}
-    ];
 
     /**
      * In some cases we can not go back just one path,
@@ -35,11 +42,11 @@ export class ActionBubbleBackComponent {
      * @param current, in some cases the remapped Router URL
      */
     getCorrectBackPath(current: string[]) {
-        for (let mapping of this.backUrlMappingTable) {
-            if (mapping.from.sort().toString() === current.sort().toString()) {
-                return mapping.to;
-            }
+        if (!current.includes(MainRoutes.DETAIL)) {
             return current;
         }
+
+        // from detail page to search page
+        return this.currentTag ? ['', MainRoutes.SEARCH, this.currentTag] : ['', MainRoutes.SEARCH];
     }
 }

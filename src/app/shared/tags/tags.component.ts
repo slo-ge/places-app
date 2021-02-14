@@ -53,7 +53,7 @@ export class TagsComponent implements OnInit {
     };
 
     constructor(private taxonomyService: TaxonomyService,
-                public queryParamsHandler: RouteHandlerService) {
+                public routeHandler: RouteHandlerService) {
     }
 
     ngOnInit(): void {

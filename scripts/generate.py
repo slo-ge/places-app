@@ -61,7 +61,7 @@ def append_tag_pages(url_set):
     wp_response = requests.get(f'{API_URL}/tags?per_page=100')
     for index, item in enumerate(sorted(wp_response.json(), key=lambda tag: tag['count'], reverse=True)):
         url_set.append(element_from_wp_object(None, f'{BASE}/{SEARCH}/{item["slug"]}'))
-        if index > 20:
+        if index > 30:
             return
 
 

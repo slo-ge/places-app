@@ -3,6 +3,7 @@ import 'zone.js/dist/zone-node';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
+import apicache from 'apicache'
 
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
@@ -28,6 +29,10 @@ export function app() {
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
+
+  // Using the api cahce
+  const cache = apicache.middleware;
+  server.use(cache('1 hour'));
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {

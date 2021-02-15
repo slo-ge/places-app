@@ -36,6 +36,7 @@
         "@ngx-share/core": "^7.1.4",
         "@ngxs/storage-plugin": "^3.6.0",
         "@ngxs/store": "^3.6.0",
+        "apicache": "^1.5.3",
         "express": "^4.15.2",
         "rxjs": "~6.5.4",
         "tslib": "^2.0.0",

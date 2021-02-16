@@ -33,3 +33,19 @@ app-pagination {
         margin: 0 5px;
     }
 }
+
+.search-info {
+    margin-top: 50px;
+
+    h1 {
+        margin-bottom: 0;
+        padding: 0;
+        font-size: 20px;
+    }
+
+    img {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+    }
+}

@@ -6,7 +6,7 @@ import {getFeaturedImage} from "../utils/media";
 import {decodeHTMLEntities} from "../utils/html";
 
 
-interface MetaData {
+export interface MetaData {
     title?: string;
     description?: string;
     imageUrl?: string;
@@ -45,6 +45,25 @@ export class SeoService {
             title: environment.seoTitle,
             description: environment.seoDescription,
             imageUrl: environment.seoImageUrl
+        };
+
+        this.setMeta(defaults);
+    }
+
+    /**
+     * Adds default meta to given meta data
+     *
+     * @param metaData
+     */
+    public appendDefaultsWith(metaData: MetaData) {
+        if (!(metaData.title && metaData.description)) {
+            return;
+        }
+
+        const defaults: MetaData = {
+            title: `${metaData.title} | ${environment.seoSearchTitle}`,
+            description: `${metaData.description} | ${environment.seoDescription}`,
+            imageUrl: metaData.imageUrl || environment.seoImageUrl
         };
 
         this.setMeta(defaults);

@@ -27,3 +27,9 @@
 
 
 <app-pagination></app-pagination>
+
+<div *ngIf="currentSeoData$ | async as seoData" class="search-info">
+    <h1 *ngIf="seoData.title">{{seoData.title}}</h1>
+    <p *ngIf="seoData.description">{{seoData.description}}</p>
+    <img *ngIf="seoData.imageUrl" [src]="seoData.imageUrl">
+</div>

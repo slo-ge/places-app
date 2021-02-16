@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable, ReplaySubject} from "rxjs";
-import {Tag} from "../model/tags";
-import {map, take, tap} from "rxjs/operators";
+import {ACFMeta, Tag} from "../model/tags";
+import {filter, map, take, tap} from "rxjs/operators";
+import {MetaData} from "@places/core/services/seo.service";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
+export const META_BASE_URL = 'https://locations.phipluspi.com/wp-json/acf/v3/tags';
 
 @Injectable({
     providedIn: 'root'
@@ -51,5 +53,16 @@ export class TaxonomyService {
 
     public getTagFromCacheBySlug(slug) {
         return this._tagCache.find(tag => tag.slug === slug)
+    }
+
+    public getMetaForTag(id: string | number): Observable<MetaData> {
+        return this.httpClient.get<ACFMeta>(`${META_BASE_URL}/${id}`).pipe(
+            filter(data => data !== null),
+            map(data => ({
+                title: data.acf.seoTitle,
+                description: data.acf.seoDescription,
+                imageUrl: data.acf.seoImage
+            }))
+        );
     }
 }

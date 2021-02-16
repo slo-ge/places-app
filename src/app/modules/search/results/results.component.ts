@@ -10,6 +10,7 @@ import {SelectFullTextQuery, SelectTagAction} from "@places/store/app.actions";
 import {TaxonomyService} from "@places/core/services/taxonomy.service";
 import {Tag} from "@places/core/model/tags";
 import {AppState} from "@places/store/app.state";
+import {MetaData, SeoService} from "@places/core/services/seo.service";
 
 
 export enum SortType {
@@ -37,18 +38,17 @@ export class ResultsComponent implements OnInit {
     currentPage: 1;
     loading = false;
 
+    currentSeoData$: Observable<MetaData>;
+
     constructor(private locationService: LocationService,
                 private geoLocation: GeoLocationService,
                 private route: ActivatedRoute,
                 private store: Store,
-                private tagService: TaxonomyService) {
+                private tagService: TaxonomyService,
+                private seoService: SeoService) {
     }
 
     ngOnInit() {
-        this.initPaginated();
-    }
-
-    initPaginated() {
         const queryParams$ = this.route.queryParams;
         const paths$ = this.route.params as Observable<RouteParam>;
         const tags$ = this.tagService.getTags();
@@ -90,7 +90,14 @@ export class ResultsComponent implements OnInit {
         // this behavior sets the new tag for frontend
         if (params.slug) {
             this.tagService.getTagFromString(params.slug)
-                .pipe(take(1))
+                .pipe(
+                    take(1),
+                    tap(tag => {
+                        this.currentSeoData$ = this.tagService.getMetaForTag(tag.id).pipe(
+                            tap(data => this.seoService.appendDefaultsWith(data))
+                        )
+                    })
+                )
                 .subscribe(tag => this.store.dispatch(new SelectTagAction(tag)));
 
             httpParams = {

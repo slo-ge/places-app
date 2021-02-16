@@ -34,3 +34,11 @@ interface ExtendedInfos {
     seoDescription: string;
     seoImage: any;
 }
+
+export interface ACFMeta {
+    acf: {
+        seoTitle: string;
+        seoDescription: string;
+        seoImage: string;
+    }
+}

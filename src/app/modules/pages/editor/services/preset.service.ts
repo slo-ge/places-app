@@ -60,7 +60,7 @@ export class PresetService {
         if (isText(item)) {
 
           const text = getMetaField(this.metaProperties, item.type);
-          const obj = this.createText(text, item, item.offsetTop + posLastObjectY);
+          const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
 
           this.addObjectToCanvas(obj);
           renderedItems.push({object: obj, preset: item});
@@ -133,7 +133,7 @@ export class PresetService {
    * @param item, the config from item
    * @param offsetTop
    */
-  createText(text: string, item: PresetObject, offsetTop: number) {
+  async createText(text: string, item: PresetObject, offsetTop: number) {
     let fabricText = new fabric.Textbox(
       text,
       {
@@ -164,16 +164,15 @@ export class PresetService {
 
     if (item.font) {
       fabricText.presetFont = item.font;
-      this.loadFontFromPresetItem(item.font, fabricText);
+      await this.loadFontFromPresetItem(item.font, fabricText);
     }
-
     return fabricText;
   }
 
   async loadFontFromPresetItem(font: Font, fabricText: CustomTextBox) {
     const fontObserver = new FontFaceObserver(font.fontName);
-    await importFontInDom(font);
-    fontObserver.load(font.fontFamily, 5000).then(
+    importFontInDom(font);
+    await fontObserver.load(font.fontFamily, 5000).then(
       () => fabricText.set('fontFamily', font?.fontFamily),
       (e) => console.error(e)
     );

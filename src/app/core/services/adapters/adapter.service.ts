@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {WordpressContentService} from "@app/core/services/wordpress-content.service";
-import {ApiAdapter, ContentService} from "@app/core/model/content.service";
+import {WordpressContentService} from "@app/core/services/adapters/wordpress-content.service";
+import {ApiAdapter, ContentService, EditorPreviewInfoService} from "@app/core/model/content.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
-import {MetaContentService} from "@app/core/services/meta-content.service";
+import {MetaContentService} from "@app/core/services/adapters/meta-content.service";
 import {of} from "rxjs";
+import {LoremIpsumContentService} from "@app/core/services/adapters/lorem-ipsum-content.service";
 
 
 @Injectable({
@@ -14,7 +15,7 @@ export class AdapterService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getService(queryParamsSnapshot: any): ContentService {
+  getService(queryParamsSnapshot: any): ContentService | EditorPreviewInfoService {
     let apiUrl = queryParamsSnapshot.get('apiUrl');
     const adapterName: ApiAdapter = queryParamsSnapshot.get('adapter');
 
@@ -28,6 +29,10 @@ export class AdapterService {
       return new MetaContentService(this.httpClient);
     }
 
+    if (adapterName === ApiAdapter.LOREM_IPSUM) {
+      return new LoremIpsumContentService();
+    }
+
     console.error('no API Adapter found for', adapterName);
     console.error('returning wordpress Adapter');
     console.error('import test posts from assets \'/assets/posts\'');
@@ -35,6 +40,9 @@ export class AdapterService {
   }
 
   async findAdapter(url: string): Promise<ApiAdapter> {
+    if (url.length === 0) {
+      return ApiAdapter.LOREM_IPSUM;
+    }
 
     if (url.startsWith('wordpress://')) { // this is hacky af
       url = url.replace('wordpress://', '');

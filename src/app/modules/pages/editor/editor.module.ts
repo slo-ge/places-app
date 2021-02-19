@@ -14,6 +14,7 @@ import { ColorPickerComponent } from './components/color-picker/color-picker.com
 import { TextSettingsComponent } from './components/simple-actions/simple-actions/text-settings/text-settings.component';
 import { MetaDataActionsComponent } from './components/meta-data-actions/meta-data-actions.component';
 import { FontSelectorComponent } from './components/font-selector/font-selector.component';
+import { FontWeightComponent } from './components/font-weight/font-weight.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FontSelectorComponent } from './components/font-selector/font-selector.
     ColorPickerComponent,
     TextSettingsComponent,
     MetaDataActionsComponent,
-    FontSelectorComponent
+    FontSelectorComponent,
+    FontWeightComponent
   ],
   imports: [
     CommonModule,

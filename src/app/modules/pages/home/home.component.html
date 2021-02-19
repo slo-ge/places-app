@@ -33,6 +33,11 @@
   {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
           Generate
         </button>
+
+        <button *ngIf="adapter == ApiAdapter.LOREM_IPSUM" [routerLink]="['/editor']" [queryParams]="
+  {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
+          Open Open Open
+        </button>
       </div>
 
       <div *ngIf="adapter == false">

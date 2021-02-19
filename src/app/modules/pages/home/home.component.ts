@@ -1,6 +1,6 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {FormControl, FormGroup} from "@angular/forms";
-import {AdapterService} from "@app/core/services/adapter.service";
+import {AdapterService} from "@app/core/services/adapters/adapter.service";
 import {ApiAdapter} from "@app/core/model/content.service";
 import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
 
@@ -30,7 +30,8 @@ export const PREDEFINED_TEST_URL: { name: string, url: string }[] = [
 export class HomeComponent {
   adapterInfoText = {
     [ApiAdapter.WORDPRESS]: 'Found Wordpress Blog, start with selecting a blog post.',
-    [ApiAdapter.METADATA]: 'Website meta data available. Start generating beautiful thumbnails.'
+    [ApiAdapter.METADATA]: 'Website meta data available. Start generating beautiful thumbnails.',
+    [ApiAdapter.LOREM_IPSUM]: 'Using placeholder infos, because no URL is inserted.'
   };
 
   baseURLForm = new FormGroup({

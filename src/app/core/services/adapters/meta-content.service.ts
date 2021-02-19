@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {EMPTY, Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ContentService} from "../model/content.service";
+import {ContentService, EditorPreviewInfoService} from "../../model/content.service";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 
 export interface MetaData {
@@ -13,26 +13,11 @@ export interface MetaData {
   iconUrl?: string;
 }
 
-export class MetaContentService implements ContentService {
+export class MetaContentService implements EditorPreviewInfoService {
   private readonly apiUrl: string;
 
   constructor(private httpClient: HttpClient) {
     this.apiUrl = '/api/meta';
-  }
-
-  public getPageBy(slug: string): Observable<any> {
-    console.error('do not call');
-    return EMPTY;
-  }
-
-  public getPostBy(slug: string): Observable<any> {
-    console.error('do not call');
-    return EMPTY
-  }
-
-  public getPosts(): Observable<any> {
-    console.error('do not call');
-    return EMPTY;
   }
 
   getEditorPreviewSettings(url: string): Observable<MetaProperties> {

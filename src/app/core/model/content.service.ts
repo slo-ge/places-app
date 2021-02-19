@@ -1,10 +1,6 @@
 import {Observable} from "rxjs";
 import {Page, Post} from "./wpObject";
-import {InjectionToken} from "@angular/core";
 import {MetaProperties} from "@app/modules/pages/editor/models";
-
-export const CONTENT_SERVICE = new InjectionToken<ContentService>('content.service');
-
 
 
 export interface ContentService extends EditorPreviewInfoService{
@@ -19,5 +15,6 @@ export interface EditorPreviewInfoService {
 
 export enum ApiAdapter {
   WORDPRESS = 'wordpress',
-  METADATA = 'meta_data'
+  METADATA = 'meta_data',
+  LOREM_IPSUM = 'lorem-ipsum'
 }

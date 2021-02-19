@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {ContentService} from "../model/content.service";
+import {ContentService} from "../../model/content.service";
 import {ContentType, Page, Post, WpObject} from "@app/core/model/wpObject";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";

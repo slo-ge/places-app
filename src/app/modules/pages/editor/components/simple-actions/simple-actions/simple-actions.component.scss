@@ -84,6 +84,8 @@
 .type-settings {
   > * {
     display: flex;
+    align-items: center;
+
     &::before {
       margin-right: 12px;
       border-right: 1px solid $grey-1;

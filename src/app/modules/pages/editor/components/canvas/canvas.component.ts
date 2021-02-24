@@ -2,12 +2,12 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
-import {EditorService} from "@app/modules/pages/editor/services/editor.service";
-import {PresetService} from "@app/modules/pages/editor/services/preset.service";
-import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
+import {EditorService} from "@app/core/editor/editor.service";
+import {PresetService} from "@app/core/editor/preset.service";
+import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 import {faDownload, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
-import {getPresetItem} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {getPresetItem} from "@app/core/editor/fabric-object.utils";
 import {EMPTY, Observable} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {take} from "rxjs/operators";
@@ -24,7 +24,7 @@ import {ActivatedRoute} from "@angular/router";
 export class CanvasComponent implements OnInit, OnChanges {
   @Input()
   metaProperties: MetaProperties = {} as any;
-  layoutSetting: Preset = {} as any;
+  preset: Preset = {} as any;
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;
   loggedInUser: Observable<AuthResponse | null> = EMPTY;
@@ -55,8 +55,8 @@ export class CanvasComponent implements OnInit, OnChanges {
     this.loggedInUser = this.cmsService.getUser();
   }
 
-  setLayout($event: Preset) {
-    this.layoutSetting = $event;
+  setLayout($preset: Preset) {
+    this.preset = $preset;
     this.refreshCanvas();
   }
 
@@ -72,17 +72,17 @@ export class CanvasComponent implements OnInit, OnChanges {
       this.canvas.clear();
     }
 
-    this.layoutSetting = mergeLayouts(this.layoutSetting);
+    this.preset = mergeLayouts(this.preset);
 
     if (this.metaProperties) {
       this.currentPresetService = new PresetService(
         this.canvas,
         this.metaProperties,
-        this.layoutSetting
+        this.preset
       );
 
-      this.canvas.setHeight(this.layoutSetting.height);
-      this.canvas.setWidth(this.layoutSetting.width);
+      this.canvas.setHeight(this.preset.height);
+      this.canvas.setWidth(this.preset.width);
       this.canvas.renderAll();
 
       this.currentPresetService.initObjectsOnCanvas();
@@ -102,7 +102,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     if (!defaults) {
       return;
     }
-    this.cmsService.update(defaults, this.layoutSetting.id)
+    this.cmsService.update(defaults, this.preset.id)
       .pipe(take(1))
       .subscribe(
         res => this.sentUpdateResponse = `updated at: ${res.updated_at?.toString() || null}`,
@@ -114,7 +114,7 @@ export class CanvasComponent implements OnInit, OnChanges {
    * resets the template to given defaults
    */
   resetTemplate() {
-    this.layoutSetting.itemsJson = DEFAULT_ITEMS;
-    this.setLayout(this.layoutSetting);
+    this.preset.itemsJson = DEFAULT_ITEMS;
+    this.setLayout(this.preset);
   }
 }

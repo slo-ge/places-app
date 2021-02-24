@@ -1,13 +1,12 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ResultListModule } from './modules/pages/result-list/result-list.module';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {ResultListModule} from './modules/pages/result-list/result-list.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {MainBreadcrumbsModule} from "@app/modules/main-breadcrumbs/main-breadcrumbs.module";
-import {LoginModule} from "@app/modules/login/login.module";
 import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
+import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
     AppRoutingModule,
     ResultListModule,
     HttpClientModule,
-    MainBreadcrumbsModule,
-    LoginModule
+    PageLayoutsModule
   ],
   providers: [
     {

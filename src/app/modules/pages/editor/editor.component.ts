@@ -3,7 +3,7 @@ import {MetaProperties} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapters/adapter.service";
-import {DownloadCanvasService} from "@app/modules/pages/editor/services/download-canvas.service";
+import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 
 
 @Component({
@@ -20,9 +20,9 @@ export class EditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // data is in most cases the url where we can get our meta data from
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
-    // TODO: guess data
     this.setting$ = contentService.getEditorPreviewSettings(data as string);
   }
 
@@ -33,5 +33,4 @@ export class EditorComponent implements OnInit {
   download() {
     this.downloadService.download();
   }
-
 }

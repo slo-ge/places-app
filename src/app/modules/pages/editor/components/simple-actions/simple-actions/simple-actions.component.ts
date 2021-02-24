@@ -1,7 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
 import {fabric} from "fabric";
-import {EditorService} from "@app/modules/pages/editor/services/editor.service";
+import {EditorService} from "@app/core/editor/editor.service";
 import {
   faAlignCenter,
   faCaretSquareLeft,
@@ -17,7 +17,7 @@ import {
   ObjectAlignments,
   SimpleAlignments
 } from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
-import {CustomImageBox, CustomObject, CustomTextBox} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 
 enum FabricType {

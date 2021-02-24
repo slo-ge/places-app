@@ -1,17 +1,17 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {PresetService} from "@app/modules/pages/editor/services/preset.service";
+import {PresetService} from "@app/core/editor/preset.service";
 import {MetaProperties} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
 import {fabric} from "fabric";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {getMetaField} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {getMetaField} from "@app/core/editor/fabric-object.utils";
 
 @Component({
   selector: 'app-meta-data-actions',
   templateUrl: './meta-data-actions.component.html',
   styleUrls: ['./meta-data-actions.component.scss']
 })
-export class MetaDataActionsComponent implements OnInit {
+export class MetaDataActionsComponent {
   @Input()
   presetService: PresetService | any;
   @Input()
@@ -21,9 +21,6 @@ export class MetaDataActionsComponent implements OnInit {
   plusIcon = faPlus;
 
   constructor() {
-  }
-
-  ngOnInit(): void {
   }
 
   async addText(type: LayoutItemType) {

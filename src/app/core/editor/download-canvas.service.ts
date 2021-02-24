@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {EditorService} from "@app/modules/pages/editor/services/editor.service";
+import {EditorService} from "@app/core/editor/editor.service";
 import {take} from "rxjs/operators";
 
 @Injectable({

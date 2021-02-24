@@ -1,19 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {EditorComponent} from "@app/modules/pages/editor/editor.component";
+import {RenderComponent} from "@app/modules/pages/render/render/render.component";
 import {PresetResolver} from "@app/core/editor/preset.resolver";
 
-const routes: Routes = [
-  {
-    path: '',
-    component: EditorComponent,
-    resolve: {preset: PresetResolver}
-  }
-];
+const routes: Routes = [{
+  path: '',
+  component: RenderComponent,
+  resolve: {preset: PresetResolver}
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EditorRoutingModule {
+export class RenderRoutingModule {
 }

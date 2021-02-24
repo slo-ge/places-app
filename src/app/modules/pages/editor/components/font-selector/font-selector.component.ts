@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
-import {CustomTextBox} from "@app/modules/pages/editor/services/fabric-object.utils";
-import {importFontInDom} from "@app/modules/pages/editor/services/utils";
+import {CustomTextBox} from "@app/core/editor/fabric-object.utils";
+import {importFontInDom} from "@app/core/editor/utils";
 import * as FontFaceObserver from "fontfaceobserver";
 import {Font, FONTS} from "@app/core/model/preset";
 

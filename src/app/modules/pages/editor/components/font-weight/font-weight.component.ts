@@ -1,5 +1,5 @@
 import {Component, HostBinding, HostListener, Input, OnInit} from '@angular/core';
-import {CustomTextBox} from "@app/modules/pages/editor/services/fabric-object.utils";
+import {CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {faBold} from "@fortawesome/free-solid-svg-icons/faBold";
 
 @Component({

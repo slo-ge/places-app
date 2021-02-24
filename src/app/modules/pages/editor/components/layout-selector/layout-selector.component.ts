@@ -2,7 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CmsService} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
 import {Preset} from "@app/core/model/preset";
-import {toAbsoluteCMSUrl} from "@app/modules/pages/editor/services/utils";
+import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
 
 @Component({
   selector: 'app-layout-selector',

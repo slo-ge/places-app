@@ -9,8 +9,8 @@ import {
   getYPos,
   isImage,
   isText
-} from "@app/modules/pages/editor/services/fabric-object.utils";
-import {appendFontToDom, toAbsoluteCMSUrl, importFontInDom, proxiedUrl} from "@app/modules/pages/editor/services/utils";
+} from "@app/core/editor/fabric-object.utils";
+import {appendFontToDom, toAbsoluteCMSUrl, importFontInDom, proxiedUrl} from "@app/core/editor/utils";
 
 
 /**

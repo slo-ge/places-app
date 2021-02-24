@@ -37,6 +37,8 @@ export class JWTAuthInterceptor implements HttpInterceptor {
           catchError((error: HttpErrorResponse) => {
             if (error.status === 403) {
               this.cmsService.logout();
+            } else if(error.status == 401) {
+              this.cmsService.logout();
             }
             return throwError(error);
           })

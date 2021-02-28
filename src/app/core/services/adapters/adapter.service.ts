@@ -15,7 +15,10 @@ export class AdapterService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getService(queryParamsSnapshot: any): ContentService | EditorPreviewInfoService {
+  /**
+   * @param queryParamsSnapshot, the current snapshot where we try to guess the service from
+   */
+  public getService(queryParamsSnapshot: any): ContentService | EditorPreviewInfoService {
     let apiUrl = queryParamsSnapshot.get('apiUrl');
     const adapterName: ApiAdapter = queryParamsSnapshot.get('adapter');
 
@@ -39,7 +42,11 @@ export class AdapterService {
     return new WordpressContentService(this.httpClient, '/assets/posts');
   }
 
-  async findAdapter(url: string): Promise<ApiAdapter> {
+  /**
+   * Checks if the given url can be linked with an adapter
+   * @param url
+   */
+  public async findAdapter(url: string): Promise<ApiAdapter> {
     if (url.length === 0) {
       return ApiAdapter.LOREM_IPSUM;
     }
@@ -57,7 +64,7 @@ export class AdapterService {
     }
 
     const metaService = new MetaContentService(this.httpClient);
-    const isMetaObject = await metaService.getEditorPreviewSettings(url).pipe(
+    const isMetaObject = await metaService.getMetaMapperData(url).pipe(
       map(() => true),
       catchError(() => of(false))
     ).toPromise();

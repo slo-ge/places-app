@@ -1,7 +1,7 @@
 import {fabric} from "fabric";
 import {Font, LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 
 /**
  * Extra information which can a fabric object hold
@@ -121,7 +121,7 @@ export function getPresetItem(canvas: Canvas) {
  * @param metaProperties
  * @param type
  */
-export function getMetaField(metaProperties: MetaProperties, type: LayoutItemType) {
+export function getMetaField(metaProperties: MetaMapperData, type: LayoutItemType) {
   switch (type) {
     case LayoutItemType.TITLE: {
       return metaProperties.title || 'empty title';

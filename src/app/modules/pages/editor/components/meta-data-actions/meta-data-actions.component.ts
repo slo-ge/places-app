@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PresetService} from "@app/core/editor/preset.service";
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
 import {fabric} from "fabric";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -15,7 +15,7 @@ export class MetaDataActionsComponent {
   @Input()
   presetService: PresetService | any;
   @Input()
-  metaProperties: MetaProperties | any;
+  metaProperties: MetaMapperData | any;
 
   LayoutItemType = LayoutItemType;
   plusIcon = faPlus;

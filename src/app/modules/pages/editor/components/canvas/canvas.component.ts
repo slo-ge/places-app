@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/core/editor/editor.service";
@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class CanvasComponent implements OnInit, OnChanges {
   @Input()
-  metaProperties: MetaProperties = {} as any;
+  metaProperties: MetaMapperData = {} as any;
   preset: Preset = {} as any;
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;

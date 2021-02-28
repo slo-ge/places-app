@@ -1,16 +1,17 @@
 import {fabric} from "fabric";
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
-  CustomObject, CustomTextBox,
+  CustomObject,
+  CustomTextBox,
   getMetaField,
   getYPos,
   isImage,
   isText
 } from "@app/core/editor/fabric-object.utils";
-import {appendFontToDom, toAbsoluteCMSUrl, importFontInDom, proxiedUrl} from "@app/core/editor/utils";
+import {appendFontToDom, importFontInDom, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
 
 
 /**
@@ -21,25 +22,23 @@ import {appendFontToDom, toAbsoluteCMSUrl, importFontInDom, proxiedUrl} from "@a
 const imageCache: { [key: string]: Image } = {};
 
 
+/**
+ * store fabricjs object with corresponding preset
+ */
 interface FabricObjectAndPreset {
   object: any,
   preset: PresetObject
 }
 
 export class PresetService {
-  private readonly metaProperties: MetaProperties;
-  public readonly layoutSetting: Preset; // TODO: getter and setter
+  private readonly metaMapperData: MetaMapperData;
+  public readonly preset: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
 
-  /**
-   * currentObjects which the current canvas holds,
-   * this is needed to change and update data for updating presets
-   */
-
-  constructor(canvas: Canvas, metaProperties: MetaProperties, layoutSetting: Preset) {
+  constructor(canvas: Canvas, metaMapperData: MetaMapperData, preset: Preset) {
     this.canvas = canvas;
-    this.layoutSetting = layoutSetting;
-    this.metaProperties = metaProperties;
+    this.preset = preset;
+    this.metaMapperData = metaMapperData;
   }
 
 
@@ -47,19 +46,18 @@ export class PresetService {
    * This is the main entry point which draws all layer to the canvas
    */
   async initObjectsOnCanvas() {
-    if (this.layoutSetting.backgroundImage) {
-      this.setBackground(toAbsoluteCMSUrl(this.layoutSetting.backgroundImage.url));
+    if (this.preset.backgroundImage) {
+      this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
       await this.loadGlobalFontFromLayoutSetting();
     }
 
     const renderedItems: FabricObjectAndPreset[] = [];
 
-    if (this.layoutSetting.itemsJson && this.layoutSetting.itemsJson.length > 0) {
+    if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
-      for (const item of this.layoutSetting.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
+      for (const item of this.preset.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (isText(item)) {
-
-          const text = getMetaField(this.metaProperties, item.type);
+          const text = getMetaField(this.metaMapperData, item.type);
           const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
 
           this.addObjectToCanvas(obj);
@@ -67,7 +65,7 @@ export class PresetService {
           posLastObjectY = getYPos(obj);
 
         } else if (isImage(item)) {
-          const url = getMetaField(this.metaProperties, item.type);
+          const url = getMetaField(this.metaMapperData, item.type);
           const image = fabric.util.object.clone(await this.getImage(url));
           const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
           this.addObjectToCanvas(obj);
@@ -115,13 +113,13 @@ export class PresetService {
    * check if a certain font is set and load the font
    */
   async loadGlobalFontFromLayoutSetting() {
-    if (this.layoutSetting.fontFamilyHeadingCSS && this.layoutSetting.fontFileWoff) {
+    if (this.preset.fontFamilyHeadingCSS && this.preset.fontFileWoff) {
       appendFontToDom(
-        this.layoutSetting.fontFileWoff.url,
-        this.layoutSetting.fontFamilyHeadingCSS
+        this.preset.fontFileWoff.url,
+        this.preset.fontFamilyHeadingCSS
       );
 
-      const font = new FontFaceObserver(this.layoutSetting.fontFamilyHeadingCSS);
+      const font = new FontFaceObserver(this.preset.fontFamilyHeadingCSS);
       await font.load(null, 5000);
     }
   }
@@ -146,8 +144,8 @@ export class PresetService {
       fabricText.set('fill', item.fontColor);
     }
 
-    if (this.layoutSetting.fontFamilyHeadingCSS) {
-      fabricText.set('fontFamily', this.layoutSetting.fontFamilyHeadingCSS);
+    if (this.preset.fontFamilyHeadingCSS) {
+      fabricText.set('fontFamily', this.preset.fontFamilyHeadingCSS);
     }
 
     if (item.fontWeight) {
@@ -249,7 +247,7 @@ export class PresetService {
    * @param fabricObject
    * @param item
    */
-  afterAddToCanvasAttributes(fabricObject: Object, item: PresetObject) {
+  private afterAddToCanvasAttributes(fabricObject: Object, item: PresetObject) {
     if (item.zIndex) {
       this.canvas.moveTo(fabricObject, item.zIndex);
       fabricObject.moveTo(item.zIndex);
@@ -261,7 +259,7 @@ export class PresetService {
    * Adds the object to the canvas
    * Also adds object and item to a list
    */
-  addObjectToCanvas(object: fabric.Image | fabric.Textbox) {
+  public addObjectToCanvas(object: fabric.Image | fabric.Textbox) {
     this.canvas.add(object);
   }
 }

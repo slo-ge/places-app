@@ -1,4 +1,4 @@
-export interface MetaProperties {
+export interface MetaMapperData {
   title: string;
   description: string;
   image?: string | null;

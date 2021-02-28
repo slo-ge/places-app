@@ -18,7 +18,7 @@ export class RenderComponent implements OnInit {
     // data is in most cases the url where we can get our meta data from
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
-    const metaProperties$ = contentService.getEditorPreviewSettings(data as string);
+    const metaProperties$ = contentService.getMetaMapperData(data as string);
 
     const preset = this.route.snapshot.data.preset;
     const canvas = new fabric.Canvas('meta-mapper-canvas');

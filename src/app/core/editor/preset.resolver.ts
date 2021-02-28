@@ -4,6 +4,9 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from "@angular/rou
 import {CmsService} from "@app/core/services/cms.service";
 import {Preset} from "@app/core/model/preset";
 
+/**
+ * Resolves a single presetId given by query parameter.
+ */
 @Injectable({providedIn: 'root'})
 export class PresetResolver implements Resolve<Preset> {
   constructor(private cmsService: CmsService) {

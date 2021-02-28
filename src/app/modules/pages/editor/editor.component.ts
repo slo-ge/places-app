@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapters/adapter.service";
@@ -12,7 +12,7 @@ import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  setting$: Observable<MetaProperties> = EMPTY;
+  setting$: Observable<MetaMapperData> = EMPTY;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute,
@@ -23,7 +23,7 @@ export class EditorComponent implements OnInit {
     // data is in most cases the url where we can get our meta data from
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
-    this.setting$ = contentService.getEditorPreviewSettings(data as string);
+    this.setting$ = contentService.getMetaMapperData(data as string);
   }
 
 

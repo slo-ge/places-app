@@ -1,6 +1,6 @@
 import {Observable} from "rxjs";
 import {Page, Post} from "./wpObject";
-import {MetaProperties} from "@app/modules/pages/editor/models";
+import {MetaMapperData} from "@app/modules/pages/editor/models";
 
 
 export interface ContentService extends EditorPreviewInfoService{
@@ -10,7 +10,11 @@ export interface ContentService extends EditorPreviewInfoService{
 }
 
 export interface EditorPreviewInfoService {
-  getEditorPreviewSettings(identifier: any): Observable<MetaProperties>;
+  /**
+   * @param identifier, in most cases it is an URL which will be fetched
+   * by the internal API.
+   */
+  getMetaMapperData(identifier: any): Observable<MetaMapperData>;
 }
 
 export enum ApiAdapter {

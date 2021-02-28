@@ -3,7 +3,6 @@ import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {EMPTY, Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {AdapterService} from "@app/core/services/adapters/adapter.service";
-import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 
 
 @Component({
@@ -15,8 +14,7 @@ export class EditorComponent implements OnInit {
   setting$: Observable<MetaMapperData> = EMPTY;
 
   constructor(private adapterService: AdapterService,
-              private route: ActivatedRoute,
-              private downloadService: DownloadCanvasService) {
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -24,13 +22,5 @@ export class EditorComponent implements OnInit {
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
     this.setting$ = contentService.getMetaMapperData(data as string);
-  }
-
-
-  /**
-   * Generate a downloadable image
-   */
-  download() {
-    this.downloadService.download();
   }
 }

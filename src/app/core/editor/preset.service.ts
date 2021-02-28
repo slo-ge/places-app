@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
+import {BackgroundImage, Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
@@ -12,6 +12,7 @@ import {
   isText
 } from "@app/core/editor/fabric-object.utils";
 import {appendFontToDom, importFontInDom, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {PresetVideo} from "@app/core/editor/preset-video.service";
 
 
 /**
@@ -107,6 +108,10 @@ export class PresetService {
       bgImage.lockMovement = true;
       this.canvas.moveTo(bgImage, 0);
     }, {crossOrigin: "*"});
+  }
+
+  setAnimatedBackground(url: string, background: BackgroundImage){
+    PresetVideo.initializeVideo(this.canvas, url, background);
   }
 
   /**

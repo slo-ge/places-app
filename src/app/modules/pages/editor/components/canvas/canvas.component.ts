@@ -14,7 +14,9 @@ import {take} from "rxjs/operators";
 import {DEFAULT_ITEMS, mergeLayouts} from "@app/modules/pages/editor/components/canvas/defaults";
 import {Canvas} from "fabric/fabric-impl";
 import {ActivatedRoute} from "@angular/router";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
+declare var MediaRecorder: any;
 
 @Component({
   selector: 'app-canvas',
@@ -32,11 +34,13 @@ export class CanvasComponent implements OnInit, OnChanges {
   saveChangesIcon = faSave;
   undoIcon = faUndo;
   sentUpdateResponse: string | null = '';
+  videoBlobUrl: SafeUrl | null = null;
 
   constructor(private editorService: EditorService,
               private downloadService: DownloadCanvasService,
               private cmsService: CmsService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private sanitizer: DomSanitizer) {
   }
 
   ngOnInit(): void {
@@ -86,11 +90,56 @@ export class CanvasComponent implements OnInit, OnChanges {
       this.canvas.renderAll();
 
       this.currentPresetService.initObjectsOnCanvas();
+
+      const video = this.getVideoElement();
+      const fabVideo = new fabric.Image(video, {left: 0, top: 0});
+      this.canvas.add(fabVideo);
+
+      (fabVideo.getElement() as HTMLVideoElement).play();
+      let self = this;
+      fabric.util.requestAnimFrame(function render() {
+        self.canvas.renderAll();
+        fabric.util.requestAnimFrame(render);
+      })
     }
   }
 
   download() {
-    this.downloadService.download();
+    //this.downloadService.download();
+    this.record(this.canvas.getElement(), 4000).then(data => {
+      this.videoBlobUrl = this.sanitizer.bypassSecurityTrustUrl(data);
+    });
+  }
+
+  record(canvas: HTMLCanvasElement, time: number): Promise<string> {
+    const recordedChunks = [] as any;
+    return new Promise( (res, _rej) => {
+      const stream = (canvas as any).captureStream(25 /*fps*/);
+      const mediaRecorder = new MediaRecorder(stream, {
+        mimeType: "video/webm; codecs=vp9"
+      });
+
+      //ondataavailable will fire in interval of `time || 4000 ms`
+      mediaRecorder.start(time || 4000);
+
+      mediaRecorder.ondataavailable =  (_e: any) => {
+        recordedChunks.push((event as any).data);
+
+        if (mediaRecorder.state === 'recording') {
+          // after stop data avilable event run one more time
+          mediaRecorder.stop();
+        }
+
+      };
+
+      mediaRecorder.onstop =  (_event: any) => {
+        const blob = new Blob(recordedChunks, {
+          type: "video/webm"
+        });
+        const url = URL.createObjectURL(blob);
+        res(url);
+      }
+    })
   }
 
   /**
@@ -116,5 +165,18 @@ export class CanvasComponent implements OnInit, OnChanges {
   resetTemplate() {
     this.preset.itemsJson = DEFAULT_ITEMS;
     this.setLayout(this.preset);
+  }
+
+  getVideoElement(url: string = '/assets/video/test.mp4') {
+    const videoE = document.createElement('video');
+    videoE.width = 530;
+    videoE.height = 298;
+    videoE.muted = true;
+    videoE.crossOrigin = "anonymous";
+    const source = document.createElement('source');
+    source.src = url;
+    source.type = 'video/mp4';
+    videoE.appendChild(source);
+    return videoE;
   }
 }

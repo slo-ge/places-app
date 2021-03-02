@@ -23,7 +23,7 @@ export class MetaDataActionsComponent {
   constructor() {
   }
 
-  async addText(type: LayoutItemType) {
+  async addObject(type: LayoutItemType) {
     if (this.presetService && this.metaProperties) {
       const preset: PresetObject = {
         offsetLeft: 20,
@@ -32,9 +32,10 @@ export class MetaDataActionsComponent {
         type: type,
         position: 9999
       };
+
       if (type === LayoutItemType.TITLE || type === LayoutItemType.DESCRIPTION) {
         const text = getMetaField(this.metaProperties, type);
-        const obj = this.presetService.createText(text, preset, 50);
+        const obj = await this.presetService.createText(text, preset, 50);
         this.presetService.addObjectToCanvas(obj);
       }
 
@@ -42,7 +43,7 @@ export class MetaDataActionsComponent {
       if (type === LayoutItemType.IMAGE || type === LayoutItemType.ICON) {
         const imageUrl = getMetaField(this.metaProperties, type);
         const image = fabric.util.object.clone(await this.presetService.getImage(imageUrl));
-        const obj = this.presetService.createImage(image, 50, preset);
+        const obj = await this.presetService.createImage(image, 50, preset);
         this.presetService.addObjectToCanvas(obj);
       }
     }

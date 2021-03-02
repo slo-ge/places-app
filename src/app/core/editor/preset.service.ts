@@ -48,7 +48,13 @@ export class PresetService {
    */
   async initObjectsOnCanvas() {
     if (this.preset.backgroundImage) {
-      this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
+      // video/mp4 -> TODO: use enum
+      if (this.preset.backgroundImage.mime.startsWith('video')){
+        console.log('use experimental video modus');
+        this.setAnimatedBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
+      } else {
+        this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
+      }
       await this.loadGlobalFontFromLayoutSetting();
     }
 
@@ -110,8 +116,8 @@ export class PresetService {
     }, {crossOrigin: "*"});
   }
 
-  setAnimatedBackground(url: string, background: BackgroundImage){
-    PresetVideo.initializeVideo(this.canvas, url, background);
+  setAnimatedBackground(url: string){
+    PresetVideo.initializeVideo(this.canvas, url, this.preset);
   }
 
   /**

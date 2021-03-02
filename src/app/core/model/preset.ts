@@ -47,7 +47,7 @@ export interface Preset {
   title?: string;
   created_at?: Date;
   updated_at?: Date;
-  backgroundImage?: BackgroundImage;
+  backgroundImage: BackgroundImage;
 
   fontFileWoff?: GlobalFont;
   fontFamilyHeadingCSS?: string;

@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {Canvas} from "fabric/fabric-impl";
-import {BackgroundImage} from "@app/core/model/preset";
+import {BackgroundImage, Preset} from "@app/core/model/preset";
 
 export class PresetVideo {
 
@@ -8,8 +8,8 @@ export class PresetVideo {
   constructor() {
   }
 
-  public static initializeVideo(canvas: Canvas, videoUrl: string, background: BackgroundImage) {
-    const video = PresetVideo.getVideoElement(videoUrl);
+  public static initializeVideo(canvas: Canvas, videoUrl: string, preset: Preset) {
+    const video = PresetVideo.getVideoElement(videoUrl, preset);
     PresetVideo.setVideoBackground(video, canvas);
 
     fabric.util.requestAnimFrame(function render() {
@@ -26,15 +26,16 @@ export class PresetVideo {
     canvas.moveTo(fabVideo, 0);
   }
 
-  private static getVideoElement(url: string) {
+  private static getVideoElement(url: string, preset: Preset) {
     const videoE = document.createElement('video');
-    videoE.width = 640; // TODO: set width
-    videoE.height = 640; // TODO: set height
-    videoE.muted = true;
+    videoE.width = preset.width;
+    videoE.height = preset.height;
+    videoE.muted = false;
+    videoE.loop = true;
     videoE.crossOrigin = "anonymous";
     const source = document.createElement('source');
     source.src = url;
-    source.type = 'video/mp4';
+    source.type = preset.backgroundImage.mime;
     videoE.appendChild(source);
     return videoE;
   }

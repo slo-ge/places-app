@@ -1,0 +1,19 @@
+<div class="toggle">
+  <button (click)="downloadImage()">Download
+    <fa-icon [icon]="downloadIcon"></fa-icon>
+  </button>
+  <div class="toggle-content" *ngIf="extended">
+    <div class="video-heading">Download as Video</div>
+    <div class="duration-container">
+      <div (click)="downloadVideo(2000)">2sec</div>
+      <div (click)="downloadVideo(4000)">4sec</div>
+      <div (click)="downloadVideo(8000)">8sec</div>
+    </div>
+
+    <div class="recording" *ngIf="recording">
+      <div>recording</div>
+      <app-loading-animation></app-loading-animation>
+    </div>
+  </div>
+</div>
+

@@ -20,9 +20,7 @@
                                [presetService]="this.currentPresetService"
                                [metaProperties]="metaProperties">
         </app-meta-data-actions>
-        <button (click)="download()">Download
-          <fa-icon [icon]="downloadIcon"></fa-icon>
-        </button>
+        <app-button-download [presetService]="currentPresetService"></app-button-download>
       </div>
       <app-simple-actions></app-simple-actions>
     </div>

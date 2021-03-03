@@ -60,7 +60,6 @@ export class SimpleActionsComponent implements OnInit {
               private alignmentService: AlignmentService) {
   }
 
-
   ngOnInit(): void {
     // TODO: kill subscription in onDestroy!
     this.editorService.getCanvas().subscribe(canvas => {

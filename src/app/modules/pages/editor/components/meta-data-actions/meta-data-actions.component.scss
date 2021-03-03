@@ -7,29 +7,6 @@
     margin-right: 10px;
   }
 
-  .toggle {
-    position: relative;
-    cursor: pointer;
-
-    .toggle-content {
-      display: none;
-    }
-
-    &:hover {
-      .toggle-content {
-        display: block !important;
-        position: absolute;
-        border: 1px solid $grey-1;
-        border-radius: $common-border-radius;
-        padding: 10px;
-        z-index: 1010;
-        background: white;
-      }
-    }
-  }
-
-
-
   .actions {
     width: 150px;
 

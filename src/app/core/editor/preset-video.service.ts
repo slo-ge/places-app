@@ -12,6 +12,9 @@ export class PresetVideo {
     const video = PresetVideo.getVideoElement(videoUrl, preset);
     PresetVideo.setVideoBackground(video, canvas);
 
+    console.warn('danger: we can not always call the requestAnimFrame method');
+    console.warn('because it will be triggered on every preset change');
+
     fabric.util.requestAnimFrame(function render() {
       canvas.renderAll();
       fabric.util.requestAnimFrame(render);

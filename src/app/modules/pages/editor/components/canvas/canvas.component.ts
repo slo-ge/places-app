@@ -5,7 +5,7 @@ import {Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/core/editor/editor.service";
 import {PresetService} from "@app/core/editor/preset.service";
 import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
-import {faDownload, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
 import {EMPTY, Observable} from "rxjs";
@@ -28,7 +28,6 @@ export class CanvasComponent implements OnInit, OnChanges {
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;
   loggedInUser: Observable<AuthResponse | null> = EMPTY;
-  downloadIcon = faDownload;
   saveChangesIcon = faSave;
   undoIcon = faUndo;
   sentUpdateResponse: string | null = '';

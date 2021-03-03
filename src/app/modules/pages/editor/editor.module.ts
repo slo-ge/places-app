@@ -15,6 +15,7 @@ import { TextSettingsComponent } from './components/simple-actions/simple-action
 import { MetaDataActionsComponent } from './components/meta-data-actions/meta-data-actions.component';
 import { FontSelectorComponent } from './components/font-selector/font-selector.component';
 import { FontWeightComponent } from './components/font-weight/font-weight.component';
+import { ButtonDownloadComponent } from './components/button-download/button-download.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FontWeightComponent } from './components/font-weight/font-weight.compon
     TextSettingsComponent,
     MetaDataActionsComponent,
     FontSelectorComponent,
-    FontWeightComponent
+    FontWeightComponent,
+    ButtonDownloadComponent
   ],
   imports: [
     CommonModule,

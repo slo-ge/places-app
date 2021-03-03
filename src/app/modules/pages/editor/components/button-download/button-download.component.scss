@@ -1,0 +1,30 @@
+@import 'style';
+
+.toggle-content {
+  width: 100%;
+}
+.video-heading {
+  font-weight: bold;
+  margin: 10px 0;
+}
+.duration-container {
+  display: flex;
+
+  > div {
+    border-radius: $common-border-radius;
+    background-color: $grey-0;
+
+    padding: 5px;
+    margin-right: 5px;
+
+    &:hover {
+      background-color: $primary;
+    }
+  }
+}
+
+.recording {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

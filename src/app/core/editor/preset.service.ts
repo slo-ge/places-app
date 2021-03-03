@@ -31,10 +31,18 @@ interface FabricObjectAndPreset {
   preset: PresetObject
 }
 
+/**
+ * Infos Which do the presetService holds
+ */
+interface PresetServiceInfo {
+  isAnimatedBackground?: boolean;
+}
+
 export class PresetService {
   private readonly metaMapperData: MetaMapperData;
   public readonly preset: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
+  public info: PresetServiceInfo = {};
 
   constructor(canvas: Canvas, metaMapperData: MetaMapperData, preset: Preset) {
     this.canvas = canvas;
@@ -49,12 +57,7 @@ export class PresetService {
   async initObjectsOnCanvas() {
     if (this.preset.backgroundImage) {
       // video/mp4 -> TODO: use enum
-      if (this.preset.backgroundImage.mime.startsWith('video')){
-        console.log('use experimental video modus');
-        this.setAnimatedBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
-      } else {
-        this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
-      }
+      this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
       await this.loadGlobalFontFromLayoutSetting();
     }
 
@@ -101,12 +104,21 @@ export class PresetService {
 
 
   /**
-   * Set the background image to the whole canvas layer,
+   * Set the background image or the video to the whole canvas layer,
    * the background image is not selectable and so, it can not be
    * removed
    * @param url
    */
   setBackground(url: string) {
+    if(this.preset.backgroundImage.mime.startsWith('video')) {
+      this.info.isAnimatedBackground = true;
+      this.setAnimatedBackground(url);
+    } else {
+     this.setStaticBackground(url);
+    }
+  }
+
+  setStaticBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {
       const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
       bgImage.scaleToWidth(this.canvas.width);

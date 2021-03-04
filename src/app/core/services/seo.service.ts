@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {ACFLocation, WpObject} from "../model/wpObject";
 import {environment} from "../../../environments/environment";
 import {getFeaturedImage} from "../utils/media";
 import {decodeHTMLEntities} from "../utils/html";
+import {DOCUMENT} from "@angular/common";
 
 
 export interface MetaData {
@@ -17,7 +18,8 @@ export interface MetaData {
 })
 export class SeoService {
     constructor(private meta: Meta,
-                private title: Title) {
+                private title: Title,
+                @Inject(DOCUMENT) private dom) {
     }
 
     private getDefaultMeta(wpObject: WpObject): MetaData {
@@ -83,5 +85,17 @@ export class SeoService {
         if (metaData.imageUrl) {
             this.meta.updateTag({property: 'og:image', content: metaData.imageUrl});
         }
+    }
+
+    public setCanonicalUrl(path: string) {
+        const url = `https://goove.at/${path}`;
+        const head = this.dom.getElementsByTagName('head')[0];
+        let element: HTMLLinkElement = this.dom.querySelector(`link[rel='canonical']`) || null
+        if (element == null) {
+            element = this.dom.createElement('link') as HTMLLinkElement;
+            head.appendChild(element);
+        }
+        element.setAttribute('rel', 'canonical')
+        element.setAttribute('href', url)
     }
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {combineLatest, Observable} from "rxjs";
-import {ActivatedRoute, Params} from "@angular/router";
-import {finalize, map, switchMap, take, tap} from "rxjs/operators";
+import {combineLatest, EMPTY, Observable} from "rxjs";
+import {ActivatedRoute, Params, Router} from "@angular/router";
+import {catchError, finalize, map, switchMap, take, tap} from "rxjs/operators";
 import {ACFLocation} from "@places/core/model/wpObject";
 import {LocationService} from "@places/core/services/location.service";
 import {GeoLocationService} from "@places/core/services/geo-location.service";
@@ -45,7 +45,8 @@ export class ResultsComponent implements OnInit {
                 private route: ActivatedRoute,
                 private store: Store,
                 private tagService: TaxonomyService,
-                private seoService: SeoService) {
+                private seoService: SeoService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -56,8 +57,13 @@ export class ResultsComponent implements OnInit {
         this.locations$ = combineLatest([queryParams$, paths$, tags$]).pipe(
             tap(() => this.loading = true),
             map(([queryParams, params, tags]) => this.buildPlacesResponseFrom(queryParams, params, tags)),
+
             switchMap(mappedParams => this.locationService.allLocations(mappedParams).pipe(
-                finalize(() => this.loading = false)
+                finalize(() => this.loading = false),
+                catchError(() => {
+                    this.router.navigate(["/404-not-found"]);
+                    return EMPTY;
+                }),
             ))
         );
     }

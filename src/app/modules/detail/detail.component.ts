@@ -25,8 +25,9 @@ export class DetailComponent implements OnInit {
     ngOnInit() {
         // from resolver
         this.location$ = of(this.route.snapshot.data['place']).pipe(
-            tap(data => {
+            tap((data: ACFLocation) => {
                 this.seoService.setMetaFromLocation(data);
+                this.seoService.setCanonicalUrl(data.slug);
                 this.imgUrl = getFeaturedImage(data._embedded);
             })
         );

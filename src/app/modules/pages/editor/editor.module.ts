@@ -16,6 +16,8 @@ import { MetaDataActionsComponent } from './components/meta-data-actions/meta-da
 import { FontSelectorComponent } from './components/font-selector/font-selector.component';
 import { FontWeightComponent } from './components/font-weight/font-weight.component';
 import { ButtonDownloadComponent } from './components/button-download/button-download.component';
+import { FontBackgroundComponent } from './components/font-background/font-background.component';
+import { FontUnderlineComponent } from './components/font-underline/font-underline.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { ButtonDownloadComponent } from './components/button-download/button-dow
     MetaDataActionsComponent,
     FontSelectorComponent,
     FontWeightComponent,
-    ButtonDownloadComponent
+    ButtonDownloadComponent,
+    FontBackgroundComponent,
+    FontUnderlineComponent
   ],
   imports: [
     CommonModule,

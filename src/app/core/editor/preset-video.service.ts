@@ -33,7 +33,7 @@ export class PresetVideo {
     const videoE = document.createElement('video');
     videoE.width = preset.width;
     videoE.height = preset.height;
-    videoE.muted = false;
+    videoE.muted = true; // otherwise there will be: https://stackoverflow.com/a/50742427
     videoE.loop = true;
     videoE.crossOrigin = "anonymous";
     const source = document.createElement('source');

@@ -1,7 +1,7 @@
 // This proxy proxies any url and sets the cors origin to * to make
 // every content access by browser
 import {CMS_API_URL} from "@app/core/services/cms.service";
-import {Font} from "@app/core/model/preset";
+import {Font, Preset} from "@app/core/model/preset";
 
 export const PROXY_URL = '/api/proxy';
 //export const PROXY_URL = 'http://localhost:5000/proxy';
@@ -56,4 +56,8 @@ export function importFontInDom(font: Font) {
   const style = document.createElement('style');
   style.appendChild(document.createTextNode(CSS));
   head.appendChild(style);
+}
+
+export function isVideoBackground(preset: Preset) {
+  return preset.backgroundImage.mime.startsWith('video');
 }

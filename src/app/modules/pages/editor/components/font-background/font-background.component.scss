@@ -1,0 +1,9 @@
+@import 'style';
+
+:host {
+  display: block;
+  margin-left: 5px;
+  padding: 15px;
+  border: 1px solid $grey-0;
+  border-radius: $common-border-radius;
+}

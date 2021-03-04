@@ -11,7 +11,13 @@ import {
   isImage,
   isText
 } from "@app/core/editor/fabric-object.utils";
-import {appendFontToDom, importFontInDom, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {
+  appendFontToDom,
+  importFontInDom,
+  isVideoBackground,
+  proxiedUrl,
+  toAbsoluteCMSUrl
+} from "@app/core/editor/utils";
 import {PresetVideo} from "@app/core/editor/preset-video.service";
 
 
@@ -22,6 +28,17 @@ import {PresetVideo} from "@app/core/editor/preset-video.service";
  */
 const imageCache: { [key: string]: Image } = {};
 
+// Change the padding logic to include background-color
+fabric.Text.prototype.set({
+  _getNonTransformedDimensions() { // Object dimensions
+    // @ts-ignore
+    return new fabric.Point(this.width, this.height).scalarAdd(this.padding);
+  },
+  // @ts-ignore
+  _calculateCurrentDimensions() { // Controls dimensions
+    return fabric.util.transformPoint(this._getTransformedDimensions(), this.getViewportTransform(), true);
+  }
+});
 
 /**
  * store fabricjs object with corresponding preset
@@ -110,7 +127,7 @@ export class PresetService {
    * @param url
    */
   setBackground(url: string) {
-    if(this.preset.backgroundImage.mime.startsWith('video')) {
+    if(isVideoBackground(this.preset)) {
       this.info.isAnimatedBackground = true;
       this.setAnimatedBackground(url);
     } else {
@@ -158,7 +175,9 @@ export class PresetService {
     let fabricText = new fabric.Textbox(
       text,
       {
-        fontSize: item.fontSize
+        fontSize: item.fontSize,
+        left: 10,
+        top: 10,
       }
     ) as any | CustomTextBox;
     this.setObjectAttributes(fabricText, item, offsetTop);
@@ -187,6 +206,19 @@ export class PresetService {
       fabricText.presetFont = item.font;
       await this.loadFontFromPresetItem(item.font, fabricText);
     }
+
+    if (item.fontBackgroundColor) {
+      fabricText.backgroundColor = item.fontBackgroundColor;
+
+      if (item.fontBackgroundPadding) {
+        fabricText.padding = item.fontBackgroundPadding;
+      }
+    }
+
+    if(item.fontUnderline) {
+      fabricText.underline = true;
+    }
+
     return fabricText;
   }
 

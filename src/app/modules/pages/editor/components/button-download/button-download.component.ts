@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {faDownload} from "@fortawesome/free-solid-svg-icons";
 import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 import {PresetService} from "@app/core/editor/preset.service";

@@ -27,7 +27,7 @@ export class DetailComponent implements OnInit {
         this.location$ = of(this.route.snapshot.data['place']).pipe(
             tap((data: ACFLocation) => {
                 this.seoService.setMetaFromLocation(data);
-                this.seoService.setCanonicalUrl(data.slug);
+                this.seoService.setCanonicalUrl(`detail/${data.slug}`);
                 this.imgUrl = getFeaturedImage(data._embedded);
             })
         );

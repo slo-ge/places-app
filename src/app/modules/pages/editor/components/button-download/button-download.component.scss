@@ -1,5 +1,6 @@
 @import 'style';
 
+button,
 .toggle-content {
   width: 100%;
 }
@@ -13,7 +14,6 @@
   > div {
     border-radius: $common-border-radius;
     background-color: $grey-0;
-
     padding: 5px;
     margin-right: 5px;
 

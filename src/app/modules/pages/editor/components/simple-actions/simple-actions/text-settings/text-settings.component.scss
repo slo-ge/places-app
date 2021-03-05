@@ -1,4 +1,9 @@
-app-font-selector,
-app-color-picker {
-  margin-right: 30px;
+:host {
+  > * {
+    margin-right: 5px;
+  }
+}
+
+.font-deco {
+  display: flex;
 }

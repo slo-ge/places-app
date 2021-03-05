@@ -1,0 +1,14 @@
+@import 'style';
+
+.border-box {
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin-right: 5px;
+  }
+}
+
+app-range-slider {
+  width: 150px;
+}

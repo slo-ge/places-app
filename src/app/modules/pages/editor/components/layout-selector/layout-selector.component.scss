@@ -15,10 +15,9 @@ button {
 
 
 .preview {
-  max-height: 60vh;
   overflow: auto;
   display: grid;
-  grid-template-columns: 120px 120px;
+  grid-template-columns: 134px 120px;
   grid-template-rows: 160px;
   grid-gap: 10px;
 
@@ -44,6 +43,7 @@ button {
       opacity: 0.9;
     }
 
+    video,
     img {
       object-fit: cover;
       width: 120px;

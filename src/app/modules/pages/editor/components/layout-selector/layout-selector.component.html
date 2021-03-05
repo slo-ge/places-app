@@ -1,6 +1,14 @@
 <div class="preview">
-  <a (click)="selectPreset(setting)"  [routerLink]="['./']" [queryParams]="{presetId: setting.id}" [queryParamsHandling]="'merge'" *ngFor="let setting of settings$ | async" class="preview-tile">
-    <div class="preview-tile-title">{{setting.title}}</div>
-    <img [alt]="setting.title" [src]="cmsApiUrl(setting.backgroundImage?.formats?.thumbnail?.url || '')">
+  <a (click)="selectPreset(preset)"  [routerLink]="['./']" [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'" *ngFor="let preset of settings$ | async"
+    class="preview-tile">
+    <div class="preview-tile-title">{{preset.title}}</div>
+    <img *ngIf="preset.backgroundImage.mime.startsWith('image'); else videoTile" [alt]="preset.title" [src]="cmsApiUrl(preset.backgroundImage?.formats?.thumbnail?.url || '')">
+
+    <ng-template #videoTile>
+      <video preload="metadata">
+        <source [src]="cmsApiUrl(preset.backgroundImage?.url || '')  + '#t=0.5'">
+        type="video/mp4">
+      </video>
+    </ng-template>
   </a>
 </div>

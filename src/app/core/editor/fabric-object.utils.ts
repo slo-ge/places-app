@@ -74,6 +74,21 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
       tmp.font = fabricObject.presetFont;
     }
 
+    if (fabricObject.backgroundColor) {
+      tmp.fontBackgroundColor = fabricObject.backgroundColor;
+    } else {
+      tmp.fontBackgroundColor = null;
+    }
+
+    if (fabricObject.padding) {
+      tmp.fontBackgroundPadding = fabricObject.padding;
+    }
+
+    if (fabricObject.underline) {
+      tmp.fontUnderline = fabricObject.underline;
+    } else {
+      tmp.fontUnderline = false;
+    }
   }
 
   return tmp;

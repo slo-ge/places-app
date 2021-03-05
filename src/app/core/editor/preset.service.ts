@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
+import {BackgroundImage, Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
@@ -11,7 +11,14 @@ import {
   isImage,
   isText
 } from "@app/core/editor/fabric-object.utils";
-import {appendFontToDom, importFontInDom, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {
+  appendFontToDom,
+  importFontInDom,
+  isVideoBackground,
+  proxiedUrl,
+  toAbsoluteCMSUrl
+} from "@app/core/editor/utils";
+import {PresetVideo} from "@app/core/editor/preset-video.service";
 
 
 /**
@@ -21,6 +28,17 @@ import {appendFontToDom, importFontInDom, proxiedUrl, toAbsoluteCMSUrl} from "@a
  */
 const imageCache: { [key: string]: Image } = {};
 
+// Change the padding logic to include background-color
+fabric.Text.prototype.set({
+  _getNonTransformedDimensions() { // Object dimensions
+    // @ts-ignore
+    return new fabric.Point(this.width, this.height).scalarAdd(this.padding);
+  },
+  // @ts-ignore
+  _calculateCurrentDimensions() { // Controls dimensions
+    return fabric.util.transformPoint(this._getTransformedDimensions(), this.getViewportTransform(), true);
+  }
+});
 
 /**
  * store fabricjs object with corresponding preset
@@ -30,10 +48,18 @@ interface FabricObjectAndPreset {
   preset: PresetObject
 }
 
+/**
+ * Infos Which do the presetService holds
+ */
+interface PresetServiceInfo {
+  isAnimatedBackground?: boolean;
+}
+
 export class PresetService {
   private readonly metaMapperData: MetaMapperData;
   public readonly preset: Preset; // TODO: getter and setter
   private readonly canvas: Canvas;
+  public info: PresetServiceInfo = {};
 
   constructor(canvas: Canvas, metaMapperData: MetaMapperData, preset: Preset) {
     this.canvas = canvas;
@@ -47,6 +73,7 @@ export class PresetService {
    */
   async initObjectsOnCanvas() {
     if (this.preset.backgroundImage) {
+      // video/mp4 -> TODO: use enum
       this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
       await this.loadGlobalFontFromLayoutSetting();
     }
@@ -94,12 +121,21 @@ export class PresetService {
 
 
   /**
-   * Set the background image to the whole canvas layer,
+   * Set the background image or the video to the whole canvas layer,
    * the background image is not selectable and so, it can not be
    * removed
    * @param url
    */
   setBackground(url: string) {
+    if(isVideoBackground(this.preset)) {
+      this.info.isAnimatedBackground = true;
+      this.setAnimatedBackground(url);
+    } else {
+     this.setStaticBackground(url);
+    }
+  }
+
+  setStaticBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {
       const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
       bgImage.scaleToWidth(this.canvas.width);
@@ -107,6 +143,10 @@ export class PresetService {
       bgImage.lockMovement = true;
       this.canvas.moveTo(bgImage, 0);
     }, {crossOrigin: "*"});
+  }
+
+  setAnimatedBackground(url: string){
+    PresetVideo.initializeVideo(this.canvas, url, this.preset);
   }
 
   /**
@@ -135,7 +175,9 @@ export class PresetService {
     let fabricText = new fabric.Textbox(
       text,
       {
-        fontSize: item.fontSize
+        fontSize: item.fontSize,
+        left: 10,
+        top: 10,
       }
     ) as any | CustomTextBox;
     this.setObjectAttributes(fabricText, item, offsetTop);
@@ -164,6 +206,19 @@ export class PresetService {
       fabricText.presetFont = item.font;
       await this.loadFontFromPresetItem(item.font, fabricText);
     }
+
+    if (item.fontBackgroundColor) {
+      fabricText.backgroundColor = item.fontBackgroundColor;
+
+      if (item.fontBackgroundPadding) {
+        fabricText.padding = item.fontBackgroundPadding;
+      }
+    }
+
+    if(item.fontUnderline) {
+      fabricText.underline = true;
+    }
+
     return fabricText;
   }
 

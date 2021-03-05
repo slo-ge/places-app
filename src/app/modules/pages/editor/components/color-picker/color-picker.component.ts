@@ -1,23 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-color-picker',
   templateUrl: './color-picker.component.html',
   styleUrls: ['./color-picker.component.scss']
 })
-export class ColorPickerComponent implements OnInit {
+export class ColorPickerComponent {
   @Output()
   color: EventEmitter<string> = new EventEmitter<string>();
   @Input()
   currentColor: string = '';
+  @Input()
+  name: string = 'Color';
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
   addColor(input: HTMLInputElement) {
-    console.log(input.value);
     this.color.emit(input.value);
   }
 }

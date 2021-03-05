@@ -47,7 +47,7 @@ export interface Preset {
   title?: string;
   created_at?: Date;
   updated_at?: Date;
-  backgroundImage?: BackgroundImage;
+  backgroundImage: BackgroundImage;
 
   fontFileWoff?: GlobalFont;
   fontFamilyHeadingCSS?: string;
@@ -60,6 +60,11 @@ export interface PresetObject {
   fontSize?: number,
   fontLineHeight?: string | number,
   fontLetterSpacing?: string | number,
+  fontWeight?: string | number;
+  fontColor?: string;
+  fontBackgroundPadding?: null | number;
+  fontBackgroundColor?: null | string;
+  fontUnderline?: boolean;
   offsetTop: number,
   offsetLeft: number,
   offsetRight?: number,
@@ -67,8 +72,6 @@ export interface PresetObject {
   type: LayoutItemType,
   title?: string,
   position: number;
-  fontWeight?: string | number;
-  fontColor?: string;
   objectAngle?: number;
   zIndex?: number;
   objectPosition?: ObjectPosition;

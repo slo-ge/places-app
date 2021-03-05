@@ -38,7 +38,8 @@
       </div>
     </div>
   </div>
-  <app-range-slider [value]="activeRangeSliderCurrentValue" [max]="activeRangeSliderMax"
+  <app-range-slider class="size-range border-box" [value]="activeRangeSliderCurrentValue"
+                    [max]="activeRangeSliderMax"
                     (valueChange)="changeSize($event)"></app-range-slider>
 
   <div class="type-settings" [ngSwitch]="selectedType">

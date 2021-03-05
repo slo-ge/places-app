@@ -1,7 +1,9 @@
 <div class="preview">
   <aside>
-    <h3>Select Layouts</h3>
+    <h3>Select Preset</h3>
     <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+    <hr>
+    <app-button-download [presetService]="currentPresetService"></app-button-download>
     <ng-container *ngIf="loggedInUser | async">
       <button class="save-change secondary" (click)="resetTemplate()">Reset Template
         <fa-icon [icon]="undoIcon"></fa-icon>
@@ -19,12 +21,9 @@
                                [presetService]="this.currentPresetService"
                                [metaProperties]="metaProperties">
         </app-meta-data-actions>
-        <button (click)="download()">Download
-          <fa-icon [icon]="downloadIcon"></fa-icon>
-        </button>
+        <app-simple-actions></app-simple-actions>
       </div>
 
-      <app-simple-actions></app-simple-actions>
     </div>
 
     <div class="canvas-wrapper">

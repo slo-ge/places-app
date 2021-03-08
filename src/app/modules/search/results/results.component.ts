@@ -34,7 +34,6 @@ export class ResultsComponent implements OnInit {
     locations$: Observable<ACFLocation[]>;
     geoLocation$: Promise<any> | any;
 
-    params = {page: 1, geo_location: null};
     currentPage: 1;
     loading = false;
 
@@ -110,6 +109,10 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 tags: tags.find(tag => tag.slug == params.slug).id
             };
+        } else {
+            // if no slug is set we always hide these items which should not be visible in our
+            // default view
+            httpParams = {...httpParams, categories_exclude: 111};
         }
 
         // map fullTextQuery query param to wordpress search param

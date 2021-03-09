@@ -3,7 +3,10 @@
     <div class="info-wrapper">
         <h1 [innerHTML]="location.title.rendered"></h1>
         <address>
-            <div class="address">{{location.acf.place.address}}</div>
+            <a target="_blank"
+               [href]="sanitizer.bypassSecurityTrustUrl('geo:' + location.acf.place.lat + ', ' + location.acf.place.lng)">
+                <div class="address">{{location.acf.place.address}}</div>
+            </a>
         </address>
         <div class="description" [innerHTML]="location.acf.description[0].text"></div>
         <app-favourite-toggle [place]="location"></app-favourite-toggle>

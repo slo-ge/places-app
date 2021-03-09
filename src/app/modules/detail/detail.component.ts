@@ -6,6 +6,7 @@ import {LocationService} from "../../core/services/location.service";
 import {ACFLocation} from "../../core/model/wpObject";
 import {SeoService} from "../../core/services/seo.service";
 import {getFeaturedImage} from "../../core/utils/media";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-detail',
@@ -16,7 +17,8 @@ export class DetailComponent implements OnInit {
 
     constructor(private locationService: LocationService,
                 private route: ActivatedRoute,
-                private seoService: SeoService) {
+                private seoService: SeoService,
+                public sanitizer: DomSanitizer) {
     }
 
     location$: Observable<ACFLocation>;

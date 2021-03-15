@@ -6,6 +6,7 @@ import {DetailComponent} from './detail.component';
 import {FooterComponent} from './footer/footer.component';
 import {SharedModule} from "../../shared/shared.module";
 import {DetailResolver} from "./detail.resolver";
+import {PlatformModule} from "@angular/cdk/platform";
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {DetailResolver} from "./detail.resolver";
     imports: [
         CommonModule,
         DetailRoutingModule,
-        SharedModule
+        SharedModule,
+        PlatformModule
     ],
     providers: [DetailResolver]
 })

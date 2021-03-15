@@ -4,7 +4,7 @@
         <h1 [innerHTML]="location.title.rendered"></h1>
         <address>
             <a target="_blank"
-               [href]="sanitizer.bypassSecurityTrustUrl('geo:' + location.acf.place.lat + ', ' + location.acf.place.lng)">
+               [href]="geoUrl">
                 <div class="address">{{location.acf.place.address}}</div>
             </a>
         </address>

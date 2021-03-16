@@ -1,6 +1,6 @@
 import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {BackgroundImage, Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
+import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {

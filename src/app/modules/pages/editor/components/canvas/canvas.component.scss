@@ -23,7 +23,7 @@ canvas {
 ::ng-deep {
   .canvas-container {
     transform: scale(0.7);
-    transform-origin: 0% 0% 0px;
+    transform-origin: 0 0 0;
   }
 }
 
@@ -83,6 +83,26 @@ aside {
   app-layout-selector {
     width: 280px;
     display: block;
+    overflow-y: scroll;
+
+    max-height: 77vh;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px $grey-0;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      -webkit-box-shadow: inset 0 0 6px $grey-2;
+    }
+
+    scrollbar-color: $grey-2 $grey-0;
+    scrollbar-width: thin !important;
   }
 
   app-button-download,

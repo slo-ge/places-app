@@ -2,10 +2,10 @@
   <a (click)="selectPreset(preset)"  [routerLink]="['./']" [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'" *ngFor="let preset of settings$ | async"
     class="preview-tile">
     <div class="preview-tile-title">{{preset.title}}</div>
-    <img *ngIf="preset.backgroundImage.mime.startsWith('image'); else videoTile" [alt]="preset.title" [src]="cmsApiUrl(preset.backgroundImage?.formats?.thumbnail?.url || '')">
+    <img loading="lazy" *ngIf="preset.backgroundImage.mime.startsWith('image'); else videoTile" [alt]="preset.title" [src]="cmsApiUrl(preset.backgroundImage?.formats?.thumbnail?.url || '')">
 
     <ng-template #videoTile>
-      <video preload="metadata">
+      <video preload="metadata" loading="lazy">
         <source [src]="cmsApiUrl(preset.backgroundImage?.url || '')  + '#t=0.5'">
         type="video/mp4">
       </video>

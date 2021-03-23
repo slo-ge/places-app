@@ -33,7 +33,6 @@ export class CanvasComponent implements OnInit, OnChanges {
   sentUpdateResponse: string | null = '';
 
   constructor(private editorService: EditorService,
-              private downloadService: DownloadCanvasService,
               private cmsService: CmsService,
               private activatedRoute: ActivatedRoute) {
   }
@@ -87,10 +86,6 @@ export class CanvasComponent implements OnInit, OnChanges {
       this.currentPresetService.initObjectsOnCanvas();
 
     }
-  }
-
-  download() {
-    this.downloadService.download();
   }
 
   /**

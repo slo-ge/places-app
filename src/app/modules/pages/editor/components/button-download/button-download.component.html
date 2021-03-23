@@ -2,6 +2,11 @@
   <button (click)="downloadImage()">Download
     <fa-icon [icon]="downloadIcon"></fa-icon>
   </button>
+
+  <form [formGroup]="form" *ngIf="currentUser$ | async">
+    <input type="checkbox" formControlName="upload" id="uploadFile" class="form-check-input"/>
+    <label for="uploadFile" class="form-check-label">Upload as Preview</label>
+  </form>
   <div class="toggle-content" *ngIf="extended">
     <div class="video-heading">Download as Video</div>
     <div class="duration-container">

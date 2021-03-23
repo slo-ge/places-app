@@ -1,0 +1,22 @@
+<div class="load-entries">
+  <button class="secondary" (click)="toggle()">show examples</button>
+</div>
+
+<div *ngIf="open">
+  <div class="carousel">
+    <img class="overlay" src="/assets/images/iphone-overlay.png">
+    <img  class="preview-image" (load)="onImageLoad($event)" *ngIf="currentImage | async as image" loading="lazy" src="{{'/cms' + image.formats.small.url}}">
+    <app-loading-animation *ngIf="loading"></app-loading-animation>
+    <div class="controls">
+      <div (click)="prev()">prev</div>
+      <div (click)="next()">next</div>
+    </div>
+  </div>
+
+ <!-- <div class="previews">
+    <div class="preview" *ngFor="let preview of images | async">
+      <img loading="lazy" src="{{'/cms' + preview.formats.small.url}}">
+    </div>
+  </div> -->
+</div>
+

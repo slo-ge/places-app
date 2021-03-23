@@ -10,7 +10,8 @@
         <div>
           <form [formGroup]="baseURLForm">
             <div class="input-wrapper">
-              <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url" type="text">
+              <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url"
+                     type="text">
               <div class="search" (click)="check()">
                 <fa-icon [icon]="faSearch"></fa-icon>
               </div>
@@ -22,7 +23,9 @@
       </div>
 
       <div *ngIf="adapter && !loading" class="adapter">
-        <div class="adapter-info"><fa-icon class="success" [icon]="faCheckCircle"></fa-icon> {{adapterInfoText[adapter]}}</div>
+        <div class="adapter-info">
+          <fa-icon class="success" [icon]="faCheckCircle"></fa-icon>
+          {{adapterInfoText[adapter]}}</div>
 
         <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
                 [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
@@ -56,6 +59,13 @@
     </div>
   </div>
 </section>
+
+<section>
+  <div>
+    <app-previews></app-previews>
+  </div>
+</section>
+
 
 <section class="description">
   <h2>How does MetaMapper work?</h2>

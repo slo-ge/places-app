@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Preset, PresetObject} from "@app/core/model/preset";
+import {BackgroundImage, Preset, PresetObject} from "@app/core/model/preset";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {tap} from "rxjs/operators";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
@@ -57,6 +57,24 @@ export class CmsService {
     formData.append('data', JSON.stringify({itemsJson: items}));
     const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
     return this.httpClient.put<Preset>(url, formData);
+  }
+
+  /**
+   * Uploads a file to the CMS
+   * @param file, current file
+   * @param fileName, the file name which can also be quieried
+   */
+  public uploadFile(file: File, fileName:string = 'mmpreview') {
+    const formData = new FormData();
+    formData.append('files', file, fileName);
+    return this.httpClient.post(`${CMS_API_URL}/upload`, formData);
+  }
+
+  /**
+   * get all files which should be shown as preview
+   */
+  public getPreviews(): Observable<BackgroundImage[]> {
+    return this.httpClient.get<BackgroundImage[]>(`${CMS_API_URL}/upload/search/mmpreview?sort=created_at::desc`);
   }
 
   public token(user: string, password: string): Observable<AuthResponse> {

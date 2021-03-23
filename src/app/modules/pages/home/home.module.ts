@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-animation.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {PreviewsModule} from "@app/modules/previews/previews.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     HomeRoutingModule,
     ReactiveFormsModule,
     LoadingAnimationModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    PreviewsModule
   ]
 })
 export class HomeModule { }

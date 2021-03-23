@@ -7,6 +7,7 @@ import {AppState} from "../../store/app.state";
 import {Observable} from "rxjs";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
 import {Tag} from "../../core/model/tags";
+import {getGoogleMapRoute} from "@places/core/utils/maps";
 
 @Component({
     selector: 'app-place',
@@ -23,6 +24,7 @@ export class PlaceComponent implements OnInit {
     tags$: Observable<Tag[]>;
     featureImageUrl: string;
     detailPagePaths: string[];
+    geoUrl: string;
 
     constructor(private taxonomyService: TaxonomyService) {
     }
@@ -31,6 +33,7 @@ export class PlaceComponent implements OnInit {
         this.tags$ = this.taxonomyService.getNamesFromId(this.place.tags);
         this.featureImageUrl = getFeaturedImage(this.place._embedded);
         this.detailPagePaths = ['/detail', this.place.slug];
+        this.geoUrl = getGoogleMapRoute(this.place);
     }
 
     calcDistance(location: ACFLocation, myPos: GeoPosition) {

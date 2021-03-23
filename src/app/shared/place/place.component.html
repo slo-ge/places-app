@@ -18,7 +18,9 @@
                          class="distance">
                         {{calcDistance(place, geoPosition) | number}} km
                     </div>
-                    <div class="address">{{place.acf.place.address}}</div>
+                    <a [href]="geoUrl" target="_blank">
+                        <div class="address">{{place.acf.place.address}}</div>
+                    </a>
                 </address>
             </div>
             <app-tags [tags$]="tags$"></app-tags>

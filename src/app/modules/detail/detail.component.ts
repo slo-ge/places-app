@@ -7,7 +7,7 @@ import {ACFLocation} from "../../core/model/wpObject";
 import {SeoService} from "../../core/services/seo.service";
 import {getFeaturedImage} from "../../core/utils/media";
 import {SafeUrl} from "@angular/platform-browser";
-import {Platform} from "@angular/cdk/platform";
+import {getGoogleMapRoute} from "@places/core/utils/maps";
 
 @Component({
     selector: 'app-detail',
@@ -19,8 +19,7 @@ export class DetailComponent implements OnInit {
 
     constructor(private locationService: LocationService,
                 private route: ActivatedRoute,
-                private seoService: SeoService,
-                public platform: Platform) {
+                private seoService: SeoService) {
     }
 
     location$: Observable<ACFLocation>;
@@ -33,12 +32,7 @@ export class DetailComponent implements OnInit {
                 this.seoService.setMetaFromLocation(data);
                 this.seoService.setCanonicalUrl(`detail/${data.slug}`);
                 this.imgUrl = getFeaturedImage(data._embedded);
-
-                if (this.platform.IOS) {
-                    this.geoUrl = `maps://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${data.acf.place.lat},${data.acf.place.lng}`;
-                } else {
-                    this.geoUrl = `https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=${data.acf.place.lat},${data.acf.place.lng}`;
-                }
+                this.geoUrl = getGoogleMapRoute(data);
             })
         );
     }

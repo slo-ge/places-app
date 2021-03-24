@@ -50,14 +50,39 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
     this.downloadService.downloadAsVideo(number || 4000);
   }
 
+
   private uploadImage() {
     if (!this.presetService) {
       return;
     }
 
-    this.presetService.canvas.getElement().toBlob((blob: any) => {
+    const originCanvas = this.presetService.canvas.getElement();
+    const tmpCanvas = getScaledImage(originCanvas, 800, 800);
+    tmpCanvas.toBlob((blob: any) => {
       let file = new File([blob], "fileName.jpg", {type: "image/jpeg"});
-      this.cmsService.uploadFile(file).pipe(take(1)).subscribe();
+      this.cmsService.createPreview(file, this.presetService!.metaMapperData)
+        .pipe(take(1))
+        .subscribe();
     });
   }
+}
+
+/**
+ * scales the canvas to a different width and height,
+ * and returns the new canvas HtmlElement
+ */
+export function getScaledImage(originCanvas: HTMLCanvasElement, maxWidth: number, maxHeight: number): HTMLCanvasElement {
+  const ratioX = maxWidth / originCanvas.width;
+  const ratioY = maxHeight / originCanvas.height;
+  const ratio = Math.min(ratioX, ratioY);
+
+  const newWidth = Math.round(originCanvas.width * ratio);
+  const newHeight = Math.round(originCanvas.height * ratio);
+
+  const tmpCanvas = document.createElement('canvas');
+  const ctx = tmpCanvas.getContext('2d');
+  tmpCanvas.width = newWidth;
+  tmpCanvas.height = newHeight;
+  ctx?.drawImage(originCanvas, 0, 0, originCanvas.width, originCanvas.height, 0, 0, tmpCanvas.width, tmpCanvas.height);
+  return tmpCanvas;
 }

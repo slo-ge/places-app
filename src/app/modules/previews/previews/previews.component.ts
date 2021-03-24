@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {CmsService} from "@app/core/services/cms.service";
+import {CmsService, Preview} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
 import {BackgroundImage} from "@app/core/model/preset";
-import {map, shareReplay} from "rxjs/operators";
+import {map, shareReplay, tap} from "rxjs/operators";
 
 @Component({
   selector: 'app-previews',
@@ -12,8 +12,8 @@ import {map, shareReplay} from "rxjs/operators";
 export class PreviewsComponent implements OnInit {
   open = false;
 
-  images: Observable<BackgroundImage[]> = EMPTY;
-  currentImage: Observable<BackgroundImage> = EMPTY;
+  previews: Observable<Preview[]> = EMPTY;
+  currentPreview: Observable<Preview> = EMPTY;
   currentIndex = 0;
   loading = true;
 
@@ -21,8 +21,10 @@ export class PreviewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.images = this.cmsService.getPreviews().pipe(shareReplay(1));
-    this.currentImage = this.images.pipe(
+    this.previews = this.cmsService.getPreviews().pipe(
+      shareReplay(1)
+    );
+    this.currentPreview = this.previews.pipe(
       map(data => data[this.currentIndex])
     );
   }
@@ -30,14 +32,15 @@ export class PreviewsComponent implements OnInit {
   indexOf(index: number) {
     this.loading = true;
 
-    this.currentImage = this.images.pipe(
+    this.currentPreview = this.previews.pipe(
       map(data => {
         if (index < 0) {
           return data[0];
         }
 
-        if (index >= data.length) {
-          return data[data.length - 1];
+        if (index >= data.length-1) {
+          this.currentIndex = 0;
+          return data[0];
         }
 
         return data[index];

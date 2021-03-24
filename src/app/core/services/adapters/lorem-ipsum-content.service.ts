@@ -16,7 +16,8 @@ export class LoremIpsumContentService implements EditorPreviewInfoService {
       title: 'Welcome to Meta-Mapper.com',
       description: 'The concept of MetaMapper is very simple. MetaMapper is based on so called "meta tags" which are snippets of text or images which are related to a website, i.e. blog posts, websites, or other content. "Meta Tags" ...',
       image: 'https://www.phipluspi.com/wp-content/uploads/2021/01/diagram-768x434.jpg',
-      iconUrl: 'https://www.meta-mapper.com/assets/meta/android-icon-192x192.png'
+      iconUrl: 'https://www.meta-mapper.com/assets/meta/android-icon-192x192.png',
+      url: 'https://www.meta-mapper.com'
     });
   }
 }

@@ -50,7 +50,8 @@ export class WordpressContentService implements ContentService {
     return {
       title,
       description,
-      image: imgUrl
+      image: imgUrl,
+      url: 'null'
     }
   }
 }

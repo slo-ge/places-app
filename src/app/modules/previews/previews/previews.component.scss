@@ -6,7 +6,16 @@
   width: 100%;
   margin: 30px auto;
   text-align: center;
-
+  .url {
+    position: absolute;
+    bottom: -30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    font-size: 14px;
+    font-weight: bold;
+    color: $primary-dark;
+  }
   img.overlay {
     position: absolute;
     width: 300px;
@@ -46,7 +55,6 @@ app-loading-animation {
   left: 0;
   right: 0;
   bottom: 0;
-  background: #5b5b5b11;
 }
 
 img {

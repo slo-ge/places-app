@@ -33,23 +33,6 @@ export interface ContentRendered {
     protected: boolean;
 }
 
-export interface ACF {
-    place: Place;
-    description: Description[];
-}
-
-interface Description {
-    language: string;
-    text: string;
-}
-
-interface Place {
-    address: string;
-    lat: number;
-    lng: number;
-}
-
-
 
 export enum ContentType {
     PAGE = 'pages',
@@ -58,7 +41,6 @@ export enum ContentType {
 
 
 export interface Post extends WpObject {
-
 }
 
 export interface Page extends WpObject {

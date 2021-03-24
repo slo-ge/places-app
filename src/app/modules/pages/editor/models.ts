@@ -3,4 +3,5 @@ export interface MetaMapperData {
   description: string;
   image?: string | null;
   iconUrl?: string | null;
+  url: string;
 }

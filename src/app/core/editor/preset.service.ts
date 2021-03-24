@@ -56,7 +56,7 @@ interface PresetServiceInfo {
 }
 
 export class PresetService {
-  private readonly metaMapperData: MetaMapperData;
+  public readonly metaMapperData: MetaMapperData;
   public readonly preset: Preset; // TODO: getter and setter
   public readonly canvas: Canvas;
   public info: PresetServiceInfo = {};

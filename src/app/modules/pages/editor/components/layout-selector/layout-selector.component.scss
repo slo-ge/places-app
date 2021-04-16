@@ -13,12 +13,15 @@ button {
   margin-bottom: 15px;
 }
 
-
 .preview {
   overflow: auto;
   display: grid;
   grid-template-columns: 134px 120px;
-  grid-template-rows: 160px;
+
+  @include respond-below(sm) {
+    grid-template-columns: 60px 60px;
+  }
+
   grid-gap: 10px;
 
   &-tile {
@@ -49,6 +52,11 @@ button {
       width: 120px;
       height: 160px;
       border-radius: $common-border-radius;
+
+      @include respond-below(sm) {
+        width: 60px;
+        height: 60px;
+      }
     }
   }
 }

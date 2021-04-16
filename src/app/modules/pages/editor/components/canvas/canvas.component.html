@@ -1,18 +1,23 @@
 <div class="preview">
   <aside>
-    <h3>Select Preset</h3>
-    <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+    <div>
+      <h3>Select Preset</h3>
+      <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+    </div>
     <hr>
-    <app-button-download [presetService]="currentPresetService"></app-button-download>
-    <ng-container *ngIf="loggedInUser | async">
-      <button class="save-change secondary" (click)="resetTemplate()">Reset Template
-        <fa-icon [icon]="undoIcon"></fa-icon>
-      </button>
-      <button class="save-change secondary" (click)="updateValues()">Save Template
-        <fa-icon [icon]="saveChangesIcon"></fa-icon>
-      </button>
-      <div>{{sentUpdateResponse}}</div>
-    </ng-container>
+    <div>
+      <app-button-download [presetService]="currentPresetService"></app-button-download>
+      <ng-container *ngIf="loggedInUser | async">
+        <button class="save-change secondary" (click)="resetTemplate()">Reset Template
+          <fa-icon [icon]="undoIcon"></fa-icon>
+        </button>
+        <button class="save-change secondary" (click)="updateValues()">Save Template
+          <fa-icon [icon]="saveChangesIcon"></fa-icon>
+        </button>
+        <div>{{sentUpdateResponse}}</div>
+      </ng-container>
+      <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
+    </div>
   </aside>
   <main>
     <div class="canvas-actions">

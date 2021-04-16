@@ -4,7 +4,6 @@ import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/core/editor/editor.service";
 import {PresetService} from "@app/core/editor/preset.service";
-import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 import {faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
@@ -64,7 +63,22 @@ export class CanvasComponent implements OnInit, OnChanges {
    */
   refreshCanvas() {
     if (this.canvas == null) {
-      this.canvas = new fabric.Canvas('myCanvas');
+      this.canvas = new fabric.Canvas('myCanvas', {
+        centeredScaling: true,
+        allowTouchScrolling: true
+      });
+
+      // scrolling for mobile events, because sometimes it jumps to any point in view
+      // TODO: for better mobile ux
+      /*this.canvas.on({
+        'text:editing:entered': (textObject: any) => {
+          // calculate canvas offset and textObject offset and scroll to this position
+          const yOffset = textObject.target.top || 0;
+          const y = this.canvas.getElement().getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({top: y, behavior: 'smooth'});
+        }
+      });*/
+
       this.editorService.setCanvas(this.canvas);
     } else {
       this.canvas.clear();
@@ -111,5 +125,12 @@ export class CanvasComponent implements OnInit, OnChanges {
   resetTemplate() {
     this.preset.itemsJson = DEFAULT_ITEMS;
     this.setLayout(this.preset);
+  }
+
+  zoomOut() {
+    const zoom = 0.4;
+    this.canvas.zoomToPoint({ x: 0, y: 0} as fabric.Point, zoom);
+    this.canvas.setHeight(this.canvas.getHeight() * zoom);
+    this.canvas.setWidth(this.canvas.getWidth() * zoom);
   }
 }

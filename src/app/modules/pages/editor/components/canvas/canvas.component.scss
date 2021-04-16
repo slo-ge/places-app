@@ -1,5 +1,6 @@
 @import 'style';
 
+
 $border: 1px solid $grey-1;
 
 :host {
@@ -21,6 +22,7 @@ canvas {
   position: absolute; // TODO: check this
   background: white;
   overflow: hidden;
+  box-shadow: $box-shadow-dark;
 }
 
 ::ng-deep {
@@ -44,6 +46,7 @@ main {
     z-index: 1010;
     background-color: white;
     border-bottom: 1px solid $grey-1;
+    box-shadow: $box-shadow-dark;
 
     @include respond-below(sm) {
       //display: none;

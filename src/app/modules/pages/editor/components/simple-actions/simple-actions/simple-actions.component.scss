@@ -28,15 +28,6 @@
 
   &:hover {
     .align-classes {
-      display: block !important;
-      position: absolute;
-      border: 1px solid $grey-1;
-      border-radius: $common-border-radius;
-      padding: 10px;
-      z-index: 1010;
-
-      background: white;
-
       .simple-aligners {
         display: flex;
         justify-content: space-between;
@@ -44,7 +35,6 @@
 
         span {
           margin: 0 10px;
-          //width: 40px;
         }
       }
 
@@ -55,7 +45,6 @@
 
         > div {
           background-color: $grey-1;
-          //width: 30px;
           height: 20px;
 
           &:hover {

@@ -48,4 +48,16 @@ export class MetaDataActionsComponent {
       }
     }
   }
+
+  async imageUpload(e: any) {
+    const file = e.target.files[0];
+    var reader = new FileReader();
+    const self = this;
+    reader.onload = async function (file) {
+
+      const image = await self.presetService.getImage(file!.target!.result, false);
+      self.presetService.addObjectToCanvas(image);
+    };
+    reader.readAsDataURL(file);
+  }
 }

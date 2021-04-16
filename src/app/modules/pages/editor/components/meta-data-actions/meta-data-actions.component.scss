@@ -8,7 +8,7 @@
   }
 
   fa-icon {
-    font-size: 25px;
+    font-size: 24px;
   }
 
   .actions {
@@ -16,11 +16,22 @@
 
     > div {
       cursor: pointer;
-      padding: 2px;
+      margin: 5px 0;
+      padding: 5px;
+
+      fa-icon {
+        font-size: 14px;
+      }
 
       &:hover {
-        background: $grey-1;
+        border-radius: $common-border-radius;
+        background: $grey-0;
       }
+    }
+
+    &.file-upload {
+      display: flex;
+      align-items: center;
     }
   }
 }

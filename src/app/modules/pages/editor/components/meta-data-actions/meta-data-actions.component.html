@@ -2,10 +2,14 @@
   <span><fa-icon [icon]="plusIcon"></fa-icon></span>
   <div class="toggle-content">
     <div class="actions">
-      <div (click)="addObject(LayoutItemType.TITLE)"><fa-icon [icon]="plusIcon"></fa-icon> meta title</div>
-      <div (click)="addObject(LayoutItemType.DESCRIPTION)"><fa-icon [icon]="plusIcon"></fa-icon>  meta description</div>
-      <div (click)="addObject(LayoutItemType.IMAGE)"><fa-icon [icon]="plusIcon"></fa-icon>  meta image</div>
-      <div (click)="addObject(LayoutItemType.ICON)"><fa-icon [icon]="plusIcon"></fa-icon>  meta icon</div>
+      <div (click)="addObject(LayoutItemType.TITLE)"><fa-icon [icon]="plusIcon"></fa-icon> Meta title</div>
+      <div (click)="addObject(LayoutItemType.DESCRIPTION)"><fa-icon [icon]="plusIcon"></fa-icon>  Meta description</div>
+      <div (click)="addObject(LayoutItemType.IMAGE)"><fa-icon [icon]="plusIcon"></fa-icon>  Meta image</div>
+      <div (click)="addObject(LayoutItemType.ICON)"><fa-icon [icon]="plusIcon"></fa-icon>  Meta icon</div>
+      <div class="file-upload">
+        <label for="imageUpload" class="btn btn-primary btn-block btn-outlined"><fa-icon [icon]="plusIcon"></fa-icon> Upload image</label>
+        <input type="file" id="imageUpload" (change)="imageUpload($event)" style="display: none">
+      </div>
     </div>
   </div>
 </div>

@@ -232,11 +232,15 @@ export class PresetService {
   }
 
   /**
-   * returns image from cache or null
+   * returns image from cache or null,
+   * use proxy uses the proxy service to download images directly to canvas,
+   * this problem does not exist if any image is uploaded locally directly to fabric canvas
+   * so we do need to skip the using proxy url step
    */
-  public async getImage(url: string) {
+  public async getImage(url: string, useProxy: boolean = true) {
     if (url) {
-      const proxiedImageUrl = proxiedUrl(url);
+      const proxiedImageUrl = useProxy ? proxiedUrl(url) : url;
+
       if (!(proxiedImageUrl in imageCache)) {
         const prom = new Promise<Image>((resolve, _reject) => {
           fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})

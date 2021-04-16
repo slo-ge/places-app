@@ -49,6 +49,10 @@ export class MetaDataActionsComponent {
     }
   }
 
+  /**
+   * TODO: refactore to Service
+   * @param e
+   */
   async imageUpload(e: any) {
     const file = e.target.files[0];
     var reader = new FileReader();
@@ -56,6 +60,9 @@ export class MetaDataActionsComponent {
     reader.onload = async function (file) {
 
       const image = await self.presetService.getImage(file!.target!.result, false);
+      image.set({ 'left': 50 });
+      image.set({ 'top': 50 });
+      image.scaleToWidth(self.presetService.canvas.getWidth()/2);
       self.presetService.addObjectToCanvas(image);
     };
     reader.readAsDataURL(file);

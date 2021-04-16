@@ -1,4 +1,4 @@
-<div class="object-actions" *ngIf="activeObject">
+<div class="object-actions" *ngIf="activeObject; else selectItem">
   <div class="align-actions">
     <div (click)="removeActiveObject()">
       <fa-icon [icon]="iconRemove"></fa-icon>
@@ -46,3 +46,8 @@
     <app-text-settings *ngSwitchCase="fabricType.TEXTBOX" [textBox]="canvas.getActiveObject()"></app-text-settings>
   </div>
 </div>
+
+
+<ng-template #selectItem>
+  <div class="select-items">Add new items or click items in image for editing.</div>
+</ng-template>

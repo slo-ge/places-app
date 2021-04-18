@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
@@ -16,6 +16,7 @@ export class MetaDataActionsComponent {
   presetService: PresetService | any;
   @Input()
   metaProperties: MetaMapperData | any;
+
 
   LayoutItemType = LayoutItemType;
   plusIcon = faPlus;
@@ -60,9 +61,9 @@ export class MetaDataActionsComponent {
     reader.onload = async function (file) {
 
       const image = await self.presetService.getImage(file!.target!.result, false);
-      image.set({ 'left': 50 });
-      image.set({ 'top': 50 });
-      image.scaleToWidth(self.presetService.canvas.getWidth()/2);
+      image.set({'left': 50});
+      image.set({'top': 50});
+      image.scaleToWidth(self.presetService.canvas.getWidth() / 2);
       self.presetService.addObjectToCanvas(image);
     };
     reader.readAsDataURL(file);

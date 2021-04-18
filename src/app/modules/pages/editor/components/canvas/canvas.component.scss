@@ -77,9 +77,7 @@ main {
 }
 
 aside {
-  padding: 20px;
-  min-height: 80vh;
-  max-width: 265px;
+  min-height: calc(100vh - 55px);
   border-right: 1px solid $grey-1;
   background-color: $grey-0;
 

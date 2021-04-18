@@ -16,7 +16,7 @@ import {
   dictToKeys,
   ObjectAlignments,
   SimpleAlignments
-} from "@app/modules/pages/editor/components/simple-actions/simple-actions/alignment.service";
+} from "@app/modules/pages/editor/components/actions/simple-actions/simple-actions/alignment.service";
 import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 

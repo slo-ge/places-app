@@ -1,31 +1,37 @@
 <div class="preview">
   <aside>
-    <div>
-      <h3>Select Preset</h3>
-      <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
-    </div>
-    <hr>
-    <div>
-      <app-button-download [presetService]="currentPresetService"></app-button-download>
-      <ng-container *ngIf="loggedInUser | async">
-        <button class="save-change secondary" (click)="resetTemplate()">Reset Template
-          <fa-icon [icon]="undoIcon"></fa-icon>
-        </button>
-        <button class="save-change secondary" (click)="updateValues()">Save Template
-          <fa-icon [icon]="saveChangesIcon"></fa-icon>
-        </button>
-        <div>{{sentUpdateResponse}}</div>
-      </ng-container>
-      <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
-    </div>
-  </aside>
-  <main>
-    <div class="canvas-actions">
-      <div class="actions-row">
+    <tabs>
+      <tab tabTitle="Presets" [faIcon]="faPalette">
+        <h3>Select Preset</h3>
+        <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
+      </tab>
+      <tab tabTitle="Add" [faIcon]="faCode">
+        <h3>Select Meta Info</h3>
         <app-meta-data-actions *ngIf="this.currentPresetService"
                                [presetService]="this.currentPresetService"
                                [metaProperties]="metaProperties">
         </app-meta-data-actions>
+      </tab>
+
+      <tab tabTitle="Download" [faIcon]="faDownload">
+        <h3>Download</h3>
+          <app-button-download [presetService]="currentPresetService"></app-button-download>
+          <ng-container *ngIf="loggedInUser | async">
+            <button class="save-change secondary" (click)="resetTemplate()">Reset Template
+              <fa-icon [icon]="undoIcon"></fa-icon>
+            </button>
+            <button class="save-change secondary" (click)="updateValues()">Save Template
+              <fa-icon [icon]="saveChangesIcon"></fa-icon>
+            </button>
+            <div>{{sentUpdateResponse}}</div>
+          </ng-container>
+          <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
+      </tab>
+    </tabs>
+  </aside>
+  <main>
+    <div class="canvas-actions">
+      <div class="actions-row">
         <app-simple-actions></app-simple-actions>
       </div>
 

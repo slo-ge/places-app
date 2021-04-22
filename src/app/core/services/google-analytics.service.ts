@@ -27,11 +27,9 @@ export class GoogleAnalyticsService {
         filter(event => event instanceof NavigationEnd),
       ).subscribe(activatedRoute => {
         // @ts-ignore
-        gtag('config', 'G-P8ZD58Z83D',
-          {
-            'page_path': (activatedRoute as NavigationEnd).urlAfterRedirects
-          }
-        );
+        gtag('js', new Date());
+        // @ts-ignore
+        gtag('G-P8ZD58Z83D', 'config');
       });
 
     } else {

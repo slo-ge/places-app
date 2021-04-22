@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -7,6 +7,7 @@ import {ResultListModule} from './modules/pages/result-list/result-list.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
 import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
+import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,12 @@ import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JWTAuthInterceptor,
+      multi: true
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (service: GoogleAnalyticsService) => () => service.init(),
+      deps: [GoogleAnalyticsService],
       multi: true
     }
   ],

@@ -120,8 +120,9 @@ export class CmsService {
     if (this.simpleLocalCacheService.getUser()) {
       return of(this.simpleLocalCacheService.getUser());
     }
-
-    return this.currentUser.asObservable();
+    return of(this.simpleLocalCacheService.getUser());
+    // TODO:
+    //return this.currentUser.asObservable();
   }
 
   public logout() {

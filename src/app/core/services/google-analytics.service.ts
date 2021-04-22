@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs/operators";
+import {CookieService} from "@app/core/services/cookie.service";
 
 declare let gtag: Function;
 
@@ -9,26 +10,32 @@ declare let gtag: Function;
 })
 export class GoogleAnalyticsService {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private cookieService: CookieService) {
   }
 
   init() {
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    function gtag() {
-      // @ts-ignore
-      dataLayer.push(arguments);
+    if (!this.cookieService.isTrackingDisabled()) {
 
+      (window as any).dataLayer = (window as any).dataLayer || [];
+
+      function gtag() {
+        // @ts-ignore
+        dataLayer.push(arguments);
+      }
+
+      this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd),
+      ).subscribe(activatedRoute => {
+        // @ts-ignore
+        gtag('config', 'G-P8ZD58Z83D',
+          {
+            'page_path': (activatedRoute as NavigationEnd).urlAfterRedirects
+          }
+        );
+      });
+
+    } else {
+      console.warn('TRAAAACKING is disabled');
     }
-
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-    ).subscribe(activatedRoute => {
-      // @ts-ignore
-      gtag('config', 'G-P8ZD58Z83D',
-        {
-          'page_path': (activatedRoute as NavigationEnd).urlAfterRedirects
-        }
-      );
-    })
   }
 }

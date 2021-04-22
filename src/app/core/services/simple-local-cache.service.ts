@@ -9,7 +9,8 @@ const USER_KEY = 'strapi-user';
 export class SimpleLocalCacheService {
   localStorage = localStorage;
 
-  constructor() {}
+  constructor() {
+  }
 
   setUser(auth: AuthResponse) {
     this.localStorage.setItem(USER_KEY, JSON.stringify(auth));
@@ -26,5 +27,13 @@ export class SimpleLocalCacheService {
 
   clearUser() {
     this.localStorage.removeItem(USER_KEY);
+  }
+
+  getItem(key: string): string | null{
+    return localStorage.getItem(key);
+  }
+
+  setItem(key: string, value: any) {
+    localStorage.setItem(key, value);
   }
 }

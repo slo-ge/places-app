@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {CMS_API_URL, CmsService} from "@app/core/services/cms.service";
-import {catchError, mergeMap} from "rxjs/operators";
+import {catchError, finalize, mergeMap, take, tap} from "rxjs/operators";
 
 
 /**
@@ -24,6 +24,7 @@ export class JWTAuthInterceptor implements HttpInterceptor {
     }
 
     return this.cmsService.getUser().pipe(
+      take(1), // Important, otherwise the subscription will not be closed
       mergeMap(user => {
         if (user) {
           request = request.clone({

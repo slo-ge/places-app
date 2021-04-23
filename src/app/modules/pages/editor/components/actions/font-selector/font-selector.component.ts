@@ -18,8 +18,8 @@ export class FontSelectorComponent implements OnInit {
 
   @Input()
   activeObject: CustomTextBox | any;
-
-  fonts = FONTS;
+  alphaSort = (a: Font, b: Font) => (a.fontName > b.fontName) ? 1 : -1;
+  fonts = FONTS.sort(this.alphaSort);
 
   constructor(private fb: FormBuilder) {
   }

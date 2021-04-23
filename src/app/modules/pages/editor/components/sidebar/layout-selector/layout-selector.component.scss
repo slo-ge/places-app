@@ -19,7 +19,7 @@ button {
   grid-template-columns: 134px 120px;
 
   @include respond-below(sm) {
-    grid-template-columns: 60px 60px;
+    grid-template-columns: 60px 60px 60px 60px;
   }
 
   grid-gap: 10px;

@@ -114,7 +114,38 @@ export const FONTS: Font[] = [
     fontFamily: "'Abril Fatface', cursive",
     importPath: 'https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap',
     fontName: 'Abril Fatface'
+  },
+  {
+    fontFamily: "'Rubik', sans-serif",
+    importPath: 'https://fonts.googleapis.com/css2?family=Rubik&display=swap',
+    fontName: 'Rubik'
+  },
+  {
+    fontFamily: "'VT323', monospace",
+    importPath: 'https://fonts.googleapis.com/css2?family=VT323&display=swap',
+    fontName: 'VT323'
+  },
+  {
+    fontFamily: "'Major Mono Display', monospace",
+    importPath: 'https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap',
+    fontName: 'Major Mono Display'
+  },
+  {
+    fontFamily: "'Press Start 2P', cursive",
+    importPath: 'https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap',
+    fontName: 'Press Start 2P'
+  },
+  {
+    fontFamily: "'Monoton', cursive",
+    importPath: 'https://fonts.googleapis.com/css2?family=Monoton&display=swap',
+    fontName: 'Monoton'
+  },
+  {
+    fontFamily: "'Bungee Shade', cursive",
+    importPath: 'https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap',
+    fontName: 'Bungee Shade'
   }
+
 ];
 
 

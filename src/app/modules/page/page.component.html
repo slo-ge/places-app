@@ -1,0 +1,3 @@
+<ng-container *ngIf="page$ | async as page">
+    <div [innerHTML]="page.content.rendered"></div>
+</ng-container>

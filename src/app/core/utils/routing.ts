@@ -5,6 +5,7 @@ export enum MainRoutes {
     INFO = 'info',
     BLOG = 'blog',
     PROFILE = 'profile',
-    NOT_FOUND = '404-not-found'
+    NOT_FOUND = '404-not-found',
+    PAGE = 'p/:pageSlug'
 }
 

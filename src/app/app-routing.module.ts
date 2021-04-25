@@ -8,6 +8,10 @@ const routes: Routes = [
         loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
     },
     {
+        path: MainRoutes.PAGE,
+        loadChildren: () => import('./modules/page/page.module').then(m => m.PageModule),
+    },
+    {
         path: MainRoutes.SEARCH,
         loadChildren: () => import('./modules/search/search.module').then(m => m.SearchModule),
         data: {animation: 'Page1'}

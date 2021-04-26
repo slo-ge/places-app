@@ -6,6 +6,7 @@ import {take} from "rxjs/operators";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EMPTY, Observable} from "rxjs";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 @Component({
   selector: 'app-button-download',
@@ -26,11 +27,12 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
 
   constructor(private downloadService: DownloadCanvasService,
               private formBuilder: FormBuilder,
-              private cmsService: CmsService) {
+              private cmsService: CmsService,
+              private authService: CmsAuthService) {
   }
 
   ngOnInit(): void {
-    this.currentUser$ = this.cmsService.getUser();
+    this.currentUser$ = this.authService.getUser();
   }
 
   ngOnChanges(sC: SimpleChanges): void {

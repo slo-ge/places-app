@@ -3,6 +3,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {Observable, throwError} from 'rxjs';
 import {CMS_API_URL, CmsService} from "@app/core/services/cms.service";
 import {catchError, finalize, mergeMap, take, tap} from "rxjs/operators";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 
 /**
@@ -14,7 +15,7 @@ import {catchError, finalize, mergeMap, take, tap} from "rxjs/operators";
  */
 @Injectable()
 export class JWTAuthInterceptor implements HttpInterceptor {
-  constructor(private cmsService: CmsService) {
+  constructor(private authService: CmsAuthService) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -23,7 +24,7 @@ export class JWTAuthInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    return this.cmsService.getUser().pipe(
+    return this.authService.getUser().pipe(
       take(1), // Important, otherwise the subscription will not be closed
       mergeMap(user => {
         if (user) {
@@ -37,9 +38,9 @@ export class JWTAuthInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
           catchError((error: HttpErrorResponse) => {
             if (error.status === 403) {
-              this.cmsService.logout();
+              this.authService.logout();
             } else if(error.status == 401) {
-              this.cmsService.logout();
+              this.authService.logout();
             }
             return throwError(error);
           })

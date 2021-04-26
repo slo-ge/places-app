@@ -4,7 +4,7 @@ import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/core/editor/editor.service";
 import {PresetService} from "@app/core/editor/preset.service";
-import {faCode, faDownload, faPalette, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {faCode, faCogs, faDownload, faPalette, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
 import {EMPTY, Observable} from "rxjs";
@@ -13,6 +13,7 @@ import {take} from "rxjs/operators";
 import {DEFAULT_ITEMS, mergeLayouts} from "@app/modules/pages/editor/components/canvas/defaults";
 import {Canvas} from "fabric/fabric-impl";
 import {ActivatedRoute} from "@angular/router";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 
 @Component({
@@ -33,11 +34,13 @@ export class CanvasComponent implements OnInit, OnChanges {
   faCode = faCode;
   faPalette = faPalette;
   faDownload = faDownload;
+  faCogs = faCogs;
 
   sentUpdateResponse: string | null = '';
 
   constructor(private editorService: EditorService,
               private cmsService: CmsService,
+              private authService: CmsAuthService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -54,7 +57,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(data: SimpleChanges): void {
-    this.loggedInUser = this.cmsService.getUser();
+    this.loggedInUser = this.authService.getUser();
   }
 
   setLayout($preset: Preset) {

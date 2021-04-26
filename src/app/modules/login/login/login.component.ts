@@ -4,6 +4,7 @@ import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {take} from "rxjs/operators";
 import {EMPTY, Observable} from "rxjs";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   currentUser: Observable<AuthResponse | null> = EMPTY;
 
   constructor(private fb: FormBuilder,
-              private authService: CmsService) {
+              private authService: CmsAuthService) {
   }
 
   ngOnInit(): void {

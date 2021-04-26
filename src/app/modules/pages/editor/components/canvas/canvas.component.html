@@ -16,16 +16,21 @@
       <tab tabTitle="Download" [faIcon]="faDownload">
         <h3>Download</h3>
           <app-button-download [presetService]="currentPresetService"></app-button-download>
-          <ng-container *ngIf="loggedInUser | async">
-            <button class="save-change secondary" (click)="resetTemplate()">Reset Template
-              <fa-icon [icon]="undoIcon"></fa-icon>
-            </button>
-            <button class="save-change secondary" (click)="updateValues()">Save Template
-              <fa-icon [icon]="saveChangesIcon"></fa-icon>
-            </button>
-            <div>{{sentUpdateResponse}}</div>
-          </ng-container>
-          <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
+      </tab>
+
+      <tab tabTitle="Settings" [faIcon]="faCogs">
+        <h3>Settings</h3>
+        <ng-container *ngIf="loggedInUser | async">
+          <button class="save-change secondary" (click)="resetTemplate()">Reset Template
+            <fa-icon [icon]="undoIcon"></fa-icon>
+          </button>
+          <button class="save-change secondary" (click)="updateValues()">Save Template
+            <fa-icon [icon]="saveChangesIcon"></fa-icon>
+          </button>
+          <div>{{sentUpdateResponse}}</div>
+        </ng-container>
+        <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
+        <app-profile></app-profile>
       </tab>
     </tabs>
   </aside>

@@ -1,0 +1,10 @@
+<div *ngIf="currentUser$ | async as user">
+  <hr>
+  <div class="user-data">
+    <h3>Current User</h3>
+    <div>{{user.user.email}}</div>
+    <div>{{user.user.username}}</div>
+    <div class="cookies" (click)="toggleCookies()">Cookies disabled: {{cookieService.isTrackingDisabled()}}</div>
+  </div>
+  <button (click)="logout()" class="secondary">Logout</button>
+</div>

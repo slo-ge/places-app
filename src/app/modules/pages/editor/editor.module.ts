@@ -20,6 +20,7 @@ import { FontBackgroundComponent } from './components/actions/font-background/fo
 import { FontUnderlineComponent } from './components/actions/font-underline/font-underline.component';
 import { TabGroupComponent } from './components/sidebar/tab-group/tab-group.component';
 import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-group/tab.component";
+import {LoginModule} from "@app/modules/login/login.module";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-gro
     EditorRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    LoadingAnimationModule
+    LoadingAnimationModule,
+    LoginModule
   ]
 })
 export class EditorModule {

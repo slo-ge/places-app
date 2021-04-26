@@ -12,4 +12,12 @@ export class CookieService {
     const enabled = this.simpleLocalCache.getItem('cookies');
     return enabled === 'disabled';
   }
+
+  disableCookies() {
+    this.simpleLocalCache.setItem('cookies', 'disabled');
+  }
+
+  enableCookies() {
+    this.simpleLocalCache.setItem('cookies', 'enabled');
+  }
 }

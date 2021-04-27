@@ -13,9 +13,9 @@ export class LoremIpsumContentService implements EditorPreviewInfoService {
 
   getMetaMapperData(_identifier: any): Observable<MetaMapperData> {
     return of({
-      title: 'Welcome to Meta-Mapper.com',
-      description: 'The concept of MetaMapper is very simple. MetaMapper is based on so called "meta tags" which are snippets of text or images which are related to a website, i.e. blog posts, websites, or other content. "Meta Tags" ...',
-      image: 'https://www.phipluspi.com/wp-content/uploads/2021/01/diagram-768x434.jpg',
+      title: 'Heading: you can edit this text box',
+      description: 'Welcome to the meta-mapper edit mode. By clicking on this text, you can change it, you can also change the font size, the color, or the font type. It\'s also possible to change or remove this image.' ,
+      image: 'https://www.meta-mapper.com/assets/images/lorem-ipsum.jpg',
       iconUrl: 'https://www.meta-mapper.com/assets/meta/android-icon-192x192.png',
       url: 'https://www.meta-mapper.com'
     });

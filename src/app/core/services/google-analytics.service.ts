@@ -2,38 +2,41 @@ import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {filter} from "rxjs/operators";
 import {CookieService} from "@app/core/services/cookie.service";
-
-declare let gtag: Function;
+import {GoogleTagManagerService} from "angular-google-tag-manager";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoogleAnalyticsService {
 
-  constructor(private router: Router, private cookieService: CookieService) {
+  constructor(private router: Router,
+              private cookieService: CookieService,
+              private gtmService: GoogleTagManagerService) {
   }
 
   init() {
     if (!this.cookieService.isTrackingDisabled()) {
-
-      (window as any).dataLayer = (window as any).dataLayer || [];
-
-      function gtag() {
-        // @ts-ignore
-        dataLayer.push(arguments);
-      }
-
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd),
       ).subscribe(activatedRoute => {
-        // @ts-ignore
-        gtag('js', new Date());
-        // @ts-ignore
-        gtag('G-P8ZD58Z83D', 'config');
+        if (activatedRoute instanceof NavigationEnd) {
+          const gtmTag = {
+            event: 'page',
+            pageName: activatedRoute.url
+          };
+          this.gtmService.pushTag(gtmTag);
+        }
       });
 
     } else {
       console.warn('TRAAAACKING is disabled');
     }
+  }
+
+  public clickAction(title: string) {
+    this.gtmService.pushTag({
+      event: 'click_action',
+      buttonData: title
+    });
   }
 }

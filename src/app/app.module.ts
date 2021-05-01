@@ -27,6 +27,10 @@ import {GoogleAnalyticsService} from "@app/core/services/google-analytics.servic
       multi: true
     },
     {
+      provide: 'googleTagManagerId',
+      useValue: 'GTM-KJS779S'
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: (service: GoogleAnalyticsService) => () => service.init(),
       deps: [GoogleAnalyticsService],
@@ -35,4 +39,5 @@ import {GoogleAnalyticsService} from "@app/core/services/google-analytics.servic
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

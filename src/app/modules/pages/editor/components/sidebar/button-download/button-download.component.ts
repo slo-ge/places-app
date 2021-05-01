@@ -7,6 +7,7 @@ import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
+import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 
 @Component({
   selector: 'app-button-download',
@@ -28,7 +29,8 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
   constructor(private downloadService: DownloadCanvasService,
               private formBuilder: FormBuilder,
               private cmsService: CmsService,
-              private authService: CmsAuthService) {
+              private authService: CmsAuthService,
+              private googleAnalytics: GoogleAnalyticsService) {
   }
 
   ngOnInit(): void {
@@ -66,6 +68,12 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
         .pipe(take(1))
         .subscribe();
     });
+  }
+
+  track() {
+    const presetTitle = this.presetService?.preset?.title || null;
+    const presetID = this.presetService?.preset?.id || null;
+    this.googleAnalytics.clickAction( `Download Button ${presetTitle} / ID: ${presetID}`);
   }
 }
 

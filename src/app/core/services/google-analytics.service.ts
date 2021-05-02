@@ -4,6 +4,13 @@ import {filter} from "rxjs/operators";
 import {CookieService} from "@app/core/services/cookie.service";
 import {GoogleTagManagerService} from "angular-google-tag-manager";
 
+
+export enum ActionType {
+  CLICK_DOWNLOAD_CANVAS = 'click_download_canvas',
+  CLICK_CHANGE_PRESET = 'click_change_preset'
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,10 +40,14 @@ export class GoogleAnalyticsService {
     }
   }
 
-  public clickAction(title: string) {
-    this.gtmService.pushTag({
-      event: 'click_action',
-      buttonData: title
-    });
+  public triggerClick(action: ActionType, data: string) {
+    if (!this.cookieService.isTrackingDisabled()) {
+      this.gtmService.pushTag({
+        event: 'click_action',
+        data: `${action}: ${data}`,
+        action: action
+      });
+    }
   }
 }
+

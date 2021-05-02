@@ -3,6 +3,7 @@ import {CmsService} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
 import {Preset} from "@app/core/model/preset";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {ActionType, GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 
 @Component({
   selector: 'app-layout-selector',
@@ -15,7 +16,7 @@ export class LayoutSelectorComponent implements OnInit {
 
   settings$: Observable<Preset[]> = EMPTY;
 
-  constructor(private cmsService: CmsService) {
+  constructor(private cmsService: CmsService, private ga: GoogleAnalyticsService) {
   }
 
   ngOnInit(): void {
@@ -23,6 +24,7 @@ export class LayoutSelectorComponent implements OnInit {
   }
 
   selectPreset(setting: Preset) {
+    this.ga.triggerClick(ActionType.CLICK_CHANGE_PRESET, setting.title || 'no-title');
     this.layout.emit(setting);
   }
 

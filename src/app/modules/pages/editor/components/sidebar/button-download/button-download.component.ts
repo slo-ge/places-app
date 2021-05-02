@@ -7,7 +7,7 @@ import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
-import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
+import {GoogleAnalyticsService, ActionType} from "@app/core/services/google-analytics.service";
 
 @Component({
   selector: 'app-button-download',
@@ -73,7 +73,7 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
   track() {
     const presetTitle = this.presetService?.preset?.title || null;
     const presetID = this.presetService?.preset?.id || null;
-    this.googleAnalytics.clickAction( `Download Button ${presetTitle} / ID: ${presetID}`);
+    this.googleAnalytics.triggerClick(ActionType.CLICK_DOWNLOAD_CANVAS, `Download Button ${presetTitle} / ID: ${presetID}`);
   }
 }
 

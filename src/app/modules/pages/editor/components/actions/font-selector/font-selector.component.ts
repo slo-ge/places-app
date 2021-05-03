@@ -3,7 +3,11 @@ import {FormBuilder} from "@angular/forms";
 import {CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {importFontInDom} from "@app/core/editor/utils";
 import * as FontFaceObserver from "fontfaceobserver";
-import {Font, FONTS} from "@app/core/model/preset";
+import {Font} from "@app/core/model/preset";
+import {CmsService} from "@app/core/services/cms.service";
+import {EMPTY, Observable, of} from "rxjs";
+import {catchError, map} from "rxjs/operators";
+import {FALLBACK_FONTS} from "@app/core/utils/fallback";
 
 
 @Component({
@@ -19,13 +23,21 @@ export class FontSelectorComponent implements OnInit {
   @Input()
   activeObject: CustomTextBox | any;
   alphaSort = (a: Font, b: Font) => (a.fontName > b.fontName) ? 1 : -1;
-  fonts = FONTS.sort(this.alphaSort);
+  fonts$: Observable<Font[]> = EMPTY;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private cms: CmsService) {
   }
 
   ngOnInit(): void {
     this.layoutSelectForm?.get('fontFamily')?.valueChanges.subscribe(value => this.addFont(value));
+    this.fonts$ = this.cms.getSettings().pipe(
+      map(settings => settings.GoogleFonts.sort(this.alphaSort)),
+      catchError(e => {
+        console.error(e);
+        return of(FALLBACK_FONTS.sort(this.alphaSort));
+      })
+    );
   }
 
   /**

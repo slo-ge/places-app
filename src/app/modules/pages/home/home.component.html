@@ -51,14 +51,16 @@
         <app-loading-animation></app-loading-animation>
       </div>
 
-
-      <div class="examples">
+      <div class="examples" *ngIf="testUrls$ | async as testUrls;">
         <h2>Or try with one of the following addresses</h2>
-        <span *ngFor="let item of testUrls" (click)="selectItem(item)">{{item.name}}, </span>
+        <span *ngFor="let item of testUrls; let last = last" (click)="selectItem(item)">
+          {{item.name}}<ng-container *ngIf="!last">, </ng-container>
+        </span>
       </div>
     </div>
   </div>
 </section>
+
 
 <section>
   <div>

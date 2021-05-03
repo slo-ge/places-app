@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BackgroundImage, Preset, PresetObject} from "@app/core/model/preset";
+import {BackgroundImage, Font, Preset, PresetObject} from "@app/core/model/preset";
 import {EMPTY, Observable} from "rxjs";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
+import {shareReplay} from "rxjs/operators";
 
 export const CMS_API_URL = '/cms';
 const LAYOUT_CONFIG_API = '/cms/export-latest-layouts';
@@ -25,11 +26,22 @@ export interface Preview {
   description: string;
   rendered: BackgroundImage;
 }
+export interface UrlItem {
+  name: string;
+  url: string;
+}
+
+export interface Settings {
+  GoogleFonts: Font[];
+  ExampleUrls: UrlItem[];
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CmsService {
+  private settings: Observable<Settings> | null = null;
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -91,4 +103,15 @@ export class CmsService {
 
     return this.httpClient.post<Preview>(`${CMS_API_URL}/previews`, formData);
   }
+
+  public getSettings(): Observable<Settings> {
+    if(this.settings) {
+      return this.settings;
+    }
+    this.settings =  this.httpClient.get<Settings>(`${CMS_API_URL}/meta-mapper-settings`)
+      .pipe(shareReplay(1));
+    return this.settings;
+  }
 }
+
+

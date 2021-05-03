@@ -29,6 +29,7 @@ export interface Preview {
 export interface UrlItem {
   name: string;
   url: string;
+  presetId?: string;
 }
 
 export interface Settings {

@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   baseURLForm = new FormGroup({
     url: new FormControl(''),
+    presetId: new FormControl('')
   });
 
   testUrls$: Observable<UrlItem[]> = EMPTY;
@@ -56,7 +57,7 @@ export class HomeComponent implements OnInit {
   }
 
   selectItem(item: UrlItem) {
-    this.baseURLForm.patchValue({url: item.url});
+    this.baseURLForm.patchValue({url: item.url, presetId: item.presetId});
     this.check();
   }
 }

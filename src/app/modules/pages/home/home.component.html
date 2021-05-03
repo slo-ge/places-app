@@ -28,12 +28,15 @@
           {{adapterInfoText[adapter]}}</div>
 
         <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
-                [queryParams]="{adapter: this.adapter, apiUrl: baseURLForm.get('url')?.value}">
+                [queryParams]="{adapter: adapter, apiUrl: baseURLForm.get('url')?.value}">
           Select Post
         </button>
 
-        <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']" [queryParams]="
-  {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
+        <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']"
+                [queryParams]="{
+                    adapter: adapter,
+                    data: baseURLForm.get('url')?.value,
+                    presetId: baseURLForm.get('presetId')?.value}">
           Generate
         </button>
 

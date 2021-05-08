@@ -11,7 +11,7 @@ export const environment = {
     apiUrl: 'https://locations.phipluspi.com/wp-json/wp/v2',
     baseUrl: 'http://localhost:4200',
     production: false,
-    gtagKey: 'UA-74008202-1'
+    gtagKey: null
 };
 
 /*

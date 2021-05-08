@@ -109,10 +109,6 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 tags: tags.find(tag => tag.slug == params.slug).id
             };
-        } else {
-            // if no slug is set we always hide these items which should not be visible in our
-            // default view
-            httpParams = {...httpParams, categories_exclude: 111};
         }
 
         // map fullTextQuery query param to wordpress search param
@@ -125,6 +121,10 @@ export class ResultsComponent implements OnInit {
                 ...httpParams,
                 search: queryParams.fullTextQuery
             }
+        } else {
+            // if no slug is set we always hide these items which should not be visible in our
+            // default view
+            httpParams = {...httpParams, categories_exclude: 111};
         }
         return httpParams;
     }

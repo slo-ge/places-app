@@ -6,7 +6,10 @@ import {ContentType, Page, Post, WpObject} from "@app/core/model/wpObject";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";
 
-
+/**
+ * Fetches from Wordpress API posts and pages, which
+ * can be viewed in meta-mapper
+ */
 export class WordpressContentAdapter implements ContentService {
   private readonly apiUrl: string;
   private readonly params = {

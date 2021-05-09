@@ -127,7 +127,6 @@ export function getPresetItem(canvas: Canvas) {
   return items.map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
 }
 
-
 /**
  * This methods returns the correct value to a given metaProperty type
  *
@@ -159,4 +158,17 @@ export function isImage(item: PresetObject) {
 
 export function isText(item: PresetObject) {
   return item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION;
+}
+
+
+/**
+ * Returns the current text of the fabric Object by there layout type,
+ *
+ * @param canvas, current canvas
+ * @param type, only text types
+ */
+export function getCurrentTextOfFabricObject(canvas: Canvas, type: LayoutItemType.TITLE | LayoutItemType.DESCRIPTION): string | undefined {
+  const items = canvas.getObjects().filter(object => (object as CustomObject).presetType === type);
+
+  return  (items?.[0] as CustomTextBox)?.text;
 }

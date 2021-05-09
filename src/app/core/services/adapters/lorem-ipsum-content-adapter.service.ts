@@ -7,6 +7,12 @@ export class LoremIpsumContentAdapter implements EditorPreviewInfoService {
   constructor() {
   }
 
+  /**
+   * Random Adapter which has some pre-filled values,
+   * this adapter is only here for test issues
+   *
+   * @param _identifier
+   */
   getMetaMapperData(_identifier: any): Observable<MetaMapperData> {
     return of({
       title: 'Heading: you can edit this text box',

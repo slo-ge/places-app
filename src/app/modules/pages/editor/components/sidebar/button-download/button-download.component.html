@@ -22,3 +22,8 @@
   </div>
 </div>
 
+<div class="copy-url" (click)="createStaticEditorLink()">Copy shareable URL to clipboard</div>
+<div class="copy-url-description" *ngIf="staticUrl"><fa-icon [icon]="faInfo"></fa-icon>The shareable url also includes text changes which can be shared.
+  The shareable URL automatically opens meta-mapper.com with text changes. The shareable URL is now in your clipboard
+  and can be shared with friends.
+</div>

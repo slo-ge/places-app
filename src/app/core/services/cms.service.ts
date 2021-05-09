@@ -9,6 +9,9 @@ export const CMS_API_URL = '/cms';
 const LAYOUT_CONFIG_API = '/cms/export-latest-layouts';
 
 
+/**
+ * The strapi response of the auth call
+ */
 export interface AuthResponse {
   jwt: string,
   user: {
@@ -20,18 +23,30 @@ export interface AuthResponse {
   }
 }
 
+/**
+ * Preview for the home page, which
+ * defines an object of an downloaded meta-mapper image
+ */
 export interface Preview {
   url: string;
   title: string;
   description: string;
   rendered: BackgroundImage;
 }
+
+/**
+ * Urls which hold data, where the editor can be opened
+ * and filled with predefined data
+ */
 export interface UrlItem {
   name: string;
   url: string;
   presetId?: string;
 }
 
+/**
+ * The Settings, which where maintained by strapi
+ */
 export interface Settings {
   GoogleFonts: Font[];
   ExampleUrls: UrlItem[];

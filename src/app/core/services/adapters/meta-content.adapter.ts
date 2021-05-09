@@ -1,8 +1,8 @@
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {EditorPreviewInfoService} from "../../model/content.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
+import {EditorPreviewInfoService} from "@app/core/model/content.service";
 
 export interface MetaData {
   metaDescription: string;
@@ -13,6 +13,9 @@ export interface MetaData {
   iconUrl?: string;
 }
 
+/**
+ * Downloads meta data of certain given website by internal api
+ */
 export class MetaContentAdapter implements EditorPreviewInfoService {
   private readonly apiUrl: string;
 

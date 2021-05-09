@@ -28,3 +28,19 @@ button,
   justify-content: space-between;
   align-items: center;
 }
+
+.copy-url {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.copy-url-description {
+  margin-top: 5px;
+  font-size: 12px;
+
+  fa-icon {
+    margin-right: 10px;
+  }
+}

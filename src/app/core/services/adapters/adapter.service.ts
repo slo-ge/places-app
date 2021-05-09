@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {WordpressContentService} from "@app/core/services/adapters/wordpress-content.service";
+import {WordpressContentAdapter} from "@app/core/services/adapters/wordpress-content.adapter";
 import {ApiAdapter, ContentService, EditorPreviewInfoService} from "@app/core/model/content.service";
 import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
-import {MetaContentService} from "@app/core/services/adapters/meta-content.service";
+import {MetaContentAdapter} from "@app/core/services/adapters/meta-content.adapter";
 import {of} from "rxjs";
-import {LoremIpsumContentService} from "@app/core/services/adapters/lorem-ipsum-content.service";
+import {LoremIpsumContentAdapter} from "@app/core/services/adapters/lorem-ipsum-content-adapter.service";
+import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
 
 
 @Injectable({
@@ -25,21 +26,25 @@ export class AdapterService {
     if (adapterName === ApiAdapter.WORDPRESS && apiUrl) {
       // this is hacky af
       apiUrl = apiUrl.replace('wordpress://', '');
-      return new WordpressContentService(this.httpClient, apiUrl);
+      return new WordpressContentAdapter(this.httpClient, apiUrl);
     }
 
     if (adapterName === ApiAdapter.METADATA) {
-      return new MetaContentService(this.httpClient);
+      return new MetaContentAdapter(this.httpClient);
     }
 
     if (adapterName === ApiAdapter.LOREM_IPSUM) {
-      return new LoremIpsumContentService();
+      return new LoremIpsumContentAdapter();
+    }
+
+    if (adapterName === ApiAdapter.STATIC) {
+      return new StaticContentAdapter(queryParamsSnapshot);
     }
 
     console.error('no API Adapter found for', adapterName);
     console.error('returning wordpress Adapter');
     console.error('import test posts from assets \'/assets/posts\'');
-    return new WordpressContentService(this.httpClient, '/assets/posts');
+    return new WordpressContentAdapter(this.httpClient, '/assets/posts');
   }
 
   /**
@@ -63,7 +68,7 @@ export class AdapterService {
       }
     }
 
-    const metaService = new MetaContentService(this.httpClient);
+    const metaService = new MetaContentAdapter(this.httpClient);
     const isMetaObject = await metaService.getMetaMapperData(url).pipe(
       map(() => true),
       catchError(() => of(false))

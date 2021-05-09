@@ -13,7 +13,7 @@ export interface MetaData {
   iconUrl?: string;
 }
 
-export class MetaContentService implements EditorPreviewInfoService {
+export class MetaContentAdapter implements EditorPreviewInfoService {
   private readonly apiUrl: string;
 
   constructor(private httpClient: HttpClient) {

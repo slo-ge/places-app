@@ -7,7 +7,7 @@ import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {decodeHTMLEntities, sanitizeHtml} from "@app/core/utils/html";
 
 
-export class WordpressContentService implements ContentService {
+export class WordpressContentAdapter implements ContentService {
   private readonly apiUrl: string;
   private readonly params = {
     _embed: ''
@@ -38,7 +38,7 @@ export class WordpressContentService implements ContentService {
 
   public getMetaMapperData(data: string): Observable<MetaMapperData> {
     return this.getBySlug<Post>(data, ContentType.POST).pipe(
-      map(WordpressContentService.mapWordpressObjectToSimpleSetting)
+      map(WordpressContentAdapter.mapWordpressObjectToSimpleSetting)
     );
   }
 

@@ -20,5 +20,6 @@ export interface EditorPreviewInfoService {
 export enum ApiAdapter {
   WORDPRESS = 'wordpress',
   METADATA = 'meta_data',
-  LOREM_IPSUM = 'lorem-ipsum'
+  LOREM_IPSUM = 'lorem-ipsum',
+  STATIC = 'static'
 }

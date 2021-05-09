@@ -1,12 +1,8 @@
-import {Injectable} from '@angular/core';
 import {EditorPreviewInfoService} from "@app/core/model/content.service";
 import {Observable, of} from "rxjs";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 
-@Injectable({
-  providedIn: 'root'
-})
-export class LoremIpsumContentService implements EditorPreviewInfoService {
+export class LoremIpsumContentAdapter implements EditorPreviewInfoService {
 
   constructor() {
   }

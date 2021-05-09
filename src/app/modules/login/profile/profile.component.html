@@ -1,4 +1,4 @@
-<div *ngIf="currentUser$ | async as user">
+<div *ngIf="currentUser$ | async as user; else login">
   <hr>
   <div class="user-data">
     <h3>Current User</h3>
@@ -8,3 +8,7 @@
   </div>
   <button (click)="logout()" class="secondary">Logout</button>
 </div>
+
+<ng-template #login>
+  <app-login></app-login>
+</ng-template>

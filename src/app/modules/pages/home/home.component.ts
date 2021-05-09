@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
   adapterInfoText = {
     [ApiAdapter.WORDPRESS]: 'Found Wordpress Blog, start with selecting a blog post.',
     [ApiAdapter.METADATA]: 'Website meta data available. Start generating beautiful thumbnails.',
-    [ApiAdapter.LOREM_IPSUM]: 'Using placeholder infos, because no URL is inserted.'
+    [ApiAdapter.LOREM_IPSUM]: 'Using placeholder infos, because no URL is inserted.',
+    [ApiAdapter.STATIC]: 'Static Adapter'
   };
 
   baseURLForm = new FormGroup({

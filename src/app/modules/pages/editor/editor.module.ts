@@ -21,6 +21,7 @@ import { FontUnderlineComponent } from './components/actions/font-underline/font
 import { TabGroupComponent } from './components/sidebar/tab-group/tab-group.component';
 import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-group/tab.component";
 import {LoginModule} from "@app/modules/login/login.module";
+import {SharedModule} from "@app/modules/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {LoginModule} from "@app/modules/login/login.module";
     ReactiveFormsModule,
     FontAwesomeModule,
     LoadingAnimationModule,
-    LoginModule
+    LoginModule,
+    SharedModule
   ]
 })
 export class EditorModule {

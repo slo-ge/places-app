@@ -7,7 +7,6 @@ import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
-import {ActionType, GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
 import {getScaledImage} from "@app/core/editor/canvas.utils";
 
@@ -34,8 +33,7 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
   constructor(private downloadService: DownloadCanvasService,
               private formBuilder: FormBuilder,
               private cmsService: CmsService,
-              private authService: CmsAuthService,
-              private googleAnalytics: GoogleAnalyticsService) {
+              private authService: CmsAuthService) {
   }
 
   ngOnInit(): void {
@@ -74,15 +72,6 @@ export class ButtonDownloadComponent implements OnChanges, OnInit {
         .pipe(take(1))
         .subscribe();
     });
-  }
-
-  /**
-   * TODO: use directive for tracking
-   */
-  track() {
-    const presetTitle = this.presetService?.preset?.title || null;
-    const presetID = this.presetService?.preset?.id || null;
-    this.googleAnalytics.triggerClick(ActionType.CLICK_DOWNLOAD_CANVAS, `Download Button ${presetTitle} / ID: ${presetID}`);
   }
 
   /**

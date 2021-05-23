@@ -33,6 +33,7 @@
         </button>
 
         <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']"
+                trackClick="Open Editor with data: {{baseURLForm.get('url')?.value}}"
                 [queryParams]="{
                     adapter: adapter,
                     data: baseURLForm.get('url')?.value,

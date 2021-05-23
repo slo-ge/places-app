@@ -1,5 +1,6 @@
 <div class="toggle">
-  <button (click)="downloadImage(); track()">Download
+  <button (click)="downloadImage()" trackClick="Download {{presetService?.preset?.title}} (ID: {{presetService?.preset?.id}})">
+    Download
     <fa-icon [icon]="downloadIcon"></fa-icon>
   </button>
 

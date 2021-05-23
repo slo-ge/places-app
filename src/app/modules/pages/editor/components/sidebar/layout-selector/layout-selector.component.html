@@ -1,6 +1,11 @@
 <div class="preview">
-  <a (click)="selectPreset(preset)"  [routerLink]="['./']" [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'" *ngFor="let preset of settings$ | async"
+  <a (click)="selectPreset(preset)"
+    *ngFor="let preset of settings$ | async"
+    [routerLink]="['./']" [queryParams]="{presetId: preset.id}"
+    [queryParamsHandling]="'merge'"
+    trackClick="Change preset to: {{preset.title}} (ID: {{preset.id}})"
     class="preview-tile">
+
     <div class="preview-tile-title">{{preset.title}}</div>
     <img loading="lazy" *ngIf="preset.backgroundImage.mime.startsWith('image'); else videoTile" [alt]="preset.title" [src]="cmsApiUrl(preset.backgroundImage?.formats?.thumbnail?.url || '')">
 

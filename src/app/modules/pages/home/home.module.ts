@@ -7,6 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {LoadingAnimationModule} from "@app/modules/loading-animation/loading-animation.module";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {PreviewsModule} from "@app/modules/previews/previews.module";
+import {SharedModule} from "@app/modules/shared/shared.module";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {PreviewsModule} from "@app/modules/previews/previews.module";
     ReactiveFormsModule,
     LoadingAnimationModule,
     FontAwesomeModule,
-    PreviewsModule
+    PreviewsModule,
+    SharedModule
   ]
 })
 export class HomeModule { }

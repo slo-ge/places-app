@@ -97,7 +97,7 @@ export class CmsService {
     if (presetTag) {
       params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
     } else {
-      params = params.set('highlighted', 'true') // show only highlighted
+      params = params.set('highlighted', 'true'); // show only highlighted
     }
 
     if (this.presetCache.get(params.toString()) === undefined) {

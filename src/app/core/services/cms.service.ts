@@ -92,11 +92,12 @@ export class CmsService {
    */
   public getLayoutSetting(presetTag?: string | null): Observable<Preset[]> {
     let params = new HttpParams()
-      .set('highlighted', 'true') // show only highlighted
       .set('_sort', 'updated_at:desc'); // show last edited first
 
     if (presetTag) {
-     params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
+      params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
+    } else {
+      params = params.set('highlighted', 'true') // show only highlighted
     }
 
     if (this.presetCache.get(params.toString()) === undefined) {

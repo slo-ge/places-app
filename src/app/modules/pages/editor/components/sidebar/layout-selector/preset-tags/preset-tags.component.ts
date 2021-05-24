@@ -32,10 +32,10 @@ export class PresetTagsComponent implements OnInit {
   remove(rla: RouterLinkActive) {
     if (rla.isActive) {
       this.router.navigate([], {
-          relativeTo: this.route,
-          queryParams: {presetTag: null},
-          queryParamsHandling: 'merge'
-        });
+        relativeTo: this.route,
+        queryParams: {presetTag: null},
+        queryParamsHandling: 'merge'
+      });
     }
   }
 }

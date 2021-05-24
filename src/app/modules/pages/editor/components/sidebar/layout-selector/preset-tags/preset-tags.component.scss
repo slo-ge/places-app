@@ -1,0 +1,23 @@
+@import 'style';
+
+.heading {
+  font-weight: bold;
+}
+
+span {
+  padding: 5px;
+  border-radius: 2px;
+  background-color: $grey-1;
+  display: inline-block;
+  margin-right: 5px;
+  color: white;
+  cursor: pointer;
+
+  &.active {
+    background-color: $primary;
+  }
+
+  fa-icon {
+    margin-left: 10px;
+  }
+}

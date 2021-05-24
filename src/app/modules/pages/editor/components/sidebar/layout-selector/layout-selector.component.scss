@@ -1,5 +1,10 @@
 @import 'style';
 
+app-preset-tags {
+  display: block;
+  margin-bottom: 10px;
+}
+
 select {
   border: 2px solid $grey-1;
   width: 100%;

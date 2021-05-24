@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {BackgroundImage, Font, Preset, PresetObject} from "@app/core/model/preset";
 import {EMPTY, Observable} from "rxjs";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {shareReplay} from "rxjs/operators";
+import {shareReplay, take} from "rxjs/operators";
 
 export const CMS_API_URL = '/cms';
 const LAYOUT_CONFIG_API = '/cms/export-latest-layouts';
@@ -52,11 +52,22 @@ export interface Settings {
   ExampleUrls: UrlItem[];
 }
 
+export interface Tag {
+  id: number;
+  name: string;
+  created_at: Date;
+  updated_at: Date;
+  presets: Preset[];
+
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class CmsService {
   private settings: Observable<Settings> | null = null;
+  private tags: Observable<Tag[]> | null = null;
+  private presetCache: Map<string, Observable<Preset[]>> = new Map<string, Observable<Preset[]>>();
 
   constructor(private httpClient: HttpClient) {
   }
@@ -75,14 +86,27 @@ export class CmsService {
   }
 
   /**
+   * Fetch Layouts from CMS
    *
+   * TODO: just call with additionalQueryParams and not only with presetTag
    */
-  public getLayoutSetting(): Observable<Preset[]> {
+  public getLayoutSetting(presetTag?: string | null): Observable<Preset[]> {
     let params = new HttpParams()
       .set('highlighted', 'true') // show only highlighted
       .set('_sort', 'updated_at:desc'); // show last edited first
 
-    return this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, {params});
+    if (presetTag) {
+     params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
+    }
+
+    if (this.presetCache.get(params.toString()) === undefined) {
+      this.presetCache.set(
+        params.toString(),
+        this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, {params}).pipe(take(1), shareReplay(1))
+      );
+    }
+
+    return this.presetCache.get(params.toString())!;
   }
 
   /**
@@ -121,12 +145,21 @@ export class CmsService {
   }
 
   public getSettings(): Observable<Settings> {
-    if(this.settings) {
+    if (this.settings) {
       return this.settings;
     }
-    this.settings =  this.httpClient.get<Settings>(`${CMS_API_URL}/meta-mapper-settings`)
+    this.settings = this.httpClient.get<Settings>(`${CMS_API_URL}/meta-mapper-settings`)
       .pipe(shareReplay(1));
     return this.settings;
+  }
+
+  public getPresetTags() {
+    if (!this.tags) {
+      this.tags = this.httpClient.get<Tag[]>(`${CMS_API_URL}/preset-tags`)
+        .pipe(shareReplay(1));
+    }
+
+    return this.tags;
   }
 }
 

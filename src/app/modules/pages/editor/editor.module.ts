@@ -22,6 +22,7 @@ import { TabGroupComponent } from './components/sidebar/tab-group/tab-group.comp
 import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-group/tab.component";
 import {LoginModule} from "@app/modules/login/login.module";
 import {SharedModule} from "@app/modules/shared/shared.module";
+import { PresetTagsComponent } from './components/sidebar/layout-selector/preset-tags/preset-tags.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {SharedModule} from "@app/modules/shared/shared.module";
     FontUnderlineComponent,
     TabGroupComponent,
     TabGroupComponent,
-    TabComponent
+    TabComponent,
+    PresetTagsComponent
   ],
   imports: [
     CommonModule,

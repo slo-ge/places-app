@@ -3,6 +3,8 @@ import {CmsService} from "@app/core/services/cms.service";
 import {EMPTY, Observable} from "rxjs";
 import {Preset} from "@app/core/model/preset";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {ActivatedRoute} from "@angular/router";
+import {mergeMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-layout-selector',
@@ -15,11 +17,14 @@ export class LayoutSelectorComponent implements OnInit {
 
   settings$: Observable<Preset[]> = EMPTY;
 
-  constructor(private cmsService: CmsService) {
+  constructor(private cmsService: CmsService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.settings$ = this.cmsService.getLayoutSetting();
+    this.settings$ = this.route.queryParamMap.pipe(
+      mergeMap(data => this.cmsService.getLayoutSetting(data.get('presetTag')))
+    );
   }
 
   selectPreset(setting: Preset) {

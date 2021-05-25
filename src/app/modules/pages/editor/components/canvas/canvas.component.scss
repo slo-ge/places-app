@@ -1,6 +1,5 @@
 @import 'style';
 
-$sidebar-height: calc(100vh - 55px);
 $border: 1px solid $grey-1;
 
 :host {
@@ -82,14 +81,15 @@ aside {
   background-color: $grey-0;
 
   @include respond-below(sm) {
-    height: 300px;
     min-height: 0;
     display: flex;
     max-width: 100%;
   }
 
   tabs {
-    min-height: $sidebar-height;
+    @include respond-above(sm) {
+      min-height: $viewport-height;
+    }
   }
 
 
@@ -111,7 +111,7 @@ aside {
     display: block;
     overflow-y: scroll;
 
-    max-height: $sidebar-height;
+    max-height: $viewport-height;
 
     @include respond-below(sm) {
       height: 250px;
@@ -141,5 +141,13 @@ aside {
     display: block;
     width: 100%;
     margin-bottom: 10px;
+  }
+}
+
+.notification {
+  padding: 10px;
+  background-color: $orange-0;
+  @include respond-above(sm) {
+    display: none;
   }
 }

@@ -2,5 +2,5 @@
 :host {
   display: block;
   background-color: $grey-0;
-  min-height: calc(100vh - #{$header-height});
+  min-height: $viewport-height;
 }

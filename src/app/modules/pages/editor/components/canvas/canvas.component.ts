@@ -75,6 +75,8 @@ export class CanvasComponent implements OnInit, OnChanges {
         centeredScaling: true,
         allowTouchScrolling: true
       });
+      this.canvas.allowTouchScrolling = true;
+      this.canvas.centeredScaling = true;
 
       // scrolling for mobile events, because sometimes it jumps to any point in view
       // TODO: for better mobile ux

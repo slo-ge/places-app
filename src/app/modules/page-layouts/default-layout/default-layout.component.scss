@@ -73,7 +73,7 @@ app-main-breadcrumbs {
 }
 
 main {
-  min-height: calc(100vh - #{$header-height});
+  min-height: $viewport-height;
 }
 
 .background {

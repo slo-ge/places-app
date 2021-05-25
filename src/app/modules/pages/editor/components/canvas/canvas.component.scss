@@ -23,6 +23,7 @@ canvas {
   overflow: hidden;
   box-shadow: $box-shadow-dark;
   touch-action: manipulation;
+  pointer-events: none;
 }
 
 ::ng-deep {

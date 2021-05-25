@@ -42,27 +42,6 @@ export class CanvasComponent implements OnInit, OnChanges {
               private cmsService: CmsService,
               private authService: CmsAuthService,
               private activatedRoute: ActivatedRoute) {
-
-    const addEventOptions = { passive: false };
-
-    fabric.util.object.extend(fabric.Canvas.prototype,{
-      _onTouchStart: function(e: any) {
-        //e.preventDefault();
-        if (this.mainTouchId === null) {
-          this.mainTouchId = this.getPointerId(e);
-        }
-        this.__onMouseDown(e);
-        this._resetTransformEventData();
-        const canvasElement = this.upperCanvasEl;
-        const eventTypePrefix = this._getEventPrefix();
-        // @ts-ignore
-        fabric.util.addListener((fabric as any).document, 'touchend', this._onTouchEnd, addEventOptions);
-        // @ts-ignore
-        fabric.util.addListener((fabric as any).document, 'touchmove', this._onMouseMove, addEventOptions);
-        // Unbind mousedown to prevent double triggers from touch devices
-        fabric.util.removeListener(canvasElement, eventTypePrefix + 'down', this._onMouseDown);
-      }
-    });
   }
 
   ngOnInit(): void {

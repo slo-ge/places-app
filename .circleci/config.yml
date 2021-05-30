@@ -64,14 +64,6 @@ jobs:
                   root: /tmp/workspace
                   paths:
                       - sitemap.xml
-    build-qa:
-        working_directory: ~/goove
-        environment:
-            ENV: 'qa'
-        docker:
-            - image: circleci/node:12-browsers
-        steps: *steps
-
 
     build-prod:
         working_directory: ~/goove
@@ -87,12 +79,6 @@ workflows:
     build:
         jobs:
             - build-sitemap
-            - build-qa:
-                requires:
-                    - build-sitemap
-                filters:
-                    branches:
-                        ignore: master
             - build-prod:
                 requires:
                     - build-sitemap

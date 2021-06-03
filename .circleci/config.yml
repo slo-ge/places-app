@@ -70,7 +70,7 @@ jobs:
         working_directory: ~/goove
         environment:
             ENV: 'prod'
-            NODE_ENV: 'production'
+            CUSTOM_BUILD_COMMAND: 'npm ci && npm run build'
         docker:
             - image: circleci/node:12-browsers
         steps: *steps

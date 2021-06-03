@@ -69,6 +69,7 @@ jobs:
         working_directory: ~/goove
         environment:
             ENV: 'prod'
+            NODE_ENV: 'production'
         docker:
             - image: circleci/node:12-browsers
         steps: *steps

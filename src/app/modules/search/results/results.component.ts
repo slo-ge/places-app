@@ -11,6 +11,7 @@ import {TaxonomyService} from "@places/core/services/taxonomy.service";
 import {Tag} from "@places/core/model/tags";
 import {AppState} from "@places/store/app.state";
 import {MetaData, SeoService} from "@places/core/services/seo.service";
+import {MainRoutes} from "@places/core/utils/routing";
 
 
 export enum SortType {
@@ -94,21 +95,31 @@ export class ResultsComponent implements OnInit {
         // TODO: make a nicer dispatch service
         // this behavior sets the new tag for frontend
         if (params.slug) {
-            this.tagService.getTagFromString(params.slug)
-                .pipe(
-                    take(1),
-                    tap(tag => {
+
+            // Add tag to UI if it exists
+            this.tagService.getTagFromString(params.slug).pipe(
+                take(1),
+                tap(tag => {
+                    if (tag) {
                         this.currentSeoData$ = this.tagService.getMetaForTag(tag.id).pipe(
                             tap(data => this.seoService.appendDefaultsWith(data))
-                        )
-                    })
-                )
-                .subscribe(tag => this.store.dispatch(new SelectTagAction(tag)));
+                        );
+                    } else {
+                        console.error(`tag: ${tag} from params: "${params.slug}" does not exist`);
+                    }
+                })
+            ).subscribe(tag => this.store.dispatch(new SelectTagAction(tag)));
 
-            httpParams = {
-                ...httpParams,
-                tags: tags.find(tag => tag.slug == params.slug).id
-            };
+
+            // If tag is available then add it to query params for api request
+            // If tag is not available we redirect to 404 page
+            const tag = tags.find(tag => tag.slug == params.slug);
+            if (tag) {
+                httpParams = {...httpParams, tags: tag.id};
+            } else {
+                this.router.navigate([MainRoutes.NOT_FOUND]);
+                return;
+            }
         }
 
         // map fullTextQuery query param to wordpress search param

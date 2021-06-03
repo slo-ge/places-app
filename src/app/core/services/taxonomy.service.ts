@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable, ReplaySubject} from "rxjs";
+import {EMPTY, Observable, ReplaySubject} from "rxjs";
 import {ACFMeta, Tag} from "../model/tags";
-import {filter, map, take, tap} from "rxjs/operators";
+import {expand, filter, map, take, tap, toArray} from "rxjs/operators";
 import {MetaData} from "@places/core/services/seo.service";
 
 export const BASE_URL = 'https://locations.phipluspi.com/wp-json/wp/v2/tags';
@@ -26,7 +26,14 @@ export class TaxonomyService {
             per_page: 100
         };
 
-        return this.httpClient.get<Tag[]>(BASE_URL, {params});
+        return this.httpClient.get<Tag[]>(BASE_URL, {params}).pipe(
+            expand(tags => tags.length === 100
+                ? this.httpClient.get<Tag[]>(BASE_URL, {params: {...params, page: 2}})
+                : EMPTY
+            ),
+            toArray(),
+            map(d => d.reduce((acc, val) => acc.concat(val), []))
+        );
     }
 
     public getTags(): Observable<Tag[]> {

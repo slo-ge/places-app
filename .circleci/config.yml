@@ -11,6 +11,7 @@ deployment-steps: &steps
             command: echo ${CIRCLE_BRANCH}
       - run:
             command: |
+                npm --version
                 npm install
                 sudo apt-get update
       - save_cache:

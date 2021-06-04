@@ -88,7 +88,7 @@ export class SeoService {
     }
 
     public setCanonicalUrl(path: string) {
-        const url = `https://goove.at/${path}`;
+        const url = `https://www.goove.at/${path}`;
         const head = this.dom.getElementsByTagName('head')[0];
         let element: HTMLLinkElement = this.dom.querySelector(`link[rel='canonical']`) || null
         if (element == null) {

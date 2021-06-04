@@ -20,7 +20,6 @@ export class ActionBubbleBackComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentTag = this.store.selectSnapshot(AppState.selectedTag)?.slug;
-        console.log(this.currentTag);
     }
 
 

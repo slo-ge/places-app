@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {ACFLocation, ContentType} from "../model/wpObject";
-import {map, take, tap} from "rxjs/operators";
+import {map, shareReplay, take, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 
 
@@ -29,6 +29,7 @@ export class LocationService {
     };
 
     _cachedPlaces = new Map<string, ACFLocation>();
+    _cachedResponse = new Map<string, Observable<any>>();
 
     constructor(private httpClient: HttpClient) {
     }
@@ -36,7 +37,15 @@ export class LocationService {
     public allLocations(params: any): Observable<ACFLocation[]> {
         params = {...this.paramOptions, ...params};
 
-        return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {observe: 'response', params: params}).pipe(
+        // The caching is build this way, because we need to do the transformations in
+        // the pipe in the return statement, otherwise the this.nextInfo would not be set
+        const key = JSON.stringify(params);
+        const request = this._cachedResponse.get(key)
+            || this.httpClient.get<ACFLocation[]>(LOCATION_URL, {observe: 'response', params: params})
+                .pipe(shareReplay(1));
+        this._cachedResponse.set(key, request);
+
+        return request.pipe(
             tap(data => this.nextInfo(data.headers, params.page)),
             map(data => data.body),
             tap(data => data.forEach(place => this._cachedPlaces.set(place.slug, place))) // add to cachedPlaced Map

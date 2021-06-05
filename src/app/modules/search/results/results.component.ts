@@ -123,7 +123,7 @@ export class ResultsComponent implements OnInit {
         }
 
 
-        // map fullTextQuery query param to wordpress search param
+        // Map fullTextQuery query param to wordpress search param
         // TODO: move this to a different search service
         // TODO: may we can handle this in query queryParams handler
         if (queryParams.fullTextQuery) {
@@ -135,7 +135,8 @@ export class ResultsComponent implements OnInit {
             }
         }
 
-        // if no slug (tag) and no fulltextQuery is set is set we always hide
+
+        // If no slug (tag) and no fulltextQuery is set is set we always hide
         // these items which should not be visible in our default view
         if (!params.slug && !queryParams.fullTextQuery) {
             httpParams = {...httpParams, categories_exclude: 111};

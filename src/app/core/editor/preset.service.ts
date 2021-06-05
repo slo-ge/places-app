@@ -277,23 +277,36 @@ export class PresetService {
    */
   private applyOptions(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
-    fabricObject.set('top', offsetTop);
 
-    fabricObject.presetType = item.type;
+    // setting the y position
     fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE;
+    if (item.objectPosition === ObjectPosition.ABSOLUTE_XY
+      || item.objectPosition === ObjectPosition.ABSOLUTE_Y) {
+      console.log(item.offsetTop);
+      fabricObject.set('top', item.offsetTop)
+    } else {
+      // else use the relative position
+      fabricObject.set('top', offsetTop);
+    }
 
+    // setting the x position and calculating the width
     let width = (this.canvas.width || 0) - (2 * item.offsetLeft);
-    if (item.objectPosition === ObjectPosition.ABSOLUTE) {
+    if (item.objectPosition === ObjectPosition.ABSOLUTE_DEPRECATED
+      || item.objectPosition === ObjectPosition.ABSOLUTE_X
+      || item.objectPosition === ObjectPosition.ABSOLUTE_XY) {
+
       let offsetRight = item.offsetRight || item.offsetLeft;
       width = (this.canvas.width || 0) - item.offsetLeft - offsetRight;
     }
 
+    // depending on type set the width with the correct operation
     if (isImage(item)) {
       fabricObject.scaleToWidth(width);
     } else {
       fabricObject.set('width', width);
     }
 
+    fabricObject.presetType = item.type;
 
     if (item.objectAngle) {
       fabricObject.set('angle', item.objectAngle);

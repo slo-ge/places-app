@@ -32,7 +32,9 @@
         <div class="fixed-position">
           <div>Position:</div>
           <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
-          <div (click)="position(ObjectPosition.ABSOLUTE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE">absolute</div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_X)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED || activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X">fix X</div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_Y)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_Y">fix Y</div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_XY)" [class.active]=" activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_XY">fix XY</div>
         </div>
 
       </div>

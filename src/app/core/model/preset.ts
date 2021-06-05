@@ -85,7 +85,12 @@ export interface Font {
 }
 
 export enum ObjectPosition {
-  STATIC = 'static', RELATIVE = 'relative', ABSOLUTE = 'absolute'
+  STATIC = 'static',
+  RELATIVE = 'relative',
+  ABSOLUTE_DEPRECATED = 'absolute', // TODO: remove in near future
+  ABSOLUTE_X = 'absoluteX',
+  ABSOLUTE_Y = 'absoluteY',
+  ABSOLUTE_XY = 'absoluteXY'
 }
 
 export enum LayoutItemType {

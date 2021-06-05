@@ -38,11 +38,16 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     tmp.objectAngle = fabricObject.angle;
   }
 
-  if (fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE) {
-    tmp.objectPosition = fabricObject.presetObjectPosition;
+  tmp.objectPosition = fabricObject.presetObjectPosition;
+  // Setting the correct x position, the y position is already set in the previous method
+  if (fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED
+    || fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X
+    || fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_XY) {
     // @ts-ignore
     tmp.offsetRight = canvas.width - fabricObject.getScaledWidth() - fabricObject.left;
   }
+
+
 
   const zIndex = canvas.getObjects().indexOf(fabricObject);
   if (zIndex > 0) {
@@ -119,12 +124,31 @@ export function sortCanvasObject(a: Object, b: Object) {
 export function getPresetItem(canvas: Canvas) {
   const items = canvas.getObjects().filter(object => (object as CustomObject).presetType != null);
   let posLastObjectY = 0;
-  for (let item of items.sort(sortCanvasObject)) {
-    (item as CustomObject).presetOffsetTop = (item as any).top - posLastObjectY;
+  let item: CustomObject;
+  for (item of items.sort(sortCanvasObject)) {
+    item.presetOffsetTop = calculateOffsetTop(item, posLastObjectY);
     posLastObjectY = getYPos(item);
   }
 
   return items.map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
+}
+
+
+/**
+ * Returns the correct y position,
+ * if position = absolute_Y we do not calculate the spacing to the previous object.
+ * We just do use the absolute url. So it ignores the position of the last element
+ *
+ * @param object
+ * @param posLastObjectY
+ */
+export function calculateOffsetTop(object: CustomObject, posLastObjectY: number) {
+  if(object.presetObjectPosition === ObjectPosition.ABSOLUTE_Y
+  || object.presetObjectPosition === ObjectPosition.ABSOLUTE_XY) {
+    return object.top;
+  }
+
+  return object.top! - posLastObjectY;
 }
 
 /**

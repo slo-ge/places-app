@@ -29,7 +29,7 @@
           </div>
         </div>
 
-        <div class="fixed-position">
+        <div class="fixed-position" *ngIf="authService.getUser() | async">
           <div>Position:</div>
           <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
           <div (click)="position(ObjectPosition.ABSOLUTE_X)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED || activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X">fix X</div>

@@ -19,6 +19,7 @@ import {
 } from "@app/modules/pages/editor/components/actions/simple-actions/simple-actions/alignment.service";
 import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -57,7 +58,9 @@ export class SimpleActionsComponent implements OnInit {
   activeObject: CustomObject | CustomImageBox | CustomTextBox | any = null;
 
   constructor(private  editorService: EditorService,
-              private alignmentService: AlignmentService) {
+              private alignmentService: AlignmentService,
+              // used in template, dirty.
+              public authService: CmsAuthService) {
   }
 
   ngOnInit(): void {

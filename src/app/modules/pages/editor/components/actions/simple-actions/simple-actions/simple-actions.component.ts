@@ -91,11 +91,11 @@ export class SimpleActionsComponent implements OnInit {
       borderScaleFactor: 2
     });
 
-    if (this.activeObject instanceof fabric.Textbox) {
+    if (this.activeObject.isType('textbox')) {
       this.activeRangeSliderCurrentValue = Number(this.activeObject.fontSize);
       this.activeRangeSliderMax = 300;
       this.selectedType = FabricType.TEXTBOX;
-    } else if (this.activeObject instanceof fabric.Image) {
+    } else if (this.activeObject.isType('image')) {
       this.activeRangeSliderCurrentValue = Number(this.activeObject.getScaledWidth());
       this.activeRangeSliderMax = Number(1200);
       this.selectedType = FabricType.IMAGE;
@@ -111,9 +111,9 @@ export class SimpleActionsComponent implements OnInit {
 
   changeSize(newWidth: number) {
     const activeObject = this.activeObject;
-    if (activeObject instanceof fabric.Textbox) {
+    if (this.activeObject.isType('textbox')) {
       activeObject.fontSize = newWidth;
-    } else if (activeObject instanceof fabric.Image) {
+    } else if (this.activeObject.isType('image')) {
       activeObject.scaleToWidth(newWidth);
     } else {
       console.error('changeSize, can not change size of object:', activeObject)

@@ -78,6 +78,7 @@ export class PresetService {
       await this.loadGlobalFontFromLayoutSetting();
     }
 
+    // holds all fabricJs objects for setting the correct zIndex
     const renderedItems: FabricObjectAndPreset[] = [];
 
     if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
@@ -135,7 +136,7 @@ export class PresetService {
     }
   }
 
-  setStaticBackground(url: string) {
+  async setStaticBackground(url: string) {
     fabric.Image.fromURL(url, (myImg) => {
       const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
       bgImage.scaleToWidth(this.canvas.width);
@@ -180,7 +181,7 @@ export class PresetService {
         top: 10,
       }
     ) as any | CustomTextBox;
-    this.setObjectAttributes(fabricText, item, offsetTop);
+    this.applyOptions(fabricText, item, offsetTop);
 
     if (item.fontColor) {
       fabricText.set('fill', item.fontColor);
@@ -263,7 +264,7 @@ export class PresetService {
    * @param item
    */
   public createImage(image: Image, offsetTop: number, item: PresetObject) {
-    this.setObjectAttributes(image, item, offsetTop);
+    this.applyOptions(image, item, offsetTop);
     return image;
   }
 
@@ -274,10 +275,9 @@ export class PresetService {
    * @param item
    * @param offsetTop
    */
-  private setObjectAttributes(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
+  private applyOptions(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
     fabricObject.set('top', offsetTop);
-
 
     fabricObject.presetType = item.type;
     fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE;
@@ -298,7 +298,6 @@ export class PresetService {
     if (item.objectAngle) {
       fabricObject.set('angle', item.objectAngle);
     }
-
   }
 
   /**

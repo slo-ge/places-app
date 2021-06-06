@@ -9,7 +9,9 @@ import {
   getMetaField,
   getYPos,
   isImage,
-  isText
+  isText,
+  isPositionXFixed,
+  isPositionYFixed
 } from "@app/core/editor/fabric-object.utils";
 import {
   appendFontToDom,
@@ -280,9 +282,7 @@ export class PresetService {
 
     // setting the y position
     fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE;
-    if (item.objectPosition === ObjectPosition.ABSOLUTE_XY
-      || item.objectPosition === ObjectPosition.ABSOLUTE_Y) {
-      console.log(item.offsetTop);
+    if (isPositionYFixed(item)) {
       fabricObject.set('top', item.offsetTop)
     } else {
       // else use the relative position
@@ -291,10 +291,7 @@ export class PresetService {
 
     // setting the x position and calculating the width
     let width = (this.canvas.width || 0) - (2 * item.offsetLeft);
-    if (item.objectPosition === ObjectPosition.ABSOLUTE_DEPRECATED
-      || item.objectPosition === ObjectPosition.ABSOLUTE_X
-      || item.objectPosition === ObjectPosition.ABSOLUTE_XY) {
-
+    if (isPositionXFixed(item)) {
       let offsetRight = item.offsetRight || item.offsetLeft;
       width = (this.canvas.width || 0) - item.offsetLeft - offsetRight;
     }

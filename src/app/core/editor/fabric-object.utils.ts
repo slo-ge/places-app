@@ -22,12 +22,13 @@ export type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
  * Maps the new canvas object to the export latest preset object format
  *
  * @param fabricObject, the fabricObject which should be saved
- * @param position, position in layout, always calculated from previous object
+ * @param position, position in layout, always calculated from previous object,
+ * or if it is position absolute the position will always the distance to top of canvas
  * @param canvas, current canvas
  */
 function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number, canvas: Canvas): PresetObject {
   let tmp: PresetObject = {
-    type: fabricObject.presetType || LayoutItemType.TITLE,
+    type: fabricObject.presetType!, // already filtered
     // TODO: calculate offset correct, it is not possible to use the current offset of the canvas because it is not relative to the size of the text
     offsetTop: Math.round(fabricObject.presetOffsetTop || 0),
     offsetLeft: Math.round(fabricObject.left || 0),
@@ -40,13 +41,9 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
 
   tmp.objectPosition = fabricObject.presetObjectPosition;
   // Setting the correct x position, the y position is already set in the previous method
-  if (fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED
-    || fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X
-    || fabricObject.presetObjectPosition === ObjectPosition.ABSOLUTE_XY) {
-    // @ts-ignore
-    tmp.offsetRight = canvas.width - fabricObject.getScaledWidth() - fabricObject.left;
+  if (isPositionXFixed(tmp)) {
+    tmp.offsetRight = canvas.width! - fabricObject.getScaledWidth() - fabricObject.left!;
   }
-
 
 
   const zIndex = canvas.getObjects().indexOf(fabricObject);
@@ -54,9 +51,7 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     tmp.zIndex = zIndex;
   }
 
-  if (fabricObject.presetType === LayoutItemType.TITLE
-    || fabricObject.presetType === LayoutItemType.DESCRIPTION) {
-
+  if (isText(tmp)) {
     fabricObject = fabricObject as CustomTextBox;
 
     if (fabricObject.fontSize) {
@@ -121,34 +116,33 @@ export function sortCanvasObject(a: Object, b: Object) {
 /**
  * returns the current items and
  */
-export function getPresetItem(canvas: Canvas) {
-  const items = canvas.getObjects().filter(object => (object as CustomObject).presetType != null);
+export function getPresetItem(canvas: Canvas): PresetObject[] {
+  const items = canvas.getObjects()
+    .filter(object => (object as CustomObject).presetType != null);
+
+  return prepareItems(items)
+    .map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
+}
+
+/**
+ * Sets attributes which are related to all objects in canvas.
+ *
+ * @param items
+ */
+export function prepareItems(items: CustomObject[]) {
   let posLastObjectY = 0;
   let item: CustomObject;
   for (item of items.sort(sortCanvasObject)) {
-    item.presetOffsetTop = calculateOffsetTop(item, posLastObjectY);
+    // Returns the correct y position,
+    //if position = absolute_Y we do not calculate the spacing to the previous object.
+    // We just do use the absolute url. So it ignores the position of the last element
+    item.presetOffsetTop = isPositionYFixed(item) ? item.top : item.top! - posLastObjectY;
+
+    // calculate last position of object
     posLastObjectY = getYPos(item);
   }
 
-  return items.map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));
-}
-
-
-/**
- * Returns the correct y position,
- * if position = absolute_Y we do not calculate the spacing to the previous object.
- * We just do use the absolute url. So it ignores the position of the last element
- *
- * @param object
- * @param posLastObjectY
- */
-export function calculateOffsetTop(object: CustomObject, posLastObjectY: number) {
-  if(object.presetObjectPosition === ObjectPosition.ABSOLUTE_Y
-  || object.presetObjectPosition === ObjectPosition.ABSOLUTE_XY) {
-    return object.top;
-  }
-
-  return object.top! - posLastObjectY;
+  return items;
 }
 
 /**
@@ -171,19 +165,51 @@ export function getMetaField(metaProperties: MetaMapperData, type: LayoutItemTyp
       return metaProperties.iconUrl || 'https://via.placeholder.com/150/000000/FFFFFF/?text=Icon NotFound';
     }
     case LayoutItemType.IMAGE: {
-      return metaProperties.image || 'https://via.placeholder.com/150/000000/FFFFFF/?text=ogImage Not Found';
+      return metaProperties.image || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=ogImage%20Not%20Found';
     }
   }
 }
 
-export function isImage(item: PresetObject) {
-  return item.type === LayoutItemType.IMAGE || item.type === LayoutItemType.ICON;
+/**
+ * Is presetObject a text object
+ */
+export function isImage(item: PresetObject | LayoutItemType): Boolean {
+  const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
+  return presetType === LayoutItemType.IMAGE || presetType === LayoutItemType.ICON;
 }
 
-export function isText(item: PresetObject) {
-  return item.type === LayoutItemType.TITLE || item.type === LayoutItemType.DESCRIPTION;
+/**
+ * Is presetObject a image object
+ */
+export function isText(item: PresetObject | LayoutItemType): Boolean {
+  const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
+  return presetType === LayoutItemType.TITLE || presetType === LayoutItemType.DESCRIPTION;
 }
 
+/**
+ * Is the X-Position fixed
+ */
+export function isPositionXFixed(item: PresetObject | CustomObject) {
+  const positionType = (item as PresetObject).objectPosition
+    ? (item as PresetObject).objectPosition
+    : (item as CustomObject).presetObjectPosition;
+
+  return positionType === ObjectPosition.ABSOLUTE_DEPRECATED
+    || positionType === ObjectPosition.ABSOLUTE_X
+    || positionType === ObjectPosition.ABSOLUTE_XY;
+}
+
+/**
+ * Is the Y-Position fixed
+ */
+export function isPositionYFixed(item: PresetObject | CustomObject) {
+  const positionType = (item as PresetObject).objectPosition
+    ? (item as PresetObject).objectPosition
+    : (item as CustomObject).presetObjectPosition;
+
+  return positionType === ObjectPosition.ABSOLUTE_Y
+    || positionType === ObjectPosition.ABSOLUTE_XY;
+}
 
 /**
  * Returns the current text of the fabric Object by there layout type,

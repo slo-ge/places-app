@@ -76,6 +76,8 @@ export class ResultsComponent implements OnInit {
      * @param tags
      */
     private buildPlacesResponseFrom(queryParams: Params, params: RouteParam, tags: Tag[]) {
+        this.seoService.setCanonicalUrlForResultList(queryParams, params);
+
         const sort = queryParams.sort || SortType.DEFAULT;
         let httpParams: any = {page: queryParams.page || 1};
 

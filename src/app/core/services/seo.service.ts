@@ -98,4 +98,14 @@ export class SeoService {
         element.setAttribute('rel', 'canonical')
         element.setAttribute('href', url)
     }
+
+    public setCanonicalUrlForResultList(queryParams: any, pathParams: any) {
+        if (queryParams.page === '1') {
+            if (pathParams.slug) {
+                this.setCanonicalUrl(`s/${pathParams.slug}`)
+            } else {
+                this.setCanonicalUrl('s/');
+            }
+        }
+    }
 }

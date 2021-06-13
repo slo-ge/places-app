@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {Font, LayoutItemType, ObjectPosition, PresetObject} from "@app/core/model/preset";
+import {Font, LayoutItemType, ObjectPosition, PresetObject, PresetObjectStaticText} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 
@@ -91,6 +91,10 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     }
   }
 
+  if (tmp.type === LayoutItemType.STATIC_TEXT) {
+    (tmp as PresetObjectStaticText).text = (fabricObject as CustomTextBox).text!;
+  }
+
   return tmp;
 }
 
@@ -146,15 +150,16 @@ export function prepareItems(items: CustomObject[]) {
 }
 
 /**
- * This methods returns the correct value to a given metaProperty type
+ * This methods returns the correct value to a given metaProperty type,
+ * or if it is an static field it returns the corresponding field data
  *
  * It returns also a default value, if one of the meta tags is not found
  *
  * @param metaProperties
- * @param type
+ * @param presetObject
  */
-export function getMetaField(metaProperties: MetaMapperData, type: LayoutItemType) {
-  switch (type) {
+export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, presetObject: PresetObject) {
+  switch (presetObject.type) {
     case LayoutItemType.TITLE: {
       return metaProperties.title || 'empty title';
     }
@@ -167,7 +172,12 @@ export function getMetaField(metaProperties: MetaMapperData, type: LayoutItemTyp
     case LayoutItemType.IMAGE: {
       return metaProperties.image || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=ogImage%20Not%20Found';
     }
+    case LayoutItemType.STATIC_TEXT: {
+      return (presetObject as PresetObjectStaticText).text || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    }
   }
+
+  throw Error(`Layout Type ${presetObject.type} can not be mapped to meta object`);
 }
 
 /**
@@ -183,7 +193,9 @@ export function isImage(item: PresetObject | LayoutItemType): Boolean {
  */
 export function isText(item: PresetObject | LayoutItemType): Boolean {
   const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
-  return presetType === LayoutItemType.TITLE || presetType === LayoutItemType.DESCRIPTION;
+  return presetType === LayoutItemType.TITLE
+    || presetType === LayoutItemType.DESCRIPTION
+    || presetType === LayoutItemType.STATIC_TEXT;
 }
 
 /**

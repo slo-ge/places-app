@@ -21,4 +21,8 @@
       Upload image</label>
     <input type="file" id="imageUpload" (change)="imageUpload($event)" style="display: none" trackClick="Meta Action | Upload new">
   </div>
+  <div (click)="addObject(LayoutItemType.STATIC_TEXT)" trackClick="Meta Action | Textbox">
+    <fa-icon [icon]="plusIcon"></fa-icon>
+    Textbox
+  </div>
 </div>

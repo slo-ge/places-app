@@ -52,7 +52,7 @@ export interface Preset {
   fontFileWoff?: GlobalFont;
   fontFamilyHeadingCSS?: string;
 
-  itemsJson?: PresetObject[];
+  itemsJson?: Array<PresetObject | PresetObjectStaticText>;
 }
 
 export interface PresetObject {
@@ -78,6 +78,11 @@ export interface PresetObject {
   font?: Font;
 }
 
+export interface PresetObjectStaticText extends PresetObject {
+  type: LayoutItemType.STATIC_TEXT;
+  text: string;
+}
+
 export interface Font {
   importPath: string;
   fontFamily: string;
@@ -97,6 +102,7 @@ export enum LayoutItemType {
   TITLE = 'title',
   DESCRIPTION = 'description',
   IMAGE = 'image',
-  ICON = 'icon'
+  ICON = 'icon',
+  STATIC_TEXT = 'static-text'
 }
 

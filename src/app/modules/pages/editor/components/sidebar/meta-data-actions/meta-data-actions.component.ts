@@ -4,7 +4,7 @@ import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject} from "@app/core/model/preset";
 import {fabric} from "fabric";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {getMetaField} from "@app/core/editor/fabric-object.utils";
+import {getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
 
 @Component({
   selector: 'app-meta-data-actions',
@@ -29,20 +29,20 @@ export class MetaDataActionsComponent {
       const preset: PresetObject = {
         offsetLeft: 20,
         offsetTop: 20,
-        fontSize: 20,
+        fontSize: 40,
         type: type,
         position: 9999
       };
 
-      if (type === LayoutItemType.TITLE || type === LayoutItemType.DESCRIPTION) {
-        const text = getMetaField(this.metaProperties, type);
+      if (isText(type)) {
+        const text = getMetaFieldOrStaticField(this.metaProperties, preset);
         const obj = await this.presetService.createText(text, preset, 50);
         this.presetService.addObjectToCanvas(obj);
       }
 
       // TODO: refactor this stuff
-      if (type === LayoutItemType.IMAGE || type === LayoutItemType.ICON) {
-        const imageUrl = getMetaField(this.metaProperties, type);
+      if (isImage(type)) {
+        const imageUrl = getMetaFieldOrStaticField(this.metaProperties, preset);
         const image = fabric.util.object.clone(await this.presetService.getImage(imageUrl));
         const obj = await this.presetService.createImage(image, 50, preset);
         this.presetService.addObjectToCanvas(obj);

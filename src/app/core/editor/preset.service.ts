@@ -6,7 +6,7 @@ import * as FontFaceObserver from 'fontfaceobserver'
 import {
   CustomObject,
   CustomTextBox,
-  getMetaField,
+  getMetaFieldOrStaticField,
   getYPos,
   isImage,
   isText,
@@ -87,7 +87,7 @@ export class PresetService {
       let posLastObjectY = 0; // the position of the last item in canvas
       for (const item of this.preset.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
         if (isText(item)) {
-          const text = getMetaField(this.metaMapperData, item.type);
+          const text = getMetaFieldOrStaticField(this.metaMapperData, item);
           const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
 
           this.addObjectToCanvas(obj);
@@ -95,7 +95,7 @@ export class PresetService {
           posLastObjectY = getYPos(obj);
 
         } else if (isImage(item)) {
-          const url = getMetaField(this.metaMapperData, item.type);
+          const url = getMetaFieldOrStaticField(this.metaMapperData, item);
           const image = fabric.util.object.clone(await this.getImage(url));
           const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
           this.addObjectToCanvas(obj);

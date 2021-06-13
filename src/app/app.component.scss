@@ -1,6 +1,8 @@
 @import 'style';
 
 :host {
-  display: block;
-  background: $app-main-background-color;
+    display: block;
+    background: $app-main-background-color;
+    max-width: 800px;
+    margin: 0 auto;
 }

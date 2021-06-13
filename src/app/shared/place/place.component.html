@@ -2,7 +2,7 @@
     <header>
         <a [routerLink]="detailPagePaths" queryParamsHandling="merge">
             <div class="title">
-                <div class="cat">Restaurant</div>
+                <div class="cat">{{place.acf?.mainCategory?.name || 'Restaurant'}}</div>
                 <h2 [innerHTML]=" place.title.rendered"></h2>
             </div>
             <div class="image">

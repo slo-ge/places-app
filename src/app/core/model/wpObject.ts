@@ -36,6 +36,16 @@ export interface ContentRendered {
 export interface ACF {
     place: Place;
     description: Description[];
+    mainCategory: Category;
+}
+
+export interface Category {
+    term_id: number;
+    name: string;
+    slug: string;
+    count: number;
+    description: string;
+
 }
 
 interface Description {

@@ -31,6 +31,7 @@ select {
   padding: 1rem 2rem 1rem 1rem;
 }
 
+.button,
 button {
   width: 200px;
   border-radius: $common-border-radius;
@@ -42,6 +43,7 @@ button {
   cursor: pointer;
 }
 
+.button,
 button.secondary {
   background-color: white;
   color: $primary-dark;

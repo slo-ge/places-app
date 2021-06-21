@@ -7,6 +7,7 @@ import {MetaContentAdapter} from "@app/core/services/adapters/meta-content.adapt
 import {of} from "rxjs";
 import {LoremIpsumContentAdapter} from "@app/core/services/adapters/lorem-ipsum-content-adapter.service";
 import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
+import {ImageUploadContentAdapter} from "@app/core/services/adapters/image-upload-content.adapter";
 
 
 @Injectable({
@@ -39,6 +40,14 @@ export class AdapterService {
 
     if (adapterName === ApiAdapter.STATIC) {
       return new StaticContentAdapter(queryParamsSnapshot);
+    }
+
+    if (adapterName === ApiAdapter.IMAGE_UPLOAD) {
+      if (queryParamsSnapshot.get('blobUrl') !== null) {
+        return new ImageUploadContentAdapter(queryParamsSnapshot);
+      } else {
+        console.error('no blobUrl is provided, using Fallback Adapter instead');
+      }
     }
 
     console.error('no API Adapter found for', adapterName);

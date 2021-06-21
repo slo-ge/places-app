@@ -241,6 +241,10 @@ export class PresetService {
    * so we do need to skip the using proxy url step
    */
   public async getImage(url: string, useProxy: boolean = true) {
+    // if the url starts with blob, it is a pre selected or taken photo,
+    // used by the @ImageUploadContentAdapter
+    useProxy = url.startsWith('blob:') ? false : useProxy;
+
     if (url) {
       const proxiedImageUrl = useProxy ? proxiedUrl(url) : url;
 

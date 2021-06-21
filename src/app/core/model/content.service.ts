@@ -21,5 +21,6 @@ export enum ApiAdapter {
   WORDPRESS = 'wordpress',
   METADATA = 'meta_data',
   LOREM_IPSUM = 'lorem-ipsum',
-  STATIC = 'static'
+  STATIC = 'static',
+  IMAGE_UPLOAD = 'image-upload'
 }

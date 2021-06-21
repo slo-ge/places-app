@@ -83,6 +83,10 @@ export interface PresetObjectStaticText extends PresetObject {
   text: string;
 }
 
+export interface PresetObjectStaticImage extends PresetObject {
+  image: Partial<BackgroundImage>;
+}
+
 export interface Font {
   importPath: string;
   fontFamily: string;
@@ -103,6 +107,7 @@ export enum LayoutItemType {
   DESCRIPTION = 'description',
   IMAGE = 'image',
   ICON = 'icon',
-  STATIC_TEXT = 'static-text'
+  STATIC_TEXT = 'static-text',
+  STATIC_IMAGE = 'static-image'
 }
 

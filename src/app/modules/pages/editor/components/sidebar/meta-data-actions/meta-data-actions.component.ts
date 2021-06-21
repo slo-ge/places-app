@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {LayoutItemType, PresetObject} from "@app/core/model/preset";
+import {LayoutItemType, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {fabric} from "fabric";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
@@ -56,7 +56,7 @@ export class MetaDataActionsComponent {
    */
   async imageUpload(e: any) {
     const file = e.target.files[0];
-    var reader = new FileReader();
+    const reader = new FileReader();
     const self = this;
     reader.onload = async function (file) {
 
@@ -67,5 +67,21 @@ export class MetaDataActionsComponent {
       self.presetService.addObjectToCanvas(image);
     };
     reader.readAsDataURL(file);
+  }
+
+  async addStaticImage(url: string) {
+    const preset: PresetObjectStaticImage = {
+      offsetLeft: 20,
+      offsetTop: 20,
+      fontSize: 40,
+      type: LayoutItemType.STATIC_IMAGE,
+      position: 9999,
+      image: {
+        url
+      }
+    };
+    const image = fabric.util.object.clone(await this.presetService.getImage(url));
+    const obj = await this.presetService.createImage(image, 50, preset);
+    this.presetService.addObjectToCanvas(obj);
   }
 }

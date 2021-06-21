@@ -23,6 +23,7 @@ import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-gro
 import {LoginModule} from "@app/modules/login/login.module";
 import {SharedModule} from "@app/modules/shared/shared.module";
 import { PresetTagsComponent } from './components/sidebar/layout-selector/preset-tags/preset-tags.component';
+import { MetaDataActionStaticImageComponent } from './components/sidebar/meta-data-action-static-image/meta-data-action-static-image.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PresetTagsComponent } from './components/sidebar/layout-selector/preset
     TabGroupComponent,
     TabGroupComponent,
     TabComponent,
-    PresetTagsComponent
+    PresetTagsComponent,
+    MetaDataActionStaticImageComponent
   ],
   imports: [
     CommonModule,

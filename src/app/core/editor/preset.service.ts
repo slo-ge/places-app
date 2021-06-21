@@ -1,6 +1,13 @@
 import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {Font, ObjectPosition, Preset, PresetObject} from "@app/core/model/preset";
+import {
+  Font,
+  LayoutItemType,
+  ObjectPosition,
+  Preset,
+  PresetObject,
+  PresetObjectStaticImage
+} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
@@ -9,13 +16,14 @@ import {
   getMetaFieldOrStaticField,
   getYPos,
   isImage,
-  isText,
   isPositionXFixed,
-  isPositionYFixed
+  isPositionYFixed,
+  isText
 } from "@app/core/editor/fabric-object.utils";
 import {
   appendFontToDom,
   importFontInDom,
+  isAbsoluteUrl,
   isVideoBackground,
   proxiedUrl,
   toAbsoluteCMSUrl
@@ -122,7 +130,6 @@ export class PresetService {
     }
   }
 
-
   /**
    * Set the background image or the video to the whole canvas layer,
    * the background image is not selectable and so, it can not be
@@ -130,11 +137,11 @@ export class PresetService {
    * @param url
    */
   setBackground(url: string) {
-    if(isVideoBackground(this.preset)) {
+    if (isVideoBackground(this.preset)) {
       this.info.isAnimatedBackground = true;
       this.setAnimatedBackground(url);
     } else {
-     this.setStaticBackground(url);
+      this.setStaticBackground(url);
     }
   }
 
@@ -148,7 +155,7 @@ export class PresetService {
     }, {crossOrigin: "*"});
   }
 
-  setAnimatedBackground(url: string){
+  setAnimatedBackground(url: string) {
     PresetVideo.initializeVideo(this.canvas, url, this.preset);
   }
 
@@ -218,7 +225,7 @@ export class PresetService {
       }
     }
 
-    if(item.fontUnderline) {
+    if (item.fontUnderline) {
       fabricText.underline = true;
     }
 
@@ -242,8 +249,9 @@ export class PresetService {
    */
   public async getImage(url: string, useProxy: boolean = true) {
     // if the url starts with blob, it is a pre selected or taken photo,
-    // used by the @ImageUploadContentAdapter
-    useProxy = url.startsWith('blob:') ? false : useProxy;
+    // used by the @ImageUploadContentAdapter,
+    // also ignore proxy if there is no absolute url, because its internal content
+    useProxy = (url.startsWith('blob:') || !isAbsoluteUrl(url)) ? false : useProxy;
 
     if (url) {
       const proxiedImageUrl = useProxy ? proxiedUrl(url) : url;
@@ -284,8 +292,6 @@ export class PresetService {
   private applyOptions(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
 
-    // setting the y position
-    fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE;
     if (isPositionYFixed(item)) {
       fabricObject.set('top', item.offsetTop)
     } else {
@@ -307,7 +313,12 @@ export class PresetService {
       fabricObject.set('width', width);
     }
 
+    // setting the preset[Variable] to object, to read it if persisting
     fabricObject.presetType = item.type;
+    fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE; // setting the y position
+    if (item.type === LayoutItemType.STATIC_IMAGE) {
+      fabricObject.presetStaticImageUrl = (item as PresetObjectStaticImage).image.url;
+    }
 
     if (item.objectAngle) {
       fabricObject.set('angle', item.objectAngle);

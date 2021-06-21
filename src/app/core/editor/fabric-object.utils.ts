@@ -1,5 +1,12 @@
 import {fabric} from "fabric";
-import {Font, LayoutItemType, ObjectPosition, PresetObject, PresetObjectStaticText} from "@app/core/model/preset";
+import {
+  Font,
+  LayoutItemType,
+  ObjectPosition,
+  PresetObject,
+  PresetObjectStaticImage,
+  PresetObjectStaticText
+} from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 
@@ -11,6 +18,7 @@ interface CustomFabricObjectFields {
   presetOffsetTop?: number;
   presetObjectPosition?: ObjectPosition;
   presetFont?: Font;
+  presetStaticImageUrl?: string;
 }
 
 export type  CustomObject = fabric.Object & CustomFabricObjectFields;
@@ -95,6 +103,10 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     (tmp as PresetObjectStaticText).text = (fabricObject as CustomTextBox).text!;
   }
 
+  if (tmp.type === LayoutItemType.STATIC_IMAGE) {
+    (tmp as PresetObjectStaticImage).image = {url: fabricObject.presetStaticImageUrl!};
+  }
+
   return tmp;
 }
 
@@ -175,6 +187,10 @@ export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, preset
     case LayoutItemType.STATIC_TEXT: {
       return (presetObject as PresetObjectStaticText).text || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
     }
+    case LayoutItemType.STATIC_IMAGE: {
+      return (presetObject as PresetObjectStaticImage).image.url!
+        || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=StaticImage%20Not%20Found';
+    }
   }
 
   throw Error(`Layout Type ${presetObject.type} can not be mapped to meta object`);
@@ -185,7 +201,9 @@ export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, preset
  */
 export function isImage(item: PresetObject | LayoutItemType): Boolean {
   const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
-  return presetType === LayoutItemType.IMAGE || presetType === LayoutItemType.ICON;
+  return presetType === LayoutItemType.IMAGE
+    || presetType === LayoutItemType.ICON
+    || presetType === LayoutItemType.STATIC_IMAGE;
 }
 
 /**
@@ -232,5 +250,5 @@ export function isPositionYFixed(item: PresetObject | CustomObject) {
 export function getCurrentTextOfFabricObject(canvas: Canvas, type: LayoutItemType.TITLE | LayoutItemType.DESCRIPTION): string | undefined {
   const items = canvas.getObjects().filter(object => (object as CustomObject).presetType === type);
 
-  return  (items?.[0] as CustomTextBox)?.text;
+  return (items?.[0] as CustomTextBox)?.text;
 }

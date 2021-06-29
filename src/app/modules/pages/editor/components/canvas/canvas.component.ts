@@ -44,13 +44,13 @@ export class CanvasComponent implements OnInit, OnChanges {
    * but at least it does not work correctly because of the
    * sketchy canvas container
    */
-  @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
+  /*@ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
   @HostListener('document:mousedown', ['$event'])
   onGlobalClick(event: any): void {
     if (!this.canvasElement.nativeElement.contains(event.target)) {
       this.canvas.discardActiveObject().renderAll();
     }
-  }
+  }*/
 
   constructor(private editorService: EditorService,
               private cmsService: CmsService,

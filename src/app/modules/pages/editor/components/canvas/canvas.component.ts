@@ -42,15 +42,13 @@ export class CanvasComponent implements OnInit, OnChanges {
   /**
    * this is the deselect logic,
    * but at least it does not work correctly because of the
-   * sketchy canvas container
+   * sketchy canvas container. It only removes selection on double click
    */
-  /*@ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
-  @HostListener('document:mousedown', ['$event'])
-  onGlobalClick(event: any): void {
-    if (!this.canvasElement.nativeElement.contains(event.target)) {
-      this.canvas.discardActiveObject().renderAll();
-    }
-  }*/
+  @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
+  @HostListener('document:dblclick', ['$event'])
+  onGlobalClick(_event: any): void {
+    this.canvas.discardActiveObject().renderAll();
+  }
 
   constructor(private editorService: EditorService,
               private cmsService: CmsService,
@@ -153,7 +151,7 @@ export class CanvasComponent implements OnInit, OnChanges {
 
   zoomOut() {
     const zoom = 0.4;
-    this.canvas.zoomToPoint({ x: 0, y: 0} as fabric.Point, zoom);
+    this.canvas.zoomToPoint({x: 0, y: 0} as fabric.Point, zoom);
     this.canvas.setHeight(this.canvas.getHeight() * zoom);
     this.canvas.setWidth(this.canvas.getWidth() * zoom);
   }

@@ -19,7 +19,17 @@ export class ImagePickerComponent {
       reader.onload = (_e) => {
         const blob = new Blob(fileInput.target.files, {type: fileInput.target.files[0].type});
         const url = window.URL.createObjectURL(blob);
-        this.router.navigate(['editor'], {queryParams: {adapter: ApiAdapter.IMAGE_UPLOAD, blobUrl: url}})
+        this.router.navigate(
+          ['editor'],
+          {
+            queryParams: {
+              adapter: ApiAdapter.IMAGE_UPLOAD,
+              blobUrl: url,
+              presetTag: 3,
+              presetId: 61
+            }
+          }
+        );
       };
       reader.readAsDataURL(fileInput.target.files[0]);
     }

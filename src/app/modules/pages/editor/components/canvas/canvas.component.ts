@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
@@ -24,6 +24,7 @@ import {CmsAuthService} from "@app/core/services/cms-auth.service";
 export class CanvasComponent implements OnInit, OnChanges {
   @Input()
   metaProperties: MetaMapperData = {} as any;
+
   preset: Preset = {} as any;
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;
@@ -38,11 +39,25 @@ export class CanvasComponent implements OnInit, OnChanges {
 
   sentUpdateResponse: string | null = '';
 
+  /**
+   * this is the deselect logic,
+   * but at least it does not work correctly because of the
+   * sketchy canvas container
+   */
+  @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
+  @HostListener('document:mousedown', ['$event'])
+  onGlobalClick(event: any): void {
+    if (!this.canvasElement.nativeElement.contains(event.target)) {
+      this.canvas.discardActiveObject().renderAll();
+    }
+  }
+
   constructor(private editorService: EditorService,
               private cmsService: CmsService,
               private authService: CmsAuthService,
               private activatedRoute: ActivatedRoute) {
   }
+
 
   ngOnInit(): void {
     // check if presetId is set, if its set, just apply it

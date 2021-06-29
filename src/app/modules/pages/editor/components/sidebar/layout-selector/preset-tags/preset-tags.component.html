@@ -1,5 +1,8 @@
-Popular: <span #rla="routerLinkActive" *ngFor="let tag of tags$ | async" (click)="remove(rla)"
-      queryParamsHandling="merge" [queryParams]="{presetTag: tag.id}" trackClick="Popular Tags: {{tag.name}}"
-      [routerLink]="['./']" routerLinkActive="active">
-  #{{tag.name}} <fa-icon *ngIf="rla.isActive" [icon]="faClose"></fa-icon>
-</span>
+<div class="hs full">
+  <div class="item" #rla="routerLinkActive" *ngFor="let tag of tags$ | async" (click)="remove(rla)"
+       queryParamsHandling="merge" [queryParams]="{presetTag: tag.id}" trackClick="Popular Tags: {{tag.name}}"
+       [routerLink]="['./']" routerLinkActive="active">
+    #{{tag.name}}
+    <fa-icon *ngIf="rla.isActive" [icon]="faClose"></fa-icon>
+  </div>
+</div>

@@ -4,11 +4,12 @@
   font-weight: bold;
 }
 
-span {
+.item {
+  scroll-snap-align: center;
+  display: flex;
   padding: 5px;
   border-radius: 2px;
   background-color: $grey-1;
-  display: inline-block;
   margin-right: 5px;
   color: white;
   cursor: pointer;
@@ -20,4 +21,34 @@ span {
   fa-icon {
     margin-left: 10px;
   }
+}
+
+:root {
+  --gutter: 20px;
+  grid-column: 2 / -2;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.hs {
+  display: grid;
+  grid-gap: calc(var(--gutter) / 2);
+  grid-template-columns: 10px;
+  grid-template-rows: minmax(10px, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: calc(50% - var(--gutter) * 2);
+
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+  padding-bottom: 5px;
+
+  @include scroll-style;
+}
+
+.hs:before,
+.hs:after {
+  content: '';
+  width: 10px;
 }

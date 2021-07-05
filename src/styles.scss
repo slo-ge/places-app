@@ -22,6 +22,11 @@ input[type=text], select {
   border: 2px solid $grey-0;
 }
 
+input[type=number] {
+    border-radius: $common-border-radius;
+    border: 2px solid $grey-0;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;

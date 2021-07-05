@@ -11,11 +11,11 @@ import {StaticContentAdapter} from "@app/core/services/adapters/static-content.a
 import {getScaledImage} from "@app/core/editor/canvas.utils";
 
 @Component({
-  selector: 'app-button-download',
-  templateUrl: './button-download.component.html',
-  styleUrls: ['./button-download.component.scss']
+  selector: 'app-tab-download',
+  templateUrl: './tab-download.component.html',
+  styleUrls: ['./tab-download.component.scss']
 })
-export class ButtonDownloadComponent implements OnChanges, OnInit {
+export class TabDownloadComponent implements OnChanges, OnInit {
   @Input()
   presetService: PresetService | null = null;
   currentUser$: Observable<AuthResponse | null> = EMPTY;

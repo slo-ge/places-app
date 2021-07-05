@@ -1,6 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
-import {fabric} from "fabric";
 import {EditorService} from "@app/core/editor/editor.service";
 import {
   faAlignCenter,
@@ -82,6 +81,16 @@ export class SimpleActionsComponent implements OnInit {
     this.removeActiveObject();
   }
 
+    /**
+     * this is the deselect logic,
+     * but at least it does not work correctly because of the
+     * sketchy canvas container. It only removes selection on double click
+     */
+    @HostListener('document:keydown.esc', ['$event'])
+    onKeyDown(_event: any): void {
+        this.canvas.discardActiveObject().renderAll();
+    }
+
   removeActiveObject() {
     this.canvas.remove(this.activeObject);
   }
@@ -112,7 +121,8 @@ export class SimpleActionsComponent implements OnInit {
     this.selectedType = null;
   }
 
-  changeSize(newWidth: number) {
+  changeSize(newWidth: number | string) {
+    newWidth = Number(newWidth);
     const activeObject = this.activeObject;
     if (this.activeObject.isType('textbox')) {
       activeObject.fontSize = newWidth;
@@ -159,4 +169,5 @@ export class SimpleActionsComponent implements OnInit {
     const activeObject = this.activeObject as CustomObject;
     activeObject.presetObjectPosition = position;
   }
+
 }

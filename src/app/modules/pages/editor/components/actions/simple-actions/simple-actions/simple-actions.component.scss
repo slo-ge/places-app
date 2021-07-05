@@ -58,7 +58,6 @@
   .align-classes {
     display: none;
   }
-
 }
 
 .fixed-position,
@@ -87,9 +86,15 @@
   }
 }
 
-.size-range  {
-  width: 150px;
-  height: 26px;
+.font-sizer  {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input[type=number] {
+      width: 50px;
+  }
 }
 
 .select-items {

@@ -1,1 +1,1 @@
-<img (click)="selectImage(img)"  *ngFor="let img of staticImages$ | async" [src]="img.formats.small.url">
+<img (click)="selectImage(img)"  *ngFor="let img of staticImages$ | async" [src]="img.thumbnailUrl">

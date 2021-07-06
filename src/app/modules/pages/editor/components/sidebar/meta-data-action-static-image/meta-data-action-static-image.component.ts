@@ -5,6 +5,11 @@ import {Observable} from "rxjs";
 import {map, mergeMap, take, toArray} from "rxjs/operators";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
 
+interface StaticImage {
+    url: string;
+    thumbnailUrl: string;
+}
+
 @Component({
   selector: 'app-meta-data-action-static-image',
   templateUrl: './meta-data-action-static-image.component.html',
@@ -14,7 +19,7 @@ export class MetaDataActionStaticImageComponent implements OnInit {
   @Output()
   selectStaticImageUrl = new EventEmitter<string>();
 
-  staticImages$: Observable<BackgroundImage[]> | null = null;
+  staticImages$: Observable<StaticImage[]> | null = null;
 
   constructor(private cmsService: CmsService) {
   }
@@ -23,15 +28,15 @@ export class MetaDataActionStaticImageComponent implements OnInit {
     this.staticImages$ = this.cmsService.getStaticImages().pipe(
       take(1),
       mergeMap(image => image),
-      map(image => {
-        image.formats.small.url = toAbsoluteCMSUrl(image.formats.small.url);
-        return image;
-      }),
+      map(image => ({
+            thumbnailUrl: toAbsoluteCMSUrl(image.formats.thumbnail.url),
+            url:toAbsoluteCMSUrl(image.url)
+        })),
       toArray()
     );
   }
 
-  selectImage(image: BackgroundImage) {
-    this.selectStaticImageUrl.emit(toAbsoluteCMSUrl(image.url));
+  selectImage(image: StaticImage) {
+    this.selectStaticImageUrl.emit(image.url);
   }
 }

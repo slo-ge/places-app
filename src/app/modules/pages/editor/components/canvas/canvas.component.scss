@@ -26,13 +26,11 @@ canvas {
   pointer-events: none;
 }
 
+
 ::ng-deep {
   .canvas-container {
     transform-origin: 0 0 0;
-
-    @include respond-above(sm) {
-      transform: scale(0.7);
-    }
+    transform: scale(var(--zoom-factor));
   }
 }
 
@@ -50,7 +48,6 @@ main {
     box-shadow: $box-shadow-dark;
 
     @include respond-below(sm) {
-      //display: none;
       position: sticky;
       top: 0;
     }
@@ -129,6 +126,12 @@ aside {
     width: 100%;
     margin-bottom: 10px;
   }
+}
+
+app-zoom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
 }
 
 .notification {

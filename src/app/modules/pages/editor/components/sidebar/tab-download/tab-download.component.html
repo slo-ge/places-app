@@ -1,5 +1,7 @@
 <div class="toggle">
-  <button (click)="downloadImage()" trackClick="Download {{presetService?.preset?.title}} (ID: {{presetService?.preset?.id}})">
+  <button (click)="downloadImage()"
+          trackClick="Download {{presetService?.preset?.title}} (ID: {{presetService?.preset?.id}})"
+          trackingCategory="Download">
     Download
     <fa-icon [icon]="downloadIcon"></fa-icon>
   </button>
@@ -10,7 +12,7 @@
   </form>
   <div class="toggle-content" *ngIf="extended">
     <div class="video-heading">Download as Video</div>
-    <div class="duration-container">
+    <div class="duration-container" trackClick="Download Video {{presetService?.preset?.title}}" trackingCategory="Download">
       <div (click)="downloadVideo(2000)">2sec</div>
       <div (click)="downloadVideo(4000)">4sec</div>
       <div (click)="downloadVideo(8000)">8sec</div>

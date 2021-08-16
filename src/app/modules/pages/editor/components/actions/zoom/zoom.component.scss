@@ -1,0 +1,13 @@
+@import 'style';
+
+:host {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  padding: 8px;
+  background-color: $grey-0;
+  box-shadow: $box-shadow-dark;
+  border-radius: 2px;
+  margin: 5px;
+  display: flex;
+}

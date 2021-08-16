@@ -37,16 +37,16 @@
   <main>
     <div class="notification">Warning: MetaMapper is optimized for screens with bigger sizes and is mainly tested with chrome.</div>
     <div class="canvas-actions">
-      <div class="actions-row">
+      <div class="actions-row" >
         <app-simple-actions></app-simple-actions>
       </div>
 
     </div>
 
-    <div class="canvas-wrapper"  #canvasElement>
+    <div class="canvas-wrapper" style="--zoom-factor: {{zoomFactor}}">
       <canvas id="myCanvas"></canvas>
     </div>
-
+    <app-zoom (zoomFactor)="zoomFactor = $event"></app-zoom>
   </main>
 </div>
 

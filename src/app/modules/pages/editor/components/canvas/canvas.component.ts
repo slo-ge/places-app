@@ -38,6 +38,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     faCogs = faCogs;
 
     sentUpdateResponse: string | null = '';
+    zoomFactor = 0.7;
 
     constructor(private editorService: EditorService,
                 private cmsService: CmsService,

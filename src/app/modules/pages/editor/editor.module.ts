@@ -24,6 +24,7 @@ import { SharedModule } from "@app/modules/shared/shared.module";
 import { PresetTagsComponent } from './components/sidebar/layout-selector/preset-tags/preset-tags.component';
 import { MetaDataActionStaticImageComponent } from './components/sidebar/meta-data-action-static-image/meta-data-action-static-image.component';
 import { TabDownloadComponent } from '@app/modules/pages/editor/components/sidebar/tab-download/tab-download.component';
+import { ZoomComponent } from './components/actions/zoom/zoom.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { TabDownloadComponent } from '@app/modules/pages/editor/components/sideb
         TabGroupComponent,
         TabComponent,
         PresetTagsComponent,
-        MetaDataActionStaticImageComponent
+        MetaDataActionStaticImageComponent,
+        ZoomComponent
     ],
     imports: [
         CommonModule,

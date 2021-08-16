@@ -12,6 +12,8 @@ export class RangeSliderComponent {
   max = 100;
   @Input()
   value = 50;
+  @Input()
+  unit = 'px';
 
   @Output()
   valueChange = new EventEmitter<number>();

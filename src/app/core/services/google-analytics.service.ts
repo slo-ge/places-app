@@ -33,12 +33,15 @@ export class GoogleAnalyticsService {
     }
   }
 
-  public triggerClick( data: string) {
+  public triggerClick(data: string) {
+
     if (!this.cookieService.isTrackingDisabled()) {
       this.gtmService.pushTag({
         event: 'click_action',
         data: `${data}`,
       });
+    } else {
+      console.log('If tracking was enabled:', data);
     }
   }
 }

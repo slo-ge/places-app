@@ -1,7 +1,7 @@
 @import 'style';
 
 .background {
-  background: linear-gradient(200deg, $primary-soft 0%, $primary 100%);
+  background: $gradient-background;
 }
 
 section {

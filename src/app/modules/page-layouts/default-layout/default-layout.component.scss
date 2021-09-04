@@ -23,20 +23,14 @@ header {
   }
 }
 
-app-main-breadcrumbs {
-  min-width: 340px;
-}
-
 .header-bar {
   background-color: $grey-0;
   border-bottom: 1px $grey-1 solid;
   padding: 10px 0;
   flex-wrap: wrap;
-}
-
-.header-bar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header-left {
@@ -47,29 +41,6 @@ app-main-breadcrumbs {
   > * {
     margin-left: 50px;
   }
-
-
-}
-
-@media screen and (max-width: 768px) {
-  .header-bar {
-    display: block;
-  }
-
-  .header-left {
-    display: block;
-  }
-
-  header {
-    margin-left: 5px;
-  }
-  app-login {
-    display: none;
-  }
-
-  app-main-breadcrumbs {
-    display: none;
-  }
 }
 
 main {
@@ -77,7 +48,7 @@ main {
 }
 
 .background {
-  background: linear-gradient(200deg, $primary-soft 0%, $primary 100%);
+  background: $gradient-background;
 }
 
 
@@ -92,4 +63,11 @@ footer {
   span {
     margin-right: 20px;
   }
+}
+
+.feedback-action {
+  margin-right: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
 }

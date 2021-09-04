@@ -8,6 +8,8 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
 import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
 import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
+import {OverlayModule} from '@angular/cdk/overlay';
+import {SharedModule} from "@app/modules/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import {GoogleAnalyticsService} from "@app/core/services/google-analytics.servic
     AppRoutingModule,
     ResultListModule,
     HttpClientModule,
-    PageLayoutsModule
+    PageLayoutsModule,
+    OverlayModule
   ],
   providers: [
     {

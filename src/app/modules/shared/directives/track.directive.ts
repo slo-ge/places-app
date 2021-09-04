@@ -17,7 +17,7 @@ export class TrackDirective {
    * to track an additional parameter
    */
   @Input()
-  public trackingCategory: 'Download' | null = null;
+  public trackingCategory: 'Download' | 'Feedback' | null = null;
 
   constructor(private googleAnalytics: GoogleAnalyticsService) {
   }

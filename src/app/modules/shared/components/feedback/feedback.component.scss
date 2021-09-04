@@ -1,0 +1,65 @@
+@import 'style';
+
+
+:host {
+  max-width: 800px;
+  display: block;
+}
+
+h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: normal;
+}
+
+fieldset {
+  margin-top: 20px;
+  border-radius: $common-border-radius;
+  border: $border;
+}
+
+.simple-feedback {
+
+  button.small {
+    width: auto;
+    font-size: 14px;
+    height: 35px;
+    cursor: pointer;
+    margin: 2px;
+
+    &.active {
+      background-color: $primary-soft;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+}
+
+.feedback-text {
+  margin: 10px 0;
+}
+
+.feedback-sent {
+  margin: 20px 0;
+
+  .thank-you {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 25px;
+    color: $primary;
+  }
+
+  .another-feedback {
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+.refresh-fast-feedback {
+  cursor: pointer;
+  color: $primary-soft;;
+  margin-left: 20px;
+}

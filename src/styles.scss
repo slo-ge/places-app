@@ -3,6 +3,8 @@
 @import 'style';
 @import 'lib';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import '~@angular/cdk/overlay-prebuilt.css';
+
 body {
   font-family: 'Open Sans', sans-serif;
   margin: 0;
@@ -12,7 +14,7 @@ h1, h2 {
   font-family: 'Archivo Black', sans-serif;
 }
 
-
+textarea,
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
@@ -41,14 +43,17 @@ button {
   width: 200px;
   border-radius: $common-border-radius;
   border: 1px solid #434c61;
-  font-size: 20px;
-  background-color: $primary-dark;
   color: white;
   height: 40px;
-  cursor: pointer;
+  font-size: 20px;
+
+  &:not(:disabled){
+    cursor: pointer;
+    background-color: $primary-dark;
+  }
 }
 
-.button,
+.button.secondary,
 button.secondary {
   background-color: white;
   color: $primary-dark;

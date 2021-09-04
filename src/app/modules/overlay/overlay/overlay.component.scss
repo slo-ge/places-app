@@ -1,0 +1,18 @@
+@import 'style';
+
+:host {
+  background: white;
+  padding: 25px;
+  margin: 5px;
+  border-radius: $common-border-radius;
+}
+
+.modal-header {
+  margin: -12px;
+  font-size: 20px;
+  text-align: right;
+}
+
+fa-icon {
+  cursor: pointer;
+}

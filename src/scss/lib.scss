@@ -16,7 +16,7 @@
       border-radius: $common-border-radius;
       box-shadow: $box-shadow-dark;
       padding: 10px;
-      z-index: 1010;
+      z-index: $z-index-popover;
       background: white;
     }
   }

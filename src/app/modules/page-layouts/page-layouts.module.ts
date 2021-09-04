@@ -3,6 +3,7 @@ import {DefaultLayoutComponent} from './default-layout/default-layout.component'
 import {LoginModule} from "@app/modules/login/login.module";
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "@app/modules/shared/shared.module";
+import {CustomOverlayModule} from "@app/modules/overlay/custom-overlay.module";
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import {SharedModule} from "@app/modules/shared/shared.module";
   imports: [
     LoginModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    CustomOverlayModule
   ]
 })
 export class PageLayoutsModule { }

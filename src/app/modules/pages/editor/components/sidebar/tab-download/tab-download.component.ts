@@ -9,6 +9,8 @@ import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
 import {getScaledImage} from "@app/core/editor/canvas.utils";
+import {OverlayService} from "@app/modules/overlay/overlay.service";
+import {FeedbackComponent} from "@app/modules/shared/components/feedback/feedback.component";
 
 @Component({
   selector: 'app-tab-download',

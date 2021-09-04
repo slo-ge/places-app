@@ -42,7 +42,7 @@ main {
     position: absolute;
     left: 0;
     right: 0;
-    z-index: 1010;
+    z-index: $z-index-highlight;
     background-color: white;
     border-bottom: 1px solid $grey-1;
     box-shadow: $box-shadow-dark;

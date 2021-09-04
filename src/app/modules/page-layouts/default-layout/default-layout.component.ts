@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {OverlayService} from "@app/modules/overlay/overlay.service";
+import {FeedbackComponent} from "@app/modules/shared/components/feedback/feedback.component";
 
 @Component({
   selector: 'app-default-layout',
@@ -7,6 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DefaultLayoutComponent {
 
-  constructor() { }
+  constructor(private overlay: OverlayService) {
+  }
 
+  openFeedback() {
+    this.overlay.open(FeedbackComponent);
+  }
 }

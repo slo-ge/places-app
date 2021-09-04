@@ -1,0 +1,44 @@
+<h2>Yeah, could you please help me improving MetaMapper?</h2>
+<div class="feedback-text">What do you think about MetaMapper?</div>
+<div class="simple-feedback">
+  <div class="fast-feedback" [class.sent]="fastFeedbackSent">
+    <button class="secondary small"
+            [class.active]="feedBackItem.selected"
+            [disabled]="fastFeedbackSent"
+            (click)="fastFeedbackSent=true; highlightSimpleFeedback(feedBackItem)"
+
+            *ngFor="let feedBackItem of feedBackItems">{{feedBackItem.title}}
+    </button>
+    <span class="refresh-fast-feedback" *ngIf="fastFeedbackSent" (click)="fastFeedbackSent=false"><fa-icon
+      [icon]="faRefresh"></fa-icon></span>
+  </div>
+  <fieldset *ngIf="!formSent">
+    <div class="feedback-text">Or tell me, how should MetaMapper be improved? What would be a nice new feature?
+      New templates? New fonts? An instruction page?
+    </div>
+    <form [formGroup]="simpleTextFeedback">
+      <textarea formControlName="text" placeholder="Feedback text goes here"></textarea>
+      <button [disabled]="simpleTextFeedback.invalid" (click)="sendFeedback()">Send</button>
+    </form>
+  </fieldset>
+  <div class="feedback-sent" *ngIf="formSent">
+    <div class="thank-you">Thank you for your feedback 👏👏👏👏</div>
+    <div>You forgot to mention something?
+      <span class="another-feedback" (click)="formSent=false">Give another feedback</span></div>
+  </div>
+</div>
+<div class="social-notes">
+  <p>If you want to support MetaMapper you can follow me on Instagram. And if you are
+    going to share images on Instagram, created with MetaMapper, you can also use
+    <a target="_blank" href="https://www.instagram.com/metamapper/">@MetaMapper</a>
+    or using the hash tag
+    <a target="_blank" href="https://www.instagram.com/explore/tags/metamapper/">#metamapper</a>.
+  </p>
+  <div>Contact with me use:</div>
+  <div>
+    <a href="mailto:eta-mapper@outlook.com">Meta-Mapper@outlook.com</a>
+  </div>
+  <div>
+    <a target="_blank" href="https://www.instagram.com/metamapper/">@MetaMapper</a>
+  </div>
+</div>

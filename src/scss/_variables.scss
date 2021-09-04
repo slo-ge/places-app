@@ -22,3 +22,11 @@ $header-height: 55px;
 $viewport-height: calc(100vh - #{$header-height});
 
 $box-shadow-dark:  0 5px 10px 0 #00000085;
+
+
+$z-index-highlight: 100;
+$z-index-popover: 101;
+
+$gradient-background: linear-gradient(200deg, $primary-soft 0%, $primary 100%);
+
+$border: 1px solid $grey-1;

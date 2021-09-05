@@ -1,0 +1,30 @@
+@import 'style';
+:host {
+  font-size: 14px;
+  color: $grey-dark-0;
+}
+
+.heading {
+  padding: 5px;
+  margin: 10px 0;
+}
+
+.card-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 5px;
+}
+
+a {
+  color: $grey-dark-0;
+  text-decoration: none;
+}
+
+.symbol {
+  font-size: 20px;
+}

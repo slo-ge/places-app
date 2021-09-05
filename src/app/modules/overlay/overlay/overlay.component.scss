@@ -5,6 +5,8 @@
   padding: 25px;
   margin: 5px;
   border-radius: $common-border-radius;
+  max-height: 90vh;
+  overflow: auto;
 }
 
 .modal-header {

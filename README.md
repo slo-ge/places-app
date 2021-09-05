@@ -28,3 +28,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## Filesizes (kB)
 4.9.2021: `483`
+5.9.2021: `541`

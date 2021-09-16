@@ -1,13 +1,13 @@
 import 'zone.js/dist/zone-node';
 
-import { ngExpressEngine } from '@nguniversal/express-engine';
+import {ngExpressEngine} from '@nguniversal/express-engine';
 import * as express from 'express';
-import { join } from 'path';
+import {join} from 'path';
 import apicache from 'apicache'
 
-import { AppServerModule } from './src/main.server';
-import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
+import {AppServerModule} from './src/main.server';
+import {APP_BASE_HREF} from '@angular/common';
+import {existsSync} from 'fs';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
@@ -31,12 +31,18 @@ export function app() {
   }));
 
   // Using the api cahce
+    apicache.options({statusCodes: {include: [200]}});
   const cache = apicache.middleware;
   server.use(cache('1 hour'));
 
+    // adding health endpoint
+    server.get('/health', (req, res) => {
+        res.json({status: 'UP'});
+    });
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+
+      res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
   });
 
   return server;

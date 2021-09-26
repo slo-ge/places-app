@@ -191,6 +191,9 @@ export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, preset
       return (presetObject as PresetObjectStaticImage).image.url!
         || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=StaticImage%20Not%20Found';
     }
+    case LayoutItemType.PRICE: {
+      return metaProperties.displayPrice || '99 €';
+    }
   }
 
   throw Error(`Layout Type ${presetObject.type} can not be mapped to meta object`);
@@ -213,7 +216,8 @@ export function isText(item: PresetObject | LayoutItemType): Boolean {
   const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
   return presetType === LayoutItemType.TITLE
     || presetType === LayoutItemType.DESCRIPTION
-    || presetType === LayoutItemType.STATIC_TEXT;
+    || presetType === LayoutItemType.STATIC_TEXT
+    || presetType === LayoutItemType.PRICE
 }
 
 /**

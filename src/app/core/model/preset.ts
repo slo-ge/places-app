@@ -108,6 +108,7 @@ export enum LayoutItemType {
   IMAGE = 'image',
   ICON = 'icon',
   STATIC_TEXT = 'static-text',
-  STATIC_IMAGE = 'static-image'
+  STATIC_IMAGE = 'static-image',
+  PRICE = 'price'
 }
 

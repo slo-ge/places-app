@@ -283,7 +283,8 @@ export class PresetService {
   }
 
   /**
-   * Set object overlapping attributes
+   * Set object overlapping attributes,
+   * also set the "data" type (i.e. title, description, price) to the object
    *
    * @param fabricObject can be text or image
    * @param item

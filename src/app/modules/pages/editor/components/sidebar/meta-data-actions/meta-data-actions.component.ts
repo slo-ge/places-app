@@ -3,7 +3,7 @@ import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {fabric} from "fabric";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faMoneyBill, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
 
 @Component({
@@ -15,11 +15,12 @@ export class MetaDataActionsComponent {
   @Input()
   presetService: PresetService | any;
   @Input()
-  metaProperties: MetaMapperData | any;
+  metaProperties: MetaMapperData = {} as any;
 
 
   LayoutItemType = LayoutItemType;
   plusIcon = faPlus;
+  moneyBillIcon = faMoneyBill;
 
   constructor() {
   }

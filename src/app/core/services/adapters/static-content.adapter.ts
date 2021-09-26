@@ -16,6 +16,7 @@ export class StaticContentAdapter implements EditorPreviewInfoService {
    * @param _identifier
    */
   getMetaMapperData(_identifier: any): Observable<MetaMapperData> {
+    // TODO: map custom price data?
     return of({
       title: this.data.get('title') || '',
       description: this.data.get('description') || '',

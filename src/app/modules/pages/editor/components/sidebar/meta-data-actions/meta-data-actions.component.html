@@ -7,6 +7,10 @@
     <fa-icon [icon]="plusIcon"></fa-icon>
     Meta description
   </div>
+  <div *ngIf="metaProperties?.displayPrice" (click)="addObject(LayoutItemType.PRICE)" trackClick="Meta Action | Add Price">
+    <fa-icon [icon]="plusIcon"></fa-icon>
+    Meta Price <fa-icon [icon]="moneyBillIcon"></fa-icon>
+  </div>
   <div (click)="addObject(LayoutItemType.IMAGE)" trackClick="Meta Action | Add Image">
     <fa-icon [icon]="plusIcon"></fa-icon>
     Meta image

@@ -1,4 +1,6 @@
 /**
+ * The domain object
+ *
  * TODO: also accept null values for title, description and url
  */
 export interface MetaMapperData {
@@ -7,4 +9,5 @@ export interface MetaMapperData {
   image?: string | null;
   iconUrl?: string | null;
   url: string;
+  displayPrice?: string | null;
 }

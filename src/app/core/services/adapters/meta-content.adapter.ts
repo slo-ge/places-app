@@ -11,6 +11,12 @@ export interface MetaData {
   ogTitle: string;
   title: string;
   iconUrl?: string;
+  price?: {
+    lowestPrice: Number | string | null;
+    highestPrice: Number | string | null;
+    currency: Number | string | null;
+    displayPrice: string | null;
+  }
 }
 
 /**
@@ -31,7 +37,8 @@ export class MetaContentAdapter implements EditorPreviewInfoService {
         description: data.metaDescription,
         image: data.ogImage,
         iconUrl: data.iconUrl,
-        url
+        url,
+        displayPrice: data.price?.displayPrice
       }))
     );
   }

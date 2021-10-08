@@ -1,35 +1,41 @@
 <div class="actions">
-  <div (click)="addObject(LayoutItemType.TITLE)" trackClick="Meta Action | Add Title">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Meta title
-  </div>
-  <div (click)="addObject(LayoutItemType.DESCRIPTION)" trackClick="Meta Action | Add Description">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Meta description
-  </div>
-  <div *ngIf="metaProperties?.displayPrice" (click)="addObject(LayoutItemType.PRICE)" trackClick="Meta Action | Add Price">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Meta Price <fa-icon [icon]="moneyBillIcon"></fa-icon>
-  </div>
-  <div (click)="addObject(LayoutItemType.IMAGE)" trackClick="Meta Action | Add Image">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Meta image
-  </div>
-  <div (click)="addObject(LayoutItemType.ICON)" trackClick="Meta Action | Add Icon">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Meta icon
-  </div>
-  <div class="file-upload">
-    <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">
+  <div class="meta-actions">
+    <span>Meta Fields</span>
+    <div (click)="addObject(LayoutItemType.TITLE)" trackClick="Meta Action | Add Title">
       <fa-icon [icon]="plusIcon"></fa-icon>
-      Upload image</label>
-    <input type="file" id="imageUpload" (change)="imageUpload($event)" style="display: none" trackClick="Meta Action | Upload new">
+      Title
+    </div>
+    <div (click)="addObject(LayoutItemType.DESCRIPTION)" trackClick="Meta Action | Add Description">
+      <fa-icon [icon]="plusIcon"></fa-icon>
+      Description
+    </div>
+    <div *ngIf="metaProperties?.displayPrice" (click)="addObject(LayoutItemType.PRICE)"
+         trackClick="Meta Action | Add Price">
+      <fa-icon [icon]="plusIcon"></fa-icon>
+      Price
+    </div>
+    <div (click)="addObject(LayoutItemType.IMAGE)" trackClick="Meta Action | Add Image">
+      <fa-icon [icon]="plusIcon"></fa-icon>
+      Image
+    </div>
+    <div (click)="addObject(LayoutItemType.ICON)" trackClick="Meta Action | Add Icon">
+      <fa-icon [icon]="plusIcon"></fa-icon>
+      Icon
+    </div>
+    <span>Static Field</span>
+    <div class="file-upload">
+      <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">
+        <fa-icon [icon]="plusIcon"></fa-icon>
+        Upload image</label>
+      <input type="file" id="imageUpload" (change)="imageUpload($event)" style="display: none"
+             trackClick="Meta Action | Upload new">
+    </div>
+    <div (click)="addObject(LayoutItemType.STATIC_TEXT)" trackClick="Meta Action | Textbox">
+      <fa-icon [icon]="plusIcon"></fa-icon>
+      Textbox
+    </div>
   </div>
-  <div (click)="addObject(LayoutItemType.STATIC_TEXT)" trackClick="Meta Action | Textbox">
-    <fa-icon [icon]="plusIcon"></fa-icon>
-    Textbox
-  </div>
-
-  <h3>Elements</h3>
-  <app-meta-data-action-static-image (selectStaticImageUrl)="addStaticImage($event)"></app-meta-data-action-static-image>
+  <h3>Add Media Elements</h3>
+  <app-meta-data-action-static-image
+    (selectStaticImageUrl)="addStaticImage($event)"></app-meta-data-action-static-image>
 </div>

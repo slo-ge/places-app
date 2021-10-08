@@ -9,6 +9,7 @@ import {
 } from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
+import {FALLBACKS} from "@app/core/config/fallbacks";
 
 /**
  * Extra information which can a fabric object hold
@@ -167,32 +168,32 @@ export function prepareItems(items: CustomObject[]) {
  *
  * It returns also a default value, if one of the meta tags is not found
  *
- * @param metaProperties
- * @param presetObject
+ * @param metaProperties: The meta data object
+ * @param presetObject: The preset object which will mitch to a certain meta data field
  */
-export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, presetObject: PresetObject) {
+export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, presetObject: PresetObject | PresetObjectStaticImage) {
   switch (presetObject.type) {
     case LayoutItemType.TITLE: {
-      return metaProperties.title || 'empty title';
+      return metaProperties.title || FALLBACKS.title;
     }
     case LayoutItemType.DESCRIPTION: {
-      return metaProperties.description || 'empty description';
+      return metaProperties.description || FALLBACKS.description;
     }
     case LayoutItemType.ICON: {
-      return metaProperties.iconUrl || 'https://via.placeholder.com/150/000000/FFFFFF/?text=Icon NotFound';
+      return metaProperties.iconUrl || FALLBACKS.icon;
     }
     case LayoutItemType.IMAGE: {
-      return metaProperties.image || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=ogImage%20Not%20Found';
+      return metaProperties.image || FALLBACKS.image;
     }
     case LayoutItemType.STATIC_TEXT: {
-      return (presetObject as PresetObjectStaticText).text || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      return (presetObject as PresetObjectStaticText).text || FALLBACKS[LayoutItemType.STATIC_TEXT];
     }
     case LayoutItemType.STATIC_IMAGE: {
       return (presetObject as PresetObjectStaticImage).image.url!
-        || 'https://via.placeholder.com/400x200/000000/FFFFFF/?text=StaticImage%20Not%20Found';
+        || FALLBACKS.image;
     }
     case LayoutItemType.PRICE: {
-      return metaProperties.displayPrice || '99 €';
+      return metaProperties.displayPrice || FALLBACKS.price;
     }
   }
 

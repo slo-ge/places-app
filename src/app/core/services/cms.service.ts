@@ -92,7 +92,7 @@ export class CmsService {
    */
   public getLayoutSetting(presetTag?: string | null): Observable<Preset[]> {
     let params = new HttpParams()
-      .set('_sort', 'updated_at:desc'); // show last edited first
+      .set('_sort', 'sortIndex:asc');
 
     if (presetTag) {
       params = params.set('preset_tags', presetTag); // limit the layouts to a given preset

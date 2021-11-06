@@ -1,11 +1,5 @@
 @import 'style';
 
-:host(.bold) {
-  font-weight: bold;
-  padding: 2px 10px;
-  background-color: $grey-0;
-}
-
 :host {
   cursor: pointer;
 }

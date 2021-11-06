@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
 import {EditorService} from "@app/core/editor/editor.service";
 import {
@@ -19,6 +19,7 @@ import {
 import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
+import {Subscription} from "rxjs";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -30,7 +31,7 @@ enum FabricType {
   templateUrl: './simple-actions.component.html',
   styleUrls: ['./simple-actions.component.scss']
 })
-export class SimpleActionsComponent implements OnInit {
+export class SimpleActionsComponent implements OnInit, OnDestroy {
   canvas: any | Canvas;
 
   activeRangeSliderMax = 100;
@@ -56,6 +57,8 @@ export class SimpleActionsComponent implements OnInit {
    */
   activeObject: CustomObject | CustomImageBox | CustomTextBox | any = null;
 
+  private subscriptions: Subscription = new Subscription();
+
   constructor(private  editorService: EditorService,
               private alignmentService: AlignmentService,
               // used in template, dirty.
@@ -64,7 +67,7 @@ export class SimpleActionsComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: kill subscription in onDestroy!
-    this.editorService.getCanvas().subscribe(canvas => {
+    const sub = this.editorService.getCanvas().subscribe(canvas => {
       this.canvas = canvas;
       this.canvas.on(
         {
@@ -74,6 +77,7 @@ export class SimpleActionsComponent implements OnInit {
         },
       );
     });
+    this.subscriptions.add(sub);
   }
 
   @HostListener('document:keydown.delete', ['$event'])
@@ -146,10 +150,11 @@ export class SimpleActionsComponent implements OnInit {
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
     this.alignmentService.move(aligner, this.canvas, this.activeObject);
   }
-
+  
   moveToBack() {
     const activeObject = this.activeObject;
     const position = this.canvas.getObjects().indexOf(activeObject);
+
     if (position > 1) {
       this.canvas.moveTo(activeObject, position - 1);
     }
@@ -162,7 +167,7 @@ export class SimpleActionsComponent implements OnInit {
   }
 
   /**
-   * set the position to absolute or relative
+   * Set a css-like position to the selected object
    * @param position
    */
   position(position: ObjectPosition) {
@@ -170,4 +175,7 @@ export class SimpleActionsComponent implements OnInit {
     activeObject.presetObjectPosition = position;
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

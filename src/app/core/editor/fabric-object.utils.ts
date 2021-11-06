@@ -10,6 +10,7 @@ import {
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {FALLBACKS} from "@app/core/config/fallbacks";
+import {TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
 
 /**
  * Extra information which can a fabric object hold
@@ -63,41 +64,8 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
   if (isText(tmp)) {
     fabricObject = fabricObject as CustomTextBox;
 
-    if (fabricObject.fontSize) {
-      tmp.fontSize = Math.round(fabricObject.fontSize || 0);
-    }
-    if (fabricObject.fill) {
-      tmp.fontColor = fabricObject.fill as string;
-    }
-    if (fabricObject.fontWeight) {
-      tmp.fontWeight = fabricObject.fontWeight;
-    }
-    if (fabricObject.lineHeight) {
-      tmp.fontLineHeight = fabricObject.lineHeight;
-    }
-    if (fabricObject.charSpacing) {
-      tmp.fontLetterSpacing = fabricObject.charSpacing;
-    }
-
-    if (fabricObject.presetFont) {
-      tmp.font = fabricObject.presetFont;
-    }
-
-    if (fabricObject.backgroundColor) {
-      tmp.fontBackgroundColor = fabricObject.backgroundColor;
-    } else {
-      tmp.fontBackgroundColor = null;
-    }
-
-    if (fabricObject.padding) {
-      tmp.fontBackgroundPadding = fabricObject.padding;
-    }
-
-    if (fabricObject.underline) {
-      tmp.fontUnderline = fabricObject.underline;
-    } else {
-      tmp.fontUnderline = false;
-    }
+    // Apply all presets setting to the object
+    TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, tmp));
   }
 
   if (tmp.type === LayoutItemType.STATIC_TEXT) {

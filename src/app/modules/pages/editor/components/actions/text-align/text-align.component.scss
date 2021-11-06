@@ -1,0 +1,9 @@
+@import 'style';
+
+:host {
+  cursor: pointer;
+  display: flex;
+  > * {
+    @include action-style;
+  }
+}

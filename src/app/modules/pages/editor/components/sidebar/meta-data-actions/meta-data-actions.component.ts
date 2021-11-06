@@ -20,6 +20,7 @@ export class MetaDataActionsComponent {
 
   LayoutItemType = LayoutItemType;
   plusIcon = faPlus;
+  showMedia = false; // Initially do not show the media elements
 
   constructor() {
   }

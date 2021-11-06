@@ -1,13 +1,6 @@
 import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {
-  Font,
-  LayoutItemType,
-  ObjectPosition,
-  Preset,
-  PresetObject,
-  PresetObjectStaticImage
-} from "@app/core/model/preset";
+import {LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver'
 import {
@@ -20,15 +13,10 @@ import {
   isPositionYFixed,
   isText
 } from "@app/core/editor/fabric-object.utils";
-import {
-  appendFontToDom,
-  importFontInDom,
-  isAbsoluteUrl,
-  isVideoBackground,
-  proxiedUrl,
-  toAbsoluteCMSUrl
-} from "@app/core/editor/utils";
+import {appendFontToDom, isAbsoluteUrl, isVideoBackground, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
 import {PresetVideo} from "@app/core/editor/preset-video.service";
+import {TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
+import {FontResolver} from "@app/core/editor/resolvers/font.resolver";
 
 
 /**
@@ -77,11 +65,10 @@ export class PresetService {
     this.metaMapperData = metaMapperData;
   }
 
-
   /**
    * This is the main entry point which draws all layer to the canvas
    */
-  async initObjectsOnCanvas() {
+  public async initObjectsOnCanvas() {
     if (this.preset.backgroundImage) {
       // video/mp4 -> TODO: use enum
       this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
@@ -105,10 +92,10 @@ export class PresetService {
         } else if (isImage(item)) {
           const url = getMetaFieldOrStaticField(this.metaMapperData, item);
           const image = fabric.util.object.clone(await this.getImage(url));
-          const obj = this.createImage(image, item.offsetTop + posLastObjectY, item);
-          this.addObjectToCanvas(obj);
-          renderedItems.push({object: obj, preset: item});
-          posLastObjectY = getYPos(obj);
+          this.applyOptions(image, item, item.offsetTop + posLastObjectY);
+          this.addObjectToCanvas(image);
+          renderedItems.push({object: image, preset: item});
+          posLastObjectY = getYPos(image);
         }
       }
     } else {
@@ -131,114 +118,16 @@ export class PresetService {
   }
 
   /**
-   * Set the background image or the video to the whole canvas layer,
-   * the background image is not selectable and so, it can not be
-   * removed
-   * @param url
+   * Adds the object to the canvas
+   * Also adds object and item to a list
    */
-  setBackground(url: string) {
-    if (isVideoBackground(this.preset)) {
-      this.info.isAnimatedBackground = true;
-      this.setAnimatedBackground(url);
-    } else {
-      this.setStaticBackground(url);
-    }
+  public addObjectToCanvas(object: fabric.Image | fabric.Textbox) {
+    this.canvas.add(object);
   }
 
-  async setStaticBackground(url: string) {
-    fabric.Image.fromURL(url, (myImg) => {
-      const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
-      bgImage.scaleToWidth(this.canvas.width);
-      bgImage.lockMovementX = true;
-      bgImage.lockMovement = true;
-      this.canvas.moveTo(bgImage, 0);
-    }, {crossOrigin: "*"});
-  }
-
-  setAnimatedBackground(url: string) {
-    PresetVideo.initializeVideo(this.canvas, url, this.preset);
-  }
-
-  /**
-   * check if a certain font is set and load the font
-   */
-  async loadGlobalFontFromLayoutSetting() {
-    if (this.preset.fontFamilyHeadingCSS && this.preset.fontFileWoff) {
-      appendFontToDom(
-        this.preset.fontFileWoff.url,
-        this.preset.fontFamilyHeadingCSS
-      );
-
-      const font = new FontFaceObserver(this.preset.fontFamilyHeadingCSS);
-      await font.load(null, 5000);
-    }
-  }
-
-  /**
-   * This function renders the fabricJs text to the canvas with given
-   * parameters.
-   * @param text, the text from preview
-   * @param item, the config from item
-   * @param offsetTop
-   */
-  async createText(text: string, item: PresetObject, offsetTop: number) {
-    let fabricText = new fabric.Textbox(
-      text,
-      {
-        fontSize: item.fontSize,
-        left: 10,
-        top: 10,
-      }
-    ) as any | CustomTextBox;
-    this.applyOptions(fabricText, item, offsetTop);
-
-    if (item.fontColor) {
-      fabricText.set('fill', item.fontColor);
-    }
-
-    if (this.preset.fontFamilyHeadingCSS) {
-      fabricText.set('fontFamily', this.preset.fontFamilyHeadingCSS);
-    }
-
-    if (item.fontWeight) {
-      fabricText.set('fontWeight', item.fontWeight);
-    }
-
-    if (item.fontLineHeight) {
-      fabricText.set('lineHeight', item.fontLineHeight);
-    }
-
-    if (item.fontLetterSpacing) {
-      fabricText.set('charSpacing', item.fontLetterSpacing);
-    }
-
-    if (item.font) {
-      fabricText.presetFont = item.font;
-      await this.loadFontFromPresetItem(item.font, fabricText);
-    }
-
-    if (item.fontBackgroundColor) {
-      fabricText.backgroundColor = item.fontBackgroundColor;
-
-      if (item.fontBackgroundPadding) {
-        fabricText.padding = item.fontBackgroundPadding;
-      }
-    }
-
-    if (item.fontUnderline) {
-      fabricText.underline = true;
-    }
-
-    return fabricText;
-  }
-
-  async loadFontFromPresetItem(font: Font, fabricText: CustomTextBox) {
-    const fontObserver = new FontFaceObserver(font.fontName);
-    importFontInDom(font);
-    await fontObserver.load(font.fontFamily, 5000).then(
-      () => fabricText.set('fontFamily', font?.fontFamily),
-      (e) => console.error(e)
-    );
+  public createImage(image: Image, offsetTop: number, item: PresetObject) {
+    this.applyOptions(image, item, offsetTop);
+    return image;
   }
 
   /**
@@ -263,32 +152,87 @@ export class PresetService {
         imageCache[proxiedImageUrl] = await prom;
       }
       return imageCache[proxiedImageUrl];
-    } else {
-      console.error('Can not create image, if no URL is set, returning NULL');
     }
+
+    console.error('Can not create image, if no URL is set, returning NULL');
     return null;
   }
 
   /**
-   * Sets a given preview image with offset
-   * TODO: maybe this can be refactored
-   *
-   * @param image
-   * @param offsetTop: the offset always depends on previous item
-   * @param item
+   * Set the background image or the video to the whole canvas layer,
+   * the background image is not selectable and so, it can not be
+   * removed
+   * @param url
    */
-  public createImage(image: Image, offsetTop: number, item: PresetObject) {
-    this.applyOptions(image, item, offsetTop);
-    return image;
+  private setBackground(url: string) {
+    if (isVideoBackground(this.preset)) {
+      this.info.isAnimatedBackground = true;
+      this.setAnimatedBackground(url);
+    } else {
+      this.setStaticBackground(url);
+    }
+  }
+
+  private async setStaticBackground(url: string) {
+    fabric.Image.fromURL(url, (myImg) => {
+      const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
+      bgImage.scaleToWidth(this.canvas.width);
+      bgImage.lockMovementX = true;
+      bgImage.lockMovement = true;
+      this.canvas.moveTo(bgImage, 0);
+    }, {crossOrigin: "*"});
+  }
+
+  private setAnimatedBackground(url: string) {
+    PresetVideo.initializeVideo(this.canvas, url, this.preset);
+  }
+
+  /**
+   * check if a certain font is set and load the font
+   */
+  private async loadGlobalFontFromLayoutSetting() {
+    if (this.preset.fontFamilyHeadingCSS && this.preset.fontFileWoff) {
+      appendFontToDom(
+        this.preset.fontFileWoff.url,
+        this.preset.fontFamilyHeadingCSS
+      );
+
+      const font = new FontFaceObserver(this.preset.fontFamilyHeadingCSS);
+      await font.load(null, 5000);
+    }
+  }
+
+  /**
+   * This function renders the fabricJs text to the canvas with given
+   * parameters.
+   * @param text, the text from preview
+   * @param item, the config from item
+   * @param offsetTop
+   */
+  private async createText(text: string, item: PresetObject, offsetTop: number) {
+    const fabricText = new fabric.Textbox(
+      text, {fontSize: item.fontSize, left: 10, top: 10}
+    ) as any | CustomTextBox;
+    this.applyOptions(fabricText, item, offsetTop);
+
+    // Apply resolvers to the preset
+    TEXT_RESOLVERS.forEach(r => r.applyOnObject(fabricText, item));
+    // TODO: this needs to be refactored to FontResolver
+    if (item.font) {
+      await FontResolver.loadFontFromPresetItem(item.font, fabricText);
+    }
+
+    // this can not be changed in editor at the moment
+    if (!item.font && this.preset.fontFamilyHeadingCSS) {
+      fabricText.set('fontFamily', this.preset.fontFamilyHeadingCSS);
+    }
+
+    return fabricText;
   }
 
   /**
    * Set object overlapping attributes,
    * also set the "data" type (i.e. title, description, price) to the object
-   *
-   * @param fabricObject can be text or image
-   * @param item
-   * @param offsetTop
    */
   private applyOptions(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
     fabricObject.set('left', item.offsetLeft);
@@ -328,8 +272,6 @@ export class PresetService {
 
   /**
    * some object operations can only be done after object is painted on canvas
-   * @param fabricObject
-   * @param item
    */
   private afterAddToCanvasAttributes(fabricObject: Object, item: PresetObject) {
     if (item.zIndex) {
@@ -337,13 +279,5 @@ export class PresetService {
       fabricObject.moveTo(item.zIndex);
       this.canvas.renderAll();
     }
-  }
-
-  /**
-   * Adds the object to the canvas
-   * Also adds object and item to a list
-   */
-  public addObjectToCanvas(object: fabric.Image | fabric.Textbox) {
-    this.canvas.add(object);
   }
 }

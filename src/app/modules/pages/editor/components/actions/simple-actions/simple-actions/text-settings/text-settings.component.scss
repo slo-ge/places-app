@@ -1,3 +1,5 @@
+@import 'style';
+
 :host {
   > * {
     margin-right: 5px;
@@ -6,4 +8,16 @@
 
 .font-deco {
   display: flex;
+
+  app-font-weight,
+  app-font-underline {
+    @include action-style;
+  }
+
+  app-text-align {
+    padding: 2px 10px;
+    display: flex;
+    align-items: center;
+  }
 }
+

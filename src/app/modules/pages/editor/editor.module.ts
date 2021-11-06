@@ -25,6 +25,7 @@ import {PresetTagsComponent} from './components/sidebar/layout-selector/preset-t
 import {MetaDataActionStaticImageComponent} from './components/sidebar/meta-data-action-static-image/meta-data-action-static-image.component';
 import {TabDownloadComponent} from '@app/modules/pages/editor/components/sidebar/tab-download/tab-download.component';
 import {ZoomComponent} from './components/actions/zoom/zoom.component';
+import { TextAlignComponent } from './components/actions/text-align/text-align.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import {ZoomComponent} from './components/actions/zoom/zoom.component';
     TabComponent,
     PresetTagsComponent,
     MetaDataActionStaticImageComponent,
-    ZoomComponent
+    ZoomComponent,
+    TextAlignComponent
   ],
   imports: [
     CommonModule,

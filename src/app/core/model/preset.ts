@@ -76,6 +76,7 @@ export interface PresetObject {
   zIndex?: number;
   objectPosition?: ObjectPosition;
   font?: Font;
+  textAlignment?: any;
 }
 
 export interface PresetObjectStaticText extends PresetObject {

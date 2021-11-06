@@ -107,7 +107,6 @@ export class AlignmentService {
   }
 
   move(aligner: ObjectAlignments | SimpleAlignments, canvas: Canvas, active: FabricObject) {
-    console.log(aligner);
     this.canvas = canvas;
     this.active = active;
     this.alignmentActions[aligner]();

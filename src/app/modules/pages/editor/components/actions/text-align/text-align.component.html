@@ -1,0 +1,5 @@
+<div *ngFor="let position of positions | keyvalue:originalOrder"
+     (click)="changeTextAlign(position.key)"
+    [class.active]="position.key === this.currentAlign">
+  <fa-icon [icon]="position.value"></fa-icon>
+</div>

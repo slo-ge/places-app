@@ -35,7 +35,7 @@
       Textbox
     </div>
   </div>
-  <h3>Add Media Elements</h3>
-  <app-meta-data-action-static-image
+  <h4 class="media-elements" (click)="showMedia = !showMedia">Show Media Elements</h4>
+  <app-meta-data-action-static-image *ngIf="showMedia"
     (selectStaticImageUrl)="addStaticImage($event)"></app-meta-data-action-static-image>
 </div>

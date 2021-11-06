@@ -123,3 +123,15 @@ $breakpoints: (
   scrollbar-color: $grey-2 $grey-0;
   scrollbar-width: thin !important;
 }
+
+@mixin action-style {
+  padding: 2px 10px;
+  display: flex;
+  align-items: center;
+
+  &.active, &:hover {
+    border-radius: $common-border-radius;
+    text-decoration: underline;
+    background-color: $grey-0;
+  }
+}

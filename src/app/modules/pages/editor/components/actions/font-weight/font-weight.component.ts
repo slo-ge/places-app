@@ -16,7 +16,7 @@ export class FontWeightComponent {
   constructor() {
   }
 
-  @HostBinding('class.bold')
+  @HostBinding('class.active')
   get cls() {
     return this.activeObject.fontWeight === 'bold';
   }

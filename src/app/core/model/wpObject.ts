@@ -1,4 +1,5 @@
 import {WpEmbed} from "./embed";
+import {Tag} from "@places/core/model/tags";
 
 export interface WpObject {
     id: number;
@@ -36,7 +37,8 @@ export interface ContentRendered {
 export interface ACF {
     place: Place;
     description: Description[];
-    mainCategory: Category;
+    mainCategory?: Category;
+    mainTag?: Tag;
 }
 
 export interface Category {

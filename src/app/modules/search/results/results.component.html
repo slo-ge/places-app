@@ -18,7 +18,7 @@
         <app-selected-tag></app-selected-tag>
         <app-full-text-search-bubble></app-full-text-search-bubble>
     </div>
-    <div class="places">
+    <div class="places" *ngIf="!loading">
         <ng-container *ngFor="let place of locations">
             <app-place [place]="place"></app-place>
         </ng-container>

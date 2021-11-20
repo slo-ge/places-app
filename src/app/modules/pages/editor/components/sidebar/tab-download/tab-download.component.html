@@ -1,5 +1,5 @@
 <div class="toggle">
-  <button (click)="downloadImage()"
+  <button (click)="downloadImage(); openFeedbackOnlyOnFirstTime()"
           trackClick="Download {{presetService?.preset?.title}} (ID: {{presetService?.preset?.id}})"
           trackingCategory="Download">
     Download

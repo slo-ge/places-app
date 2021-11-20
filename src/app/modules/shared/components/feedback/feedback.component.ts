@@ -1,21 +1,8 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 import {faSync} from "@fortawesome/free-solid-svg-icons/faSync";
+import {CustomOverlayRef} from "@app/modules/overlay/custom-overlay-ref";
 
-interface SimpleFeedBackItem {
-  title: string;
-  selected?: boolean;
-}
-
-const FEED_BACK_ITEMS: SimpleFeedBackItem[] = [
-  {title: 'Thank you'},
-  {title: 'I like your tool'},
-  {title: 'Go on with some new features'},
-  {title: 'It works, but needs to be improved'},
-  {title: 'I don\'t understand this tool'},
-  {title: 'Fuck off, it does not work'}
-];
 
 @Component({
   selector: 'app-feedback',
@@ -27,32 +14,12 @@ export class FeedbackComponent {
     text: new FormControl('', Validators.required),
   });
 
-  formSent = false;
-  fastFeedbackSent = false;
-
-  TRACKING_PREFIX = 'Feedback';
-  feedBackItems = FEED_BACK_ITEMS;
-
   faRefresh = faSync;
 
-  constructor(private trackingService: GoogleAnalyticsService) {
+  constructor(private overlay: CustomOverlayRef) {
   }
 
-  sendFeedback() {
-    this.formSent = true;
-    this.trackingService.triggerClick(`${this.TRACKING_PREFIX} ${this.simpleTextFeedback.getRawValue()['text']}`)
-    this.simpleTextFeedback.reset();
-  }
-
-  highlightSimpleFeedback(feedBackItem: SimpleFeedBackItem) {
-    if (!feedBackItem.selected) {
-      this.trackingService.triggerClick(`${this.TRACKING_PREFIX}: ${feedBackItem.title}`)
-      this.fastFeedbackSent = true;
-    }
-    if(feedBackItem.selected) {
-      this.fastFeedbackSent = false;
-    }
-
-    feedBackItem.selected = !feedBackItem.selected;
+  close() {
+    this.overlay.close();
   }
 }

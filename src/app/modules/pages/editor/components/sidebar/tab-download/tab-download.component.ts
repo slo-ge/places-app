@@ -9,8 +9,7 @@ import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
 import {getScaledImage} from "@app/core/editor/canvas.utils";
-import {OverlayService} from "@app/modules/overlay/overlay.service";
-import {FeedbackComponent} from "@app/modules/shared/components/feedback/feedback.component";
+import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
 
 @Component({
   selector: 'app-tab-download',
@@ -35,7 +34,8 @@ export class TabDownloadComponent implements OnChanges, OnInit {
   constructor(private downloadService: DownloadCanvasService,
               private formBuilder: FormBuilder,
               private cmsService: CmsService,
-              private authService: CmsAuthService) {
+              private authService: CmsAuthService,
+              private feedbackService: FeedbackService) {
   }
 
   ngOnInit(): void {
@@ -53,27 +53,14 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     this.downloadService.download();
   }
 
+  openFeedbackOnlyOnFirstTime() {
+    this.feedbackService.openAtFirstTime();
+  }
+
   downloadVideo(number: number) {
     this.recording = true;
     setTimeout(() => this.recording = false, number);
     this.downloadService.downloadAsVideo(number || 4000);
-  }
-
-
-  private uploadImage() {
-    if (!this.presetService) {
-      console.error('preset service is not present in button-download');
-      return;
-    }
-
-    const originCanvas = this.presetService.canvas.getElement();
-    const tmpCanvas = getScaledImage(originCanvas, 800, 800);
-    tmpCanvas.toBlob((blob: any) => {
-      let file = new File([blob], "fileName.jpg", {type: "image/jpeg"});
-      this.cmsService.createPreview(file, this.presetService!.metaMapperData)
-        .pipe(take(1))
-        .subscribe();
-    });
   }
 
   /**
@@ -93,5 +80,21 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     } else {
       console.log('static url can not be created');
     }
+  }
+
+  private uploadImage() {
+    if (!this.presetService) {
+      console.error('preset service is not present in button-download');
+      return;
+    }
+
+    const originCanvas = this.presetService.canvas.getElement();
+    const tmpCanvas = getScaledImage(originCanvas, 800, 800);
+    tmpCanvas.toBlob((blob: any) => {
+      let file = new File([blob], "fileName.jpg", {type: "image/jpeg"});
+      this.cmsService.createPreview(file, this.presetService!.metaMapperData)
+        .pipe(take(1))
+        .subscribe();
+    });
   }
 }

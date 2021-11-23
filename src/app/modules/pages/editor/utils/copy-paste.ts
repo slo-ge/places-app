@@ -10,10 +10,10 @@ import {CustomObject} from "@app/core/editor/fabric-object.utils";
 let clipboard: any | null = null;
 
 
+
 export function copyPasteKeyPress($event: KeyboardEvent,
                                   activeObject: any,
                                   canvas: fabric.Canvas) {
-  console.log(activeObject, clipboard, canvas);
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'c') {
     copy(activeObject);
   }
@@ -28,13 +28,16 @@ export function copy(activeObject: any): void {
   });
 }
 
-export function paste(canvas: fabric.Canvas): void {
-  if (clipboard === null) {
+export function paste(canvas: fabric.Canvas, existingClone?: fabric.Object): void {
+  if (clipboard === null && existingClone === null) {
     return;
   }
 
-  clipboard.clone((clonedObj: any) => {
-    if (clonedObj === undefined || !clipboard) {
+  const cloneableObject = existingClone || clipboard;
+
+
+  cloneableObject.clone((clonedObj: any) => {
+    if (clonedObj === undefined || !cloneableObject) {
       return;
     }
 
@@ -55,10 +58,14 @@ export function paste(canvas: fabric.Canvas): void {
       canvas.add(clonedObj);
     }
 
-    clipboard.top += 10;
-    clipboard.left += 10;
+    cloneableObject.top += 10;
+    cloneableObject.left += 10;
 
     canvas.setActiveObject(clonedObj);
     canvas.requestRenderAll();
   });
+}
+
+export function isSomethingSelected(): boolean {
+  return !!clipboard;
 }

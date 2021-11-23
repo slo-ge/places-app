@@ -26,6 +26,7 @@ import {MetaDataActionStaticImageComponent} from './components/sidebar/meta-data
 import {TabDownloadComponent} from '@app/modules/pages/editor/components/sidebar/tab-download/tab-download.component';
 import {ZoomComponent} from './components/actions/zoom/zoom.component';
 import { TextAlignComponent } from './components/actions/text-align/text-align.component';
+import { ObjectCopyComponent } from './components/actions/object-copy/object-copy.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { TextAlignComponent } from './components/actions/text-align/text-align.c
     PresetTagsComponent,
     MetaDataActionStaticImageComponent,
     ZoomComponent,
-    TextAlignComponent
+    TextAlignComponent,
+    ObjectCopyComponent
   ],
   imports: [
     CommonModule,

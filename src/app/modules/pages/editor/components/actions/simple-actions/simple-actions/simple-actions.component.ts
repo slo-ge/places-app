@@ -20,6 +20,7 @@ import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabr
 import {ObjectPosition} from "@app/core/model/preset";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {Subscription} from "rxjs";
+import {copyPasteKeyPress} from "@app/modules/pages/editor/utils/copy-paste";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -59,7 +60,7 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private  editorService: EditorService,
+  constructor(private editorService: EditorService,
               private alignmentService: AlignmentService,
               // used in template, dirty.
               public authService: CmsAuthService) {
@@ -85,15 +86,20 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
     this.removeActiveObject();
   }
 
-    /**
-     * this is the deselect logic,
-     * but at least it does not work correctly because of the
-     * sketchy canvas container. It only removes selection on double click
-     */
-    @HostListener('document:keydown.esc', ['$event'])
-    onKeyDown(_event: any): void {
-        this.canvas.discardActiveObject().renderAll();
-    }
+  @HostListener('document:keydown', ['$event'])
+  onKeyPress($event: KeyboardEvent) {
+    copyPasteKeyPress($event, this.activeObject,  this.canvas);
+  }
+
+  /**
+   * this is the deselect logic,
+   * but at least it does not work correctly because of the
+   * sketchy canvas container. It only removes selection on double click
+   */
+  @HostListener('document:keydown.esc', ['$event'])
+  onKeyDown(_event: any): void {
+    this.canvas.discardActiveObject().renderAll();
+  }
 
   removeActiveObject() {
     this.canvas.remove(this.activeObject);
@@ -150,7 +156,7 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
   alignmentAction(aligner: ObjectAlignments | SimpleAlignments) {
     this.alignmentService.move(aligner, this.canvas, this.activeObject);
   }
-  
+
   moveToBack() {
     const activeObject = this.activeObject;
     const position = this.canvas.getObjects().indexOf(activeObject);

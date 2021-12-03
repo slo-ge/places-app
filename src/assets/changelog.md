@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.7 (2021-12-03)
+update to angular 12
+
 ## 0.1.6 (2021-11-23)
 copy paste function 
 

@@ -102,7 +102,13 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
   }
 
   removeActiveObject() {
-    this.canvas.remove(this.activeObject);
+    const removableObjects = typeof this.activeObject?.getObjects === 'function'
+      ? this.activeObject.getObjects()
+      : [this.activeObject];
+
+    for (const obj of removableObjects) {
+      this.canvas.remove(obj);
+    }
   }
 
   selectionEvent(_e: IEvent) {

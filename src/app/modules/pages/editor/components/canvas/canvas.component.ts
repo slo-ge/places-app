@@ -78,19 +78,6 @@ export class CanvasComponent implements OnInit, OnChanges {
                 centeredScaling: true,
                 allowTouchScrolling: true
             });
-
-
-            // scrolling for mobile events, because sometimes it jumps to any point in view
-            // TODO: for better mobile ux
-            /*this.canvas.on({
-              'text:editing:entered': (textObject: any) => {
-                // calculate canvas offset and textObject offset and scroll to this position
-                const yOffset = textObject.target.top || 0;
-                const y = this.canvas.getElement().getBoundingClientRect().top + window.pageYOffset + yOffset;
-                window.scrollTo({top: y, behavior: 'smooth'});
-              }
-            });*/
-
             this.editorService.setCanvas(this.canvas);
         } else {
             this.canvas.clear();

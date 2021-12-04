@@ -45,7 +45,7 @@ main {
     z-index: $z-index-highlight;
     background-color: white;
     border-bottom: 1px solid $grey-1;
-    box-shadow: $box-shadow-dark;
+    box-shadow: $box-shadow-right-bottom;
 
     @include respond-below(sm) {
       position: sticky;

@@ -1,4 +1,6 @@
 # Changelog
+### 0.1.8 (Not released)
+bugfix: deletion of multiple items works 
 
 ## 0.1.7 (2021-12-03)
 update to angular 12

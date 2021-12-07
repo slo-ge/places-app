@@ -29,11 +29,19 @@ export class MetaDataActionStaticImageComponent implements OnInit {
       take(1),
       mergeMap(image => image),
       map(image => ({
-            thumbnailUrl: toAbsoluteCMSUrl(image.formats.thumbnail.url),
+            thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),
             url:toAbsoluteCMSUrl(image.url)
         })),
       toArray()
     );
+  }
+
+  private static getSmallestUrl(image: BackgroundImage){
+    if (image.formats?.thumbnail?.url) {
+      return image.formats.thumbnail.url;
+    }
+
+    return image.url;
   }
 
   selectImage(image: StaticImage) {

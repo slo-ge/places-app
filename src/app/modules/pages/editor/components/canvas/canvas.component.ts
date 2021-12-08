@@ -75,8 +75,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     refreshCanvas() {
         if (this.canvas == null) {
             this.canvas = new fabric.Canvas('myCanvas', {
-                centeredScaling: true,
-                allowTouchScrolling: true
+              preserveObjectStacking: true // keeps all objects on der layer position when moving
             });
             this.editorService.setCanvas(this.canvas);
         } else {

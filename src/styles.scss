@@ -64,3 +64,9 @@ app-loading-animation {
   margin: 0 auto;
   text-align: center;
 }
+
+// this fixes the jump to bottom when selecting a textarea on the bottom of the screen
+// see also: https://github.com/fabricjs/fabric.js/issues/2904#issuecomment-332622993
+textarea[data-fabric-hiddentextarea]{
+  position: fixed !important;
+}

@@ -1,5 +1,14 @@
 # Changelog
-### 0.1.8 (Not released)
+### 0.1.9 
+Bugfix: viewport does not jump when clicking 
+on textfields on bottom of the screen
+
+also: 
++ Do not move layers to top if they are selected, they now stay on their position. 
++ Make action bar now sticky, and make canvas container scrollable
+
+
+### 0.1.8 
 bugfix: deletion of multiple items works 
 
 ## 0.1.7 (2021-12-03)

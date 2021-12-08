@@ -22,8 +22,6 @@ canvas {
   background: white;
   overflow: hidden;
   box-shadow: $box-shadow-dark;
-  touch-action: manipulation;
-  pointer-events: none;
 }
 
 
@@ -38,7 +36,14 @@ main {
   position: relative;
   width: 100%;
 
+
   .canvas-actions {
+
+    @include respond-below(sm) {
+      position: sticky;
+      top: 0;
+    }
+
     position: absolute;
     left: 0;
     right: 0;
@@ -46,11 +51,6 @@ main {
     background-color: white;
     border-bottom: 1px solid $grey-1;
     box-shadow: $box-shadow-right-bottom;
-
-    @include respond-below(sm) {
-      position: sticky;
-      top: 0;
-    }
 
     .actions-row {
       min-height: 60px;
@@ -65,7 +65,10 @@ main {
   }
 
   .canvas-wrapper {
-    margin: 120px 0;
+    @include scroll-style;
+    overflow-y: scroll;
+    height: 85vh; // TODO: this need to get calculated
+    padding: 120px 0;
     width: 100%;
     display: flex;
     align-items: center;

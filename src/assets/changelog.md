@@ -1,4 +1,10 @@
 # Changelog
+
+
+### 0.1.10 
+Bugfix: fix copy paste function
+(but it still needs to be improved)
+
 ### 0.1.9 
 Bugfix: viewport does not jump when clicking 
 on textfields on bottom of the screen

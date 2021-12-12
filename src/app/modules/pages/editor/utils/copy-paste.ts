@@ -1,5 +1,5 @@
 import {fabric} from "fabric";
-import {CustomObject} from "@app/core/editor/fabric-object.utils";
+import {CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 
 /**
  * TODO:
@@ -14,6 +14,9 @@ let clipboard: any | null = null;
 export function copyPasteKeyPress($event: KeyboardEvent,
                                   activeObject: any,
                                   canvas: fabric.Canvas) {
+
+  // TODO: fix copy paste function,
+  // it should not copy if there is a string selected
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'c') {
     copy(activeObject);
   }
@@ -23,18 +26,18 @@ export function copyPasteKeyPress($event: KeyboardEvent,
 }
 
 export function copy(activeObject: any): void {
+  clipboard = null;
   activeObject?.clone((obj: CustomObject) => {
     clipboard = obj;
   });
 }
 
 export function paste(canvas: fabric.Canvas, existingClone?: fabric.Object): void {
-  if (clipboard === null && existingClone === null) {
+  if (clipboard === null && (existingClone === null || existingClone === undefined)) {
     return;
   }
 
   const cloneableObject = existingClone || clipboard;
-
 
   cloneableObject.clone((clonedObj: any) => {
     if (clonedObj === undefined || !cloneableObject) {

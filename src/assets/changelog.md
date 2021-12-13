@@ -1,5 +1,6 @@
 # Changelog
-
+### 0.1.11
+Bugfix: Fix copy and paste officially 
 
 ### 0.1.10 
 Bugfix: fix copy paste function

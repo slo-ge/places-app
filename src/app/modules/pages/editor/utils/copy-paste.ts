@@ -7,21 +7,27 @@ import {CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils"
  *  - todo: clipboard state should not be here in this class
  *  - todo: get
  */
+
 let clipboard: any | null = null;
+const IS_FABRIC_OBJECT_COPY_ACTION = 'fabric-copy';
 
 
-
-export function copyPasteKeyPress($event: KeyboardEvent,
+export async function copyPasteKeyPress($event: KeyboardEvent,
                                   activeObject: any,
                                   canvas: fabric.Canvas) {
-
-  // TODO: fix copy paste function,
-  // it should not copy if there is a string selected
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'c') {
-    copy(activeObject);
+    // if we have selected some text inside the text box, we do not copy the whole object
+    if (activeObject && !activeObject.isEditing) {
+      await navigator.clipboard.writeText(IS_FABRIC_OBJECT_COPY_ACTION); // set that the current copy is an fabric copy
+      copy(activeObject);
+    }
   }
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'v') {
-    paste(canvas);
+    // only if it is a FABRIC_COPY then we should clone the active object
+    const text = await navigator.clipboard.readText();
+    if(text === IS_FABRIC_OBJECT_COPY_ACTION) {
+      paste(canvas);
+    }
   }
 }
 

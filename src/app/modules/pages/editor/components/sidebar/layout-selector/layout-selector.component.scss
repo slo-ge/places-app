@@ -33,35 +33,56 @@ button {
     position: relative;
     cursor: pointer;
 
-
     &-title {
       position: absolute;
       text-align: center;
       top: 0;
       bottom: 0;
       width: 100%;
-
+      border-radius: $common-border-radius;
       font-weight: bold;
+      font-size: 12px;
       background-color: white;
       opacity: 0;
       transition: 0.4s;
+      color: $primary-dark;
     }
 
     &:hover &-title {
       opacity: 0.9;
     }
-
+    .no-image,
     video,
     img {
       object-fit: cover;
       width: 120px;
-      height: 160px;
+      height: 120px;
       border-radius: $common-border-radius;
 
       @include respond-below(sm) {
         width: 60px;
         height: 60px;
       }
+    }
+
+    .video-icon {
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      color: white;
+    }
+  }
+
+  .no-image {
+    font-size: 10px;
+    color: black;
+    background: $gradient-background;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span {
+      text-decoration: none;
     }
   }
 }

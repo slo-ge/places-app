@@ -53,6 +53,8 @@ export interface Preset {
   fontFamilyHeadingCSS?: string;
 
   itemsJson?: Array<PresetObject | PresetObjectStaticText>;
+
+  preview?: BackgroundImage;
 }
 
 export interface PresetObject {

@@ -1,4 +1,9 @@
 # Changelog
+### 0.1.12
+Optimize Layout selector 
+* with video symbol
+* with preview image 
+
 ### 0.1.11
 Bugfix: Fix copy and paste officially 
 

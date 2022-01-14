@@ -2,6 +2,8 @@
 
 :host {
   font-size: 14px;
+  display: flex;
+  align-items: center;
 }
 
 .object-actions {
@@ -15,12 +17,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  cursor: pointer;
   font-size: 25px;
-
-  > div {
-    margin-right: 10px;
-  }
 }
 
 .grid-alignment {
@@ -99,4 +96,17 @@
 
 .select-items {
   color: $grey-2;
+}
+
+.more-actions {
+  margin-left: 10px;
+  display: flex;
+
+  fa-icon {
+    margin-right: 5px;
+  }
+}
+
+.undo-container {
+  margin: 10px;
 }

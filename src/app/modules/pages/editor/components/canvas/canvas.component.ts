@@ -14,6 +14,7 @@ import { DEFAULT_ITEMS, mergeLayouts } from "@app/modules/pages/editor/component
 import { Canvas } from "fabric/fabric-impl";
 import { ActivatedRoute } from "@angular/router";
 import { CmsAuthService } from "@app/core/services/cms-auth.service";
+import {SaveService} from "@app/core/editor/save.service";
 
 
 @Component({
@@ -39,11 +40,13 @@ export class CanvasComponent implements OnInit, OnChanges {
 
     sentUpdateResponse: string | null = '';
     zoomFactor = 0.7;
+    loading = true;
 
     constructor(private editorService: EditorService,
                 private cmsService: CmsService,
                 private authService: CmsAuthService,
-                private activatedRoute: ActivatedRoute) {
+                private activatedRoute: ActivatedRoute,
+                private saveService: SaveService) {
     }
 
 
@@ -73,15 +76,16 @@ export class CanvasComponent implements OnInit, OnChanges {
      * we need to refresh the canvas;
      */
     refreshCanvas() {
+        this.loading = true;
         if (this.canvas == null) {
             this.canvas = new fabric.Canvas('myCanvas', {
               preserveObjectStacking: true // keeps all objects on der layer position when moving
             });
-            this.editorService.setCanvas(this.canvas);
         } else {
             this.canvas.clear();
         }
 
+        this.editorService.setCanvas(this.canvas);
         this.preset = mergeLayouts(this.preset);
 
         if (this.metaProperties) {
@@ -95,7 +99,16 @@ export class CanvasComponent implements OnInit, OnChanges {
             this.canvas.setWidth(this.preset.width);
             this.canvas.renderAll();
 
-            this.currentPresetService.initObjectsOnCanvas();
+            this.currentPresetService.initObjectsOnCanvas().then(
+              () => {
+                this.saveService.init(this.canvas);
+                this.loading = false;
+              },
+              err => {
+                console.error(err);
+                this.loading = false;
+              }
+            );
 
         }
     }

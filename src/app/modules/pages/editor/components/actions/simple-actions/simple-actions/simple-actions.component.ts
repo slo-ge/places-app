@@ -5,6 +5,7 @@ import {
   faAlignCenter,
   faCaretSquareLeft,
   faCaretSquareRight,
+  faEllipsisV,
   faLayerGroup,
   faSync,
   faTh,
@@ -44,15 +45,15 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
   iconRotate = faSync;
   iconLayer = faLayerGroup;
   iconRasta = faTh;
+  iconMore = faEllipsisV;
+
   objectAlignments = dictToKeys(ObjectAlignments);
   simpleAlignments = SimpleAlignments;
-
 
   fabricType = FabricType;
   selectedType: FabricType | null = null;
 
   ObjectPosition = ObjectPosition;
-
   /**
    * holds the selected Object, if it is selected
    */
@@ -67,7 +68,6 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // TODO: kill subscription in onDestroy!
     const sub = this.editorService.getCanvas().subscribe(canvas => {
       this.canvas = canvas;
       this.canvas.on(
@@ -111,7 +111,7 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectionEvent(_e: IEvent) {
+  private selectionEvent(_e: IEvent) {
     this.activeObject = this.canvas.getActiveObject();
     this.activeObject.set({
       borderColor: '#20bfa9',
@@ -132,7 +132,7 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
+  private selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.activeObject = null;
     this.selectedType = null;
   }

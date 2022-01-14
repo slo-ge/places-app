@@ -1,0 +1,9 @@
+<div class="wrapper">
+  <div class="action-tile" [class.disabled]="!(isUndoable$ | async)">
+    <fa-icon [icon]="iconUndo" (click)="undo()"></fa-icon>
+  </div>
+  <div class="action-tile" [class.disabled]="!(isReDoable$ | async)">
+    <fa-icon [icon]="iconRedo" (click)="redo()"></fa-icon>
+  </div>
+</div>
+

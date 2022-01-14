@@ -27,6 +27,7 @@ import {TabDownloadComponent} from '@app/modules/pages/editor/components/sidebar
 import {ZoomComponent} from './components/actions/zoom/zoom.component';
 import { TextAlignComponent } from './components/actions/text-align/text-align.component';
 import { ObjectCopyComponent } from './components/actions/object-copy/object-copy.component';
+import { UndoRedoComponent } from './components/actions/undo-redo/undo-redo.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ObjectCopyComponent } from './components/actions/object-copy/object-cop
     MetaDataActionStaticImageComponent,
     ZoomComponent,
     TextAlignComponent,
-    ObjectCopyComponent
+    ObjectCopyComponent,
+    UndoRedoComponent
   ],
   imports: [
     CommonModule,

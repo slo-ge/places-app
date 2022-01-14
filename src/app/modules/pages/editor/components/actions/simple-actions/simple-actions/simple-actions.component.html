@@ -1,13 +1,15 @@
 <div class="object-actions" *ngIf="activeObject; else selectItem">
   <div class="align-actions">
-    <div (click)="removeActiveObject()">
+    <div class="action-tile -big" (click)="removeActiveObject()">
       <fa-icon [icon]="iconRemove"></fa-icon>
     </div>
-    <div (click)="turn90()">
+    <div class="action-tile -big" (click)="turn90()">
       <fa-icon [icon]="iconRotate"></fa-icon>
     </div>
     <div class="toggle grid-alignment">
-      <fa-icon [icon]="iconRasta"></fa-icon>
+      <div class="action-tile -big">
+        <fa-icon [icon]="iconRasta"></fa-icon>
+      </div>
       <div class="toggle-content align-classes">
         <div class="simple-aligners">
           <span (click)="alignmentAction(simpleAlignments.Left)"><fa-icon [icon]="iconLeft"></fa-icon></span>
@@ -31,31 +33,59 @@
 
         <div class="fixed-position" *ngIf="authService.getUser() | async">
           <div>Position:</div>
-          <div (click)="position(ObjectPosition.RELATIVE)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative</div>
-          <div (click)="position(ObjectPosition.ABSOLUTE_X)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED || activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X">fix X</div>
-          <div (click)="position(ObjectPosition.ABSOLUTE_Y)" [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_Y">fix Y</div>
-          <div (click)="position(ObjectPosition.ABSOLUTE_XY)" [class.active]=" activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_XY">fix XY</div>
+          <div (click)="position(ObjectPosition.RELATIVE)"
+               [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative
+          </div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_X)"
+               [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_DEPRECATED || activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_X">
+            fix X
+          </div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_Y)"
+               [class.active]="activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_Y">fix Y
+          </div>
+          <div (click)="position(ObjectPosition.ABSOLUTE_XY)"
+               [class.active]=" activeObject.presetObjectPosition === ObjectPosition.ABSOLUTE_XY">fix XY
+          </div>
         </div>
 
       </div>
     </div>
-    <div>
-      <app-object-copy [customObject]="activeObject"></app-object-copy>
-    </div>
+
+    <app-object-copy [customObject]="activeObject"></app-object-copy>
   </div>
 
-    <div class="font-sizer border-box">
-        <label>Size</label>
-        <input type="number" id="points" name="points" step="1" #sizer (input)="changeSize(sizer.value)" [value]="activeRangeSliderCurrentValue">
-        <div>px</div>
-    </div>
+  <div class="font-sizer border-box">
+    <label>Size</label>
+    <input type="number" id="points" name="points" step="1" #sizer (input)="changeSize(sizer.value)"
+           [value]="activeRangeSliderCurrentValue">
+    <div>px</div>
+  </div>
 
   <div class="type-settings" [ngSwitch]="selectedType">
     <app-text-settings *ngSwitchCase="fabricType.TEXTBOX" [textBox]="canvas.getActiveObject()"></app-text-settings>
   </div>
+
+
 </div>
 
 
 <ng-template #selectItem>
   <div class="select-items">Add new items or rearrange objects in the editor.</div>
 </ng-template>
+
+
+<div class="toggle">
+  <div class="more-actions">
+    <fa-icon [icon]="iconMore"></fa-icon>
+    more
+  </div>
+  <div class="toggle-content">
+    <div *ngIf="canvas?.getActiveObject()">Font Background
+    <app-font-background  [textBox]="canvas.getActiveObject()"></app-font-background>
+      </div>
+    <div class="undo-container">
+      <div>Undo/Redo (beta)</div>
+      <app-undo-redo></app-undo-redo>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,13 @@
 # Changelog
+### 0.1.13
+Undo/Redo function (beta)
+* undoing and redoing changes with component
+* (Problem: does not work with all actions i.e. text alignment)
+
+Also: 
+* loading spinner for rendering template
+* make zoom toolbar sticky not fixed 
+* 
 ### 0.1.12
 Optimize Layout selector 
 * with video symbol

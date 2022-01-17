@@ -21,6 +21,11 @@ const routes: Routes = [
   {
     path: 'render',
     loadChildren: () => import('./modules/pages/render/render.module').then(m => m.RenderModule)
+  },
+  {
+    path: 'info',
+    component: DefaultLayoutComponent,
+    loadChildren: () => import('./modules/pages/static-page/static-page.module').then(m => m.StaticPageModule)
   }
 ];
 

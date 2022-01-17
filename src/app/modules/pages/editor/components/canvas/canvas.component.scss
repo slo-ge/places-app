@@ -128,9 +128,10 @@ aside {
 }
 
 app-zoom {
-  position: fixed;
-  right: 0;
-  bottom: 0;
+  position: sticky;
+  float: right;
+  right: 5px;
+  bottom: 5px;
 }
 
 .notification {

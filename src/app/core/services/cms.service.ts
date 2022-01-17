@@ -50,6 +50,9 @@ export interface UrlItem {
 export interface Settings {
   GoogleFonts: Font[];
   ExampleUrls: UrlItem[];
+  MarketingText: string;
+  Imprint: string;
+  HelpText: string;
 }
 
 export interface Tag {

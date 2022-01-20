@@ -22,7 +22,8 @@ export class StaticContentAdapter implements EditorPreviewInfoService {
       description: this.data.get('description') || '',
       url: 'static entry with no url',
       image: this.data.get('imageUrl'),
-      iconUrl: this.data.get('iconUrl')
+      iconUrl: this.data.get('iconUrl'),
+      otherTexts: this.data.getAll('otherTexts') // TODO: this is WIP
     });
   }
 
@@ -44,7 +45,7 @@ export class StaticContentAdapter implements EditorPreviewInfoService {
     url.searchParams.append('adapter', ApiAdapter.STATIC);
     url.searchParams.append('imageUrl', preset.image || '');
     url.searchParams.append('iconUrl', preset.iconUrl || '');
-
+    // TODO: implement for otherTexts, see @MetaMapperData otherTexts
     return url;
   }
 }

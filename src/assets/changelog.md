@@ -1,4 +1,7 @@
 # Changelog
+### 0.1.14
+WIP: Using other texts for static 
+
 ### 0.1.13
 Undo/Redo function (beta)
 * undoing and redoing changes with component

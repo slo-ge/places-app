@@ -10,4 +10,5 @@ export interface MetaMapperData {
   iconUrl?: string | null;
   url: string;
   displayPrice?: string | null;
+  otherTexts?: string[]; // TODO: this should also have a position {text: 'lorem', position: 'pos1'}, to found the correct position in preset
 }

@@ -154,6 +154,20 @@ export function getMetaFieldOrStaticField(metaProperties: MetaMapperData, preset
       return metaProperties.image || FALLBACKS.image;
     }
     case LayoutItemType.STATIC_TEXT: {
+      /*
+       If staticTexts Parameter is set, we override the given static text
+       with the text of the meta object, see: @StaticContentAdapter. This is currently
+       only implemented in the @StaticContentAdapter
+       By just removing all staticTexts
+       // TODO: this is WIP, because we do also need the get the correct position of the static text,
+       // TODO: which should be replaced.
+       */
+      if(metaProperties.otherTexts?.length) {
+        const item =  metaProperties.otherTexts.shift();
+        if (item !== undefined) {
+          return item;
+        }
+      }
       return (presetObject as PresetObjectStaticText).text || FALLBACKS[LayoutItemType.STATIC_TEXT];
     }
     case LayoutItemType.STATIC_IMAGE: {

@@ -1,4 +1,8 @@
 # Changelog
+
+### 0.1.15
+scroll buttons for preset tags 
+
 ### 0.1.14
 WIP: Using other texts for static 
 

@@ -52,3 +52,31 @@
   content: '';
   width: 10px;
 }
+
+.container {
+  position: relative;
+
+  .scroll-left,
+  .scroll-right {
+    z-index: 20;
+    position: sticky;
+    padding: 5px 10px;
+    background: rgb(255,255,255);
+    color: $grey-2;
+    top: 0;
+    bottom: 0;
+  }
+
+  .scroll-left {
+    padding-left: 4px;
+    left: 0;
+    background: linear-gradient(90deg, $grey-0 50%, rgba(255,255,255,0) 100%);
+  }
+
+  .scroll-right {
+    padding-right: 4px;
+    right: 0;
+    background: linear-gradient(270deg, $grey-0 50%, rgba(255,255,255,0) 100%);
+  }
+
+}

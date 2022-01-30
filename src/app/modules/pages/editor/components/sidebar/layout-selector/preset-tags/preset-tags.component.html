@@ -1,8 +1,10 @@
-<div class="hs full">
+<div class="hs full container" #container>
+  <div class="scroll-left" (click)="scroll(container, 'left')"><fa-icon [icon]="faArrowLeft"></fa-icon></div>
   <div class="item" #rla="routerLinkActive" *ngFor="let tag of tags$ | async" (click)="remove(rla)"
        queryParamsHandling="merge" [queryParams]="{presetTag: tag.id}" trackClick="Popular Tags: {{tag.name}}"
        [routerLink]="['./']" routerLinkActive="active">
     #{{tag.name}}
     <fa-icon *ngIf="rla.isActive" [icon]="faClose"></fa-icon>
   </div>
+  <div class="scroll-right" (click)="scroll(container, 'right')"><fa-icon [icon]="faArrowRight"></fa-icon></div>
 </div>

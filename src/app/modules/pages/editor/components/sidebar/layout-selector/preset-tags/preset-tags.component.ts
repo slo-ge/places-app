@@ -3,6 +3,8 @@ import {CmsService, Tag} from "@app/core/services/cms.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router, RouterLinkActive} from "@angular/router";
 import {faWindowClose} from "@fortawesome/free-solid-svg-icons/faWindowClose";
+import {faAngleLeft} from "@fortawesome/free-solid-svg-icons/faAngleLeft";
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons/faAngleRight";
 
 @Component({
   selector: 'app-preset-tags',
@@ -13,6 +15,8 @@ export class PresetTagsComponent implements OnInit {
   tags$: Observable<Tag[]> | null = null;
 
   faClose = faWindowClose;
+  faArrowLeft = faAngleLeft;
+  faArrowRight = faAngleRight;
 
   constructor(private cmsService: CmsService,
               private route: ActivatedRoute,
@@ -37,5 +41,10 @@ export class PresetTagsComponent implements OnInit {
         queryParamsHandling: 'merge'
       });
     }
+  }
+
+  scroll(container: HTMLDivElement, position: 'left' | 'right' = 'right') {
+    const directionX = container.scrollLeft  + (position === 'right' ? 150 : -150);
+    container.scrollTo({left: directionX, behavior: 'smooth'});
   }
 }

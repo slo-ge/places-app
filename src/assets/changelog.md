@@ -1,4 +1,6 @@
 # Changelog
+### 0.1.16
+Add alignment guidelines with feature service 
 
 ### 0.1.15
 scroll buttons for preset tags 

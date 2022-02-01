@@ -28,6 +28,7 @@ import {ZoomComponent} from './components/actions/zoom/zoom.component';
 import { TextAlignComponent } from './components/actions/text-align/text-align.component';
 import { ObjectCopyComponent } from './components/actions/object-copy/object-copy.component';
 import { UndoRedoComponent } from './components/actions/undo-redo/undo-redo.component';
+import { FeatureComponent } from './components/actions/feature/feature.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { UndoRedoComponent } from './components/actions/undo-redo/undo-redo.comp
     ZoomComponent,
     TextAlignComponent,
     ObjectCopyComponent,
-    UndoRedoComponent
+    UndoRedoComponent,
+    FeatureComponent
   ],
   imports: [
     CommonModule,

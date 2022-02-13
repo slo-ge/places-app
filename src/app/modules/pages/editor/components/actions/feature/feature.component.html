@@ -1,1 +1,5 @@
-<div (click)="enable(FeatureFlag.SNAPPING_LINES)" [class.active]="enabled.includes(FeatureFlag.SNAPPING_LINES)">enable snapping lines</div>
+<div (click)="enable(FeatureFlag.SNAPPING_LINES)" class="action-menu-item" [class.active]="enabled.includes(FeatureFlag.SNAPPING_LINES)">
+  <fa-icon [icon]="faToggleOff" *ngIf="!enabled.includes(FeatureFlag.SNAPPING_LINES)"></fa-icon>
+  <fa-icon [icon]="faToggleOn" *ngIf="enabled.includes(FeatureFlag.SNAPPING_LINES)"></fa-icon>
+  Enable snapping lines
+</div>

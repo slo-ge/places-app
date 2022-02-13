@@ -1,5 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
+
 
 @Component({
   selector: 'app-zoom',
@@ -7,13 +8,19 @@ import {faSearch} from "@fortawesome/free-solid-svg-icons/faSearch";
   styleUrls: ['./zoom.component.scss']
 })
 export class ZoomComponent {
+  @Input()
+  zoomFactor!: number;
+
   @Output()
-  zoomFactor: EventEmitter<number> = new EventEmitter<number>();
+  zoomFactorChange: EventEmitter<number> = new EventEmitter<number>();
+
   zoomIcon = faSearch;
 
-  constructor() { }
+  constructor() {
+  }
 
   changeZoom(zoomFactor: number) {
-      this.zoomFactor.emit(zoomFactor / 100);
+    const zoom = zoomFactor - 50;
+    this.zoomFactorChange.emit( this.zoomFactor * (1 + zoom/100));
   }
 }

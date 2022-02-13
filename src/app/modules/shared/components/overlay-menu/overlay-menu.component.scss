@@ -1,0 +1,18 @@
+.opener {
+  margin-left: 10px;
+  cursor: pointer;
+  display: flex;
+}
+
+.content {
+  width: auto;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  padding: 10px;
+  margin: 0;
+}
+
+.toggle {
+  cursor: pointer;
+}

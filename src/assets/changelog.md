@@ -1,4 +1,15 @@
 # Changelog
+### 0.1.17
+Features: 
++ Add Image filter feature 
+Improvements: 
++ Improve zoom feature 
++ Improve handling of size of canvas for different viewports 
++ Optimize ContentHeights and footer
++ Mobile view v1
++ Enhance Toggles for mobile
+
+
 ### 0.1.16
 Add alignment guidelines with feature service 
 

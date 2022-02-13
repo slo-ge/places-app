@@ -54,7 +54,7 @@ header {
 
 
 main {
-  min-height: $viewport-height;
+  min-height: $content-height;
 }
 
 .background {
@@ -63,7 +63,7 @@ main {
 
 
 footer {
-  height: 30px;
+  height: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;

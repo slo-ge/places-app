@@ -6,11 +6,11 @@
     <div class="action-tile -big" (click)="turn90()">
       <fa-icon [icon]="iconRotate"></fa-icon>
     </div>
-    <div class="toggle grid-alignment">
-      <div class="action-tile -big">
-        <fa-icon [icon]="iconRasta"></fa-icon>
-      </div>
-      <div class="toggle-content align-classes">
+
+    <app-overlay-menu>
+      <div class="opener"><fa-icon [icon]="iconRasta"></fa-icon></div>
+      <div class="closer"><fa-icon [icon]="iconRasta"></fa-icon></div>
+      <div class="content alignment">
         <div class="simple-aligners">
           <span (click)="alignmentAction(simpleAlignments.Left)"><fa-icon [icon]="iconLeft"></fa-icon></span>
           <span (click)="alignmentAction(simpleAlignments.Center)"><fa-icon [icon]="iconCenter"></fa-icon></span>
@@ -49,7 +49,7 @@
         </div>
 
       </div>
-    </div>
+    </app-overlay-menu>
 
     <app-object-copy [customObject]="activeObject"></app-object-copy>
   </div>
@@ -64,8 +64,6 @@
   <div class="type-settings" [ngSwitch]="selectedType">
     <app-text-settings *ngSwitchCase="fabricType.TEXTBOX" [textBox]="canvas.getActiveObject()"></app-text-settings>
   </div>
-
-
 </div>
 
 
@@ -74,19 +72,18 @@
 </ng-template>
 
 
-<div class="toggle">
-  <div class="more-actions">
-    <fa-icon [icon]="iconMore"></fa-icon>
-    more
-  </div>
-  <div class="toggle-content">
-    <div *ngIf="canvas?.getActiveObject()">Font Background
-    <app-font-background  [textBox]="canvas.getActiveObject()"></app-font-background>
-      </div>
-    <div class="undo-container">
+<app-overlay-menu class="more-actions">
+  <span class="opener"><fa-icon [icon]="iconMore"></fa-icon>more</span>
+  <span class="closer"><fa-icon [icon]="iconMore"></fa-icon>close</span>
+  <div class="content">
+    <div>
       <div>Undo/Redo (beta)</div>
       <app-undo-redo></app-undo-redo>
     </div>
+    <div *ngIf="activeObject?.type === fabricType.TEXTBOX">Font Background
+      <app-font-background [textBox]="canvas.getActiveObject()"></app-font-background>
+    </div>
     <app-feature [canvas]="canvas"></app-feature>
+    <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE" [imageObject]="activeObject"></app-image-filter>
   </div>
-</div>
+</app-overlay-menu>

@@ -30,7 +30,6 @@
           </button>
           <div>{{sentUpdateResponse}}</div>
         </ng-container>
-        <button class="secondary mobile-mode" (click)="zoomOut()">Mobile View</button>
         <app-profile></app-profile>
       </tab>
     </tabs>
@@ -48,6 +47,6 @@
     <div class="canvas-wrapper" style="--zoom-factor: {{zoomFactor}}">
       <canvas id="myCanvas"></canvas>
     </div>
-    <app-zoom (zoomFactor)="zoomFactor = $event"></app-zoom>
+    <app-zoom (zoomFactorChange)="setZoomFactor($event)" [zoomFactor]="initZoom"></app-zoom>
   </main>
 </div>

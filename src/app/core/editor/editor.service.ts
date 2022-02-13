@@ -15,6 +15,7 @@ export class EditorService {
   setCanvas(canvas: any) {
     if(this.currentCanvas !== null) {
       EditorService.removeListener(this.currentCanvas);
+      this.currentCanvas.clear();
     }
 
     this.canvas.next(canvas);

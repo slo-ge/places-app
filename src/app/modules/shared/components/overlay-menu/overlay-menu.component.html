@@ -1,0 +1,18 @@
+<div (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin" class="toggle">
+  <ng-container *ngIf="!isOpen">
+    <ng-content select=".opener"></ng-content>
+  </ng-container>
+  <ng-container *ngIf="isOpen">
+    <ng-content select=".closer"></ng-content>
+  </ng-container>
+</div>
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  (backdropClick)="isOpen = false"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  [cdkConnectedOverlayOpen]="isOpen">
+  <div class="content" #content>
+    <ng-content select=".content"></ng-content>
+  </div>
+</ng-template>

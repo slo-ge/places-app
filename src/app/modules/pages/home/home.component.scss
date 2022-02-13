@@ -7,7 +7,7 @@
 section {
   display: block;
   padding: 10px;
-  min-height: $viewport-height;
+  min-height: $content-height;
 
   > *  {
     max-width: 1280px;

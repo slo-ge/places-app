@@ -2,6 +2,7 @@
 // every content access by browser
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import {Font, Preset} from "@app/core/model/preset";
+import {Image} from "fabric/fabric-impl";
 
 export const PROXY_URL = '/api/proxy';
 
@@ -66,4 +67,9 @@ export function isVideoBackground(preset: Preset) {
 export function isAbsoluteUrl(url: string) {
   const r = new RegExp('^(?:[a-z]+:)?//', 'i');
   return r.test(url);
+}
+
+export function resetFabricImage(image: Image): Image {
+  image.filters = [];
+  return image;
 }

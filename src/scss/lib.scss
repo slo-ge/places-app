@@ -24,7 +24,20 @@
 
 
 .border-box {
-  padding: 12px;
+  padding: 10px 12px;
   border: 1px solid $grey-0;
   border-radius: $common-border-radius;
+}
+
+
+.action-menu-item {
+  border-bottom: 1px solid $grey-0;
+  cursor: pointer;
+  padding: 10px;
+  margin: 4px 0;
+
+  &:hover {
+    background: $grey-0;
+    border-radius: $common-border-radius;
+  }
 }

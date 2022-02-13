@@ -1,4 +1,8 @@
 .active {
   padding: 10px;
   width: 280px;
+
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 20px);
 }

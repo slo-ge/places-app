@@ -17,6 +17,10 @@ export class FeatureService {
   private enabled: FeatureFlag[] = [];
 
   enableCanvasFeature(feature: FeatureFlag, canvas: Canvas): FeatureFlag[] {
+    if (this.enabled.includes(feature)) {
+      this.enabled = this.enabled.filter(e => e !== feature);
+      return this.enabled;
+    }
     this.enabled.push(feature);
 
     if (feature === FeatureFlag.SNAPPING_LINES) {

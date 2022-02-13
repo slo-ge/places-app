@@ -13,7 +13,14 @@ import {
   isPositionYFixed,
   isText
 } from "@app/core/editor/fabric-object.utils";
-import {appendFontToDom, isAbsoluteUrl, isVideoBackground, proxiedUrl, toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {
+  appendFontToDom,
+  isAbsoluteUrl,
+  isVideoBackground,
+  proxiedUrl,
+  resetFabricImage,
+  toAbsoluteCMSUrl
+} from "@app/core/editor/utils";
 import {PresetVideo} from "@app/core/editor/preset-video.service";
 import {TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
 import {FontResolver} from "@app/core/editor/resolvers/font.resolver";
@@ -149,9 +156,12 @@ export class PresetService {
         const prom = new Promise<Image>((resolve, _reject) => {
           fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
         });
-        imageCache[proxiedImageUrl] = await prom;
+        imageCache[proxiedImageUrl] = fabric.util.object.clone(await prom);
       }
-      return imageCache[proxiedImageUrl];
+
+      // clear image
+
+      return resetFabricImage(imageCache[proxiedImageUrl]);
     }
 
     console.error('Can not create image, if no URL is set, returning NULL');

@@ -27,8 +27,9 @@ canvas {
 
 ::ng-deep {
   .canvas-container {
-    transform-origin: 0 0 0;
+    transform-origin: top center;
     transform: scale(var(--zoom-factor));
+    position: absolute !important;
   }
 }
 
@@ -57,24 +58,37 @@ main {
       padding-left: 10px;
       display: flex;
       align-items: center;
+
+      @include respond-below(sm) {
+        ::ng-deep {
+          app-simple-actions {
+            overflow-y: auto;
+
+            * {
+              flex-wrap: nowrap;
+            }
+          }
+        }
+      }
     }
   }
 
   .canvas-wrapper {
     @include scroll-style;
+
     overflow-y: scroll;
-    height: 85vh; // TODO: this need to get calculated
-    padding: 120px 0;
+    height: $canvas-height; // TODO: this need to get calculated
     width: 100%;
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+    position: relative;
+    margin-top: $action-row-height * 2;
+
   }
 }
 
 aside {
-
   border-right: 1px solid $grey-1;
   background-color: $grey-0;
 
@@ -86,7 +100,11 @@ aside {
 
   tabs {
     @include respond-above(sm) {
-      min-height: $viewport-height;
+      height: $content-height;
+    }
+
+    tab {
+      height: 100%;
     }
   }
 
@@ -108,8 +126,6 @@ aside {
     width: 280px;
     display: block;
     overflow-y: scroll;
-
-    max-height: $viewport-height;
 
     @include respond-below(sm) {
       height: 250px;
@@ -147,3 +163,4 @@ app-loading-animation {
   top: 2px;
   left: 202px;
 }
+

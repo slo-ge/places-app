@@ -1,6 +1,8 @@
 import {Component, Input} from '@angular/core';
 import {FeatureFlag, FeatureService} from "@app/core/services/feature.service";
 import {Canvas} from "fabric/fabric-impl";
+import {faToggleOn} from "@fortawesome/free-solid-svg-icons/faToggleOn";
+import {faToggleOff} from "@fortawesome/free-solid-svg-icons/faToggleOff";
 
 @Component({
   selector: 'app-feature',
@@ -13,6 +15,9 @@ export class FeatureComponent {
 
   FeatureFlag = FeatureFlag;
   enabled: FeatureFlag[] = [];
+
+  faToggleOn = faToggleOn;
+  faToggleOff = faToggleOff;
 
   constructor(private featureService: FeatureService) { }
 

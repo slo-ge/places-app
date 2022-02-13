@@ -2,5 +2,8 @@
 :host {
   display: block;
   background-color: $grey-0;
-  min-height: $viewport-height;
+
+  @include respond-above(SM) {
+    max-height: $content-height;
+  }
 }

@@ -9,7 +9,7 @@ import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
 import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
 import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 import {OverlayModule} from '@angular/cdk/overlay';
-import {SharedModule} from "@app/modules/shared/shared.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -21,7 +21,8 @@ import {SharedModule} from "@app/modules/shared/shared.module";
     ResultListModule,
     HttpClientModule,
     PageLayoutsModule,
-    OverlayModule
+    OverlayModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

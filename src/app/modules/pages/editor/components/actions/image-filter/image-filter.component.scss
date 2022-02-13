@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+
+  img,
+  .title {
+    cursor: pointer;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+  }
+}

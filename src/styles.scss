@@ -17,10 +17,9 @@ textarea,
 input[type=text], select {
   width: 100%;
   padding: 12px 20px;
-  margin: 8px 0;
   box-sizing: border-box;
   border-radius: $common-border-radius;
-  border: 2px solid $grey-0;
+  border: 1px solid $grey-0;
 }
 
 input[type=number] {

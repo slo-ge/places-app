@@ -20,52 +20,45 @@
   font-size: 25px;
 }
 
-.grid-alignment {
-  position: relative;
+.alignment {
+  font-size: 25px;
+  cursor: pointer;
 
-  &:hover {
-    .align-classes {
-      .simple-aligners {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  .simple-aligners {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        span {
-          margin: 0 10px;
-        }
-      }
+    span {
+      margin: 0 10px;
+    }
+  }
 
-      .grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 2px;
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 2px;
 
-        > div {
-          background-color: $grey-1;
-          height: 20px;
+    > div {
+      background-color: $grey-1;
+      height: 20px;
 
-          &:hover {
-            background: $primary-dark;
-          }
-        }
+      &:hover {
+        background: $primary-dark;
       }
     }
   }
 
-  .align-classes {
-    display: none;
+  .fixed-position,
+  .zindex-move {
+    margin-top: 10px;
+    font-size: 15px;
   }
-}
 
-.fixed-position,
-.zindex-move {
-  margin-top: 10px;
-  font-size: 15px;
-}
-
-.fixed-position {
-  .active {
-    font-weight: bold;
+  .fixed-position {
+    .active {
+      font-weight: bold;
+    }
   }
 }
 
@@ -100,13 +93,12 @@
 
 .more-actions {
   margin-left: 10px;
-  display: flex;
 
   fa-icon {
     margin-right: 5px;
   }
+  span {
+    display: flex;
+  }
 }
 
-.undo-container {
-  margin: 10px;
-}

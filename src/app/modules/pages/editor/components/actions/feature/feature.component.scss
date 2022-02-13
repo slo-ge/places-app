@@ -1,7 +1,7 @@
-:host {
-  font-size: 12px;
-}
+@import 'style';
 
 .active {
-  text-decoration: underline;
+  fa-icon {
+    color: $primary;
+  }
 }

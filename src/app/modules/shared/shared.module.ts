@@ -5,16 +5,19 @@ import {FeedbackComponent} from "@app/modules/shared/components/feedback/feedbac
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ReactiveFormsModule} from "@angular/forms";
 import { SocalShareComponent } from './components/socal-share/socal-share.component';
+import { OverlayMenuComponent } from './components/overlay-menu/overlay-menu.component';
+import {OverlayModule} from "@angular/cdk/overlay";
 
 
 
 @NgModule({
-  declarations: [TrackDirective, FeedbackComponent, SocalShareComponent],
-  imports: [
-    CommonModule,
-    FontAwesomeModule,
-    ReactiveFormsModule
-  ],
-  exports: [TrackDirective, FeedbackComponent, SocalShareComponent]
+  declarations: [TrackDirective, FeedbackComponent, SocalShareComponent, OverlayMenuComponent],
+	imports: [
+		CommonModule,
+		FontAwesomeModule,
+		ReactiveFormsModule,
+		OverlayModule
+	],
+  exports: [TrackDirective, FeedbackComponent, SocalShareComponent, OverlayMenuComponent]
 })
 export class SharedModule { }

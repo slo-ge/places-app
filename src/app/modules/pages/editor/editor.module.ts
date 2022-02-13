@@ -29,6 +29,8 @@ import { TextAlignComponent } from './components/actions/text-align/text-align.c
 import { ObjectCopyComponent } from './components/actions/object-copy/object-copy.component';
 import { UndoRedoComponent } from './components/actions/undo-redo/undo-redo.component';
 import { FeatureComponent } from './components/actions/feature/feature.component';
+import { ImageFilterComponent } from './components/actions/image-filter/image-filter.component';
+import {OverlayModule} from "@angular/cdk/overlay";
 
 @NgModule({
   declarations: [
@@ -54,17 +56,19 @@ import { FeatureComponent } from './components/actions/feature/feature.component
     TextAlignComponent,
     ObjectCopyComponent,
     UndoRedoComponent,
-    FeatureComponent
+    FeatureComponent,
+    ImageFilterComponent
   ],
-  imports: [
-    CommonModule,
-    EditorRoutingModule,
-    ReactiveFormsModule,
-    FontAwesomeModule,
-    LoadingAnimationModule,
-    LoginModule,
-    SharedModule
-  ]
+	imports: [
+		CommonModule,
+		EditorRoutingModule,
+		ReactiveFormsModule,
+		FontAwesomeModule,
+		LoadingAnimationModule,
+		LoginModule,
+		SharedModule,
+		OverlayModule
+	]
 })
 export class EditorModule {
 }

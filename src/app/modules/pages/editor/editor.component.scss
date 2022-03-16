@@ -3,7 +3,7 @@
   display: block;
   background-color: $grey-0;
 
-  @include respond-above(SM) {
+  @include respond-above(sm) {
     max-height: $content-height;
   }
 }

@@ -1,0 +1,109 @@
+@import 'style';
+
+@include respond-below(sm) {
+  tab,
+  tabs {
+    width: auto;
+  }
+
+
+  aside {
+    //transition: opacity 1s ease-out;
+    position: relative;
+    opacity: 0;
+    height: 0;
+    display: none;
+
+    &.visible {
+      animation: slide-in 0.5s forwards;
+      opacity: 1;
+      min-height: 0;
+      height: auto;
+      display: flex;
+      max-width: 100%;;
+    }
+
+    app-layout-selector {
+      height: 300px;
+      width: auto;
+    }
+  }
+
+  @keyframes slide-in {
+    0% {
+      top: -200px;
+      height: 0;
+    }
+    100% {
+      top: 0;
+      height: 375px;
+    }
+  }
+
+  .mobile-opener {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 75px;
+    left: 10px;
+
+    background-color: $primary;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 30px;
+    color: white;
+    cursor: pointer;
+    box-shadow: $box-shadow-right-bottom;
+  }
+
+  main {
+    .canvas-wrapper {
+      margin-top: 35px;
+    }
+
+    .canvas-actions {
+      position: sticky;
+      top: 0;
+
+      .actions-row {
+        ::ng-deep {
+          app-simple-actions {
+            overflow-y: auto;
+
+            * {
+              flex-wrap: nowrap;
+            }
+
+            .object-actions {
+              width: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+  ::ng-deep {
+    app-meta-data-action-static-image {
+      position: relative;
+      background: white;
+      border: 1px solid black;
+      border-radius: $common-border-radius;
+      z-index: $z-index-popover;
+      margin: 10px;
+      height: 50vh;
+    }
+  }
+
+  app-zoom {
+    position: static;
+    float: none;
+    padding: 5px;
+    margin: 0;
+    border-radius: 0;
+    justify-content: end;
+  }
+}

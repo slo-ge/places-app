@@ -22,6 +22,9 @@ import {ObjectPosition} from "@app/core/model/preset";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {Subscription} from "rxjs";
 import {copyPasteKeyPress} from "@app/modules/pages/editor/utils/copy-paste";
+import {Breakpoint, BreakpointObserverService} from "@app/core/services/breakpoint-observer.service";
+import {take} from "rxjs/operators";
+import {setCornerLines} from "@app/core/editor/overrides/setcornercoords";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -36,7 +39,6 @@ enum FabricType {
 export class SimpleActionsComponent implements OnInit, OnDestroy {
   canvas: any | Canvas;
 
-  activeRangeSliderMax = 100;
   activeRangeSliderCurrentValue = 50;
   iconRemove = faTrashAlt;
   iconLeft = faCaretSquareLeft;
@@ -60,11 +62,13 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
   activeObject: CustomObject | CustomImageBox | CustomTextBox | any = null;
 
   private subscriptions: Subscription = new Subscription();
+  private currentBreakpoint: Breakpoint | null = null;
 
   constructor(private editorService: EditorService,
               private alignmentService: AlignmentService,
               // used in template, dirty.
-              public authService: CmsAuthService) {
+              public authService: CmsAuthService,
+              private breakpoint: BreakpointObserverService) {
   }
 
   ngOnInit(): void {
@@ -88,7 +92,7 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
 
   @HostListener('document:keydown', ['$event'])
   onKeyPress($event: KeyboardEvent) {
-    copyPasteKeyPress($event, this.activeObject,  this.canvas);
+    copyPasteKeyPress($event, this.activeObject, this.canvas);
   }
 
   /**
@@ -113,19 +117,23 @@ export class SimpleActionsComponent implements OnInit, OnDestroy {
 
   private selectionEvent(_e: IEvent) {
     this.activeObject = this.canvas.getActiveObject();
-    this.activeObject.set({
-      borderColor: '#20bfa9',
-      cornerColor: '#20bfa9',
-      borderScaleFactor: 2
-    });
+
+    if (this.currentBreakpoint) {
+      setCornerLines(this.activeObject, this.currentBreakpoint);
+    } else {
+      this.breakpoint.getSize()
+        .pipe(take(1))
+        .subscribe(b => {
+          this.currentBreakpoint = b;
+          setCornerLines(this.activeObject, b);
+        });
+    }
 
     if (this.activeObject.isType('textbox')) {
       this.activeRangeSliderCurrentValue = Number(this.activeObject.fontSize);
-      this.activeRangeSliderMax = 300;
       this.selectedType = FabricType.TEXTBOX;
     } else if (this.activeObject.isType('image')) {
       this.activeRangeSliderCurrentValue = Number(this.activeObject.getScaledWidth());
-      this.activeRangeSliderMax = Number(1200);
       this.selectedType = FabricType.IMAGE;
     } else {
       console.error('onCanvasEvent could not found Object:', this.activeObject)

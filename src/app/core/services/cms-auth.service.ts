@@ -4,8 +4,9 @@ import {tap} from "rxjs/operators";
 import {AuthResponse} from "@app/core/services/cms.service";
 import {HttpClient} from "@angular/common/http";
 import {SimpleLocalCacheService} from "@app/core/services/simple-local-cache.service";
+import {environment} from "@environment/environment";
 
-const AUTH_URL = '/cms/admin/auth/local';
+const AUTH_URL = `${environment.CMS_URL}/admin/auth/local`;
 
 @Injectable({
   providedIn: 'root'

@@ -3,10 +3,9 @@
 import {CMS_API_URL} from "@app/core/services/cms.service";
 import {Font, Preset} from "@app/core/model/preset";
 import {Image} from "fabric/fabric-impl";
+import {environment} from "@environment/environment";
 
-export const PROXY_URL = '/api/proxy';
-
-//export const PROXY_URL = 'http://localhost:5000/proxy';
+export const PROXY_URL = `${environment.API_URL}/proxy`;
 
 
 /**

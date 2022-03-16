@@ -99,6 +99,7 @@ export class PresetService {
         } else if (isImage(item)) {
           const url = getMetaFieldOrStaticField(this.metaMapperData, item);
           const image = fabric.util.object.clone(await this.getImage(url));
+
           this.applyOptions(image, item, item.offsetTop + posLastObjectY);
           this.addObjectToCanvas(image);
           renderedItems.push({object: image, preset: item});

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
@@ -7,7 +7,7 @@ import {PresetService} from "@app/core/editor/preset.service";
 import {faCode, faCogs, faDownload, faPalette, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
-import {BehaviorSubject, EMPTY, Observable, ReplaySubject} from "rxjs";
+import {EMPTY, Observable} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {take} from "rxjs/operators";
 import {DEFAULT_ITEMS, mergeLayouts} from "@app/modules/pages/editor/components/canvas/defaults";
@@ -15,12 +15,13 @@ import {Canvas} from "fabric/fabric-impl";
 import {ActivatedRoute} from "@angular/router";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {SaveService} from "@app/core/editor/save.service";
+import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
 
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
-  styleUrls: ['./canvas.component.scss']
+  styleUrls: ['./canvas.component.scss', './canvas.component.mobile.scss']
 })
 export class CanvasComponent implements OnInit, OnChanges {
   @Input()
@@ -37,6 +38,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   faPalette = faPalette;
   faDownload = faDownload;
   faCogs = faCogs;
+  faPlus = faBars;
 
   sentUpdateResponse: string | null = '';
   zoomFactor = 1;
@@ -46,6 +48,8 @@ export class CanvasComponent implements OnInit, OnChanges {
 
   canvasWrapperWidth: number | null = null;
   canvasWrapperHeight: number | null = null;
+
+  mobileToolbar = false;
 
   constructor(private editorService: EditorService,
               private cmsService: CmsService,
@@ -84,7 +88,9 @@ export class CanvasComponent implements OnInit, OnChanges {
     this.loading = true;
     if (this.canvas == null) {
       this.canvas = new fabric.Canvas('myCanvas', {
-        preserveObjectStacking: true // keeps all objects on der layer position when moving
+        preserveObjectStacking: true, // keeps all objects on der layer position when moving
+        allowTouchScrolling: true,
+        enableRetinaScaling: false
       });
     } else {
       this.canvas.clear();

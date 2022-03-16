@@ -1,6 +1,6 @@
 <app-loading-animation *ngIf="loading"></app-loading-animation>
 <div class="preview">
-  <aside>
+  <aside [class.visible]="mobileToolbar">
     <tabs>
       <tab tabTitle="Presets" [faIcon]="faPalette">
         <h3>Select Preset</h3>
@@ -35,13 +35,11 @@
     </tabs>
   </aside>
   <main>
-    <div class="notification">Warning: MetaMapper is optimized for screens with bigger sizes and is mainly tested with chrome.</div>
     <div class="canvas-actions">
-
       <div class="actions-row">
+        <div class="mobile-opener" (click)="mobileToolbar = !mobileToolbar"><fa-icon [icon]="faPlus"></fa-icon></div>
         <app-simple-actions></app-simple-actions>
       </div>
-
     </div>
 
     <div class="canvas-wrapper" style="--zoom-factor: {{zoomFactor}}">

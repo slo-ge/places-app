@@ -1,4 +1,12 @@
 # Changelog
+
+### 0.1.18
+Add better mobile experience
+Add new corner points 
+
+Also:
++ fix ios bug with not rendering canvas in retina mode
+
 ### 0.1.17
 Features: 
 + Add Image filter feature 

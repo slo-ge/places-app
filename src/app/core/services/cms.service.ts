@@ -4,9 +4,10 @@ import {BackgroundImage, Font, Preset, PresetObject} from "@app/core/model/prese
 import {EMPTY, Observable} from "rxjs";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {shareReplay, take} from "rxjs/operators";
+import {environment} from "@environment/environment";
 
-export const CMS_API_URL = '/cms';
-const LAYOUT_CONFIG_API = '/cms/export-latest-layouts';
+export const CMS_API_URL = `${environment.CMS_URL}`;
+const LAYOUT_CONFIG_API = `${environment.CMS_URL}/export-latest-layouts`;
 
 
 /**

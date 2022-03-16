@@ -6,6 +6,7 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "start:local": "ng serve --open --host 0.0.0.0 --disable-host-check --proxy-config proxy.conf.json",
     "build": "ng build --configuration production",
+    "build-base": "ng build --configuration qa --base-href https://static.phipluspi.com/meta-mapper/ && node ftp/deploy.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

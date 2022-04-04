@@ -4,7 +4,16 @@ import {fabric} from "fabric";
 import {Preset, PresetObject} from "@app/core/model/preset";
 import {EditorService} from "@app/core/editor/editor.service";
 import {PresetService} from "@app/core/editor/preset.service";
-import {faCode, faCogs, faDownload, faPalette, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleUp,
+  faCode,
+  faCogs,
+  faDownload,
+  faPalette,
+  faSave,
+  faUndo,
+  faWindowClose
+} from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
 import {EMPTY, Observable} from "rxjs";
@@ -39,6 +48,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   faDownload = faDownload;
   faCogs = faCogs;
   faPlus = faBars;
+  faWindowClose = faAngleUp;
 
   sentUpdateResponse: string | null = '';
   zoomFactor = 1;

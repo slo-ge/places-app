@@ -43,12 +43,9 @@
   .mobile-opener {
     display: flex;
     justify-content: center;
+    flex-shrink: 0;
     align-items: center;
-
-    position: absolute;
-    top: 75px;
-    left: 10px;
-
+    margin-right: 10px;
     background-color: $primary;
     border-radius: 100%;
     width: 40px;
@@ -57,12 +54,13 @@
     line-height: 30px;
     color: white;
     cursor: pointer;
-    box-shadow: $box-shadow-right-bottom;
+    //box-shadow: $box-shadow-right-bottom;
   }
 
   main {
     .canvas-wrapper {
       margin-top: 35px;
+      height: $canvas-height-mobile;
     }
 
     .canvas-actions {

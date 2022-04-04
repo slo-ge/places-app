@@ -89,6 +89,10 @@
 
 .select-items {
   color: $grey-2;
+
+  @include respond-below(md) {
+    font-size: 12px;
+  }
 }
 
 .more-actions {

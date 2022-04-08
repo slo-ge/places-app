@@ -1,4 +1,7 @@
 # Changelog
+### 0.1.19
+Adding Seo Data
+Adjust header styling
 
 ### 0.1.18
 Add better mobile experience

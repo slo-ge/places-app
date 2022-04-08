@@ -6,6 +6,7 @@ import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
 import {ActivatedRoute} from "@angular/router";
 import {distinctUntilChanged, map, mergeMap, take, tap} from "rxjs/operators";
 import {faVideo} from "@fortawesome/free-solid-svg-icons/faVideo";
+import {SeoService} from "@app/core/seo/seo.service";
 
 @Component({
   selector: 'app-layout-selector',
@@ -22,12 +23,14 @@ export class LayoutSelectorComponent implements OnInit {
   faVideo = faVideo;
 
   constructor(private cmsService: CmsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private seoService: SeoService) {
   }
 
   ngOnInit(): void {
     this.settings$ = this.route.queryParamMap.pipe(
       map(param => param.get('presetTag')),
+      tap(id => this.seoService.setSeoForPresetTag(Number(id))),
       distinctUntilChanged(),
       mergeMap(param => this.cmsService.getLayoutSetting(param)),
       tap(presets => {

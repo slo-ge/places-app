@@ -6,17 +6,22 @@
   align-items: center;
   flex-wrap: wrap;
 
-  background-color: $grey-0;
-  border-bottom: 1px $grey-1 solid;
-  padding: 10px;
+  background-color: white;
+  border-bottom: 3px black solid;
+  padding: 0 10px;
+  height: calc(#{$header-height} - 3px);
+
 }
 
 header {
   font-weight: bold;
   font-family: $font-heading;
+  display: flex;
+  flex: 1;
+  justify-content: center;
 
   h1 {
-    font-size: 25px;
+    font-size: 20px;
     padding: 0;
     margin: 0;
   }
@@ -26,11 +31,11 @@ header {
   }
 
   span:nth-child(1) {
-    color: $primary-dark;
+    color: black;
   }
 
   span:nth-child(2) {
-    color: $primary;
+    color: black;
   }
 }
 
@@ -69,7 +74,6 @@ footer {
   justify-content: flex-end;
   font-size: 12px;
   padding: 10px;
-
   span {
     margin-right: 20px;
   }

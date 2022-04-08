@@ -3,11 +3,9 @@
   <aside [class.visible]="mobileToolbar">
     <tabs>
       <tab tabTitle="Presets" [faIcon]="faPalette">
-        <h3>Select Preset</h3>
         <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
       </tab>
       <tab tabTitle="Add" [faIcon]="faCode">
-        <h3>Select Meta Info</h3>
         <app-meta-data-actions *ngIf="this.currentPresetService"
                                [presetService]="this.currentPresetService"
                                [metaProperties]="metaProperties">
@@ -15,12 +13,10 @@
       </tab>
 
       <tab tabTitle="Download" [faIcon]="faDownload">
-        <h3>Download</h3>
           <app-tab-download [presetService]="currentPresetService"></app-tab-download>
       </tab>
 
       <tab tabTitle="Settings" [faIcon]="faCogs">
-        <h3>Settings</h3>
         <ng-container *ngIf="loggedInUser | async">
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>

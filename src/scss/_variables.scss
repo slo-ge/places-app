@@ -1,20 +1,20 @@
-$primary-dark: black;
-$primary: #20bfa9;
-$primary-soft: #fdc8f2;
-$soft-blue-1: grey;
+$primary-dark: var(--primary-dark);
+$primary: var(--primary);
+$primary-soft: var(--primary-soft);
+$soft-blue-1: var(--soft-blue-1);
 
-$secondary-blue: grey;
-$rosa: black;
-$grey: white;
+$secondary-blue: var(--secondary-blue);
+$rosa: var(--rosa);
+$grey: var(--grey);
 
-$red-0: #d93e41;
-$orange-0: rgb(255, 207, 151);
-$grey-0: #f1f1f1;
-$grey-1: #9d9d9d;
-$grey-2: #5b5b5b;
+$red-0: var(--red-0);
+$orange-0: var(--orange-0);
+$grey-0: var(--grey-0);
+$grey-1: var(--grey-1);
+$grey-2: var(--grey-2);
 
-$grey-dark-0: #363636;
-$grey-dark-1: #171719;
+$grey-dark-0: var(--grey-dark-0);
+$grey-dark-1: var(--grey-dark-1);
 
 $common-border-radius: 6px;
 

@@ -1,8 +1,6 @@
-import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
-import {NavigationEnd, Router, RouterOutlet} from "@angular/router";
+import {Component} from '@angular/core';
+import {RouterOutlet} from "@angular/router";
 import {slideInAnimation} from "./core/utils/animations";
-import {environment} from "../environments/environment";
-import {isPlatformBrowser} from "@angular/common";
 
 declare var gtag;
 
@@ -14,19 +12,12 @@ declare var gtag;
         slideInAnimation
     ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     title = 'goove';
 
-    constructor(private router: Router, @Inject(PLATFORM_ID) private platformId: string) {
+    constructor() {
     }
 
-    ngOnInit(): void {
-        this.router.events.subscribe(event => {
-            if (event instanceof NavigationEnd && isPlatformBrowser(this.platformId)) {
-                gtag('config', environment.gtagKey, {'page_path': event.urlAfterRedirects});
-            }
-        });
-    }
 
     prepareRoute(outlet: RouterOutlet) {
         return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];

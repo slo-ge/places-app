@@ -1,0 +1,3 @@
+<div *ngFor="let place of related$ | async" [routerLink]="place.paths">
+    <div>{{place.name}}</div>
+</div>

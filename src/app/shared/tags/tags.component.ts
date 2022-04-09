@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Observable} from "rxjs";
 import {map, tap} from "rxjs/operators";
-import {Tag} from "../../core/model/tags";
+import {WPTag} from "../../core/model/tags";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
 import {RouteHandlerService} from "../../core/services/route-handler.service";
 
@@ -40,7 +40,7 @@ const FONT_MAX = 20;
 })
 export class TagsComponent implements OnInit {
     @Input()
-    tags$: Observable<Tag[]>;
+    tags$: Observable<WPTag[]>;
     @Input()
     view: 'hash' | 'cloud' | 'list' = 'hash';
     @Input()
@@ -69,7 +69,7 @@ export class TagsComponent implements OnInit {
         );
     }
 
-    calculateSize(tag: Tag) {
+    calculateSize(tag: WPTag) {
         return tag.count == MIN_COUNTS
             ? `${this.cloudSize.fontMin}px`
             : `${(tag.count / MAX_COUNTS) * (this.cloudSize.fontMax - this.cloudSize.fontMin) + this.cloudSize.fontMin}px`;

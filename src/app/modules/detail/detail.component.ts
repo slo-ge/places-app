@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {LocationService} from "../../core/services/location.service";
 import {ACFLocation} from "../../core/model/wpObject";
 import {SeoService} from "../../core/services/seo.service";
@@ -11,6 +11,8 @@ import {getGoogleMapRoute} from "@places/core/utils/maps";
 import {Store} from "@ngxs/store";
 import {AppState} from "@places/store/app.state";
 import {SelectTagAction} from "@places/store/app.actions";
+import {UITag} from "@places/core/model/tags";
+import {RoutingService} from "@places/core/services/routing.service";
 
 @Component({
     selector: 'app-detail',
@@ -23,7 +25,8 @@ export class DetailComponent implements OnInit {
     constructor(private locationService: LocationService,
                 private route: ActivatedRoute,
                 private seoService: SeoService,
-                private store: Store) {
+                private store: Store,
+                private routingService: RoutingService) {
     }
 
     location$: Observable<ACFLocation>;
@@ -31,7 +34,8 @@ export class DetailComponent implements OnInit {
 
     ngOnInit() {
         // from resolver
-        this.location$ = of(this.route.snapshot.data['place']).pipe(
+        this.location$ = this.route.data.pipe(
+            map(data => data['place']),
             tap((data: ACFLocation) => {
                 this.seoService.setMetaFromLocation(data);
                 this.seoService.setCanonicalUrl(`detail/${data.slug}`);
@@ -41,8 +45,13 @@ export class DetailComponent implements OnInit {
                 // If there is no current tag set, that means that there was any url pointing to the
                 // detail page from outside the application
                 // TODO: if a page is set as query param, this should also be removed inside the if as
-                if (!this.store.selectSnapshot(AppState.selectedTag) && data.acf?.mainTag) {
-                    this.store.dispatch(new SelectTagAction(data.acf.mainTag));
+                if (!this.store.selectSnapshot(AppState.selectedTag) && data.acf?.mainTag && !this.routingService.hasHistory()) {
+                    const uiTag: UITag = {
+                        name: data.acf.mainTag.name,
+                        id: data.acf.mainTag.term_id,
+                        count: data.acf.mainTag.count
+                    }
+                    this.store.dispatch(new SelectTagAction(uiTag));
                 }
             })
         );

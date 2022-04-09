@@ -6,6 +6,5 @@ export const environment = {
     seoImageUrl: 'assets/icons/icon-192x192.png',
     apiUrl: 'https://locations.phipluspi.com/wp-json/wp/v2',
     baseUrl: 'https://www.goove.at',
-    production: true,
-    gtagKey: 'UA-74008202-1'
+    production: true
 };

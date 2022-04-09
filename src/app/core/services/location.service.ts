@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject, Observable, of} from "rxjs";
-import {ACFLocation, ContentType} from "../model/wpObject";
+import {ACFLocation, ContentType, RelatedWpObject} from "../model/wpObject";
 import {map, shareReplay, take, tap} from "rxjs/operators";
 import {environment} from "../../../environments/environment";
 
@@ -62,6 +62,18 @@ export class LocationService {
     public getPlaceByIds(ids: number[]) {
         const params = {...this.paramOptions, include: ids.join(',')};
         return this.httpClient.get<ACFLocation[]>(LOCATION_URL, {params});
+    }
+
+    random = (list: any[]) => {
+        const random = Math.floor(Math.random() * list.length);
+        return list[random];
+    }
+
+    public getRelatedPlaces(place: ACFLocation): Observable<RelatedWpObject[]> {
+        const tagId = place.acf.mainTag?.term_id || this.random(place.tags);
+        // https://locations.phipluspi.com/wp-json/sections/v1/tag/related/112
+        const ENPOINT = 'https://locations.phipluspi.com/wp-json/sections/v1/tag/related'
+        return this.httpClient.get<RelatedWpObject[]>(`${ENPOINT}/${tagId}`);
     }
 
     public getInfo() {

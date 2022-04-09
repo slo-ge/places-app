@@ -6,7 +6,7 @@ import {Select} from "@ngxs/store";
 import {AppState} from "../../store/app.state";
 import {Observable} from "rxjs";
 import {TaxonomyService} from "../../core/services/taxonomy.service";
-import {Tag} from "../../core/model/tags";
+import {WPTag} from "../../core/model/tags";
 import {getGoogleMapRoute} from "@places/core/utils/maps";
 
 @Component({
@@ -21,7 +21,7 @@ export class PlaceComponent implements OnInit {
     @Input()
     place: ACFLocation;
 
-    tags$: Observable<Tag[]>;
+    tags$: Observable<WPTag[]>;
     featureImageUrl: string;
     detailPagePaths: string[];
     geoUrl: string;

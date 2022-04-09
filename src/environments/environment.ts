@@ -10,8 +10,7 @@ export const environment = {
     seoImageUrl: 'assets/icons/icon-192x192.png',
     apiUrl: 'https://locations.phipluspi.com/wp-json/wp/v2',
     baseUrl: 'http://localhost:4200',
-    production: false,
-    gtagKey: null
+    production: false
 };
 
 /*

@@ -10,7 +10,6 @@ import {AppState} from "@places/store/app.state";
     templateUrl: './action-bubble-back.component.html'
 })
 export class ActionBubbleBackComponent implements OnInit {
-
     currentUrl: string = '';
     currentTag = '';
 
@@ -19,7 +18,7 @@ export class ActionBubbleBackComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.currentTag = this.store.selectSnapshot(AppState.selectedTag)?.slug;
+        this.currentTag = this.store.selectSnapshot(AppState.selectedTag)?.name;
     }
 
 

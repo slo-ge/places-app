@@ -2,13 +2,14 @@ import {Action, Selector, State, StateContext} from '@ngxs/store';
 import {SelectFullTextQuery, SelectGeoLoactionAction, SelectTagAction} from './app.actions';
 import {patch} from "@ngxs/store/operators";
 import {GeoPosition} from "../core/model/wpObject";
-import {Tag} from "../core/model/tags";
+import {UITag} from "@places/core/model/tags";
 
 export class AppStateModel {
     public geoPosition: GeoPosition;
-    public selectedTag: Tag;
+    public selectedTag: UITag;
     public queryFullText: string;
 }
+
 
 @State<AppStateModel>({
     name: 'app',

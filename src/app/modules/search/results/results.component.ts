@@ -5,11 +5,10 @@ import {catchError, finalize, map, switchMap, take, tap} from "rxjs/operators";
 import {ACFLocation} from "@places/core/model/wpObject";
 import {LocationService} from "@places/core/services/location.service";
 import {GeoLocationService} from "@places/core/services/geo-location.service";
-import {Select, Store} from "@ngxs/store";
+import {Store} from "@ngxs/store";
 import {SelectFullTextQuery, SelectTagAction} from "@places/store/app.actions";
 import {TaxonomyService} from "@places/core/services/taxonomy.service";
-import {Tag} from "@places/core/model/tags";
-import {AppState} from "@places/store/app.state";
+import {WPTag} from "@places/core/model/tags";
 import {MetaData, SeoService} from "@places/core/services/seo.service";
 import {MainRoutes} from "@places/core/utils/routing";
 
@@ -29,9 +28,6 @@ interface RouteParam {
     styleUrls: ['./results.component.scss', './loading-animation.scss']
 })
 export class ResultsComponent implements OnInit {
-    @Select(AppState.selectedTag)
-    tag$: Observable<Tag>;
-
     locations$: Observable<ACFLocation[]>;
     geoLocation$: Promise<any> | any;
 
@@ -75,7 +71,7 @@ export class ResultsComponent implements OnInit {
      * @param params
      * @param tags
      */
-    private buildPlacesResponseFrom(queryParams: Params, params: RouteParam, tags: Tag[]) {
+    private buildPlacesResponseFrom(queryParams: Params, params: RouteParam, tags: WPTag[]) {
         this.seoService.setCanonicalUrlForResultList(queryParams, params);
 
         const sort = queryParams.sort || SortType.DEFAULT;

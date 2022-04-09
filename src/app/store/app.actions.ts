@@ -1,6 +1,5 @@
 import {GeoPosition} from "../core/model/wpObject";
-import {Tag} from "../core/model/tags";
-
+import {UITag} from "@places/core/model/tags";
 
 export class SelectGeoLoactionAction {
   static readonly  type = '[User] Add Geoloaction'
@@ -9,7 +8,9 @@ export class SelectGeoLoactionAction {
 
 export class SelectTagAction {
   static readonly  type = '[Tag] Select new Tag'
-  constructor(public tag: Tag) {}
+
+    constructor(public tag: UITag) {
+    }
 }
 
 export class SelectFullTextQuery {

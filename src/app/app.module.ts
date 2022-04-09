@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -14,6 +14,11 @@ import {ProfileState} from "./modules/profile/store/profile.state";
 import {NgxsStoragePluginModule} from "@ngxs/storage-plugin";
 import {LoadingInterceptor} from "./core/interceptors/loading.interceptor";
 import {TransferHttpCacheModule} from '@nguniversal/common';
+import {RoutingService} from "@places/core/services/routing.service";
+
+function initRoutingService(r: RoutingService) {
+    return () => r.init();
+}
 
 
 @NgModule({
@@ -22,7 +27,7 @@ import {TransferHttpCacheModule} from '@nguniversal/common';
         HeaderComponent
     ],
     imports: [
-        BrowserModule.withServerTransition({ appId: 'serverApp' }),
+        BrowserModule.withServerTransition({appId: 'serverApp'}),
         TransferHttpCacheModule,
         AppRoutingModule,
         HttpClientModule,
@@ -38,7 +43,8 @@ import {TransferHttpCacheModule} from '@nguniversal/common';
     ],
     providers: [
         //{provide: CONTENT_SERVICE, useClass: CachedWPContentServiceService}
-        {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true}
+        {provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true},
+        {provide: APP_INITIALIZER, useFactory: initRoutingService, deps: [RoutingService], multi: true}
     ],
     bootstrap: [AppComponent]
 })

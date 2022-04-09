@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {EMPTY, Observable, ReplaySubject} from "rxjs";
-import {ACFMeta, Tag} from "../model/tags";
+import {ACFMeta, WPTag} from "../model/tags";
 import {expand, filter, map, take, tap, toArray} from "rxjs/operators";
 import {MetaData} from "@places/core/services/seo.service";
 
@@ -12,8 +12,8 @@ export const META_BASE_URL = 'https://locations.phipluspi.com/wp-json/acf/v3/tag
     providedIn: 'root'
 })
 export class TaxonomyService {
-    private _tags$: ReplaySubject<Tag[]> = new ReplaySubject();
-    private _tagCache: Tag[] = [];
+    private _tags$: ReplaySubject<WPTag[]> = new ReplaySubject();
+    private _tagCache: WPTag[] = [];
 
     constructor(private httpClient: HttpClient) {
         this.fetchTags()
@@ -21,14 +21,14 @@ export class TaxonomyService {
             .subscribe(data => this._tags$.next(data))
     }
 
-    private fetchTags(): Observable<Tag[]> {
+    private fetchTags(): Observable<WPTag[]> {
         const params: any = {
             per_page: 100
         };
 
-        return this.httpClient.get<Tag[]>(BASE_URL, {params}).pipe(
+        return this.httpClient.get<WPTag[]>(BASE_URL, {params}).pipe(
             expand(tags => tags.length === 100
-                ? this.httpClient.get<Tag[]>(BASE_URL, {params: {...params, page: 2}})
+                ? this.httpClient.get<WPTag[]>(BASE_URL, {params: {...params, page: 2}})
                 : EMPTY
             ),
             toArray(),
@@ -36,23 +36,23 @@ export class TaxonomyService {
         );
     }
 
-    public getTags(): Observable<Tag[]> {
+    public getTags(): Observable<WPTag[]> {
         return this._tags$.asObservable();
     }
 
-    public getNamesFromId(ids: number[]): Observable<Tag[]> {
+    public getNamesFromId(ids: number[]): Observable<WPTag[]> {
         return this._tags$.pipe(
             map(data => data.filter(tag => ids.includes(tag.id)))
         );
     }
 
-    public getTagFromId(id: string): Observable<Tag> {
+    public getTagFromId(id: string): Observable<WPTag> {
         return this._tags$.pipe(
             map(tags => tags.find(tag => tag.id === Number(id)))
         );
     }
 
-    public getTagFromString(slug: string): Observable<Tag> {
+    public getTagFromString(slug: string): Observable<WPTag> {
         return this._tags$.pipe(
             map(tags => tags.find(tag => tag.slug === slug))
         );

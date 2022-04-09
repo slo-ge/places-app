@@ -1,4 +1,7 @@
-export interface Tag {
+/**
+ * The Tag which will be provided from wordpress
+ */
+export interface WPTag {
     id: number; // important
     name: string; // important
     count: number; // important
@@ -9,6 +12,31 @@ export interface Tag {
     meta: any[];
     _links: Links;
     acf?: ExtendedInfos;
+}
+
+/**
+ * Tag which will be provided by using ACFTag
+ */
+export interface ACFTag {
+    term_id: number
+    name: string
+    slug: string
+    term_group: number
+    term_taxonomy_id: number
+    taxonomy: string
+    description: string
+    parent: number
+    count: number
+    filter: string
+}
+
+/**
+ * Tag which will be hold in state and in other UI Components
+ */
+export interface UITag {
+    name: string;
+    count: number;
+    id: number;
 }
 
 interface Links {

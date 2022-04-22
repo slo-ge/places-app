@@ -9,16 +9,18 @@ img {
 
 :host {
     display: block;
+    min-height: 90vh;
+    background-color: $background-place-tile;
 }
 
 .info-wrapper {
-    background-color: $background-place-tile;
+
     border-top-right-radius: $common-border-radius*2;
     border-top-left-radius: $common-border-radius*2;
     margin-top: -$common-border-radius*2;
     position: relative;
     padding: $spacing;
-    min-height: 90vh;
+
     height: 100%;
 
     h1 {

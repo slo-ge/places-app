@@ -14,13 +14,12 @@ img {
 }
 
 .info-wrapper {
-
     border-top-right-radius: $common-border-radius*2;
     border-top-left-radius: $common-border-radius*2;
     margin-top: -$common-border-radius*2;
     position: relative;
     padding: $spacing;
-
+    background-color: $background-place-tile;
     height: 100%;
 
     h1 {

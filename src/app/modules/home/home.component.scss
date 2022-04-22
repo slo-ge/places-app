@@ -25,13 +25,10 @@
 .heading {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
 
     h2 {
-        font-size: 25px;
-        color: $grey-2;
-        margin: 0 10px 0 0;
         padding: 0;
+        margin-right: 6px;
     }
 }
 

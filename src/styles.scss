@@ -1,10 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'style';
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 @import '~@angular/cdk/overlay-prebuilt.css';
 
 html, body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
 }
 

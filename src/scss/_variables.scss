@@ -1,4 +1,4 @@
-$primary: #719192;
+$primary: #03ceaf;
 $primary-soft: #bae6e7;
 $rosa: black;
 $grey: white;
@@ -11,10 +11,11 @@ $grey-2: #5b5b5b;
 
 $app-main-background-color: $grey-0;
 
-$header-background: $primary;
+$header-background: black;
 $header-font-color: white;
 
 $footer-border-top: 1px solid $grey-1;
+
 $footer-background: white;
 $footer-font-color: $grey-1;
 
@@ -32,3 +33,6 @@ $common-border-radius: 15px;
 
 $footer-min-height: 70px;
 $spacing: 10px;
+
+$loading-primary: #ababab;
+$loading-secondary: white;

@@ -66,6 +66,7 @@ export interface ACF {
     description: Description[];
     mainCategory?: Category;
     mainTag?: ACFTag;
+    website?: string;
 }
 
 export interface Category {

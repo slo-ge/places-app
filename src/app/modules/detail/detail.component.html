@@ -11,6 +11,9 @@
         <div class="description" [innerHTML]="location.acf.description[0].text"></div>
         <app-favourite-toggle [place]="location"></app-favourite-toggle>
         <app-social-share></app-social-share>
+        <div class="website" *ngIf="location.acf.website">
+            <a [href]="location.acf.website" target="_blank"><app-icon class="large" name="www"></app-icon>Website</a>
+        </div>
     </div>
 </ng-container>
 

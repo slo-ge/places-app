@@ -15,7 +15,8 @@ export class IconComponent {
       | 'whatsapp'
       | 'telegram'
       | 'yummy'
-      | 'search';
+      | 'search'
+      | 'www';
 
   constructor() { }
 }

@@ -10,7 +10,6 @@ FE_URL_BLOG = 'https://www.goove.at/blog'
 BASE = 'https://www.goove.at'
 BLOG = 'blog'
 SEARCH = 's'
-HOME = 'home'
 LOCATION_TYPE = 'locations'
 TAGS = 'tags'
 BLOG_TYPE = 'posts'
@@ -40,7 +39,7 @@ def main():
     append_url_from_wp_type('locations', url_set, FE_URL_PLACE)
     append_url_from_wp_type('posts', url_set, FE_URL_BLOG)
 
-    for url in [BLOG, SEARCH, HOME]:
+    for url in [BLOG, SEARCH]:
         url_set.append(element_from_wp_object(None, f'{BASE}/{url}'))
     append_search_pages(url_set)
 

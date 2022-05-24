@@ -1,1 +1,2 @@
-<img (click)="selectImage(img)"  *ngFor="let img of staticImages$ | async" [src]="img.thumbnailUrl">
+<img (click)="selectImage(img)" loading="lazy" *ngFor="let img of staticImages$ | async" [src]="img.thumbnailUrl">
+<app-loading-animation *ngIf="loading"></app-loading-animation>

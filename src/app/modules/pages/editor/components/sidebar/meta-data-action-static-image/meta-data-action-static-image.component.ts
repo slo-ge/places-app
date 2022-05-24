@@ -1,9 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, HostBinding, OnInit, Output} from '@angular/core';
 import {BackgroundImage} from "@app/core/model/preset";
 import {CmsService} from "@app/core/services/cms.service";
 import {Observable} from "rxjs";
-import {map, mergeMap, take, toArray} from "rxjs/operators";
+import {finalize, map, mergeMap, take, toArray} from "rxjs/operators";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-group/tab.component";
 
 interface StaticImage {
     url: string;
@@ -19,9 +20,23 @@ export class MetaDataActionStaticImageComponent implements OnInit {
   @Output()
   selectStaticImageUrl = new EventEmitter<string>();
 
-  staticImages$: Observable<StaticImage[]> | null = null;
+  @HostBinding('attr.style')
+  get setStyle() {
+    if (!window || !this.elementRef?.nativeElement) {
+      return null;
+    }
 
-  constructor(private cmsService: CmsService) {
+    // 80 -> footer
+    const height = window.innerHeight - this.elementRef.nativeElement.offsetTop - 80;
+    return `max-height: ${height}px`;
+  }
+
+  staticImages$: Observable<StaticImage[]> | null = null;
+  loading = true;
+
+
+
+  constructor(private cmsService: CmsService, private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
@@ -29,22 +44,23 @@ export class MetaDataActionStaticImageComponent implements OnInit {
       take(1),
       mergeMap(image => image),
       map(image => ({
-            thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),
-            url:toAbsoluteCMSUrl(image.url)
-        })),
-      toArray()
+        thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),
+        url: toAbsoluteCMSUrl(image.url)
+      })),
+      toArray(),
+      finalize(() => this.loading = false)
     );
   }
 
-  private static getSmallestUrl(image: BackgroundImage){
+  selectImage(image: StaticImage) {
+    this.selectStaticImageUrl.emit(image.url);
+  }
+
+  private static getSmallestUrl(image: BackgroundImage) {
     if (image.formats?.thumbnail?.url) {
       return image.formats.thumbnail.url;
     }
 
     return image.url;
-  }
-
-  selectImage(image: StaticImage) {
-    this.selectStaticImageUrl.emit(image.url);
   }
 }

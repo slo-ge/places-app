@@ -22,7 +22,7 @@
       <fa-icon [icon]="plusIcon"></fa-icon>
       Icon
     </div>
-    <span>Static Field</span>
+    <span>Static Fields</span>
     <div class="file-upload">
       <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">
         <fa-icon [icon]="plusIcon"></fa-icon>
@@ -35,7 +35,9 @@
       Textbox
     </div>
   </div>
-  <h4 class="media-elements" (click)="showMedia = !showMedia">Show Media Elements</h4>
+  <h4 class="media-elements" (click)="showMedia = !showMedia">
+    Open Media Library <fa-icon [icon]="imageIcon"></fa-icon>
+  </h4>
   <app-meta-data-action-static-image *ngIf="showMedia"
     (selectStaticImageUrl)="addStaticImage($event)"></app-meta-data-action-static-image>
 </div>

@@ -3,7 +3,7 @@ import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {fabric} from "fabric";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faImages, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
 
 @Component({
@@ -20,6 +20,7 @@ export class MetaDataActionsComponent {
 
   LayoutItemType = LayoutItemType;
   plusIcon = faPlus;
+  imageIcon = faImages;
   showMedia = false; // Initially do not show the media elements
 
   constructor() {

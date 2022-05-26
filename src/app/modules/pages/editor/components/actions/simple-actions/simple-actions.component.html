@@ -1,0 +1,45 @@
+<div class="object-actions" *ngIf="activeObject; else selectItem">
+  <app-object-rotate></app-object-rotate>
+  <app-object-remove></app-object-remove>
+  <app-object-align></app-object-align>
+  <app-object-size></app-object-size>
+  <div class="type-settings" [ngSwitch]="selectedType">
+    <div class="text-settings" *ngSwitchCase="fabricType.TEXTBOX">
+      <app-font-color-picker></app-font-color-picker>
+      <app-font-selector></app-font-selector>
+      <div class="border-box font-deco">
+        <app-font-weight class="action-tile"></app-font-weight>
+        <app-font-underline class="action-tile"></app-font-underline>
+        <app-text-align></app-text-align>
+      </div>
+    </div>
+  </div>
+  <app-overlay-menu>
+    <span class="opener border-box">effects</span>
+    <span class="closer border-box">effects</span>
+    <div class="content">
+      <app-object-shadow></app-object-shadow>
+      <app-object-stroke></app-object-stroke>
+    </div>
+  </app-overlay-menu>
+</div>
+
+<ng-template #selectItem>
+  <div class="select-items">Add new items or rearrange objects in the editor.</div>
+</ng-template>
+
+<app-overlay-menu class="more-actions">
+  <span class="opener"><fa-icon [icon]="iconMore"></fa-icon>more</span>
+  <span class="closer"><fa-icon [icon]="iconMore"></fa-icon>close</span>
+  <div class="content">
+    <div>
+      <div>Undo/Redo (beta)</div>
+      <app-undo-redo></app-undo-redo>
+    </div>
+    <div *ngIf="activeObject?.type === fabricType.TEXTBOX">Font Background
+      <app-font-background></app-font-background>
+    </div>
+    <app-feature [canvas]="canvas"></app-feature>
+    <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE"></app-image-filter>
+  </div>
+</app-overlay-menu>

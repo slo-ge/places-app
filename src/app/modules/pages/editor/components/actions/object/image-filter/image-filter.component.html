@@ -1,0 +1,14 @@
+<div (click)="toggleFilters()" class="action-menu-item">Open Image Filters</div>
+<div *ngIf="open">
+  <div class="grid">
+    <div (click)="applyFilter(activeObject, uiFilter.filter.type)" *ngFor="let uiFilter of filters">
+      <ng-container *ngIf="uiFilter.imageUrl | async as url">
+        <img [src]="url" (load)="loaded()">
+        <div class="title">{{uiFilter.filter.type}}</div>
+      </ng-container>
+
+    </div>
+  </div>
+ <app-loading-animation *ngIf="loading"></app-loading-animation>
+  <div class="action-menu-item" (click)="resetAllFilter()">Reset filters</div>
+</div>

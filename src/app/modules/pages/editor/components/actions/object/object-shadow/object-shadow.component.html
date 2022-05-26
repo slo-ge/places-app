@@ -1,0 +1,15 @@
+<app-overlay-menu>
+  <div class="opener">Shadow</div>
+  <div class="closer">Shadow</div>
+
+  <form class="content" [formGroup]="form">
+    <label>Color</label>
+    <input type="color" formControlName="color">
+    <label>offsetX</label>
+    <input type="range" formControlName="offsetX" min="0" max="100">
+    <label>offsetY</label>
+    <input type="range" formControlName="offsetY" min="0" max="100">
+    <label>blur</label>
+    <input type="range" formControlName="blur" min="0" max="100">
+  </form>
+</app-overlay-menu>

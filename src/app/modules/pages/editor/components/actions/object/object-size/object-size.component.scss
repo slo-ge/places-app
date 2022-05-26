@@ -1,0 +1,10 @@
+.font-sizer  {
+  width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  input[type=number] {
+    width: 50px;
+  }
+}

@@ -1,0 +1,13 @@
+<app-overlay-menu>
+  <div class="opener">Stroke</div>
+  <div class="closer">Stroke</div>
+
+  <form class="content" [formGroup]="form">
+    <label>Color</label>
+    <input type="color" formControlName="strokeColor">
+    <label>Stroke Width</label>
+    <input type="number" formControlName="strokeWidth" min="0" max="100">
+    <label>Stroke Uniform</label>
+    <input type="checkbox" formControlName="strokeUniform" min="0" max="100">
+  </form>
+</app-overlay-menu>

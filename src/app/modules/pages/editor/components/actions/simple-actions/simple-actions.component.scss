@@ -1,0 +1,63 @@
+@import 'src/scss/style';
+
+:host {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.object-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.type-settings {
+  > * {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &::before {
+      margin-right: 12px;
+      border-right: 1px solid $grey-1;
+      content: '';
+    }
+  }
+}
+
+.text-settings {
+  > * {
+    margin-right: 5px;
+  }
+
+  .font-deco {
+    display: flex;
+
+    app-text-align {
+      display: flex;
+      align-items: center;
+      padding: 2px 0 2px 10px;
+    }
+  }
+}
+
+.select-items {
+  color: $grey-2;
+
+  @include respond-below(md) {
+    font-size: 12px;
+  }
+}
+
+.more-actions {
+  margin-left: 10px;
+
+  fa-icon {
+    margin-right: 5px;
+  }
+  span {
+    display: flex;
+  }
+}

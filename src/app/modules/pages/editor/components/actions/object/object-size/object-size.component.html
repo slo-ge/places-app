@@ -1,0 +1,6 @@
+<div class="font-sizer border-box">
+  <label>Size</label>
+  <input type="number" id="points" name="points" step="1" #sizer (input)="changeSize(sizer.value)"
+         [value]="activeObject.fontSize || activeObject.getScaledWidth()">
+  <div>px</div>
+</div>

@@ -1,6 +1,0 @@
-<div class="border-box">
-  <app-color-picker
-    name="BG" (color)="changeColor($event)" [currentColor]="this.textBox.backgroundColor"></app-color-picker>
-  <app-range-slider [value]="0" [max]="200" (valueChange)="changeSize($event)"></app-range-slider>
-  <div (click)="removeColor()">remove</div>
-</div>

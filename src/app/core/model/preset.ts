@@ -79,6 +79,7 @@ export interface PresetObject {
   objectPosition?: ObjectPosition;
   font?: Font;
   textAlignment?: any;
+  stroke?: {stroke: string, strokeWidth: number, strokeUniform: boolean};
 }
 
 export interface PresetObjectStaticText extends PresetObject {

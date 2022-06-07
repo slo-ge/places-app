@@ -12,11 +12,11 @@ import {Subscription} from "rxjs";
 export class ObjectStrokeComponent extends ObjectAction<CustomObject> implements OnDestroy {
   form = this.fg.group({
     strokeColor: ['rgba(148,148,148,0.3)'],
-    strokeWidth: ['3'],
+    strokeWidth: [3],
     strokeUniform: [true],
   });
 
-  formSubscription = Subscription.EMPTY;
+  private formSubscription = Subscription.EMPTY;
 
   constructor(activeObjectService: ActiveObjectService,
               private fg: FormBuilder) {

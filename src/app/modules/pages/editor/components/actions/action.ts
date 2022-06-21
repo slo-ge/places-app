@@ -1,5 +1,6 @@
 import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {Injectable} from "@angular/core";
+import {FormGroup} from "@angular/forms";
 
 export type  ActiveObjectType = CustomObject | CustomImageBox | CustomTextBox;
 
@@ -11,9 +12,6 @@ export abstract class ObjectAction<T extends ActiveObjectType> {
     return this.activeObjectService.getActiveObject() as T;
   }
 
-  public apply() {
-  };
-
   public render() {
     this.activeObject.canvas?.renderAll();
   }
@@ -22,4 +20,10 @@ export abstract class ObjectAction<T extends ActiveObjectType> {
 @Injectable()
 export abstract class ActiveObjectService {
   public abstract getActiveObject(): ActiveObjectType;
+}
+
+export interface FormAction {
+  form: FormGroup;
+  resetProperties(): void;
+  initialFormValues(): FormGroup;
 }

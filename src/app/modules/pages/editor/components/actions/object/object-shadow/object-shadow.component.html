@@ -1,7 +1,5 @@
-<app-overlay-menu>
-  <div class="opener">Shadow</div>
-  <div class="closer">Shadow</div>
-
+<app-expansion-panel [collapsed]="formCollapsed">
+  <span class="title">Shadow</span>
   <form class="content" [formGroup]="form">
     <label>Color</label>
     <input type="color" formControlName="color">
@@ -13,5 +11,6 @@
     <input type="range" formControlName="blur" min="0" max="100">
     <label>opacity</label>
     <input type="range" step="0.01" formControlName="opacity" min="0" max="1">
+    <button class="secondary small" (click)="resetProperties()">reset</button>
   </form>
-</app-overlay-menu>
+</app-expansion-panel>

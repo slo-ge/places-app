@@ -1,4 +1,4 @@
-<div (click)="toggleFilters()" class="action-menu-item">Open Image Filters</div>
+<div (click)="toggleFilters()" class="action-menu-item">Image Filters</div>
 <div *ngIf="open">
   <div class="grid">
     <div (click)="applyFilter(activeObject, uiFilter.filter.type)" *ngFor="let uiFilter of filters">

@@ -22,7 +22,7 @@ import {
   toAbsoluteCMSUrl
 } from "@app/core/editor/utils";
 import {PresetVideo} from "@app/core/editor/preset-video.service";
-import {TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
+import {OBJECT_RESOLVERS, TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
 import {FontResolver} from "@app/core/editor/resolvers/font.resolver";
 
 
@@ -245,40 +245,42 @@ export class PresetService {
    * Set object overlapping attributes,
    * also set the "data" type (i.e. title, description, price) to the object
    */
-  private applyOptions(fabricObject: CustomObject, item: PresetObject, offsetTop: number) {
-    fabricObject.set('left', item.offsetLeft);
+  private applyOptions(fabricObject: CustomObject, preset: PresetObject, offsetTop: number) {
+    fabricObject.set('left', preset.offsetLeft);
 
-    if (isPositionYFixed(item)) {
-      fabricObject.set('top', item.offsetTop)
+    if (isPositionYFixed(preset)) {
+      fabricObject.set('top', preset.offsetTop)
     } else {
       // else use the relative position
       fabricObject.set('top', offsetTop);
     }
 
     // setting the x position and calculating the width
-    let width = (this.canvas.width || 0) - (2 * item.offsetLeft);
-    if (isPositionXFixed(item)) {
-      let offsetRight = item.offsetRight || item.offsetLeft;
-      width = (this.canvas.width || 0) - item.offsetLeft - offsetRight;
+    let width = (this.canvas.width || 0) - (2 * preset.offsetLeft);
+    if (isPositionXFixed(preset)) {
+      let offsetRight = preset.offsetRight || preset.offsetLeft;
+      width = (this.canvas.width || 0) - preset.offsetLeft - offsetRight;
     }
 
     // depending on type set the width with the correct operation
-    if (isImage(item)) {
+    if (isImage(preset)) {
       fabricObject.scaleToWidth(width);
     } else {
       fabricObject.set('width', width);
     }
 
     // setting the preset[Variable] to object, to read it if persisting
-    fabricObject.presetType = item.type;
-    fabricObject.presetObjectPosition = item.objectPosition || ObjectPosition.RELATIVE; // setting the y position
-    if (item.type === LayoutItemType.STATIC_IMAGE) {
-      fabricObject.presetStaticImageUrl = (item as PresetObjectStaticImage).image.url;
+    fabricObject.presetType = preset.type;
+    fabricObject.presetObjectPosition = preset.objectPosition || ObjectPosition.RELATIVE; // setting the y position
+    if (preset.type === LayoutItemType.STATIC_IMAGE) {
+      fabricObject.presetStaticImageUrl = (preset as PresetObjectStaticImage).image.url;
     }
 
-    if (item.objectAngle) {
-      fabricObject.set('angle', item.objectAngle);
+    if (preset.objectAngle) {
+      fabricObject.set('angle', preset.objectAngle);
     }
+
+    OBJECT_RESOLVERS.forEach(r => r.applyOnObject(fabricObject, preset));
   }
 
   /**

@@ -61,3 +61,10 @@
     display: flex;
   }
 }
+
+.effects {
+  .opener, .closer {
+    font-weight: bold;
+    margin: 0 10px;
+  }
+}

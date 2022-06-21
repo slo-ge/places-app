@@ -10,7 +10,7 @@ import {
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {FALLBACKS} from "@app/core/config/fallbacks";
-import {TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
+import {OBJECT_RESOLVERS, TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
 
 /**
  * Extra information which can a fabric object hold
@@ -61,10 +61,15 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     tmp.zIndex = zIndex;
   }
 
+  if (isText(tmp) || isImage(tmp)) {
+    // Apply Image or Text options to the object
+    OBJECT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, tmp));
+  }
+
   if (isText(tmp)) {
     fabricObject = fabricObject as CustomTextBox;
 
-    // Apply all presets setting to the object
+    // Apply all presets setting to the text object
     TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, tmp));
   }
 

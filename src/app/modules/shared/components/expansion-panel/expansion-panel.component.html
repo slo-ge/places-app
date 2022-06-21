@@ -1,0 +1,6 @@
+<div class="toggle action-menu-item" (click)="collapsed=!collapsed">
+  <ng-content select=".title"></ng-content>
+</div>
+<div class="content" *ngIf="collapsed">
+  <ng-content select=".content"></ng-content>
+</div>

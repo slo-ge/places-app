@@ -2,11 +2,10 @@ import { BaseResolver, ResolverType } from '@app/core/editor/resolvers/base.reso
 import { CustomObject } from '@app/core/editor/fabric-object.utils';
 import { PresetObject } from '@app/core/model/preset';
 
-export class StrokeResolver implements BaseResolver {
+export class ObjectStrokeResolver implements BaseResolver {
     readonly resolverType = ResolverType.OBJECT;
 
     applyOnObject(object: CustomObject, preset: PresetObject): void {
-        console.log(preset);
         if (preset.stroke) {
             object.set('stroke', preset.stroke.stroke);
             object.set('strokeWidth', preset.stroke.strokeWidth);

@@ -14,12 +14,13 @@
       </div>
     </div>
   </div>
-  <app-overlay-menu>
-    <span class="opener border-box">effects</span>
-    <span class="closer border-box">effects</span>
+  <app-overlay-menu class="effects">
+    <div class="opener">Effects</div>
+    <div class="closer">Effects</div>
     <div class="content">
-      <app-object-shadow></app-object-shadow>
-      <app-object-stroke></app-object-stroke>
+      <app-object-shadow [activeObject]="activeObject"></app-object-shadow>
+      <app-object-stroke [activeObject]="activeObject"></app-object-stroke>
+      <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE"></app-image-filter>
     </div>
   </app-overlay-menu>
 </div>
@@ -40,6 +41,5 @@
       <app-font-background></app-font-background>
     </div>
     <app-feature [canvas]="canvas"></app-feature>
-    <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE"></app-image-filter>
   </div>
 </app-overlay-menu>

@@ -4,7 +4,7 @@ import {CmsService} from "@app/core/services/cms.service";
 import {Observable} from "rxjs";
 import {finalize, map, mergeMap, take, toArray} from "rxjs/operators";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
-import {TabComponent} from "@app/modules/pages/editor/components/sidebar/tab-group/tab.component";
+
 
 interface StaticImage {
     url: string;

@@ -67,6 +67,12 @@ button {
     cursor: pointer;
     background-color: $primary-dark;
   }
+
+  &.small {
+    width: 100px;
+    font-size: 14px;
+    height: 25px;
+  }
 }
 
 .button.secondary,

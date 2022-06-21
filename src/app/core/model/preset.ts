@@ -80,6 +80,15 @@ export interface PresetObject {
   font?: Font;
   textAlignment?: any;
   stroke?: {stroke: string, strokeWidth: number, strokeUniform: boolean};
+  shadow?: {
+    color?: string | undefined;
+    blur?: number | undefined;
+    offsetX?: number | undefined;
+    offsetY?: number | undefined;
+    affectStroke?: boolean | undefined;
+    includeDefaultValues?: boolean | undefined;
+    nonScaling?: boolean | undefined;
+  }
 }
 
 export interface PresetObjectStaticText extends PresetObject {

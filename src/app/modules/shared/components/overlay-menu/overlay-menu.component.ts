@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-overlay-menu',
@@ -22,6 +22,11 @@ export class OverlayMenuComponent {
     }
   }
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
+  }
+
+  public close() {
+    this.cdr.markForCheck();
+    this.isOpen = false;
   }
 }

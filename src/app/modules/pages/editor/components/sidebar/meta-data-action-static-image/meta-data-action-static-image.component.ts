@@ -1,14 +1,24 @@
-import {Component, ElementRef, EventEmitter, HostBinding, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostBinding,
+  OnChanges,
+  OnInit,
+  Output, SimpleChanges
+} from '@angular/core';
 import {BackgroundImage} from "@app/core/model/preset";
 import {CmsService} from "@app/core/services/cms.service";
 import {Observable} from "rxjs";
 import {finalize, map, mergeMap, take, toArray} from "rxjs/operators";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
+import {MetaDataActionsComponent} from "@app/modules/pages/editor/components/sidebar/meta-data-actions/meta-data-actions.component";
 
 
 interface StaticImage {
-    url: string;
-    thumbnailUrl: string;
+  url: string;
+  thumbnailUrl: string;
 }
 
 @Component({
@@ -19,15 +29,24 @@ interface StaticImage {
 export class MetaDataActionStaticImageComponent implements OnInit {
   @Output()
   selectStaticImageUrl = new EventEmitter<string>();
+  height = 0; // if
 
   @HostBinding('attr.style')
   get setStyle() {
-    if (!window || !this.elementRef?.nativeElement) {
-      return null;
-    }
+    let height = 0;
+    // NOTE: workaround for not adding antother height if elementRef changes,
+    //       which leads to hasbeendchecked expression
+    if (this.height) {
+      height = this.height;
+    } else {
+      if (!window || !this.elementRef?.nativeElement) {
+        return null;
+      }
 
-    // 80 -> footer
-    const height = window.innerHeight - this.elementRef.nativeElement.offsetTop - 80;
+      // 80 -> footer
+      height = window.innerHeight - this.elementRef.nativeElement.offsetTop - 80;
+    }
+    this.height = height;
     return `max-height: ${height}px`;
   }
 
@@ -35,8 +54,8 @@ export class MetaDataActionStaticImageComponent implements OnInit {
   loading = true;
 
 
-
-  constructor(private cmsService: CmsService, private elementRef: ElementRef) {
+  constructor(private cmsService: CmsService,
+              private elementRef: ElementRef) {
   }
 
   ngOnInit(): void {
@@ -51,6 +70,7 @@ export class MetaDataActionStaticImageComponent implements OnInit {
       finalize(() => this.loading = false)
     );
   }
+
 
   selectImage(image: StaticImage) {
     this.selectStaticImageUrl.emit(image.url);

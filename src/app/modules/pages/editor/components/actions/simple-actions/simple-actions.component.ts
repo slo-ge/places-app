@@ -55,7 +55,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   }
 
   ngOnInit(): void {
-    const sub = this.editorService.getCanvas().subscribe(canvas => {
+    const canvasSubscription = this.editorService.getCanvas().subscribe(canvas => {
       this.canvas = canvas;
       this.canvas.on(
         {
@@ -65,7 +65,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
         },
       );
     });
-    this.subscriptions.add(sub);
+    this.subscriptions.add(canvasSubscription);
   }
 
   ngOnDestroy(): void {

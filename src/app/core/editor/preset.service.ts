@@ -220,7 +220,7 @@ export class PresetService {
    * @param item, the config from item
    * @param offsetTop
    */
-  private async createText(text: string, item: PresetObject, offsetTop: number) {
+  public async createText(text: string, item: PresetObject, offsetTop: number) {
     const fabricText = new fabric.Textbox(
       text, {fontSize: item.fontSize, left: 10, top: 10}
     ) as any | CustomTextBox;

@@ -11,8 +11,7 @@ import {
   faDownload,
   faPalette,
   faSave,
-  faUndo,
-  faWindowClose
+  faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
@@ -70,7 +69,7 @@ export class CanvasComponent implements OnInit, OnChanges {
 
 
   ngOnInit(): void {
-    // check if presetId is set, if its set, just apply it
+    // check if presetId is set, if it's set, just apply it
     // from preset resolver otherwise
     // the default template is applied
     const preset = this.activatedRoute.snapshot.data.preset;
@@ -91,7 +90,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   }
 
   /**
-   * after selection of a new layout,
+   * After selection of a new layout,
    * we need to refresh the canvas;
    */
   refreshCanvas() {
@@ -134,7 +133,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   }
 
   /**
-   * update on server
+   * Update the template in CMS
    */
   updateValues(defaults?: PresetObject[] | null) {
     defaults = defaults || getPresetItem(this.canvas);
@@ -151,7 +150,7 @@ export class CanvasComponent implements OnInit, OnChanges {
   }
 
   /**
-   * resets the template to given defaults
+   * Resets the template to predefined defaults
    */
   resetTemplate() {
     this.preset.itemsJson = DEFAULT_ITEMS;
@@ -162,6 +161,9 @@ export class CanvasComponent implements OnInit, OnChanges {
     this.zoomFactor = $event;
   }
 
+  /**
+   * Calculate zoom from given canvas
+   */
   private initialZoom() {
     this.zoomFactor = 1;
     if (this.canvasWrapperWidth === null || this.canvasWrapperHeight === null) {
@@ -175,8 +177,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     const canvasHeight = this.preset.height;
     const usedH = (1 / this.canvasWrapperHeight) * canvasHeight;
 
-    // check in which dimension the  canvas uses more space, vertical
-    // or horizontal
+    // check in which dimension the  canvas uses more space, vertical or horizontal
     // then decide which scale will be applied to the canvas
     if (usedW < 1 && usedH < 1) {
       this.initZoom = this.zoomFactor = 1;

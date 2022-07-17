@@ -27,13 +27,29 @@
       <label for="imageUpload" class="btn btn-primary btn-block btn-outlined">
         <fa-icon [icon]="plusIcon"></fa-icon>
         Upload image</label>
-      <input type="file" id="imageUpload" (change)="imageUpload($event)" style="display: none"
+      <input type="file" id="imageUpload" (change)="addImageFromFile($event)" style="display: none"
              trackClick="Meta Action | Upload new">
     </div>
     <div (click)="addObject(LayoutItemType.STATIC_TEXT)" trackClick="Meta Action | Textbox">
       <fa-icon [icon]="plusIcon"></fa-icon>
       Textbox
     </div>
+
+    <div *ngIf="metaProperties.otherImages">
+      <app-overlay-menu class="other-image" #overlay>
+        <div class="opener"><fa-icon [icon]="plusIcon"></fa-icon> More images</div>
+        <div class="closer"><fa-icon [icon]="plusIcon"></fa-icon> More images</div>
+        <!-- TODO: remove styling from markup -->
+        <div class="content" style="max-width: 440px;">
+          <img loading="lazy"
+               (click)="addImageFromUrl(src, overlay)"
+               [src]="src"
+               *ngFor="let src of metaProperties.otherImages"
+               style="width: 100px; height: 100px; object-fit: cover; margin: 5px; cursor: pointer; border-radius: 5px">
+        </div>
+      </app-overlay-menu>
+    </div>
+
   </div>
   <h4 class="media-elements" (click)="showMedia = !showMedia">
     Open Media Library <fa-icon [icon]="imageIcon"></fa-icon>

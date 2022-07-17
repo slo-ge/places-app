@@ -17,7 +17,8 @@ export interface MetaData {
     highestPrice: Number | string | null;
     currency: Number | string | null;
     displayPrice: string | null;
-  }
+  },
+  otherImages?: string[];
 }
 
 /**
@@ -38,7 +39,8 @@ export class MetaContentAdapter implements EditorPreviewInfoService {
         image: data.ogImage,
         iconUrl: data.iconUrl,
         url,
-        displayPrice: data.price?.displayPrice
+        displayPrice: data.price?.displayPrice,
+        otherImages: data.otherImages
       }))
     );
   }

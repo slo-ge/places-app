@@ -129,8 +129,11 @@ export class PresetService {
    * Adds the object to the canvas
    * Also adds object and item to a list
    */
-  public addObjectToCanvas(object: fabric.Image | fabric.Textbox) {
+  public addObjectToCanvas(object: fabric.Image | fabric.Textbox, selected: boolean = false) {
     this.canvas.add(object);
+    if (selected) {
+      this.canvas.setActiveObject(object);
+    }
   }
 
   public createImage(image: Image, offsetTop: number, item: PresetObject) {
@@ -157,6 +160,7 @@ export class PresetService {
         const prom = new Promise<Image>((resolve, _reject) => {
           fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
         });
+
         imageCache[proxiedImageUrl] = fabric.util.object.clone(await prom);
       }
 

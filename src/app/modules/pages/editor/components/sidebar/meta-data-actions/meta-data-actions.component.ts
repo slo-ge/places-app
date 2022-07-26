@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, PresetObjectStaticImage} from "@app/core/model/preset";
@@ -23,6 +23,9 @@ export class MetaDataActionsComponent {
   imageIcon = faImages;
   showMedia = false;
 
+  // other images will be selected via dialog
+  selectedFromOthers: string[] = [];
+
   constructor() {
   }
 
@@ -32,11 +35,11 @@ export class MetaDataActionsComponent {
       const textOrImage = getMetaFieldOrStaticField(this.metaProperties, preset);
       if (isText(type)) {
         const obj = await this.presetService.createText(textOrImage, preset, 50);
-        this.presetService.addObjectToCanvas(obj);
+        this.presetService.addObjectToCanvas(obj, true);
       } else if (isImage(type)) {
         const image = fabric.util.object.clone(await this.presetService.getImage(textOrImage));
         const obj = await this.presetService.createImage(image, 50, preset);
-        this.presetService.addObjectToCanvas(obj);
+        this.presetService.addObjectToCanvas(obj, true);
       }
     }
   }
@@ -51,7 +54,7 @@ export class MetaDataActionsComponent {
         image.set({'left': 50});
         image.set({'top': 50});
         image.scaleToWidth(self.presetService.canvas.getWidth() / 2);
-        self.presetService.addObjectToCanvas(image);
+        self.presetService.addObjectToCanvas(image, true);
       }
     };
     reader.readAsDataURL(file);
@@ -63,19 +66,54 @@ export class MetaDataActionsComponent {
       image: {url}
     };
     const image = fabric.util.object.clone(await this.presetService.getImage(url));
-    const obj = await this.presetService.createImage(image, 50, preset);
-    this.presetService.addObjectToCanvas(obj);
+    const obj = this.presetService.createImage(image, 50, preset);
+    this.presetService.addObjectToCanvas(obj, true);
   }
 
-  async addImageFromUrl(src: string, overlay: OverlayMenuComponent) {
-    const preset = MetaDataActionsComponent.getDefaultPresetObject(LayoutItemType.IMAGE);
-    const image = fabric.util.object.clone(await this.presetService.getImage(src));
-    const obj = await this.presetService.createImage(image, 50, preset);
-    this.presetService.addObjectToCanvas(obj);
+  /**
+   * Adds one or more images
+   *
+   * TODO: build better grids, layouts...
+   * @param overlay
+   */
+  async addSelected(overlay: OverlayMenuComponent) {
+    const fabricObjects: fabric.Object[] = [];
+    let old: any = null;
+    let top = 200;
+    let left = 20;
+    for (const [index, src] of this.selectedFromOthers.entries()) {
+      let image = fabric.util.object.clone(await this.presetService.getImage(src));
+      image.scaleToHeight(200);
+      const scaling = image.getObjectScaling();
+      image.height = image.getScaledHeight() / scaling.scaleX;
+      image.width = image.getScaledWidth() / scaling.scaleY;
+
+      // Build grid 3xn grid
+      if (index % 3 === 0) {
+        top = top + 200 + 20;
+        left = 20;
+      } else {
+        left = old ? old.left + old.getScaledWidth() + 20 : 20;
+      }
+
+      image.left = left;
+      image.top = top;
+      fabricObjects.push(image);
+      old = image;
+    }
+    this.presetService.canvas.add(...fabricObjects);
+
+    // select all new added images
+    const selection = new fabric.ActiveSelection(fabricObjects, {canvas: this.presetService.canvas});
+    this.presetService.canvas.setActiveObject(selection);
+
+    // render and close modal
+    this.presetService.canvas.renderAll();
     overlay.close();
   }
 
-  private static getDefaultPresetObject(type: LayoutItemType) {
+
+  private static getDefaultPresetObject(type: LayoutItemType): any {
     return {
       offsetLeft: 20,
       offsetTop: 20,

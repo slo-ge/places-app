@@ -95,7 +95,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
     } else if (this.activeObject.isType('image')) {
       this.selectedType = FabricType.IMAGE;
     } else {
-      console.error('onCanvasEvent could not found Object:', this.activeObject)
+      console.warn('Object with type', this.activeObject.type, 'only partial supported');
     }
   }
 

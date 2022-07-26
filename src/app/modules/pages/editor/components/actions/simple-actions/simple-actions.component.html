@@ -21,6 +21,10 @@
       <app-object-shadow [activeObject]="activeObject"></app-object-shadow>
       <app-object-stroke [activeObject]="activeObject"></app-object-stroke>
       <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE"></app-image-filter>
+      <app-expansion-panel *ngIf="activeObject?.type === fabricType.TEXTBOX">
+        <span class="title">Font Background</span>
+        <app-font-background class="content"></app-font-background>
+      </app-expansion-panel>
     </div>
   </app-overlay-menu>
 </div>
@@ -37,9 +41,7 @@
       <div>Undo/Redo (beta)</div>
       <app-undo-redo></app-undo-redo>
     </div>
-    <div *ngIf="activeObject?.type === fabricType.TEXTBOX">Font Background
-      <app-font-background></app-font-background>
-    </div>
+
     <app-feature [canvas]="canvas"></app-feature>
   </div>
 </app-overlay-menu>

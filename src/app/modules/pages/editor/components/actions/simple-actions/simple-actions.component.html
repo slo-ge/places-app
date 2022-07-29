@@ -27,6 +27,7 @@
       </app-expansion-panel>
     </div>
   </app-overlay-menu>
+  <app-undo-redo></app-undo-redo>
 </div>
 
 <ng-template #selectItem>
@@ -37,11 +38,6 @@
   <span class="opener"><fa-icon [icon]="iconMore"></fa-icon>more</span>
   <span class="closer"><fa-icon [icon]="iconMore"></fa-icon>close</span>
   <div class="content">
-    <div>
-      <div>Undo/Redo (beta)</div>
-      <app-undo-redo></app-undo-redo>
-    </div>
-
     <app-feature [canvas]="canvas"></app-feature>
   </div>
 </app-overlay-menu>

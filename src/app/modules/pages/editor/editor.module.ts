@@ -37,6 +37,7 @@ import { ObjectRemoveComponent } from './components/actions/object/object-remove
 import { ObjectSizeComponent } from './components/actions/object/object-size/object-size.component';
 import { ObjectShadowComponent } from './components/actions/object/object-shadow/object-shadow.component';
 import { ObjectStrokeComponent } from './components/actions/object/object-stroke/object-stroke.component';
+import { MultiImageComponent } from './components/sidebar/meta-data-actions/multi-image/multi-image.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ObjectStrokeComponent } from './components/actions/object/object-stroke
     ObjectRemoveComponent,
     ObjectSizeComponent,
     ObjectShadowComponent,
-    ObjectStrokeComponent
+    ObjectStrokeComponent,
+    MultiImageComponent
   ],
 	imports: [
 		CommonModule,

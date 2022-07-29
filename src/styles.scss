@@ -73,6 +73,11 @@ button {
     font-size: 14px;
     height: 25px;
   }
+
+  &:disabled {
+    background: $grey-2;
+    cursor: not-allowed;
+  }
 }
 
 .button.secondary,

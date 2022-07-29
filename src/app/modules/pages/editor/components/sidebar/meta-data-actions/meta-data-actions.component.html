@@ -18,22 +18,11 @@
       <fa-icon [icon]="plusIcon"></fa-icon>
       Image
     </div>
-    <div *ngIf="metaProperties.otherImages">
+    <div *ngIf="metaProperties.otherImages?.length">
       <app-overlay-menu class="other-image" #overlay>
         <div class="opener"><fa-icon [icon]="plusIcon"></fa-icon> More images</div>
         <div class="closer"><fa-icon [icon]="plusIcon"></fa-icon> More images</div>
-        <!-- TODO: remove styling from markup -->
-        <div class="content" style="max-width: 440px;" *ngIf="metaProperties.otherImages?.length">
-          <img loading="lazy"
-               (click)="selectedFromOthers.includes(src)
-                           ? selectedFromOthers.splice(selectedFromOthers.indexOf(src, 1))
-                           : selectedFromOthers.push(src)"
-               [src]="src"
-               *ngFor="let src of metaProperties.otherImages"
-               [class.selected-image]="selectedFromOthers.includes(src)"
-               style="width: 100px; height: 100px; object-fit: cover; margin: 5px; cursor: pointer; border-radius: 5px">
-          <button class="primary" [disabled]="!selectedFromOthers.length" (click)="addSelected(overlay)">Add</button>
-        </div>
+        <app-multi-image class="content"  [images]="metaProperties.otherImages!" [presetService]="presetService"></app-multi-image>
       </app-overlay-menu>
     </div>
     <div (click)="addObject(LayoutItemType.ICON)" trackClick="Meta Action | Add Icon">

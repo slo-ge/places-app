@@ -62,6 +62,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
           'selection:created': (event: any) => this.selectionEvent(event),
           'selection:updated': (event: any) => this.selectionEvent(event),
           'selection:cleared': (event: any) => this.selectionEndEvent(event),
+          'text:editing:entered': (event: any) => this.textEditinEntrered(event)
         },
       );
     });
@@ -102,5 +103,11 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   private selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.activeObject = null;
     this.selectedType = null;
+  }
+
+  private textEditinEntrered(_e: IEvent) {
+    // TODO: may remove this class
+    console.log(_e);
+
   }
 }

@@ -33,6 +33,27 @@ canvas {
   }
 }
 
+// TODO: move to class below
+main {
+  .canvas-actions {
+    .actions-row {
+      ::ng-deep {
+        app-simple-actions {
+          overflow-y: auto;
+
+          * {
+            flex-wrap: nowrap;
+          }
+
+          .object-actions {
+            width: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
 main {
   position: relative;
   width: 100%;

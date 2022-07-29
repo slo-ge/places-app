@@ -66,24 +66,9 @@
     .canvas-actions {
       position: sticky;
       top: 0;
-
-      .actions-row {
-        ::ng-deep {
-          app-simple-actions {
-            overflow-y: auto;
-
-            * {
-              flex-wrap: nowrap;
-            }
-
-            .object-actions {
-              width: auto;
-            }
-          }
-        }
-      }
     }
   }
+
   ::ng-deep {
     app-meta-data-action-static-image {
       position: relative;

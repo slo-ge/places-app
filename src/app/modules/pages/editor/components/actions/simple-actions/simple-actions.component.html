@@ -2,6 +2,7 @@
   <app-object-rotate></app-object-rotate>
   <app-object-remove></app-object-remove>
   <app-object-align></app-object-align>
+  <app-object-copy></app-object-copy>
   <app-object-size></app-object-size>
   <div class="type-settings" [ngSwitch]="selectedType">
     <div class="text-settings" *ngSwitchCase="fabricType.TEXTBOX">
@@ -27,6 +28,7 @@
       </app-expansion-panel>
     </div>
   </app-overlay-menu>
+  <span class="transition"></span>
 </div>
 
 <ng-template #selectItem>

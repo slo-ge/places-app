@@ -1,6 +1,6 @@
 <form [formGroup]="layoutSelectForm">
   <select formControlName="fontFamily">
-    <option value="">Select Font</option>
+    <option value="" disabled>{{activeObject.presetFont?.fontName || 'Select Font'}}</option>
     <option *ngFor="let setting of fonts$ | async" [ngValue]="setting">{{setting.fontName}}</option>
   </select>
 </form>

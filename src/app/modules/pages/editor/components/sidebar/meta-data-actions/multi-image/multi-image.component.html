@@ -1,12 +1,14 @@
 <!-- TODO: remove styling from markup -->
 <div style="max-width: 440px;" *ngIf="images?.length">
   <img loading="lazy"
-       (click)="selectedFromOthers.includes(src)
-                           ? selectedFromOthers.splice(selectedFromOthers.indexOf(src, 1))
-                           : selectedFromOthers.push(src)"
+       (click)="updateSelection(src)"
        [src]="src"
        *ngFor="let src of images.slice(0, 15)"
-       [class.selected-image]="selectedFromOthers.includes(src)"
-       style="width: 100px; height: 100px; object-fit: cover; margin: 5px; cursor: pointer; border-radius: 5px">
-  <button class="primary" [disabled]="!selectedFromOthers.length" (click)="addSelected()">Add</button>
+       [class.selected-image]="selectedFromOthers.includes(src)">
+  <div class="row-actions">
+    <button class="primary" *ngFor="let i of [1, 2, 3]"
+            [disabled]="!selectedFromOthers.length"
+            (click)="addSelected(i)">Add {{i}}-col Layout
+    </button>
+  </div>
 </div>

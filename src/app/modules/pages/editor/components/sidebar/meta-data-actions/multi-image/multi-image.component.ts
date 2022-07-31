@@ -26,7 +26,7 @@ export class MultiImageComponent {
   /**
    * Adds one or more images
    */
-  async addSelected() {
+  async addSelected(rows=3) {
     const fabricObjects: fabric.Object[] = [];
     let old: any = null;
     let top = 200;
@@ -39,7 +39,7 @@ export class MultiImageComponent {
       image.width = image.getScaledWidth() / scaling.scaleY;
 
       // Build grid 3xn grid
-      if (index % 3 === 0) {
+      if (index % rows === 0) {
         top = top + 200 + 20;
         left = 20;
       } else {
@@ -59,5 +59,13 @@ export class MultiImageComponent {
 
     // render and close modal
     this.presetService.canvas.renderAll();
+  }
+
+  updateSelection(src: string) {
+    if (this.selectedFromOthers.includes(src)) {
+      this.selectedFromOthers = this.selectedFromOthers.filter(i => i !== src);
+    } else {
+      this.selectedFromOthers.push(src)
+    }
   }
 }

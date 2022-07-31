@@ -3,3 +3,19 @@
 .selected-image {
   outline: 3px solid $primary;
 }
+
+img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px
+}
+
+.row-actions {
+  button {
+    display: block;
+    margin: 10px
+  }
+}

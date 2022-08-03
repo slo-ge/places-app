@@ -1,13 +1,14 @@
 import {Component, forwardRef, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
 import {EditorService} from "@app/core/editor/editor.service";
-import {faEllipsisV} from "@fortawesome/free-solid-svg-icons";
+import {faDownload, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
 import {ObjectPosition} from "@app/core/model/preset";
 import {Subscription} from "rxjs";
 import {Breakpoint, BreakpointObserverService} from "@app/core/services/breakpoint-observer.service";
 import {take} from "rxjs/operators";
 import {setCornerLines} from "@app/core/editor/overrides/setcornercoords";
 import {ActiveObjectService, ActiveObjectType} from "@app/modules/pages/editor/components/actions/action";
+import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -37,6 +38,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   canvas: any | Canvas;
 
   iconMore = faEllipsisV;
+  iconDownload = faDownload
   fabricType = FabricType;
   selectedType: FabricType | null = null;
 
@@ -50,7 +52,8 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   private currentBreakpoint: Breakpoint | null = null;
 
   constructor(private editorService: EditorService,
-              private breakpoint: BreakpointObserverService) {
+              private breakpoint: BreakpointObserverService,
+              private downloadService: DownloadCanvasService) {
     super();
   }
 
@@ -61,8 +64,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
         {
           'selection:created': (event: any) => this.selectionEvent(event),
           'selection:updated': (event: any) => this.selectionEvent(event),
-          'selection:cleared': (event: any) => this.selectionEndEvent(event),
-          'text:editing:entered': (event: any) => this.textEditinEntrered(event)
+          'selection:cleared': (event: any) => this.selectionEndEvent(event)
         },
       );
     });
@@ -105,9 +107,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
     this.selectedType = null;
   }
 
-  private textEditinEntrered(_e: IEvent) {
-    // TODO: may remove this class
-    console.log(_e);
-
+  download() {
+    this.downloadService.download();
   }
 }

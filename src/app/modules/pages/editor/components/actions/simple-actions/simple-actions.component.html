@@ -36,7 +36,7 @@
 </ng-template>
 
 <app-undo-redo></app-undo-redo>
-
+<div (click)="download()" class="download"><fa-icon [icon]="iconDownload"></fa-icon></div>
 <app-overlay-menu class="more-actions">
   <span class="opener"><fa-icon [icon]="iconMore"></fa-icon>more</span>
   <span class="closer"><fa-icon [icon]="iconMore"></fa-icon>close</span>

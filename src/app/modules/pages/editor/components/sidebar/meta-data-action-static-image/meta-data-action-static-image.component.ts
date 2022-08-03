@@ -14,6 +14,7 @@ import {Observable} from "rxjs";
 import {finalize, map, mergeMap, take, toArray} from "rxjs/operators";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
 import {MetaDataActionsComponent} from "@app/modules/pages/editor/components/sidebar/meta-data-actions/meta-data-actions.component";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 
 interface StaticImage {
@@ -55,20 +56,23 @@ export class MetaDataActionStaticImageComponent implements OnInit {
 
 
   constructor(private cmsService: CmsService,
-              private elementRef: ElementRef) {
+              private elementRef: ElementRef,
+              private cmsAuthService: CmsAuthService) {
   }
 
   ngOnInit(): void {
-    this.staticImages$ = this.cmsService.getStaticImages().pipe(
+    const user$ = this.cmsAuthService.getUser();
+    this.staticImages$ = user$.pipe(
       take(1),
-      mergeMap(image => image),
-      map(image => ({
-        thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),
-        url: toAbsoluteCMSUrl(image.url)
-      })),
+      mergeMap(d => this.cmsService.getStaticImages(d?.user ? '&caption=other' : '').pipe(
+        mergeMap(image => image),
+        map(image => ({
+          thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),
+          url: toAbsoluteCMSUrl(image.url)
+        }))
+      )),
       toArray(),
-      finalize(() => this.loading = false)
-    );
+      finalize(() => this.loading = false));
   }
 
 

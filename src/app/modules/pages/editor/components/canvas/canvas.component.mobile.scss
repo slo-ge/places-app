@@ -6,7 +6,6 @@
     width: auto;
   }
 
-
   aside {
     //transition: opacity 1s ease-out;
     position: relative;
@@ -24,7 +23,7 @@
     }
 
     app-layout-selector {
-      height: 300px;
+      flex: auto;
       width: auto;
     }
   }

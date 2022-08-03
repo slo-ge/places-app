@@ -170,8 +170,8 @@ export class CmsService {
   /**
    * static images can be used in templates
    */
-  public getStaticImages() {
-    const url = 'upload/files?_limit=1000&_start=0&_sort=updated_at:DESC&caption=static-image';
+  public getStaticImages(additionalParameter: string = '') {
+    const url = 'upload/files?_limit=1000&_start=0&_sort=updated_at:DESC&caption=static-image' + additionalParameter;
     return this.httpClient.get<BackgroundImage[]>(`${CMS_API_URL}/${url}`);
   }
 }

@@ -6,7 +6,6 @@ deployment-steps: &steps
   - run:
       command: |
         npm install
-        sudo apt-get update
   - save_cache:
       key: AngularCircleCI-{{ .Branch }}-{{ checksum "package.json" }}
       paths:

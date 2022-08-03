@@ -22,11 +22,10 @@ export class OverlayMenuComponent {
     }
   }
 
-  constructor(private cdr: ChangeDetectorRef) {
+  constructor() {
   }
 
   public close() {
-    this.cdr.markForCheck();
     this.isOpen = false;
   }
 }

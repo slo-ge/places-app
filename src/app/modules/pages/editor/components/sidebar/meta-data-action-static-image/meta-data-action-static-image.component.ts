@@ -75,7 +75,6 @@ export class MetaDataActionStaticImageComponent implements OnInit {
       finalize(() => this.loading = false));
   }
 
-
   selectImage(image: StaticImage) {
     this.selectStaticImageUrl.emit(image.url);
   }

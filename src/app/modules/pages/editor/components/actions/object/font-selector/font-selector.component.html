@@ -1,6 +1,11 @@
-<form [formGroup]="layoutSelectForm">
-  <select formControlName="fontFamily">
-    <option value="" disabled>{{activeObject.presetFont?.fontName || 'Select Font'}}</option>
-    <option *ngFor="let setting of fonts$ | async" [ngValue]="setting">{{setting.fontName}}</option>
-  </select>
-</form>
+<app-overlay-menu>
+  <div class="border-box opener">Font: {{activeObject.presetFont?.fontName || 'Default'}}</div>
+  <div class="border-box closer">Font: {{activeObject.presetFont?.fontName || 'Default'}}</div>
+  <div class="content" style="height: 200px; overflow-y: scroll">
+    <div *ngFor="let font of fonts$ | async" class="font-item" (click)="loadFont(font)" [class.selected]="font.fontName === activeObject.presetFont?.fontName">
+      <span>{{font.fontName}}</span>
+      <img src="/assets/fonts/{{font.fontName}}.jpg">
+    </div>
+  </div>
+
+</app-overlay-menu>

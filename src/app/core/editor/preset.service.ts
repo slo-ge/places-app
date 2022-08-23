@@ -78,7 +78,7 @@ export class PresetService {
   public async initObjectsOnCanvas() {
     if (this.preset.backgroundImage) {
       // video/mp4 -> TODO: use enum
-      this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
+      await this.setBackground(toAbsoluteCMSUrl(this.preset.backgroundImage.url));
       await this.loadGlobalFontFromLayoutSetting();
     }
 
@@ -179,23 +179,22 @@ export class PresetService {
    * removed
    * @param url
    */
-  private setBackground(url: string) {
+  private async setBackground(url: string) {
     if (isVideoBackground(this.preset)) {
       this.info.isAnimatedBackground = true;
       this.setAnimatedBackground(url);
     } else {
-      this.setStaticBackground(url);
+      // add static background
+      let image = await this.getImage(url);
+      if (image) {
+        image.scaleToWidth(this.canvas.width as number);
+        image.selectable = false;
+        image.lockMovementX = true;
+        image.lockMovementY = true;
+        image.moveTo(0);
+        this.canvas.add(image);
+      }
     }
-  }
-
-  private async setStaticBackground(url: string) {
-    fabric.Image.fromURL(url, (myImg) => {
-      const bgImage = myImg.set({left: 0, top: 0, selectable: false}) as any;
-      bgImage.scaleToWidth(this.canvas.width);
-      bgImage.lockMovementX = true;
-      bgImage.lockMovement = true;
-      this.canvas.moveTo(bgImage, 0);
-    }, {crossOrigin: "*"});
   }
 
   private setAnimatedBackground(url: string) {

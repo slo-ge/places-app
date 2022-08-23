@@ -13,13 +13,10 @@ import {ActiveObjectService, ObjectAction} from "@app/modules/pages/editor/compo
 
 @Component({
   selector: 'app-font-selector',
-  templateUrl: './font-selector.component.html'
+  templateUrl: './font-selector.component.html',
+  styleUrls: ['font-selector.component.scss']
 })
 export class FontSelectorComponent extends ObjectAction<CustomTextBox> implements OnInit {
-  layoutSelectForm = this.fb.group({
-    fontFamily: ['',],
-  });
-
   alphaSort = (a: Font, b: Font) => (a.fontName > b.fontName) ? 1 : -1;
   fonts$: Observable<Font[]> = EMPTY;
 
@@ -30,7 +27,6 @@ export class FontSelectorComponent extends ObjectAction<CustomTextBox> implement
   }
 
   ngOnInit(): void {
-    this.layoutSelectForm?.get('fontFamily')?.valueChanges.subscribe(value => this.addFont(value));
     this.fonts$ = this.cms.getSettings().pipe(
       map(settings => settings.GoogleFonts.sort(this.alphaSort)),
       catchError(e => {
@@ -44,7 +40,7 @@ export class FontSelectorComponent extends ObjectAction<CustomTextBox> implement
    * async loads the font and sets it to textbox
    * @param font
    */
-  async addFont(font: Font) {
+  async loadFont(font: Font) {
     if (!font) {
       return;
     }

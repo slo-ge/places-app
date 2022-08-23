@@ -1,0 +1,27 @@
+@import 'style';
+
+.font-item {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  &.selected,
+  &:hover {
+    background: $grey-0;
+    border-radius: $common-border-radius;
+  }
+
+  img {
+    width: 100px;
+    height: auto;
+  }
+}
+
+.opener,
+.closer {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -9,6 +9,7 @@ import {take} from "rxjs/operators";
 import {setCornerLines} from "@app/core/editor/overrides/setcornercoords";
 import {ActiveObjectService, ActiveObjectType} from "@app/modules/pages/editor/components/actions/action";
 import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
+import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -53,7 +54,8 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
 
   constructor(private editorService: EditorService,
               private breakpoint: BreakpointObserverService,
-              private downloadService: DownloadCanvasService) {
+              private downloadService: DownloadCanvasService,
+              private feedbackService: FeedbackService) {
     super();
   }
 
@@ -109,5 +111,6 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
 
   download() {
     this.downloadService.download();
+    this.feedbackService.openAtFirstTime();
   }
 }

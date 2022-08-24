@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -10,6 +10,7 @@ import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
 import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 import {OverlayModule} from '@angular/cdk/overlay';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import * as Sentry from "@sentry/angular";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       useFactory: (service: GoogleAnalyticsService) => () => service.init(),
       deps: [GoogleAnalyticsService],
       multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      })
     }
   ],
   bootstrap: [AppComponent]

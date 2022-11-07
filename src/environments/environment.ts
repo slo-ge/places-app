@@ -5,7 +5,10 @@
 export const environment = {
   production: false,
   API_URL: '/api',
-  CMS_URL: '/cms'
+  CMS_URL: '/cms',
+  sentry: {
+    dsn: 'noop'
+  }
 };
 
 /*

@@ -5,14 +5,13 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
-	declarations: [OverlayComponent],
-	imports: [
-		CommonModule,
-		FontAwesomeModule
-	],
-	exports: [
-		OverlayComponent
-	],
-	entryComponents: [OverlayComponent]
+    declarations: [OverlayComponent],
+    imports: [
+        CommonModule,
+        FontAwesomeModule
+    ],
+    exports: [
+        OverlayComponent
+    ]
 })
 export class CustomOverlayModule { }

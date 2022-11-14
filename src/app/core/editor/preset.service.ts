@@ -2,7 +2,7 @@ import {fabric} from "fabric";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {Canvas, Image, Object} from "fabric/fabric-impl";
-import * as FontFaceObserver from 'fontfaceobserver'
+import * as FontFaceObserver from 'fontfaceobserver';
 import {
   CustomObject,
   CustomTextBox,
@@ -60,6 +60,11 @@ interface PresetServiceInfo {
   isAnimatedBackground?: boolean;
 }
 
+/**
+ * Sort by there vertical position
+ */
+const POSITION_SORT = (a: PresetObject, b: PresetObject) => a.position < b.position ? -1 : 1;
+
 export class PresetService {
   public readonly metaMapperData: MetaMapperData;
   public readonly preset: Preset; // TODO: getter and setter
@@ -87,7 +92,7 @@ export class PresetService {
 
     if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
-      for (const item of this.preset.itemsJson.sort((a, b) => a.position < b.position ? -1 : 1)) {
+      for (const item of this.preset.itemsJson.sort(POSITION_SORT)) {
         if (isText(item)) {
           const text = getMetaFieldOrStaticField(this.metaMapperData, item);
           const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
@@ -99,7 +104,6 @@ export class PresetService {
         } else if (isImage(item)) {
           const url = getMetaFieldOrStaticField(this.metaMapperData, item);
           const image = fabric.util.object.clone(await this.getImage(url));
-
           this.applyOptions(image, item, item.offsetTop + posLastObjectY);
           this.addObjectToCanvas(image);
           renderedItems.push({object: image, preset: item});
@@ -165,7 +169,6 @@ export class PresetService {
       }
 
       // clear image
-
       return resetFabricImage(imageCache[proxiedImageUrl]);
     }
 

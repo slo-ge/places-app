@@ -4,8 +4,8 @@ import {EMPTY, Observable} from "rxjs";
 import {Preset} from "@app/core/model/preset";
 import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
 import {ActivatedRoute} from "@angular/router";
-import {distinctUntilChanged, map, mergeMap, take, tap} from "rxjs/operators";
-import {faVideo} from "@fortawesome/free-solid-svg-icons/faVideo";
+import {distinctUntilChanged, map, mergeMap, tap} from "rxjs/operators";
+import {faVideo} from "@fortawesome/free-solid-svg-icons";
 import {SeoService} from "@app/core/seo/seo.service";
 
 @Component({

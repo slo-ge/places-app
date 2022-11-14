@@ -2,7 +2,7 @@ import {BaseResolver, ResolverType} from "@app/core/editor/resolvers/base.resolv
 import {CustomTextBox} from "@app/core/editor/fabric-object.utils";
 import {Font, PresetObject} from "@app/core/model/preset";
 import {importFontInDom} from "@app/core/editor/utils";
-import * as FontFaceObserver from 'fontfaceobserver'
+import * as FontFaceObserver from 'fontfaceobserver';
 
 export class FontResolver implements BaseResolver {
   readonly resolverType: ResolverType = ResolverType.TEXT;

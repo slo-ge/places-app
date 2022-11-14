@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CmsService, Tag} from "@app/core/services/cms.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute, Router, RouterLinkActive} from "@angular/router";
-import {faWindowClose} from "@fortawesome/free-solid-svg-icons/faWindowClose";
-import {faAngleLeft} from "@fortawesome/free-solid-svg-icons/faAngleLeft";
-import {faAngleRight} from "@fortawesome/free-solid-svg-icons/faAngleRight";
+import {faAngleLeft, faAngleRight, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-preset-tags',

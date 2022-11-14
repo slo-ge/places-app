@@ -52,7 +52,7 @@ export interface Preset {
   fontFileWoff?: GlobalFont;
   fontFamilyHeadingCSS?: string;
 
-  itemsJson?: Array<PresetObject | PresetObjectStaticText>;
+  itemsJson?: Array<PresetObject | PresetObjectStaticText | PresetObjectStaticImage>;
 
   preview?: BackgroundImage;
 }
@@ -73,6 +73,7 @@ export interface PresetObject {
   offsetBottom?: number,
   type: LayoutItemType,
   title?: string,
+  // Vertical position
   position: number;
   objectAngle?: number;
   zIndex?: number;

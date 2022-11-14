@@ -47,7 +47,8 @@
             "optimization": false,
             "namedChunks": true,
             "allowedCommonJsDependencies": [
-              "fabric"
+              "fabric",
+              "fontfaceobserver"
             ]
           },
           "configurations": {

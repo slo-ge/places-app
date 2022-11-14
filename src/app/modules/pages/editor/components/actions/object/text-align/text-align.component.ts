@@ -1,8 +1,5 @@
 import {Component} from '@angular/core';
-import {faAlignLeft} from "@fortawesome/free-solid-svg-icons/faAlignLeft";
-import {faAlignRight} from "@fortawesome/free-solid-svg-icons/faAlignRight";
-import {faAlignCenter} from "@fortawesome/free-solid-svg-icons/faAlignCenter";
-import {faAlignJustify} from "@fortawesome/free-solid-svg-icons/faAlignJustify";
+import {faAlignCenter, faAlignJustify, faAlignLeft, faAlignRight} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 import {KeyValue} from "@angular/common";
 import {CustomTextBox} from "@app/core/editor/fabric-object.utils";

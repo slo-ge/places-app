@@ -1,8 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {FeatureFlag, FeatureService} from "@app/core/services/feature.service";
 import {Canvas} from "fabric/fabric-impl";
-import {faToggleOn} from "@fortawesome/free-solid-svg-icons/faToggleOn";
-import {faToggleOff} from "@fortawesome/free-solid-svg-icons/faToggleOff";
+import {faToggleOn, faToggleOff} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-feature',

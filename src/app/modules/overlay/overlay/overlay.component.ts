@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, Type } from '@angular/core';
 import {CustomOverlayRef} from "@app/modules/overlay/custom-overlay-ref";
-import {faWindowClose} from "@fortawesome/free-solid-svg-icons/faWindowClose";
+import {faWindowClose} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({

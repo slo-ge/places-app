@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {faSync} from "@fortawesome/free-solid-svg-icons/faSync";
+import {faSync} from "@fortawesome/free-solid-svg-icons";
 import {CustomOverlayRef} from "@app/modules/overlay/custom-overlay-ref";
 
 

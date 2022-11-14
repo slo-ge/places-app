@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, UntypedFormControl} from "@angular/forms";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {take} from "rxjs/operators";
 import {EMPTY, Observable} from "rxjs";
@@ -13,8 +13,8 @@ import {CmsAuthService} from "@app/core/services/cms-auth.service";
 })
 export class LoginComponent implements OnInit {
   userForm = this.fb.group({
-    username: ['',],
-    password: ['',],
+    username: new UntypedFormControl(''),
+    password: new UntypedFormControl(''),
   });
   show: boolean = false;
   error = '';

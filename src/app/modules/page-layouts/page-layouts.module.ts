@@ -9,9 +9,7 @@ import {CustomOverlayModule} from "@app/modules/overlay/custom-overlay.module";
 @NgModule({
   declarations: [DefaultLayoutComponent],
   imports: [
-    LoginModule,
     RouterModule,
-    SharedModule,
     CustomOverlayModule
   ]
 })

@@ -1,5 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormGroup, UntypedFormControl} from "@angular/forms";
 import {AdapterService} from "@app/core/services/adapters/adapter.service";
 import {ApiAdapter} from "@app/core/model/content.service";
 import {faCheckCircle, faSearch} from "@fortawesome/free-solid-svg-icons";
@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   };
 
   baseURLForm = new FormGroup({
-    url: new FormControl(''),
-    presetId: new FormControl('')
+    url: new UntypedFormControl(''),
+    presetId: new UntypedFormControl('')
   });
 
   testUrls$: Observable<UrlItem[]> = EMPTY;

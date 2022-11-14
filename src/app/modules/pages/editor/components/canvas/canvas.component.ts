@@ -6,6 +6,7 @@ import {EditorService} from "@app/core/editor/editor.service";
 import {PresetService} from "@app/core/editor/preset.service";
 import {
   faAngleUp,
+  faBars,
   faCode,
   faCogs,
   faDownload,
@@ -23,7 +24,6 @@ import {Canvas} from "fabric/fabric-impl";
 import {ActivatedRoute} from "@angular/router";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {SaveService} from "@app/core/editor/save.service";
-import {faBars} from "@fortawesome/free-solid-svg-icons/faBars";
 
 
 @Component({

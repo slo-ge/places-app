@@ -1,5 +1,5 @@
-import {Component, HostBinding, HostListener, Input} from '@angular/core';
-import {faBold} from "@fortawesome/free-solid-svg-icons/faBold";
+import {Component, HostBinding, HostListener} from '@angular/core';
+import {faBold} from "@fortawesome/free-solid-svg-icons";
 import {ActiveObjectService, ObjectAction} from "@app/modules/pages/editor/components/actions/action";
 import {fabric} from "fabric";
 

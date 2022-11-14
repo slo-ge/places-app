@@ -1,7 +1,7 @@
 import {Component, HostListener} from '@angular/core';
 import {CustomObject} from "@app/core/editor/fabric-object.utils";
 import {copyPasteKeyPress, paste} from "@app/modules/pages/editor/utils/copy-paste";
-import {faCopy} from "@fortawesome/free-solid-svg-icons/faCopy";
+import {faCopy} from "@fortawesome/free-solid-svg-icons";
 import {ActiveObjectService, ObjectAction} from "@app/modules/pages/editor/components/actions/action";
 
 @Component({

@@ -3,13 +3,11 @@ import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {ResultListModule} from './modules/pages/result-list/result-list.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {JWTAuthInterceptor} from "@app/core/interceptors/jwtauth.interceptor";
 import {PageLayoutsModule} from "@app/modules/page-layouts/page-layouts.module";
 import {GoogleAnalyticsService} from "@app/core/services/google-analytics.service";
 import {OverlayModule} from '@angular/cdk/overlay';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import * as Sentry from "@sentry/angular";
 
 @NgModule({
@@ -19,11 +17,9 @@ import * as Sentry from "@sentry/angular";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ResultListModule,
     HttpClientModule,
     PageLayoutsModule,
-    OverlayModule,
-    BrowserAnimationsModule
+    OverlayModule
   ],
   providers: [
     {

@@ -38,6 +38,8 @@ import { ObjectSizeComponent } from './components/actions/object/object-size/obj
 import { ObjectShadowComponent } from './components/actions/object/object-shadow/object-shadow.component';
 import { ObjectStrokeComponent } from './components/actions/object/object-stroke/object-stroke.component';
 import { MultiImageComponent } from './components/sidebar/meta-data-actions/multi-image/multi-image.component';
+import { AddShapeComponent } from './components/sidebar/meta-data-actions/add-shape/add-shape.component';
+import { ObjectMaskComponent } from './components/actions/object/object-mask/object-mask.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { MultiImageComponent } from './components/sidebar/meta-data-actions/mult
     ObjectSizeComponent,
     ObjectShadowComponent,
     ObjectStrokeComponent,
-    MultiImageComponent
+    MultiImageComponent,
+    AddShapeComponent,
+    ObjectMaskComponent
   ],
 	imports: [
 		CommonModule,

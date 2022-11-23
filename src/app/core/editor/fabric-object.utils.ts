@@ -1,5 +1,6 @@
 import {fabric} from "fabric";
 import {
+  ClipPath,
   Font,
   LayoutItemType,
   ObjectPosition,
@@ -25,7 +26,11 @@ interface CustomFabricObjectFields {
 
 export type  CustomObject = fabric.Object & CustomFabricObjectFields;
 export type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
-export type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
+export type  CustomImageBox = fabric.Image
+  & CustomFabricObjectFields
+  & {
+  __internalClipPath?: ClipPath;
+};
 
 
 /**
@@ -37,51 +42,51 @@ export type  CustomImageBox = fabric.Image & CustomFabricObjectFields;
  * @param canvas, current canvas
  */
 function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number, canvas: Canvas): PresetObject {
-  let tmp: PresetObject = {
+  let presetObject: PresetObject = {
     type: fabricObject.presetType!, // already filtered
     // TODO: calculate offset correct, it is not possible to use the current offset of the canvas because it is not relative to the size of the text
     offsetTop: Math.round(fabricObject.presetOffsetTop || 0),
     offsetLeft: Math.round(fabricObject.left || 0),
-    position: position
+    position
   };
 
   if (fabricObject.angle != 360) {
-    tmp.objectAngle = fabricObject.angle;
+    presetObject.objectAngle = fabricObject.angle;
   }
 
-  tmp.objectPosition = fabricObject.presetObjectPosition;
+  presetObject.objectPosition = fabricObject.presetObjectPosition;
   // Setting the correct x position, the y position is already set in the previous method
-  if (isPositionXFixed(tmp)) {
-    tmp.offsetRight = canvas.width! - fabricObject.getScaledWidth() - fabricObject.left!;
+  if (isPositionXFixed(presetObject)) {
+    presetObject.offsetRight = canvas.width! - fabricObject.getScaledWidth() - fabricObject.left!;
   }
 
 
   const zIndex = canvas.getObjects().indexOf(fabricObject);
   if (zIndex > 0) {
-    tmp.zIndex = zIndex;
+    presetObject.zIndex = zIndex;
   }
 
-  if (isText(tmp) || isImage(tmp)) {
+  if (isText(presetObject) || isImage(presetObject)) {
     // Apply Image or Text options to the object
-    OBJECT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, tmp));
+    OBJECT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, presetObject));
   }
 
-  if (isText(tmp)) {
+  if (isText(presetObject)) {
     fabricObject = fabricObject as CustomTextBox;
 
     // Apply all presets setting to the text object
-    TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, tmp));
+    TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, presetObject));
   }
 
-  if (tmp.type === LayoutItemType.STATIC_TEXT) {
-    (tmp as PresetObjectStaticText).text = (fabricObject as CustomTextBox).text!;
+  if (presetObject.type === LayoutItemType.STATIC_TEXT) {
+    (presetObject as PresetObjectStaticText).text = (fabricObject as CustomTextBox).text!;
   }
 
-  if (tmp.type === LayoutItemType.STATIC_IMAGE) {
-    (tmp as PresetObjectStaticImage).image = {url: fabricObject.presetStaticImageUrl!};
+  if (presetObject.type === LayoutItemType.STATIC_IMAGE) {
+    (presetObject as PresetObjectStaticImage).image = {url: fabricObject.presetStaticImageUrl!};
   }
 
-  return tmp;
+  return presetObject;
 }
 
 /**

@@ -1,15 +1,14 @@
-import {Component, forwardRef, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {Canvas, IEvent, Object as FabricObject} from "fabric/fabric-impl";
-import {EditorService} from "@app/core/editor/editor.service";
-import {faDownload, faEllipsisV} from "@fortawesome/free-solid-svg-icons";
-import {ObjectPosition} from "@app/core/model/preset";
-import {Subscription} from "rxjs";
-import {Breakpoint, BreakpointObserverService} from "@app/core/services/breakpoint-observer.service";
-import {take} from "rxjs/operators";
-import {setCornerLines} from "@app/core/editor/overrides/setcornercoords";
-import {ActiveObjectService, ActiveObjectType} from "@app/modules/pages/editor/components/actions/action";
-import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
-import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
+import { Component, forwardRef, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Canvas, IEvent, Object as FabricObject } from "fabric/fabric-impl";
+import { EditorService } from "@app/core/editor/editor.service";
+import { faDownload, faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+import { Subscription } from "rxjs";
+import { Breakpoint, BreakpointObserverService } from "@app/core/services/breakpoint-observer.service";
+import { take } from "rxjs/operators";
+import { setCornerLines } from "@app/core/editor/overrides/setcornercoords";
+import { ActiveObjectService, ActiveObjectType } from "@app/modules/pages/editor/components/actions/action";
+import { DownloadCanvasService } from "@app/core/editor/download-canvas.service";
+import { FeedbackService } from "@app/modules/shared/components/feedback/feedback.service";
 
 enum FabricType {
   TEXTBOX = 'textbox',
@@ -43,7 +42,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   fabricType = FabricType;
   selectedType: FabricType | null = null;
 
-  ObjectPosition = ObjectPosition;
+
   /**
    * holds the selected Object, if it is selected
    */
@@ -95,7 +94,7 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
         });
     }
 
-    if (this.activeObject.isType('textbox')) {
+    if (this.activeObject.isType('textbox') || this.activeObject.isType('circle')) {
       this.selectedType = FabricType.TEXTBOX;
     } else if (this.activeObject.isType('image')) {
       this.selectedType = FabricType.IMAGE;

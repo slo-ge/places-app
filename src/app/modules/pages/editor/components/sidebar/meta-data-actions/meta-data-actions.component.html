@@ -41,8 +41,9 @@
       <fa-icon [icon]="plusIcon"></fa-icon>
       Textbox
     </div>
-
   </div>
+  <h4>Shapes</h4>
+  <app-add-shape [canvas]="presetService.canvas"></app-add-shape>
   <h4 class="media-elements" (click)="showMedia = !showMedia">
     Open Media Library <fa-icon [icon]="imageIcon"></fa-icon>
   </h4>

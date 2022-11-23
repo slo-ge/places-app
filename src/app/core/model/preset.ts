@@ -80,6 +80,7 @@ export interface PresetObject {
   objectPosition?: ObjectPosition;
   font?: Font;
   textAlignment?: any;
+  clipPath?: ClipPath;
   stroke?: {stroke: string, strokeWidth: number, strokeUniform: boolean};
   shadow?: {
     color?: string | undefined;
@@ -90,6 +91,17 @@ export interface PresetObject {
     includeDefaultValues?: boolean | undefined;
     nonScaling?: boolean | undefined;
   }
+}
+
+export interface ClipPath {
+  type: 'circle' | 'rect';
+  radius?: number;
+  height: number;
+  width: number;
+  scaleX: number;
+  scaleY: number;
+  left: number;
+  top: number;
 }
 
 export interface PresetObjectStaticText extends PresetObject {
@@ -108,7 +120,6 @@ export interface Font {
 }
 
 export enum ObjectPosition {
-  STATIC = 'static',
   RELATIVE = 'relative',
   ABSOLUTE_DEPRECATED = 'absolute', // TODO: remove in near future
   ABSOLUTE_X = 'absoluteX',

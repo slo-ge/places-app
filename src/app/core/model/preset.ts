@@ -113,6 +113,16 @@ export interface PresetObjectStaticImage extends PresetObject {
   image: Partial<BackgroundImage>;
 }
 
+export interface PresetObjectCircle extends PresetObject {
+  radius: number;
+  fill: string;
+}
+
+export interface PresetObjectRect extends PresetObject {
+  fill: string;
+}
+
+
 export interface Font {
   importPath: string;
   fontFamily: string;
@@ -134,6 +144,18 @@ export enum LayoutItemType {
   ICON = 'icon',
   STATIC_TEXT = 'static-text',
   STATIC_IMAGE = 'static-image',
-  PRICE = 'price'
+  PRICE = 'price',
+  RECT = 'rect',
+  CIRCLE = 'circle'
 }
 
+// Overlapping with LayoutItemType
+export enum MetaTypes {
+  TITLE = 'title',
+  DESCRIPTION = 'description',
+  IMAGE = 'image',
+  ICON = 'icon',
+  STATIC_TEXT = 'static-text',
+  STATIC_IMAGE = 'static-image',
+  PRICE = 'price',
+}

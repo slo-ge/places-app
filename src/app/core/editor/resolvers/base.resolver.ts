@@ -1,9 +1,17 @@
-import {CustomImageBox, CustomObject, CustomTextBox} from "@app/core/editor/fabric-object.utils";
+import {
+  CustomCircleObject, CustomFabricObjects,
+  CustomImageBox,
+  CustomObject,
+  CustomRectObject,
+  CustomTextBox
+} from "@app/core/editor/fabric-object.utils";
 import {PresetObject} from "@app/core/model/preset";
 
 export enum ResolverType {
-  TEXT, IMAGE, OBJECT
+  TEXT, IMAGE, OBJECT, CIRCLE, RECT
 }
+
+
 
 export interface BaseResolver {
   readonly resolverType: ResolverType;
@@ -12,12 +20,12 @@ export interface BaseResolver {
    * @param object
    * @param preset
    */
-  applyOnObject(object: CustomObject | CustomTextBox | CustomImageBox, preset: PresetObject): void;
+  applyOnObject(object: CustomFabricObjects, preset: PresetObject): void;
 
   /**
    * Extracts from object to preset
    * @param object
    * @param preset
    */
-  applyOnPreset(object: CustomObject | CustomTextBox | CustomImageBox, preset: PresetObject): void;
+  applyOnPreset(object: CustomFabricObjects, preset: PresetObject): void;
 }

@@ -7,10 +7,10 @@ import {
   CustomObject,
   CustomTextBox,
   getMetaFieldOrStaticField,
-  getYPos,
-  isImage,
+  getYPos, isCircle,
+  isImage, isObject,
   isPositionXFixed,
-  isPositionYFixed,
+  isPositionYFixed, isRect,
   isText
 } from "@app/core/editor/fabric-object.utils";
 import {
@@ -93,6 +93,7 @@ export class PresetService {
     if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
       for (const item of this.preset.itemsJson.sort(POSITION_SORT)) {
+        // TODO: refactore whole stuff
         if (isText(item)) {
           const text = getMetaFieldOrStaticField(this.metaMapperData, item);
           const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
@@ -108,6 +109,24 @@ export class PresetService {
           this.addObjectToCanvas(image);
           renderedItems.push({object: image, preset: item});
           posLastObjectY = getYPos(image);
+        } else if (isCircle(item)) {
+          const circle = new fabric.Circle({
+            radius: item.radius,
+            fill: item.fill,
+          });
+          this.applyOptions(circle, item, item.offsetTop + posLastObjectY);
+          this.addObjectToCanvas(circle);
+          renderedItems.push({object: circle, preset: item});
+          posLastObjectY = getYPos(circle);
+        } else if (isRect(item)) {
+          // TODO: move to function
+          const rect = new fabric.Rect({
+            fill: item.fill,
+          });
+          this.applyOptions(rect, item, item.offsetTop + posLastObjectY);
+          this.addObjectToCanvas(rect);
+          renderedItems.push({object: rect, preset: item});
+          posLastObjectY = getYPos(rect); // TODO: only in one position
         }
       }
     } else {
@@ -133,7 +152,7 @@ export class PresetService {
    * Adds the object to the canvas
    * Also adds object and item to a list
    */
-  public addObjectToCanvas(object: fabric.Image | fabric.Textbox, selected: boolean = false) {
+  public addObjectToCanvas(object: fabric.Image | fabric.Textbox | fabric.Rect | fabric.Circle, selected: boolean = false) {
     this.canvas.add(object);
     if (selected) {
       this.canvas.setActiveObject(object);
@@ -271,7 +290,7 @@ export class PresetService {
     // depending on type set the width with the correct operation
     if (isImage(preset)) {
       fabricObject.scaleToWidth(width);
-    } else {
+    } else if(!isCircle(preset)) {
       fabricObject.set('width', width);
     }
 

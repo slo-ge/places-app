@@ -5,13 +5,14 @@ import {
   LayoutItemType,
   ObjectPosition,
   PresetObject,
+  PresetObjectCircle, PresetObjectRect,
   PresetObjectStaticImage,
   PresetObjectStaticText
 } from "@app/core/model/preset";
 import {Canvas, Object} from "fabric/fabric-impl";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
 import {FALLBACKS} from "@app/core/config/fallbacks";
-import {OBJECT_RESOLVERS, TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
+import {CIRCLE_RESOLVERS, OBJECT_RESOLVERS, RECT_RESOLVERS, TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
 
 /**
  * Extra information which can a fabric object hold
@@ -24,14 +25,13 @@ interface CustomFabricObjectFields {
   presetStaticImageUrl?: string;
 }
 
-export type  CustomObject = fabric.Object & CustomFabricObjectFields;
-export type  CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
-export type  CustomImageBox = fabric.Image
-  & CustomFabricObjectFields
-  & {
-  __internalClipPath?: ClipPath;
-};
+export type CustomObject = fabric.Object & CustomFabricObjectFields;
+export type CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
+export type CustomImageBox = fabric.Image & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
+export type CustomCircleObject = fabric.Circle & CustomFabricObjectFields;
+export type CustomRectObject = fabric.Rect & CustomFabricObjectFields;
 
+export type CustomFabricObjects = CustomObject | CustomTextBox | CustomImageBox | CustomCircleObject | CustomRectObject;
 
 /**
  * Maps the new canvas object to the export latest preset object format
@@ -41,7 +41,7 @@ export type  CustomImageBox = fabric.Image
  * or if it is position absolute the position will always the distance to top of canvas
  * @param canvas, current canvas
  */
-function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox, position: number, canvas: Canvas): PresetObject {
+function fabricObjectToPresetObject(fabricObject: CustomFabricObjects, position: number, canvas: Canvas): PresetObject {
   let presetObject: PresetObject = {
     type: fabricObject.presetType!, // already filtered
     // TODO: calculate offset correct, it is not possible to use the current offset of the canvas because it is not relative to the size of the text
@@ -60,7 +60,6 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     presetObject.offsetRight = canvas.width! - fabricObject.getScaledWidth() - fabricObject.left!;
   }
 
-
   const zIndex = canvas.getObjects().indexOf(fabricObject);
   if (zIndex > 0) {
     presetObject.zIndex = zIndex;
@@ -78,16 +77,25 @@ function fabricObjectToPresetObject(fabricObject: CustomTextBox | CustomImageBox
     TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, presetObject));
   }
 
-  if (presetObject.type === LayoutItemType.STATIC_TEXT) {
-    (presetObject as PresetObjectStaticText).text = (fabricObject as CustomTextBox).text!;
+  if (isStaticText(presetObject)) {
+    presetObject.text = (fabricObject as CustomTextBox).text!;
   }
 
-  if (presetObject.type === LayoutItemType.STATIC_IMAGE) {
-    (presetObject as PresetObjectStaticImage).image = {url: fabricObject.presetStaticImageUrl!};
+  if (isStaticImage(presetObject)) {
+    presetObject.image = {url: fabricObject.presetStaticImageUrl!};
+  }
+
+  if (isCircle(presetObject)) {
+    CIRCLE_RESOLVERS.applyOnPreset(fabricObject as CustomCircleObject, presetObject);
+  }
+
+  if (isRect(presetObject)) {
+    RECT_RESOLVERS.applyOnPreset(fabricObject as CustomRectObject, presetObject);
   }
 
   return presetObject;
 }
+
 
 /**
  * get the baseline y coord of fabric object
@@ -203,7 +211,7 @@ export function isImage(item: PresetObject | LayoutItemType): Boolean {
 }
 
 /**
- * Is presetObject a image object
+ * Is presetObject an image object
  */
 export function isText(item: PresetObject | LayoutItemType): Boolean {
   const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
@@ -211,6 +219,28 @@ export function isText(item: PresetObject | LayoutItemType): Boolean {
     || presetType === LayoutItemType.DESCRIPTION
     || presetType === LayoutItemType.STATIC_TEXT
     || presetType === LayoutItemType.PRICE
+}
+
+/**
+ * Is other object, i.e. RECT or CIRCLE
+ */
+export function isObject(item: PresetObject | LayoutItemType): Boolean {
+  const presetType = (item as PresetObject).type ? (item as PresetObject).type : item;
+  return presetType === LayoutItemType.RECT
+    || presetType === LayoutItemType.CIRCLE
+}
+
+export function isCircle(item: PresetObject): item is PresetObjectCircle {
+  return item.type === LayoutItemType.CIRCLE;
+}
+export function isRect(item: PresetObject): item is PresetObjectRect {
+  return item.type === LayoutItemType.RECT;
+}
+export function isStaticImage(item: PresetObject): item is PresetObjectStaticImage {
+  return item.type === LayoutItemType.STATIC_IMAGE;
+}
+export function isStaticText(item: PresetObject): item is PresetObjectStaticText {
+  return item.type === LayoutItemType.STATIC_TEXT;
 }
 
 /**

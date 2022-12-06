@@ -22,7 +22,12 @@ import {
   toAbsoluteCMSUrl
 } from "@app/core/editor/utils";
 import {PresetVideo} from "@app/core/editor/preset-video.service";
-import {OBJECT_RESOLVERS, TEXT_RESOLVERS} from "@app/core/editor/resolvers/resolvers";
+import {
+  CIRCLE_RESOLVERS,
+  OBJECT_RESOLVERS,
+  RECT_RESOLVERS,
+  TEXT_RESOLVERS
+} from "@app/core/editor/resolvers/resolvers";
 import {FontResolver} from "@app/core/editor/resolvers/font.resolver";
 
 
@@ -92,41 +97,31 @@ export class PresetService {
 
     if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
       let posLastObjectY = 0; // the position of the last item in canvas
+
+      const apply = (obj: fabric.Object, item: PresetObject) => {
+        this.applyOptions(obj, item, item.offsetTop + posLastObjectY);
+        this.addObjectToCanvas(obj);
+        renderedItems.push({object: obj, preset: item});
+        posLastObjectY = getYPos(obj); // side effect
+      }
+
       for (const item of this.preset.itemsJson.sort(POSITION_SORT)) {
-        // TODO: refactore whole stuff
         if (isText(item)) {
           const text = getMetaFieldOrStaticField(this.metaMapperData, item);
           const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
-
-          this.addObjectToCanvas(obj);
-          renderedItems.push({object: obj, preset: item});
-          posLastObjectY = getYPos(obj);
-
+          apply(obj, item);
         } else if (isImage(item)) {
           const url = getMetaFieldOrStaticField(this.metaMapperData, item);
           const image = fabric.util.object.clone(await this.getImage(url));
-          this.applyOptions(image, item, item.offsetTop + posLastObjectY);
-          this.addObjectToCanvas(image);
-          renderedItems.push({object: image, preset: item});
-          posLastObjectY = getYPos(image);
+          apply(image, item);
         } else if (isCircle(item)) {
-          const circle = new fabric.Circle({
-            radius: item.radius,
-            fill: item.fill,
-          });
-          this.applyOptions(circle, item, item.offsetTop + posLastObjectY);
-          this.addObjectToCanvas(circle);
-          renderedItems.push({object: circle, preset: item});
-          posLastObjectY = getYPos(circle);
+          const circle = new fabric.Circle();
+          CIRCLE_RESOLVERS.applyOnObject(circle, item);
+          apply(circle, item);
         } else if (isRect(item)) {
-          // TODO: move to function
-          const rect = new fabric.Rect({
-            fill: item.fill,
-          });
-          this.applyOptions(rect, item, item.offsetTop + posLastObjectY);
-          this.addObjectToCanvas(rect);
-          renderedItems.push({object: rect, preset: item});
-          posLastObjectY = getYPos(rect); // TODO: only in one position
+          const rect = new fabric.Rect();
+          RECT_RESOLVERS.applyOnObject(rect, item);
+          apply(rect, item);
         }
       }
     } else {
@@ -171,7 +166,7 @@ export class PresetService {
    * so we do need to skip the using proxy url step
    */
   public async getImage(url: string, useProxy: boolean = true) {
-    // if the url starts with blob, it is a pre selected or taken photo,
+    // if the url starts with blob, it is a preselected or taken photo,
     // used by the @ImageUploadContentAdapter,
     // also ignore proxy if there is no absolute url, because its internal content
     useProxy = (url.startsWith('blob:') || !isAbsoluteUrl(url)) ? false : useProxy;
@@ -249,7 +244,9 @@ export class PresetService {
     const fabricText = new fabric.Textbox(
       text, {fontSize: item.fontSize, left: 10, top: 10}
     ) as any | CustomTextBox;
-    this.applyOptions(fabricText, item, offsetTop);
+
+    // NOTE: This is also set in this.applyOptions
+    fabricText.presetType = item.type;
 
     // Apply resolvers to the preset
     TEXT_RESOLVERS.forEach(r => r.applyOnObject(fabricText, item));
@@ -290,7 +287,7 @@ export class PresetService {
     // depending on type set the width with the correct operation
     if (isImage(preset)) {
       fabricObject.scaleToWidth(width);
-    } else if(!isCircle(preset)) {
+    } else if(!isCircle(preset) && !isRect(preset)) {
       fabricObject.set('width', width);
     }
 

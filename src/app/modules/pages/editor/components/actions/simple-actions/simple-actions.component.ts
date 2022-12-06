@@ -94,7 +94,10 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
         });
     }
 
-    if (this.activeObject.isType('textbox') || this.activeObject.isType('circle')) {
+    if (this.activeObject.isType('textbox')
+      || this.activeObject.isType('circle')
+      || this.activeObject.isType('rect')
+    ) {
       this.selectedType = FabricType.TEXTBOX;
     } else if (this.activeObject.isType('image')) {
       this.selectedType = FabricType.IMAGE;

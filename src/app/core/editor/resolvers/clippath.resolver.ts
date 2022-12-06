@@ -19,6 +19,7 @@ export class ClipPathResolver implements BaseResolver {
         mask = new fabric.Rect({...preset.clipPath});
       }
       object.clipPath = applyMaskWithCorrectScales(object, mask);
+      object.clipPath.inverted = preset.clipPath.inverted;
       object.__internalClipPath = preset.clipPath;
     }
   }

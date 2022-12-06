@@ -9,11 +9,17 @@ export class RectResolver implements BaseResolver {
     if (preset.fill) {
       object.set('fill', preset.fill);
     }
+
+    object.set('height', preset.height);
+    object.set('width', preset.width);
   }
 
   applyOnPreset(object: CustomRectObject, preset: PresetObjectRect): void {
     if (object.fill) {
       preset.fill = object.fill as string;
     }
+
+    preset.height = object.height!* object.scaleY!;
+    preset.width = object.width! * object.scaleX!;
   }
 }

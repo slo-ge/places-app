@@ -36,9 +36,10 @@ export function applyMaskWithCorrectScales(target: fabric.Image, mask: fabric.Ci
 
 /**
  * ClipPath which will be persisted
- * @param mask
+ * @param mask, object which will be used for masking
+ * @param inverted, inverted mask
  */
-export function getInternalClipPath(mask: fabric.Circle | fabric.Rect): ClipPath {
+export function getInternalClipPath(mask: fabric.Circle | fabric.Rect, inverted: boolean): ClipPath {
   return {
     type: mask.type === 'circle' ? 'circle' : 'rect',
     height: mask.height!,
@@ -47,7 +48,8 @@ export function getInternalClipPath(mask: fabric.Circle | fabric.Rect): ClipPath
     scaleY: mask.scaleY!,
     left: mask.left!,
     top: mask.top!,
-    radius: (mask as fabric.Circle).radius
+    radius: (mask as fabric.Circle).radius,
+    inverted
   };
 }
 
@@ -85,17 +87,18 @@ export class ObjectMaskComponent implements OnChanges {
     this.activeObject.canvas?.renderAll();
   }
 
-  applyMask() {
+  applyMask(inverted: boolean = false) {
     if (this.activeObject instanceof fabric.Group) {
       const mask = this.activeObject.getObjects()[1];
       const target = this.activeObject.getObjects()[0] as CustomImageBox;
 
       // internalClipPath will be persisted and reapplied on render with applyMaskWithCorrectScales
-      target.__internalClipPath = getInternalClipPath(mask);
+      target.__internalClipPath = getInternalClipPath(mask, inverted);
       target.clipPath = applyMaskWithCorrectScales(target, mask);
+      target.clipPath.inverted = inverted;
 
       this.activeObject.canvas?.remove(mask);
-      this.activeObject.canvas?.renderAll();
+      this.render();
     }
   }
 

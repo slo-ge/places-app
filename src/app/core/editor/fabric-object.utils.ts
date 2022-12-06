@@ -28,8 +28,8 @@ interface CustomFabricObjectFields {
 export type CustomObject = fabric.Object & CustomFabricObjectFields;
 export type CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
 export type CustomImageBox = fabric.Image & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
-export type CustomCircleObject = fabric.Circle & CustomFabricObjectFields;
-export type CustomRectObject = fabric.Rect & CustomFabricObjectFields;
+export type CustomCircleObject = fabric.Circle & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
+export type CustomRectObject = fabric.Rect & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
 
 export type CustomFabricObjects = CustomObject | CustomTextBox | CustomImageBox | CustomCircleObject | CustomRectObject;
 
@@ -65,14 +65,13 @@ function fabricObjectToPresetObject(fabricObject: CustomFabricObjects, position:
     presetObject.zIndex = zIndex;
   }
 
-  if (isText(presetObject) || isImage(presetObject)) {
+  if (isText(presetObject) || isImage(presetObject) || isObject(presetObject)) {
     // Apply Image or Text options to the object
     OBJECT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, presetObject));
   }
 
   if (isText(presetObject)) {
     fabricObject = fabricObject as CustomTextBox;
-
     // Apply all presets setting to the text object
     TEXT_RESOLVERS.forEach(r => r.applyOnPreset(fabricObject, presetObject));
   }
@@ -229,7 +228,6 @@ export function isObject(item: PresetObject | LayoutItemType): Boolean {
   return presetType === LayoutItemType.RECT
     || presetType === LayoutItemType.CIRCLE
 }
-
 export function isCircle(item: PresetObject): item is PresetObjectCircle {
   return item.type === LayoutItemType.CIRCLE;
 }

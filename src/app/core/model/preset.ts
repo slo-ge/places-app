@@ -102,6 +102,7 @@ export interface ClipPath {
   scaleY: number;
   left: number;
   top: number;
+  inverted: boolean;
 }
 
 export interface PresetObjectStaticText extends PresetObject {
@@ -120,6 +121,8 @@ export interface PresetObjectCircle extends PresetObject {
 
 export interface PresetObjectRect extends PresetObject {
   fill: string;
+  width: number;
+  height: number;
 }
 
 

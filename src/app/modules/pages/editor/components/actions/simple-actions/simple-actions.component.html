@@ -4,7 +4,6 @@
   <app-object-align></app-object-align>
   <app-object-copy></app-object-copy>
   <app-object-size></app-object-size>
-  <app-object-mask [activeObject]="activeObject"></app-object-mask>
   <div class="type-settings" [ngSwitch]="selectedType">
     <div class="text-settings" *ngSwitchCase="fabricType.TEXTBOX">
       <app-font-color-picker></app-font-color-picker>
@@ -43,5 +42,6 @@
   <span class="closer"><fa-icon [icon]="iconMore"></fa-icon>close</span>
   <div class="content">
     <app-feature [canvas]="canvas"></app-feature>
+    <app-object-mask [activeObject]="activeObject"></app-object-mask>
   </div>
 </app-overlay-menu>

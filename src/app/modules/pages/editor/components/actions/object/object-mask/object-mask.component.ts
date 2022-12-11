@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } f
 import { CustomImageBox } from "@app/core/editor/fabric-object.utils";
 import { fabric } from "fabric";
 import { ClipPath } from "@app/core/model/preset";
+import {faTheaterMasks} from "@fortawesome/free-solid-svg-icons";
 
 
 /**
@@ -70,6 +71,7 @@ export class ObjectMaskComponent implements OnChanges {
 
   maskMode = false;
   removeClipPath = false;
+  faMask = faTheaterMasks;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.activeObject) {

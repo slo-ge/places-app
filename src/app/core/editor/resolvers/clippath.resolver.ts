@@ -25,6 +25,8 @@ export class ClipPathResolver implements BaseResolver {
   }
 
   applyOnPreset(object: CustomImageBox, preset: PresetObject): void {
+    // TODO: There is a bug, on rescaling the image box the clipPath needs to be
+    //       newly calculated as well
     if (object.__internalClipPath) {
       preset.clipPath = object.__internalClipPath;
     }

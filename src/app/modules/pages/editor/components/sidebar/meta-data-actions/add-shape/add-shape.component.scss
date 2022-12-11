@@ -1,0 +1,11 @@
+.shapes {
+  display: flex;
+  gap: 20px;
+  font-size: 50px;
+  color: var(--primary);
+  cursor: pointer;
+
+  > *:hover {
+    color: var(--grey-dark-0);
+  }
+}

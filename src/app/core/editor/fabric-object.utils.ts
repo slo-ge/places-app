@@ -120,7 +120,15 @@ export function sortCanvasObject(a: Object, b: Object) {
  */
 export function getPresetItem(canvas: Canvas): PresetObject[] {
   const items = canvas.getObjects()
-    .filter(object => (object as CustomObject).presetType != null);
+    .filter(object => {
+
+      if ((object as CustomObject).presetType === null) {
+        console.warn("Ignoring fabric object", object.type, "because the presetType is not set.");
+        console.warn(object);
+      }
+
+      return (object as CustomObject).presetType !== null
+    });
 
   return prepareItems(items)
     .map((item, index) => fabricObjectToPresetObject(item as any, index, canvas));

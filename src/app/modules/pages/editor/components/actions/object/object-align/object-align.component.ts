@@ -8,17 +8,8 @@ import {
 import {CustomObject} from "@app/core/editor/fabric-object.utils";
 import {ObjectPosition} from "@app/core/model/preset";
 import {ActiveObjectService, ObjectAction} from "@app/modules/pages/editor/components/actions/action";
-import {
-  faAlignCenter,
-  faCaretSquareLeft,
-  faCaretSquareRight,
-  faEllipsisV,
-  faLayerGroup,
-  faSync,
-  faTh,
-  faTrashAlt
-} from "@fortawesome/free-solid-svg-icons";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
+import {faAlignCenter, faCaretSquareLeft, faCaretSquareRight, faCopy, faTh} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-object-align',
@@ -26,15 +17,11 @@ import {CmsAuthService} from "@app/core/services/cms-auth.service";
   styleUrls: ['./object-align.component.scss']
 })
 export class ObjectAlignComponent extends ObjectAction<CustomObject> {
-  activeRangeSliderCurrentValue = 50;
-  iconRemove = faTrashAlt;
   iconLeft = faCaretSquareLeft;
   iconRight = faCaretSquareRight;
   iconCenter = faAlignCenter;
-  iconRotate = faSync;
-  iconLayer = faLayerGroup;
+  iconLayer = faCopy;
   iconRasta = faTh;
-  iconMore = faEllipsisV;
 
   objectAlignments = dictToKeys(ObjectAlignments);
   simpleAlignments = SimpleAlignments;

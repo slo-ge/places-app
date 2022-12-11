@@ -1,7 +1,7 @@
 import {Component, HostListener} from '@angular/core';
 import {CustomObject} from "@app/core/editor/fabric-object.utils";
 import {copyPasteKeyPress, paste} from "@app/modules/pages/editor/utils/copy-paste";
-import {faCopy} from "@fortawesome/free-solid-svg-icons";
+import {faClone} from "@fortawesome/free-solid-svg-icons";
 import {ActiveObjectService, ObjectAction} from "@app/modules/pages/editor/components/actions/action";
 
 @Component({
@@ -14,7 +14,7 @@ export class ObjectCopyComponent extends ObjectAction<CustomObject> {
     copyPasteKeyPress($event, this.activeObject, this.activeObject.canvas!);
   }
 
-  faIcon = faCopy;
+  faIcon = faClone;
 
   constructor(activeObjectService: ActiveObjectService) {
     super(activeObjectService);

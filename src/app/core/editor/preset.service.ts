@@ -4,7 +4,8 @@ import {LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStatic
 import {Canvas, Image, Object} from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver';
 import {
-  CustomObject,
+  CustomCircleObject,
+  CustomObject, CustomRectObject,
   CustomTextBox,
   getMetaFieldOrStaticField,
   getYPos, isCircle,
@@ -102,27 +103,31 @@ export class PresetService {
         this.applyOptions(obj, item, item.offsetTop + posLastObjectY);
         this.addObjectToCanvas(obj);
         renderedItems.push({object: obj, preset: item});
-        posLastObjectY = getYPos(obj); // side effect
+        posLastObjectY = getYPos(obj); // side effect, but helps if positions are relative to their object size
       }
 
       for (const item of this.preset.itemsJson.sort(POSITION_SORT)) {
+        let obj: fabric.Object | null = null;
         if (isText(item)) {
           const text = getMetaFieldOrStaticField(this.metaMapperData, item);
-          const obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
-          apply(obj, item);
+          obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
         } else if (isImage(item)) {
           const url = getMetaFieldOrStaticField(this.metaMapperData, item);
-          const image = fabric.util.object.clone(await this.getImage(url));
-          apply(image, item);
+          obj = fabric.util.object.clone(await this.getImage(url));
         } else if (isCircle(item)) {
-          const circle = new fabric.Circle();
-          CIRCLE_RESOLVERS.applyOnObject(circle, item);
-          apply(circle, item);
+          obj = new fabric.Circle();
+          CIRCLE_RESOLVERS.applyOnObject(obj as CustomCircleObject, item);
         } else if (isRect(item)) {
-          const rect = new fabric.Rect();
-          RECT_RESOLVERS.applyOnObject(rect, item);
-          apply(rect, item);
+          obj = new fabric.Rect();
+          RECT_RESOLVERS.applyOnObject(obj as CustomRectObject, item);
         }
+
+        if (obj) {
+          apply(obj, item)
+        } else {
+          console.error(`Could not apply object with type ${item.type} in preset: ${this.preset.id}`);
+        }
+
       }
     } else {
       console.error('no items to show');
@@ -284,7 +289,8 @@ export class PresetService {
       width = (this.canvas.width || 0) - preset.offsetLeft - offsetRight;
     }
 
-    // depending on type set the width with the correct operation
+    // depending on type set the width with the correct operation,
+    // we give the image a dynamic width
     if (isImage(preset)) {
       fabricObject.scaleToWidth(width);
     } else if(!isCircle(preset) && !isRect(preset)) {

@@ -1,15 +1,28 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {faDownload, faInfo} from "@fortawesome/free-solid-svg-icons";
-import {DownloadCanvasService} from "@app/core/editor/download-canvas.service";
+import {DataUrlFileType, DownloadCanvasService, DownloadFormat} from "@app/core/editor/download-canvas.service";
 import {PresetService} from "@app/core/editor/preset.service";
 import {take} from "rxjs/operators";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EMPTY, Observable} from "rxjs";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
 import {getScaledImage} from "@app/core/editor/canvas.utils";
 import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
+
+
+enum DownloadSizes {
+  FULL = 1,
+  MEDUIM = 0.5,
+  SMALL = 0.2
+}
+
+interface SelectOption {
+  formControlName: string;
+  value: any;
+  label: any;
+}
 
 @Component({
   selector: 'app-tab-download',
@@ -21,15 +34,33 @@ export class TabDownloadComponent implements OnChanges, OnInit {
   presetService: PresetService | null = null;
   currentUser$: Observable<AuthResponse | null> = EMPTY;
 
+  readonly downloadIcon = faDownload;
+  readonly faInfo = faInfo;
+
+  readonly formatOption: SelectOption[] = [
+    {formControlName: 'downloadMode', value: DataUrlFileType.PNG, label: `${DataUrlFileType.PNG}`.toUpperCase()},
+    {formControlName: 'downloadMode', value: DataUrlFileType.WEBP, label: `${DataUrlFileType.WEBP}`.toUpperCase()},
+    {formControlName: 'downloadMode', value: DataUrlFileType.JPEG, label: `${DataUrlFileType.JPEG}`.toUpperCase()}
+  ];
+
+  readonly downloadSizes: SelectOption[] = [
+    {formControlName: 'downloadSize', value: DownloadSizes.FULL, label: 'Full'},
+    {formControlName: 'downloadSize', value: DownloadSizes.MEDUIM, label: 'Small'},
+    {formControlName: 'downloadSize', value: DownloadSizes.SMALL, label: 'Preview'}
+  ];
+
   extended = false;
-  downloadIcon = faDownload;
-  faInfo = faInfo;
   recording = false;
   staticUrl: string | null = null;
 
+
   form = new FormGroup({
     upload: new FormControl(false),
+    downloadMode: new FormControl<DataUrlFileType>(DataUrlFileType.PNG, [Validators.required]),
+    downloadSize: new FormControl<DownloadSizes>(DownloadSizes.FULL, [Validators.required])
   });
+
+
 
   constructor(private downloadService: DownloadCanvasService,
               private formBuilder: FormBuilder,
@@ -50,7 +81,13 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     if (this.form.get('upload')?.value) {
       this.uploadImage();
     }
-    this.downloadService.download();
+
+    let format = this.form.get('downloadMode')?.value || DataUrlFileType.PNG;
+    const formSize = this.form.get('downloadSize')?.value!
+    this.downloadService.download({
+      format,
+      multiplier: formSize === DownloadSizes.FULL ? undefined : formSize
+    });
   }
 
   openFeedbackOnlyOnFirstTime() {

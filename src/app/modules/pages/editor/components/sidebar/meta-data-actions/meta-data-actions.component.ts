@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {PresetService} from "@app/core/editor/preset.service";
 import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {LayoutItemType, PresetObjectStaticImage} from "@app/core/model/preset";
+import {LayoutItemType, ObjectPosition, PresetObject, PresetObjectStaticImage} from "@app/core/model/preset";
 import {fabric} from "fabric";
 import {faImages, faPlus} from "@fortawesome/free-solid-svg-icons";
-import {getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
+import {CustomObject, getMetaFieldOrStaticField, isImage, isText} from "@app/core/editor/fabric-object.utils";
 
 @Component({
   selector: 'app-meta-data-actions',
@@ -29,13 +29,19 @@ export class MetaDataActionsComponent {
     if (this.presetService && this.metaProperties) {
       const preset = MetaDataActionsComponent.getDefaultPresetObject(type);
       const textOrImage = getMetaFieldOrStaticField(this.metaProperties, preset);
+      let obj; 
       if (isText(type)) {
-        const obj = await this.presetService.createText(textOrImage, preset, 50);
+        obj = await this.presetService.createText(textOrImage, preset, 50);
         this.presetService.addObjectToCanvas(obj, true);
       } else if (isImage(type)) {
         const image = fabric.util.object.clone(await this.presetService.getImage(textOrImage));
-        const obj = await this.presetService.createImage(image, 50, preset);
+        obj = await this.presetService.createImage(image, 50, preset);
         this.presetService.addObjectToCanvas(obj, true);
+      }
+
+      if (obj) {
+        (obj as CustomObject).presetObjectPosition = ObjectPosition.ABSOLUTE_XY;
+        (obj as CustomObject).width = 400;
       }
     }
   }
@@ -63,16 +69,17 @@ export class MetaDataActionsComponent {
     };
     const image = fabric.util.object.clone(await this.presetService.getImage(url));
     const obj = this.presetService.createImage(image, 50, preset);
+    (obj as CustomObject).presetObjectPosition =  ObjectPosition.ABSOLUTE_XY;
     this.presetService.addObjectToCanvas(obj, true);
   }
 
-  private static getDefaultPresetObject(type: LayoutItemType): any {
+  private static getDefaultPresetObject(type: LayoutItemType): any & Partial<PresetObject> {   
     return {
       offsetLeft: 20,
       offsetTop: 20,
       fontSize: 40,
       type,
       position: 9999
-    }
+    };
   }
 }

@@ -6,13 +6,38 @@
     <fa-icon [icon]="downloadIcon"></fa-icon>
   </button>
 
-  <form [formGroup]="form" *ngIf="currentUser$ | async">
-    <input type="checkbox" formControlName="upload" id="uploadFile" class="form-check-input"/>
-    <label for="uploadFile" class="form-check-label">Upload as Preview</label>
+  <form [formGroup]="form">
+    <div *ngIf="currentUser$ | async">
+      <input type="checkbox" formControlName="upload" id="uploadFile" class="form-check-input"/>
+      <label for="uploadFile" class="form-check-label">Upload as Preview</label>
+    </div>
+    <app-overlay-menu class="download-option">
+      <div class="action opener">Download options</div>
+      <div class="action closer">Close options</div>
+      <div class="content">
+        <div class="radio-heading">Format</div>
+        <div class="radio-toolbar">
+          <ng-container *ngFor="let option of formatOption">
+            <input [formControlName]="option.formControlName" type="radio"
+                   [name]="option.formControlName" [value]="option.value" [id]="option.value">
+            <label [for]="option.value">{{option.label}}</label>
+          </ng-container>
+        </div>
+        <div class="radio-heading">Size</div>
+        <div class="radio-toolbar">
+          <ng-container *ngFor="let option of downloadSizes">
+            <input [formControlName]="option.formControlName" type="radio"
+                   [name]="option.formControlName" [value]="option.value" [id]="option.value">
+            <label [for]="option.value">{{option.label}}</label>
+          </ng-container>
+        </div>
+      </div>
+    </app-overlay-menu>
   </form>
   <div class="toggle-content" *ngIf="extended">
     <div class="video-heading">Download as Video</div>
-    <div class="duration-container" trackClick="Download Video {{presetService?.preset?.title}}" trackingCategory="Download">
+    <div class="duration-container" trackClick="Download Video {{presetService?.preset?.title}}"
+         trackingCategory="Download">
       <div (click)="downloadVideo(2000)">2sec</div>
       <div (click)="downloadVideo(4000)">4sec</div>
       <div (click)="downloadVideo(8000)">8sec</div>
@@ -26,7 +51,9 @@
 </div>
 
 <div class="copy-url" (click)="createStaticEditorLink()">Copy shareable URL to clipboard</div>
-<div class="copy-url-description" *ngIf="staticUrl"><fa-icon [icon]="faInfo"></fa-icon>The shareable url also includes text changes which can be shared.
+<div class="copy-url-description" *ngIf="staticUrl">
+  <fa-icon [icon]="faInfo"></fa-icon>
+  The shareable url also includes text changes which can be shared.
   The shareable URL automatically opens meta-mapper.com with text changes. The shareable URL is now in your clipboard
   and can be shared with friends.
 </div>

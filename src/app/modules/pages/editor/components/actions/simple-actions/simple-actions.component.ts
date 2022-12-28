@@ -26,7 +26,7 @@ enum FabricType {
 })
 export class SimpleActionsComponent extends ActiveObjectService implements OnInit, OnDestroy {
   /**
-   * this is the deselect logic,
+   * this is the deselect-logic,
    * but at least it does not work correctly because of the
    * sketchy canvas container. It only removes selection on double click
    */
@@ -95,8 +95,8 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
     }
 
     if (this.activeObject.isType('textbox')
-      || this.activeObject.isType('circle')
-      || this.activeObject.isType('rect')
+      || this.activeObject.isType('circle') // TODO: https://github.com/slo-ge/ExportLatest/issues/11
+      || this.activeObject.isType('rect') // TODO: https://github.com/slo-ge/ExportLatest/issues/11
     ) {
       this.selectedType = FabricType.TEXTBOX;
     } else if (this.activeObject.isType('image')) {

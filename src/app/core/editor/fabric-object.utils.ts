@@ -25,11 +25,15 @@ interface CustomFabricObjectFields {
   presetStaticImageUrl?: string;
 }
 
+interface InnterClipPath {
+  __internalClipPath?: ClipPath; 
+}
+
 export type CustomObject = fabric.Object & CustomFabricObjectFields;
 export type CustomTextBox = fabric.Textbox & CustomFabricObjectFields;
-export type CustomImageBox = fabric.Image & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
-export type CustomCircleObject = fabric.Circle & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
-export type CustomRectObject = fabric.Rect & CustomFabricObjectFields & { __internalClipPath?: ClipPath; };
+export type CustomImageBox = fabric.Image & CustomFabricObjectFields & InnterClipPath;
+export type CustomCircleObject = fabric.Circle & CustomFabricObjectFields & InnterClipPath;
+export type CustomRectObject = fabric.Rect & CustomFabricObjectFields & InnterClipPath;
 
 export type CustomFabricObjects = CustomObject | CustomTextBox | CustomImageBox | CustomCircleObject | CustomRectObject;
 

@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Canvas} from "fabric/fabric-impl";
 import {fabric} from "fabric";
 import {CustomObject} from "@app/core/editor/fabric-object.utils";
-import {LayoutItemType} from "@app/core/model/preset";
+import {LayoutItemType, ObjectPosition} from "@app/core/model/preset";
 import {faCircle, faSquare} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -28,6 +28,7 @@ export class AddShapeComponent {
       fill: '#20bfa9',
     });
     circle.presetType = LayoutItemType.CIRCLE;
+    circle.presetObjectPosition = ObjectPosition.ABSOLUTE_XY;
     this.canvas.add(circle);
   }
 
@@ -40,6 +41,7 @@ export class AddShapeComponent {
       height: 400
     });
     rect.presetType = LayoutItemType.RECT;
+    rect.presetObjectPosition = ObjectPosition.ABSOLUTE_XY;
     this.canvas.add(rect);
   }
 }

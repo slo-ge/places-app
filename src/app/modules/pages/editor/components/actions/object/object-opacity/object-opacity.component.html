@@ -1,0 +1,7 @@
+<app-expansion-panel [collapsed]="formCollapsed">
+  <span class="title">Opacity</span>
+  <form class="content" [formGroup]="form">
+    <input type="range" step="0.01" formControlName="opacity" min="0" max="1">
+    <button class="secondary small" (click)="resetProperties()">reset</button>
+  </form>
+</app-expansion-panel>

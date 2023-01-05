@@ -5,7 +5,20 @@
     Download
     <fa-icon [icon]="downloadIcon"></fa-icon>
   </button>
+  <div class="toggle-content" *ngIf="extended">
+    <div class="video-heading">Download as Video</div>
+    <div class="duration-container" trackClick="Download Video {{presetService?.preset?.title}}"
+         trackingCategory="Download">
+      <div (click)="downloadVideo(2000)">2sec</div>
+      <div (click)="downloadVideo(4000)">4sec</div>
+      <div (click)="downloadVideo(8000)">8sec</div>
+    </div>
 
+    <div class="recording" *ngIf="recording">
+      <div>recording</div>
+      <app-loading-animation></app-loading-animation>
+    </div>
+  </div>
   <form [formGroup]="form">
     <div *ngIf="currentUser$ | async">
       <input type="checkbox" formControlName="upload" id="uploadFile" class="form-check-input"/>
@@ -24,7 +37,7 @@
           </ng-container>
         </div>
         <div class="radio-heading">Size</div>
-        <div class="radio-toolbar">
+        <div class="radio-toolbar -vertical">
           <ng-container *ngFor="let option of downloadSizes">
             <input [formControlName]="option.formControlName" type="radio"
                    [name]="option.formControlName" [value]="option.value" [id]="option.value">
@@ -34,20 +47,6 @@
       </div>
     </app-overlay-menu>
   </form>
-  <div class="toggle-content" *ngIf="extended">
-    <div class="video-heading">Download as Video</div>
-    <div class="duration-container" trackClick="Download Video {{presetService?.preset?.title}}"
-         trackingCategory="Download">
-      <div (click)="downloadVideo(2000)">2sec</div>
-      <div (click)="downloadVideo(4000)">4sec</div>
-      <div (click)="downloadVideo(8000)">8sec</div>
-    </div>
-
-    <div class="recording" *ngIf="recording">
-      <div>recording</div>
-      <app-loading-animation></app-loading-animation>
-    </div>
-  </div>
 </div>
 
 <div class="copy-url" (click)="createStaticEditorLink()">Copy shareable URL to clipboard</div>

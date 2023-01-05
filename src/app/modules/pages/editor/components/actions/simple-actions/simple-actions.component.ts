@@ -72,12 +72,17 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
     this.subscriptions.add(canvasSubscription);
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
-
   getActiveObject(): ActiveObjectType {
     return this.activeObject;
+  }
+
+  download() {
+    this.downloadService.download();
+    this.feedbackService.openAtFirstTime();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   private selectionEvent(_e: IEvent) {
@@ -109,10 +114,5 @@ export class SimpleActionsComponent extends ActiveObjectService implements OnIni
   private selectionEndEvent(_e: IEvent & { selected: FabricObject[] }) {
     this.activeObject = null;
     this.selectedType = null;
-  }
-
-  download() {
-    this.downloadService.download();
-    this.feedbackService.openAtFirstTime();
   }
 }

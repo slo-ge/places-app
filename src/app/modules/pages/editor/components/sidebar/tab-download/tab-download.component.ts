@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {faDownload, faInfo} from "@fortawesome/free-solid-svg-icons";
-import {DataUrlFileType, DownloadCanvasService, DownloadFormat} from "@app/core/editor/download-canvas.service";
+import {DataUrlFileType, DownloadCanvasService} from "@app/core/editor/download-canvas.service";
 import {PresetService} from "@app/core/editor/preset.service";
 import {take} from "rxjs/operators";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
@@ -11,12 +11,6 @@ import {StaticContentAdapter} from "@app/core/services/adapters/static-content.a
 import {getScaledImage} from "@app/core/editor/canvas.utils";
 import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
 
-
-enum DownloadSizes {
-  FULL = 1,
-  MEDUIM = 0.5,
-  SMALL = 0.2
-}
 
 interface SelectOption {
   formControlName: string;
@@ -43,11 +37,14 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     {formControlName: 'downloadMode', value: DataUrlFileType.JPEG, label: `${DataUrlFileType.JPEG}`.toUpperCase()}
   ];
 
-  readonly downloadSizes: SelectOption[] = [
-    {formControlName: 'downloadSize', value: DownloadSizes.FULL, label: 'Full'},
-    {formControlName: 'downloadSize', value: DownloadSizes.MEDUIM, label: 'Small'},
-    {formControlName: 'downloadSize', value: DownloadSizes.SMALL, label: 'Preview'}
-  ];
+  downloadSizes: SelectOption[] = [];
+
+  private getSize(factor: number) {
+    console.log(factor, this.presetService)
+    const newWidth = this.presetService?.preset.width! * factor;
+    const newHeight = this.presetService?.preset.height! * factor;
+    return `${Math.round(newWidth)}px x ${Math.round(newHeight)}px`;
+  }
 
   extended = false;
   recording = false;
@@ -57,9 +54,8 @@ export class TabDownloadComponent implements OnChanges, OnInit {
   form = new FormGroup({
     upload: new FormControl(false),
     downloadMode: new FormControl<DataUrlFileType>(DataUrlFileType.PNG, [Validators.required]),
-    downloadSize: new FormControl<DownloadSizes>(DownloadSizes.FULL, [Validators.required])
+    downloadSize: new FormControl<number>(1, [Validators.required])
   });
-
 
 
   constructor(private downloadService: DownloadCanvasService,
@@ -75,6 +71,14 @@ export class TabDownloadComponent implements OnChanges, OnInit {
 
   ngOnChanges(sC: SimpleChanges): void {
     this.extended = !!this.presetService?.info?.isAnimatedBackground;
+
+    this.downloadSizes = [
+      {formControlName: 'downloadSize', value: 3, label: this.getSize(3)},
+      {formControlName: 'downloadSize', value: 2, label: this.getSize(2)},
+      {formControlName: 'downloadSize', value: 1, label: this.getSize(1)},
+      {formControlName: 'downloadSize', value: 0.5, label: this.getSize(0.5)},
+      {formControlName: 'downloadSize', value: 0.3, label: this.getSize(0.3)}
+    ];
   }
 
   downloadImage() {
@@ -86,7 +90,7 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     const formSize = this.form.get('downloadSize')?.value!
     this.downloadService.download({
       format,
-      multiplier: formSize === DownloadSizes.FULL ? undefined : formSize
+      multiplier: formSize === 1 ? undefined : formSize
     });
   }
 

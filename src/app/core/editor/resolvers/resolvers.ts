@@ -6,6 +6,9 @@ import {ObjectShadowResolver} from "@app/modules/pages/editor/components/actions
 import { ClipPathResolver } from "@app/core/editor/resolvers/clippath.resolver";
 import {CircleResolver} from "@app/core/editor/resolvers/circle.resolver";
 import {RectResolver} from "@app/core/editor/resolvers/rect.resolver";
+import {
+  ObjectOpacityResolver
+} from "@app/modules/pages/editor/components/actions/object/object-opacity/object-opacity.resolver";
 
 const _RESOLVERS: BaseResolver[] = [
   new FontMiscResolver(),
@@ -13,6 +16,7 @@ const _RESOLVERS: BaseResolver[] = [
   new AlignmentResolver(),
   new ObjectStrokeResolver(),
   new ObjectShadowResolver(),
+  new ObjectOpacityResolver(),
   new ClipPathResolver(),
 ];
 

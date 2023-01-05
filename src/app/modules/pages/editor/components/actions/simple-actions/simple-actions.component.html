@@ -21,6 +21,8 @@
     <div class="content">
       <app-object-shadow [activeObject]="activeObject"></app-object-shadow>
       <app-object-stroke [activeObject]="activeObject"></app-object-stroke>
+      <app-object-opacity [activeObject]="activeObject"></app-object-opacity>
+
       <app-image-filter *ngIf="activeObject?.type === fabricType.IMAGE"></app-image-filter>
       <app-expansion-panel *ngIf="activeObject?.type === fabricType.TEXTBOX">
         <span class="title">Font Background</span>

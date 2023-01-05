@@ -69,8 +69,29 @@ app-socal-share{
 }
 .radio-toolbar {
   display: inline-flex;
-  border: 2px solid black;
-  border-radius: $common-border-radius;
+
+  &.-vertical {
+    display: block;
+
+    label {
+      border-top: 2px solid black;
+      border-left: 2px solid black;
+      border-right: 2px solid black;
+      text-align: center;
+
+      &:first-of-type {
+        border-radius: $common-border-radius $common-border-radius 0 0;
+      }
+
+      &:last-of-type {
+        border-bottom: 2px solid black;;
+        border-radius: 0 0 $common-border-radius $common-border-radius;
+      }
+
+
+      display: block;
+    }
+  }
 
   input[type="radio"] {
     opacity: 0;
@@ -83,9 +104,22 @@ app-socal-share{
     padding: 5px 10px;
     font-size: 12px;
     cursor: pointer;
+  }
 
-    &:not(:last-child) {
-      border-right: 2px solid black;
+  &:not(.-vertical) {
+    label {
+      border: 2px solid black;
+
+      &:first-of-type {
+        border-radius: $common-border-radius 0 0 $common-border-radius;
+      }
+
+      &:last-of-type {
+        border-radius: 0 $common-border-radius $common-border-radius 0;
+      }
+      &:not(:last-child) {
+        border-right: 2px solid black;
+      }
     }
   }
 

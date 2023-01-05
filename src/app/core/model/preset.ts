@@ -90,7 +90,8 @@ export interface PresetObject {
     affectStroke?: boolean | undefined;
     includeDefaultValues?: boolean | undefined;
     nonScaling?: boolean | undefined;
-  }
+  };
+  opacity?: number;
 }
 
 export interface ClipPath {

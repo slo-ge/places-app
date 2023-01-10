@@ -30,7 +30,7 @@ export class DownloadCanvasService {
               private mediaRecorder: MediaRecorderService) {
   }
 
-  download(format: DownloadFormat = DEFAULT_DOWNLOAD_SETTING) {    
+  download(format: DownloadFormat = DEFAULT_DOWNLOAD_SETTING) {
     this.editorService.getCanvas()
       .pipe(take(1))
       .subscribe(canvas => {
@@ -40,7 +40,7 @@ export class DownloadCanvasService {
         link.click();
       });
   }
- 
+
   /**
    * TIPP: For animated backgrounds this method could be very usful
    */

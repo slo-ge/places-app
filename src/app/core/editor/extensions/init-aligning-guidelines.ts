@@ -185,9 +185,7 @@ export const initAligningGuidelines = canvas => {
     }
   });
 
-  canvas.on('before:render', function() {
-    canvas.clearContext(canvas.contextTop);
-  });
+  canvas.on('before:render', function() { canvas.clearContext(ctx); });
 
   canvas.on('after:render', function() {
     for (var i = verticalLines.length; i--; ) {

@@ -40,7 +40,6 @@ export class TabDownloadComponent implements OnChanges, OnInit {
   downloadSizes: SelectOption[] = [];
 
   private getSize(factor: number) {
-    console.log(factor, this.presetService)
     const newWidth = this.presetService?.preset.width! * factor;
     const newHeight = this.presetService?.preset.height! * factor;
     return `${Math.round(newWidth)}px x ${Math.round(newHeight)}px`;

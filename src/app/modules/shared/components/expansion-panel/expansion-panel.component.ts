@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 
 @Component({
   selector: 'app-expansion-panel',
@@ -6,6 +6,7 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./expansion-panel.component.scss']
 })
 export class ExpansionPanelComponent {
+  @HostBinding('class.expanded')
   @Input()
   collapsed = false;
 

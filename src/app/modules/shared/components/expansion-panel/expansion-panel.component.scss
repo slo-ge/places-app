@@ -17,3 +17,9 @@
     opacity: 1;
   }
 }
+
+:host(.expanded) {
+  .toggle {
+    font-weight: bold;
+  }
+}

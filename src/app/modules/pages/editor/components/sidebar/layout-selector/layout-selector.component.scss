@@ -21,7 +21,7 @@ button {
 .preview {
   overflow: auto;
   display: grid;
-  grid-template-columns: 134px 120px;
+  grid-template-columns: 125px 125px;
 
   @include respond-below(sm) {
     grid-template-columns: 60px 60px 60px 60px;
@@ -55,8 +55,8 @@ button {
     video,
     img {
       object-fit: cover;
-      width: 120px;
-      height: 120px;
+      width: 125px;
+      height: 125px;
       border-radius: $common-border-radius;
 
       @include respond-below(sm) {

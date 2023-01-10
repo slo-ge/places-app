@@ -10,11 +10,11 @@ import {faAngleLeft, faAngleRight, faWindowClose} from "@fortawesome/free-solid-
   styleUrls: ['./preset-tags.component.scss']
 })
 export class PresetTagsComponent implements OnInit {
-  tags$: Observable<Tag[]> | null = null;
+  readonly faClose = faWindowClose;
+  readonly faArrowLeft = faAngleLeft;
+  readonly faArrowRight = faAngleRight;
 
-  faClose = faWindowClose;
-  faArrowLeft = faAngleLeft;
-  faArrowRight = faAngleRight;
+  tags$: Observable<Tag[]> | null = null;
 
   constructor(private cmsService: CmsService,
               private route: ActivatedRoute,

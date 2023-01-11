@@ -70,18 +70,23 @@ export class ObjectMaskComponent implements OnChanges {
   activeObject!: fabric.Group | CustomImageBox;
 
   maskMode = false;
-  removeClipPath = false;
+  removeClipPathMode = false;
   faMask = faTheaterMasks;
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (!this.activeObject) {
+      this.maskMode = false;
+      this.removeClipPathMode = false;
+    }
+
     if (this.activeObject) {
       if (this.activeObject instanceof fabric.Group) {
         this.maskMode = this.activeObject.getObjects && this.activeObject.getObjects().length == 2;
+      } else {
+        this.maskMode = false;
       }
 
-      if (this.activeObject.clipPath) {
-        this.removeClipPath = true;
-      }
+      this.removeClipPathMode = !!this.activeObject.clipPath;
     }
   }
 

@@ -5,15 +5,15 @@ import {TabComponent} from './tab.component';
   selector: 'tabs',
   template: `
       <div class="nav-tabs">
-          <div *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
-              <div class="nav-item">
+          <div *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active" class="nav-item">
+
                   <div class="item-content">
                       <div *ngIf="tab.faIcon" class="icon">
                           <fa-icon [icon]="tab.faIcon"></fa-icon>
                       </div>
                       {{tab.title}}
                   </div>
-              </div>
+
           </div>
       </div>
       <ng-content></ng-content>

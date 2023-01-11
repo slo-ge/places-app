@@ -4,31 +4,34 @@
   display: flex;
 }
 
+.nav-tabs {
+  min-width: var(--width-nav-tabs);
+  background: var(--grey-dark-0);
+}
+
+
 .nav-item {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 12px;
-  height: 90px;
-  border-bottom: 1px solid $grey-1;
-
+  height: var(--width-nav-tabs);
+  color: white;
 
   .icon {
     text-align: center;
     margin-bottom: 2px;
   }
-
-  &:hover {
-    background: $grey-1;
-  }
 }
 
-.active {
-  .nav-item {
-    color: white;
-    background: $primary;
+.nav-item {
+  &:hover,
+  &.active {
+    color: black;
+    background-color: var(--grey-0);
     transition: background-color .3s ease-in-out;
+    //border-radius: $common-border-radius 0 0 $common-border-radius;
   }
 }
 
@@ -36,8 +39,3 @@
   transition: opacity .3s ease-in-out;
 }
 
-.nav-tabs {
-  min-width: 90px;
-  border-right: 1px solid $grey-1;
-  background: $grey-0;
-}

@@ -1,9 +1,9 @@
 {
   "/cms/*": {
-    "target": "http://dev-tools.at:1337",
+    "target": "https://dev-tools.at",
     "secure": false,
     "pathRewrite": {
-      "^/cms": ""
+      "^/cms": "/cms"
     }
   },
   "/api/*": {

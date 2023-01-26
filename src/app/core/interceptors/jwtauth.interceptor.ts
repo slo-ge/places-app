@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
-import {CMS_API_URL, CmsService} from "@app/core/services/cms.service";
-import {catchError, finalize, mergeMap, take, tap} from "rxjs/operators";
-import {CmsAuthService} from "@app/core/services/cms-auth.service";
+import { Injectable } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { CMS_API_URL, CmsService } from "@app/core/services/cms.service";
+import { catchError, finalize, mergeMap, take, tap } from "rxjs/operators";
+import { CmsAuthService } from "@app/core/services/cms-auth.service";
 
 
 /**
@@ -28,10 +28,11 @@ export class JWTAuthInterceptor implements HttpInterceptor {
       take(1), // Important, otherwise the subscription will not be closed
       mergeMap(user => {
         if (user) {
+          let httpParams = request.params;
           request = request.clone({
             setHeaders: {
               Authorization: `Bearer ${user.jwt}`
-            }
+            }, params: httpParams
           });
         }
 
@@ -39,7 +40,7 @@ export class JWTAuthInterceptor implements HttpInterceptor {
           catchError((error: HttpErrorResponse) => {
             if (error.status === 403) {
               this.authService.logout();
-            } else if(error.status == 401) {
+            } else if (error.status == 401) {
               this.authService.logout();
             }
             return throwError(error);

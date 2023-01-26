@@ -1,16 +1,14 @@
 {
   "/cms/*": {
-    "target": "http://dev-tools.at:1337",
-    "secure": false,
-    "pathRewrite": {
-      "^/cms": ""
-    }
+    "target": "http://localhost:8788",
+    "secure": false
   },
   "/api/*": {
-    "target": "http://localhost:5000",
-    "secure": false,
-    "pathRewrite": {
-      "^/api": ""
-    }
+    "target": "http://localhost:8788",
+    "secure": false
+  },
+  "/config/*": {
+    "target": "http://localhost:8788",
+    "secure": false
   }
 }

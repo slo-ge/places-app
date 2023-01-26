@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {BackgroundImage, Font, Preset, PresetObject} from "@app/core/model/preset";
-import {EMPTY, Observable} from "rxjs";
-import {MetaMapperData} from "@app/modules/pages/editor/models";
-import {shareReplay, take} from "rxjs/operators";
-import {environment} from "@environment/environment";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { BackgroundImage, Font, Preset, PresetObject } from "@app/core/model/preset";
+import { EMPTY, Observable } from "rxjs";
+import { MetaMapperData } from "@app/modules/pages/editor/models";
+import { shareReplay, take } from "rxjs/operators";
+import { environment } from "@environment/environment";
 
 export const CMS_API_URL = `${environment.CMS_URL}`;
 const LAYOUT_CONFIG_API = `${environment.CMS_URL}/export-latest-layouts`;
@@ -107,7 +107,7 @@ export class CmsService {
     if (this.presetCache.get(params.toString()) === undefined) {
       this.presetCache.set(
         params.toString(),
-        this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, {params}).pipe(take(1), shareReplay(1))
+        this.httpClient.get<Preset[]>(LAYOUT_CONFIG_API, { params }).pipe(take(1), shareReplay(1))
       );
     }
 
@@ -121,7 +121,7 @@ export class CmsService {
    */
   public update(items: PresetObject[], presetId: number) {
     const formData = new FormData();
-    formData.append('data', JSON.stringify({itemsJson: items}));
+    formData.append('data', JSON.stringify({ itemsJson: items }));
     const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
     return this.httpClient.put<Preset>(url, formData);
   }

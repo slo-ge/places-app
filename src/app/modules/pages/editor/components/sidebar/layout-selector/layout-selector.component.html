@@ -1,16 +1,12 @@
 <app-preset-tags></app-preset-tags>
 <div class="preview">
-  <a (click)="selectPreset(preset)"
-     *ngFor="let preset of settings$ | async"
-     [routerLink]="['./']" [queryParams]="{presetId: preset.id}"
-     [queryParamsHandling]="'merge'"
-     trackClick="Change preset to: {{preset.title}} (ID: {{preset.id}})"
-     class="preview-tile">
+  <a (click)="selectPreset(preset)" *ngFor="let preset of settings$ | async" [routerLink]="['./']"
+    [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'"
+    trackClick="Change preset to: {{preset.title}} (ID: {{preset.id}})" class="preview-tile">
 
     <div class="preview-tile-title">{{preset.title}}</div>
-    <img *ngIf="previewUrls.get(preset.id); else noImage" loading="lazy"
-         [alt]="preset.title"
-         [src]="previewUrls.get(preset.id)">
+    <img *ngIf="previewUrls.get(preset.id); else noImage" loading="lazy" [alt]="preset.title"
+      [src]="previewUrls.get(preset.id)">
     <ng-template #noImage>
       <div class="no-image">
         <span>{{preset.title}}</span>

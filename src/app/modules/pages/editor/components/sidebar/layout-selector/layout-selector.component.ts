@@ -1,12 +1,12 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CmsService} from "@app/core/services/cms.service";
-import {EMPTY, Observable} from "rxjs";
-import {Preset} from "@app/core/model/preset";
-import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
-import {ActivatedRoute} from "@angular/router";
-import {distinctUntilChanged, map, mergeMap, tap} from "rxjs/operators";
-import {faVideo} from "@fortawesome/free-solid-svg-icons";
-import {SeoService} from "@app/core/seo/seo.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CmsService } from "@app/core/services/cms.service";
+import { EMPTY, Observable } from "rxjs";
+import { Preset } from "@app/core/model/preset";
+import { toAbsoluteCMSUrl } from "@app/core/editor/utils";
+import { ActivatedRoute } from "@angular/router";
+import { distinctUntilChanged, map, mergeMap, tap } from "rxjs/operators";
+import { faVideo } from "@fortawesome/free-solid-svg-icons";
+import { SeoService } from "@app/core/seo/seo.service";
 
 @Component({
   selector: 'app-layout-selector',
@@ -23,8 +23,8 @@ export class LayoutSelectorComponent implements OnInit {
   faVideo = faVideo;
 
   constructor(private cmsService: CmsService,
-              private route: ActivatedRoute,
-              private seoService: SeoService) {
+    private route: ActivatedRoute,
+    private seoService: SeoService) {
   }
 
   ngOnInit(): void {

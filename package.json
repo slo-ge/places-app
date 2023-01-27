@@ -13,7 +13,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:stats": "ng build --stats-json",
-    "analyze": "webpack-bundle-analyzer dist/export-latest/stats.json"
+    "analyze": "webpack-bundle-analyzer dist/export-latest/stats.json",
+    "wrangler": "wrangler pages dev dist/export-latest"
   },
   "private": true,
   "dependencies": {

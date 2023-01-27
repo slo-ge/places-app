@@ -38,8 +38,4 @@ export class LoginComponent implements OnInit {
       err => this.error = err
     )
   }
-
-  toggleLogin() {
-    this.show = !this.show;
-  }
 }

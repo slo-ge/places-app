@@ -35,12 +35,14 @@ h1, h2 {
 }
 
 textarea,
-input[type=text], select {
+input[type=text],
+input[type=password],
+select {
   width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
   border-radius: $common-border-radius;
-  border: 1px solid $grey-0;
+  border: 1px solid $grey-1;
 }
 
 input[type=number] {

@@ -5,25 +5,31 @@
   align-items: center;
   margin-right: 20px;
 
-  .login-toggle {
-    color: $primary-dark;
-    cursor: pointer;
+  form {
+    margin-bottom: 10px;
+
+    h1 {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
   }
 
   > * {
     margin-right: 10px;
   }
 
-  form {
-    display: block;
-  }
-
   input, button {
-    margin-left: 10px;
-    max-width: 100px;
+    width: 100%;
   }
 
   .logged-in{
     font-size: 12px;
+  }
+
+  button {
+    width: 100%;
   }
 }

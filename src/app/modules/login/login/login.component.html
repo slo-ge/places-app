@@ -1,13 +1,13 @@
 <ng-container *ngIf="!(currentUser | async); else username">
-  <form *ngIf="show" class="values" [formGroup]="userForm">
+  <form class="values" [formGroup]="userForm">
+    <h1>User login</h1>
     <label>User</label>
     <input formControlName="username" type="text">
     <label>Password</label>
     <input formControlName="password" type="password">
-    <button (click)="sendLogin()">Login</button>
-    <div *ngIf="this.error">{{this.error | json}}</div>
   </form>
-  <button class=" secondary login-toggle" (click)="toggleLogin()">Sign In</button>
+  <button (click)="sendLogin()">Login</button>
+  <div *ngIf="this.error">{{this.error | json}}</div>
 </ng-container>
 
 <ng-template #username>

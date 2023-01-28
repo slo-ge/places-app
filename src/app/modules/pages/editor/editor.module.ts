@@ -41,6 +41,7 @@ import { MultiImageComponent } from './components/sidebar/meta-data-actions/mult
 import { AddShapeComponent } from './components/sidebar/meta-data-actions/add-shape/add-shape.component';
 import { ObjectMaskComponent } from './components/actions/object/object-mask/object-mask.component';
 import { ObjectOpacityComponent } from './components/actions/object/object-opacity/object-opacity.component';
+import { UrlMetaPropertiesInputComponent } from './components/utils/url-meta-properties-input/url-meta-properties-input.component';
 
 @NgModule({
 	declarations: [
@@ -77,7 +78,8 @@ import { ObjectOpacityComponent } from './components/actions/object/object-opaci
 		MultiImageComponent,
 		AddShapeComponent,
 		ObjectMaskComponent,
-		ObjectOpacityComponent
+		ObjectOpacityComponent,
+  UrlMetaPropertiesInputComponent
 	],
 	imports: [
 		CommonModule,

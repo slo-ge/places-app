@@ -3,11 +3,12 @@
   <aside [class.visible]="mobileToolbar">
     <tabs>
       <tab tabTitle="Presets" [faIcon]="faPalette">
+        <app-url-meta-properties-input (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
         <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
       </tab>
       <tab tabTitle="Add" [faIcon]="faCode">
-        <app-meta-data-actions *ngIf="this.currentPresetService"
-                               [presetService]="this.currentPresetService"
+        <app-meta-data-actions *ngIf="currentPresetService"
+                               [presetService]="currentPresetService"
                                [metaProperties]="metaProperties">
         </app-meta-data-actions>
       </tab>

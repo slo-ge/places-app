@@ -10,6 +10,8 @@ import { GoogleAnalyticsService } from "@app/core/services/google-analytics.serv
 import { OverlayModule } from '@angular/cdk/overlay';
 import * as Sentry from "@sentry/angular";
 import { AuthenticatedUserInterceptor } from './core/interceptors/user.interceptor';
+import {InitialConfigTsService} from "@app/core/services/initial-config.ts.service";
+import {CmsAuthService} from "@app/core/services/cms-auth.service";
 
 @NgModule({
   declarations: [
@@ -36,6 +38,12 @@ import { AuthenticatedUserInterceptor } from './core/interceptors/user.intercept
     {
       provide: 'googleTagManagerId',
       useValue: 'GTM-KJS779S'
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (service: InitialConfigTsService) => () => service.fetchInitialConfig(),
+      deps: [InitialConfigTsService],
+      multi: true
     },
     {
       provide: APP_INITIALIZER,

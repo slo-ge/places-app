@@ -2,7 +2,8 @@
   "include": [
     "../node_modules/@cloudflare/workers-types/index.d.ts",
     "api/**/*",
-    "cms/**/*"
+    "cms/**/*",
+    "../lib"
   ],
   "compilerOptions": {
     "target": "es2020",

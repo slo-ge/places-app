@@ -1,26 +1,33 @@
-import {Component, Input} from '@angular/core';
-import {FeatureFlag, FeatureService} from "@app/core/services/feature.service";
-import {Canvas} from "fabric/fabric-impl";
-import {faToggleOn, faToggleOff} from "@fortawesome/free-solid-svg-icons";
+import { Component, Input } from '@angular/core';
+import { Canvas } from "fabric/fabric-impl";
+import { faToggleOff, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { initAligningGuidelines } from '@app/core/editor/extensions/init-aligning-guidelines';
+
+export enum Setting {
+    SnappingLines
+}
 
 @Component({
-  selector: 'app-feature',
-  templateUrl: './feature.component.html',
-  styleUrls: ['./feature.component.scss']
+    selector: 'app-feature',
+    templateUrl: './feature.component.html',
+    styleUrls: ['./feature.component.scss']
 })
 export class FeatureComponent {
-  @Input()
-  canvas!: Canvas;
+    @Input()
+    canvas!: Canvas;
 
-  FeatureFlag = FeatureFlag;
-  enabled: FeatureFlag[] = [];
+    faToggleOn = faToggleOn;
+    faToggleOff = faToggleOff;
 
-  faToggleOn = faToggleOn;
-  faToggleOff = faToggleOff;
+    readonly Setting = Setting;
+    settings: Setting[] = []
 
-  constructor(private featureService: FeatureService) { }
-
-  enable(feature: FeatureFlag): void {
-    this.enabled = this.featureService.enableCanvasFeature(feature, this.canvas);
-  }
+    toggleSnappingLines() {
+        if (this.settings.includes(Setting.SnappingLines)) {
+            this.settings = this.settings.filter(item => item !== Setting.SnappingLines);
+            return;
+        }
+        this.settings.push(Setting.SnappingLines);
+        initAligningGuidelines(this.canvas);
+    }
 }

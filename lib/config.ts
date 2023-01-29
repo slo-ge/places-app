@@ -1,12 +1,13 @@
-export interface ApplicationConfig {
-  applicationName: string;
-  primaryColor?: string;
+export enum FeatureFlags {
+    ONLY_BRAND_TEMPLATES = 'onlyBrandTemplates',
+    SHOW_MAILTO = 'showMailTo',
+    SHOW_INLINE_META_INPUT = 'showInlineMetaInput'
+}
 
-  featureFlags?: {
-    onlyBrandTemplates?: boolean;
-    showMailTo?: boolean;
-    showInlineMetaInput?: boolean;
-  }
+export interface ApplicationConfig {
+    applicationName: string;
+    primaryColor?: string;
+    featureFlags?: FeatureFlags[];
 }
 
 export const APP_CONFIGS: Map<string, ApplicationConfig> = new Map();
@@ -14,15 +15,14 @@ export const APP_CONFIGS: Map<string, ApplicationConfig> = new Map();
 const BONNIBOLD: ApplicationConfig = {
     applicationName: "Simple Editor",
     primaryColor: "violett",
-    featureFlags: {
-      onlyBrandTemplates: true,
-      showMailTo: false,
-      showInlineMetaInput: true
-    }
-  };
+    featureFlags: [
+            FeatureFlags.ONLY_BRAND_TEMPLATES,
+            FeatureFlags.SHOW_INLINE_META_INPUT
+    ]
+};
 
 export const APP_DEFAULT_CONFIG: ApplicationConfig = {
-  applicationName: "Fast Content"
+    applicationName: "Fast Content"
 }
 
 

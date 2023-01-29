@@ -12,7 +12,7 @@ import {
   faDownload,
   faPalette,
   faSave,
-  faUndo
+  faUndo, faUser
 } from "@fortawesome/free-solid-svg-icons";
 import {AuthResponse, CmsService} from "@app/core/services/cms.service";
 import {getPresetItem} from "@app/core/editor/fabric-object.utils";
@@ -24,6 +24,7 @@ import {Canvas} from "fabric/fabric-impl";
 import {ActivatedRoute} from "@angular/router";
 import {CmsAuthService} from "@app/core/services/cms-auth.service";
 import {SaveService} from "@app/core/editor/save.service";
+import { FeatureFlags } from '@shared-lib/config';
 
 
 @Component({
@@ -35,19 +36,21 @@ export class CanvasComponent implements OnInit, OnChanges {
   @Input()
   metaProperties: MetaMapperData = {} as any;
 
+  readonly FeatureFlags = FeatureFlags;
+
   preset: Preset = {} as any;
   canvas: Canvas | any;
   currentPresetService: PresetService | null = null;
   loggedInUser: Observable<AuthResponse | null> = EMPTY;
 
-  saveChangesIcon = faSave;
-  undoIcon = faUndo;
-  faCode = faCode;
-  faPalette = faPalette;
-  faDownload = faDownload;
-  faCogs = faCogs;
-  faPlus = faBars;
-  faWindowClose = faAngleUp;
+  readonly saveChangesIcon = faSave;
+  readonly undoIcon = faUndo;
+  readonly faCode = faCode;
+  readonly faPalette = faPalette;
+  readonly faDownload = faDownload;
+  readonly faPlus = faBars;
+  readonly faWindowClose = faAngleUp;
+  readonly faUser = faUser;
 
   sentUpdateResponse: string | null = '';
   zoomFactor = 1;

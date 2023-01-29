@@ -1,16 +1,16 @@
-import {NgModule} from '@angular/core';
-import {DefaultLayoutComponent} from './default-layout/default-layout.component';
-import {LoginModule} from "@app/modules/login/login.module";
-import {RouterModule} from "@angular/router";
-import {SharedModule} from "@app/modules/shared/shared.module";
-import {CustomOverlayModule} from "@app/modules/overlay/custom-overlay.module";
+import { NgModule } from '@angular/core';
+import { DefaultLayoutComponent } from './default-layout/default-layout.component';
+import { RouterModule } from "@angular/router";
+import { CustomOverlayModule } from "@app/modules/overlay/custom-overlay.module";
+import { NgIf } from '@angular/common';
 
 
 @NgModule({
   declarations: [DefaultLayoutComponent],
   imports: [
     RouterModule,
-    CustomOverlayModule
+    CustomOverlayModule,
+    NgIf
   ]
 })
 export class PageLayoutsModule { }

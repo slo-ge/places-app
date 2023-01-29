@@ -3,7 +3,7 @@
   <aside [class.visible]="mobileToolbar">
     <tabs>
       <tab tabTitle="Presets" [faIcon]="faPalette">
-        <app-url-meta-properties-input (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
+        <app-url-meta-properties-input *ifFeatureFlag="FeatureFlags.SHOW_INLINE_META_INPUT" (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
         <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
       </tab>
       <tab tabTitle="Add" [faIcon]="faCode">
@@ -17,7 +17,7 @@
           <app-tab-download [presetService]="currentPresetService"></app-tab-download>
       </tab>
 
-      <tab tabTitle="Settings" [faIcon]="faCogs">
+      <tab tabTitle="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
         <ng-container *ngIf="loggedInUser | async">
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>

@@ -2,17 +2,21 @@
     <header>
       <h1>
         <a routerLink="/" trackClick="Back to Homepage">
-          <span>METAMAPPER</span>
+          <span>{{appName}}</span>
         </a>
       </h1>
     </header>
-  <div class="feedback-action" trackClick="Feedback: Open dialog" (click)="openFeedback()"><img height="20" src="/assets/icons/feedback.svg"> Feedback</div>
+  <div *ngIf="!hideFeedback" class="feedback-action" trackClick="Feedback: Open dialog" (click)="openFeedback()">
+    <img height="20" src="/assets/icons/feedback.svg"> Feedback</div>
 </div>
 <main>
   <router-outlet></router-outlet>
 </main>
 <footer class="background">
-  <span class="version">MetaMapper 0.1.25</span>
-  <a href="mailto:meta-mapper@outlook.com">contact</a>
-  <a routerLink="/info"> | credits</a>
+  <ng-container *ngIf="!simpleFooter">
+    <span class="version">MetaMapper 0.1.25</span>
+    <a href="mailto:meta-mapper@outlook.com">contact</a>
+  </ng-container>
+  <div *ngIf="showImprint" (click)="openImprint()">Imprint</div>
+  <a routerLink="/info">Credits</a>
 </footer>

@@ -7,6 +7,7 @@ import { ActivatedRoute } from "@angular/router";
 import { distinctUntilChanged, map, mergeMap, tap } from "rxjs/operators";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { SeoService } from "@app/core/seo/seo.service";
+import { FeatureFlags } from '@shared-lib/config';
 
 @Component({
   selector: 'app-layout-selector',
@@ -18,9 +19,10 @@ export class LayoutSelectorComponent implements OnInit {
   layout = new EventEmitter<Preset>();
 
   settings$: Observable<Preset[]> = EMPTY;
-  previewUrls: Map<number, string> = new Map<number, string>();
 
-  faVideo = faVideo;
+  readonly previewUrls: Map<number, string> = new Map<number, string>();
+  readonly faVideo = faVideo;
+  readonly FeatureFlags = FeatureFlags;
 
   constructor(private cmsService: CmsService,
     private route: ActivatedRoute,

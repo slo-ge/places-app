@@ -7,7 +7,7 @@ import { map } from "rxjs/operators";
 @Injectable({
   providedIn: 'root'
 })
-export class InitialConfigTsService {
+export class InitialConfigService {
   private initialConfig!: ApplicationConfig;
 
   constructor(private authService: CmsAuthService) {

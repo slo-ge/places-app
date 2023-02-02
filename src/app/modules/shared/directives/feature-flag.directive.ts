@@ -1,5 +1,5 @@
 import { Directive, Input, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { InitialConfigTsService } from '@app/core/services/initial-config.ts.service';
+import { InitialConfigService } from '@app/core/services/initial-config.service';
 import { FeatureFlags } from '@shared-lib/config';
 
 @Directive({
@@ -13,7 +13,7 @@ export class FeatureFlagDirective implements OnInit {
 
     constructor(private templateRef: TemplateRef<unknown>,
                 private viewContainerRef: ViewContainerRef,
-                private initialConfig: InitialConfigTsService) {
+                private initialConfig: InitialConfigService) {
     }
 
     ngOnInit() {

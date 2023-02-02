@@ -1,11 +1,12 @@
 export enum FeatureFlags {
     ONLY_BRAND_TEMPLATES = 'onlyBrandTemplates',
     SIMPLE_FOOTER = 'showMailTo',
-    SHOW_INLINE_META_INPUT = 'showInlineMetaInput',
     HIDE_FEEDBACK = 'hideFeedback',
+    SHOW_INLINE_META_INPUT = 'showInlineMetaInput',
     SHOW_PREST_TAGS = 'showPresetTags',
     SHOW_USER_SETTINGS = 'showUserSetting',
-    SHOW_IMPRINT = 'showImprint'
+    SHOW_IMPRINT = 'showImprint',
+    ENABLE_TRACKING = 'enableTracking'
 }
 
 export interface ApplicationConfig {

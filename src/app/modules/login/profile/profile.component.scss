@@ -21,3 +21,10 @@ app-login {
   width:100%;
   display: block;
 }
+
+.detail-info {
+  font-size: 12px;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: auto 1fr;
+}

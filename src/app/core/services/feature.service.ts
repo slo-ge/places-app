@@ -9,9 +9,6 @@ export class FeatureService {
 
   constructor(private initialConfigService: InitialConfigService) { }
 
-  public isTrackingEnabled() {
-    return this.featureEnabled(FeatureFlags.ENABLE_TRACKING);
-  }
 
   private featureEnabled(featureFlag: FeatureFlags) {
     return this.initialConfigService.getFeatures().includes(featureFlag);

@@ -2,9 +2,11 @@
   <hr>
   <div class="user-data">
     <h3>Current User</h3>
-    <div>{{user.user.email}}</div>
-    <div>{{user.user.username}}</div>
-    <div class="cookies" (click)="toggleCookies()">Cookies disabled: {{cookieService.isTrackingDisabled()}}</div>
+    <div class="detail-info">
+      <div>Mail:</div><div>{{user.user.email}}</div>
+      <div>User:</div><div>{{user.user.username}}</div>
+      <div>Role:</div><div>{{user.user.isAdmin ? 'admin' : 'user'}}</div>
+    </div>
   </div>
   <button (click)="logout()" class="secondary">Logout</button>
 </div>

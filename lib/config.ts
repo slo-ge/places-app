@@ -5,8 +5,7 @@ export enum FeatureFlags {
     SHOW_INLINE_META_INPUT = 'showInlineMetaInput',
     SHOW_PREST_TAGS = 'showPresetTags',
     SHOW_USER_SETTINGS = 'showUserSetting',
-    SHOW_IMPRINT = 'showImprint',
-    ENABLE_TRACKING = 'enableTracking'
+    SHOW_IMPRINT = 'showImprint'
 }
 
 export interface ApplicationConfig {
@@ -37,20 +36,21 @@ const BONNIBOLD: ApplicationConfig = {
 };
 const APP_DEFAULT_CONFIG: ApplicationConfig = {
     applicationName: "FCE",
+    colors: {
+        primary: "black",
+        'primary-soft': "#c0c0c0"
+    },
     featureFlags: [
         FeatureFlags.SHOW_USER_SETTINGS,
         FeatureFlags.SHOW_IMPRINT,
         FeatureFlags.SIMPLE_FOOTER
     ]
-}
+};
 export const APP_FALLBACK_CONFIG: ApplicationConfig = {
-    /*applicationName: "METAMAPPER",
+    applicationName: "METAMAPPER",
     featureFlags: [
         FeatureFlags.SHOW_PREST_TAGS
-    ]*/
-    ...BONNIBOLD
-}
+    ]
+};
 APP_CONFIGS.set('default', APP_DEFAULT_CONFIG);
 APP_CONFIGS.set('bonnibold', BONNIBOLD);
-
-

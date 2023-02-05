@@ -5,7 +5,8 @@ export enum FeatureFlags {
     SHOW_INLINE_META_INPUT = 'showInlineMetaInput',
     SHOW_PREST_TAGS = 'showPresetTags',
     SHOW_USER_SETTINGS = 'showUserSetting',
-    SHOW_IMPRINT = 'showImprint'
+    SHOW_IMPRINT = 'showImprint',
+    DISABLE_LANDING_PAGE = 'disableLandingPage'
 }
 
 export interface ApplicationConfig {
@@ -31,7 +32,8 @@ const BONNIBOLD: ApplicationConfig = {
         FeatureFlags.SIMPLE_FOOTER,
         FeatureFlags.HIDE_FEEDBACK,
         FeatureFlags.SHOW_USER_SETTINGS,
-        FeatureFlags.SHOW_IMPRINT
+        FeatureFlags.SHOW_IMPRINT,
+        FeatureFlags.DISABLE_LANDING_PAGE
     ]
 };
 const APP_DEFAULT_CONFIG: ApplicationConfig = {
@@ -43,7 +45,8 @@ const APP_DEFAULT_CONFIG: ApplicationConfig = {
     featureFlags: [
         FeatureFlags.SHOW_USER_SETTINGS,
         FeatureFlags.SHOW_IMPRINT,
-        FeatureFlags.SIMPLE_FOOTER
+        FeatureFlags.SIMPLE_FOOTER,
+        FeatureFlags.DISABLE_LANDING_PAGE
     ]
 };
 export const APP_FALLBACK_CONFIG: ApplicationConfig = {

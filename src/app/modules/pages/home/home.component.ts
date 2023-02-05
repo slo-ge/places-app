@@ -7,6 +7,7 @@ import {EMPTY, Observable, of} from "rxjs";
 import {CmsService, UrlItem} from "@app/core/services/cms.service";
 import {catchError, map} from "rxjs/operators";
 import {FALLBACK_TEST_URL} from "@app/core/utils/fallback";
+import { FeatureFlags } from '@shared-lib/config';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,8 @@ import {FALLBACK_TEST_URL} from "@app/core/utils/fallback";
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  readonly  FeatureFlags = FeatureFlags;
+
   adapterInfoText = {
     [ApiAdapter.WORDPRESS]: 'Found Wordpress Blog, start with selecting a blog post.',
     [ApiAdapter.METADATA]: 'Website meta data available. Start generating beautiful thumbnails.',

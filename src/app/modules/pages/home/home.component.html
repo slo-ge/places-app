@@ -1,127 +1,149 @@
-<section class="background">
-  <div class="inner-wrapper">
-    <h2>Generate beautiful thumbnails from any web address.</h2>
-  </div>
-
-  <div class="search-wrapper">
-    <div class="inner">
-      <div class="search-box">
-        <h2>Insert any address</h2>
-        <div>
-          <form [formGroup]="baseURLForm">
-            <div class="input-wrapper">
-              <input placeholder="https://www.example.com/" pattern="url" name="apiUrl" formControlName="url"
-                     type="text">
-              <div class="search" (click)="check()">
-                <fa-icon [icon]="faSearch"></fa-icon>
-              </div>
-            </div>
-          </form>
+<section class="background" *ifFeatureFlag="FeatureFlags.DISABLE_LANDING_PAGE; else landingPage" >
+  <button  [routerLink]="['/editor']" [queryParams]="
+  {adapter: ApiAdapter.LOREM_IPSUM, data: baseURLForm.get('url')?.value}">
+    Open FCE
+  </button>
+</section>
+<ng-template #landingPage>
+    <section class="background">
+        <div class="inner-wrapper">
+            <h2>Generate beautiful thumbnails from any web address.</h2>
         </div>
-        <div>
-        </div>
-      </div>
 
-      <div *ngIf="adapter && !loading" class="adapter">
-        <div class="adapter-info">
-          <fa-icon class="success" [icon]="faCheckCircle"></fa-icon>
-          {{adapterInfoText[adapter]}}</div>
+        <div class="search-wrapper">
+            <div class="inner">
+                <div class="search-box">
+                    <h2>Insert any address</h2>
+                    <div>
+                        <form [formGroup]="baseURLForm">
+                            <div class="input-wrapper">
+                                <input placeholder="https://www.example.com/" pattern="url" name="apiUrl"
+                                       formControlName="url"
+                                       type="text">
+                                <div class="search" (click)="check()">
+                                    <fa-icon [icon]="faSearch"></fa-icon>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                    </div>
+                </div>
 
-        <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
-                [queryParams]="{adapter: adapter, apiUrl: baseURLForm.get('url')?.value}">
-          Select Post
-        </button>
+                <div *ngIf="adapter && !loading" class="adapter">
+                    <div class="adapter-info">
+                        <fa-icon class="success" [icon]="faCheckCircle"></fa-icon>
+                        {{adapterInfoText[adapter]}}</div>
 
-        <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']"
-                trackClick="Open Editor with data: {{baseURLForm.get('url')?.value}}"
-                [queryParams]="{
+                    <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
+                            [queryParams]="{adapter: adapter, apiUrl: baseURLForm.get('url')?.value}">
+                        Select Post
+                    </button>
+
+                    <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']"
+                            trackClick="Open Editor with data: {{baseURLForm.get('url')?.value}}"
+                            [queryParams]="{
                     adapter: adapter,
                     data: baseURLForm.get('url')?.value,
                     presetId: baseURLForm.get('presetId')?.value}">
-          Generate
-        </button>
+                        Generate
+                    </button>
 
-        <button *ngIf="adapter == ApiAdapter.LOREM_IPSUM" [routerLink]="['/editor']" [queryParams]="
+                    <button *ngIf="adapter == ApiAdapter.LOREM_IPSUM" [routerLink]="['/editor']" [queryParams]="
   {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
-          Open Open Open
-        </button>
-      </div>
+                        Open Open Open
+                    </button>
+                </div>
 
-      <div *ngIf="adapter == false">
-        <div>There was a problem detection any framework or meta data, may the selected link is incorrect</div>
-      </div>
+                <div *ngIf="adapter == false">
+                    <div>There was a problem detection any framework or meta data, may the selected link is incorrect
+                    </div>
+                </div>
 
-      <div *ngIf="loading">
-        <app-loading-animation></app-loading-animation>
-      </div>
+                <div *ngIf="loading">
+                    <app-loading-animation></app-loading-animation>
+                </div>
 
-      <div class="examples" *ngIf="testUrls$ | async as testUrls;">
-        <h2>Or try with one of the following addresses</h2>
-        <span *ngFor="let item of testUrls; let last = last" (click)="selectItem(item)">
-          {{item.name}}<ng-container *ngIf="!last">, </ng-container>
+                <div class="examples" *ngIf="testUrls$ | async as testUrls;">
+                    <h2>Or try with one of the following addresses</h2>
+                    <span *ngFor="let item of testUrls; let last = last" (click)="selectItem(item)">
+          {{item.name}}
+                        <ng-container *ngIf="!last">, </ng-container>
         </span>
-      </div>
+                </div>
 
-      <div class="examples">
-        <h2>Or experimental image upload</h2>
-        <app-image-picker></app-image-picker>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section>
-  <div>
-    <app-previews></app-previews>
-  </div>
-</section>
+                <div class="examples">
+                    <h2>Or experimental image upload</h2>
+                    <app-image-picker></app-image-picker>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
-<section class="description">
-  <h2>How does MetaMapper work?</h2>
-  <div>
-    <p>
-      The concept of MetaMapper is very simple. MetaMapper is based on so called "meta tags" which are snippets
-      of text or images which are related to a website, i.e. blog posts, websites, or other content. "Meta Tags" are
-      hidden for the "normal" users, but they exist in HTML and they are readable for computer programs. The main goal
-      of meta tags is to describe your website/product in a way, which is, i.e., relevant for SEO or social sharing.
-    </p>
-    <p>
-      The most important tags are the "title" and the "description" tag, and most websites also using the "image"
-      tag (og:image), which is commonly used for social media links, which also have a "preview image". Many services,
-      i.e. facebook, whatsapp, telegram ..., were using these meta information to show additional information to a
-      link which is getting shared. For a more detailed (and technical) description see <a
-      href="https://www.w3schools.com/tags/tag_meta.asp">HTML meta Tag</a>
-    </p>
-    <p>
-      MetaMapper works in a similar way, it uses these tags to generate a "preview" but also with the
-      opportunity to have an image editor, which makes it easy to create an attractive image from any website,
-      which can be shared on any social media tool/service in a very simple way.
-    </p>
-  </div>
+    <section>
+        <div>
+            <app-previews></app-previews>
+        </div>
+    </section>
 
-  <h2>Why using MetaMapper?</h2>
-  <div>
-    <p>
-      An example: you run a food blog (i.e. wordpress), you were creating content like recipes, restaurants ratings,
-      etc. and you also need to share it on facebook, instagram, pinterest (or where ever), you now need to create an
-      individual and branded post with an image, an title and so on... so that's the point where MetaMapper is very
-      useful. Just insert
-      the address of your newly created blog post and let automatically create beautiful preview images which can be
-      downloaded on your phone and shared in a rush. This tool also
-    </p>
-  </div>
 
-  <h2>Main Advantages</h2>
-  <ul>
-    <li>Simply create different styles of one address</li>
-    <li>Select one out of many nice looking presets</li>
-    <li>Create new presets and save it, to use it next time</li>
-    <li>You can use it for products, posts and any other web content</li>
-    <li>No design skills needed.</li>
-    <li>Create once, export to many with MetaMapper</li>
-  </ul>
+    <section class="description">
+        <h2>How does MetaMapper work?</h2>
+        <div>
+            <p>
+                The concept of MetaMapper is very simple. MetaMapper is based on so called "meta tags" which are
+                snippets
+                of text or images which are related to a website, i.e. blog posts, websites, or other content. "Meta
+                Tags" are
+                hidden for the "normal" users, but they exist in HTML and they are readable for computer programs. The
+                main goal
+                of meta tags is to describe your website/product in a way, which is, i.e., relevant for SEO or social
+                sharing.
+            </p>
+            <p>
+                The most important tags are the "title" and the "description" tag, and most websites also using the
+                "image"
+                tag (og:image), which is commonly used for social media links, which also have a "preview image". Many
+                services,
+                i.e. facebook, whatsapp, telegram ..., were using these meta information to show additional information
+                to a
+                link which is getting shared. For a more detailed (and technical) description see <a
+                    href="https://www.w3schools.com/tags/tag_meta.asp">HTML meta Tag</a>
+            </p>
+            <p>
+                MetaMapper works in a similar way, it uses these tags to generate a "preview" but also with the
+                opportunity to have an image editor, which makes it easy to create an attractive image from any website,
+                which can be shared on any social media tool/service in a very simple way.
+            </p>
+        </div>
 
-  <h2>What can be done with this tool?</h2>
-</section>
+        <h2>Why using MetaMapper?</h2>
+        <div>
+            <p>
+                An example: you run a food blog (i.e. wordpress), you were creating content like recipes, restaurants
+                ratings,
+                etc. and you also need to share it on facebook, instagram, pinterest (or where ever), you now need to
+                create an
+                individual and branded post with an image, an title and so on... so that's the point where MetaMapper is
+                very
+                useful. Just insert
+                the address of your newly created blog post and let automatically create beautiful preview images which
+                can be
+                downloaded on your phone and shared in a rush. This tool also
+            </p>
+        </div>
+
+        <h2>Main Advantages</h2>
+        <ul>
+            <li>Simply create different styles of one address</li>
+            <li>Select one out of many nice looking presets</li>
+            <li>Create new presets and save it, to use it next time</li>
+            <li>You can use it for products, posts and any other web content</li>
+            <li>No design skills needed.</li>
+            <li>Create once, export to many with MetaMapper</li>
+        </ul>
+
+        <h2>What can be done with this tool?</h2>
+    </section>
+</ng-template>

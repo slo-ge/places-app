@@ -18,11 +18,11 @@
       </tab>
 
       <tab tabTitle="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
-        <ng-container *ngIf="loggedInUser | async">
+        <ng-container *ngIf="(loggedInUser | async)?.user?.isAdmin">
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>
           </button>
-          <button class="save-change secondary" (click)="updateValues()">Save Template
+          <button class="save-change secondary" (click)="updateValues()">Save Preset
             <fa-icon [icon]="saveChangesIcon"></fa-icon>
           </button>
           <div>{{sentUpdateResponse}}</div>

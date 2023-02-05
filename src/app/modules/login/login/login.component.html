@@ -7,7 +7,10 @@
     <input formControlName="password" type="password">
   </form>
   <button (click)="sendLogin()">Login</button>
-  <div *ngIf="this.error">{{this.error | json}}</div>
+
+  <div *ngFor="let message of error" class="login-error">
+    {{message}}
+  </div>
 </ng-container>
 
 <ng-template #username>

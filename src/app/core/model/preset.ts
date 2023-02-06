@@ -67,6 +67,7 @@ export interface PresetObject {
   fontBackgroundPadding?: null | number;
   fontBackgroundColor?: null | string;
   fontUnderline?: boolean;
+  fontTransform?: 'uppercase' | 'lowercase';
   offsetTop: number,
   offsetLeft: number,
   offsetRight?: number,

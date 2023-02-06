@@ -46,7 +46,8 @@ const APP_DEFAULT_CONFIG: ApplicationConfig = {
         FeatureFlags.SHOW_USER_SETTINGS,
         FeatureFlags.SHOW_IMPRINT,
         FeatureFlags.SIMPLE_FOOTER,
-        FeatureFlags.DISABLE_LANDING_PAGE
+        FeatureFlags.DISABLE_LANDING_PAGE,
+        FeatureFlags.SHOW_PREST_TAGS
     ]
 };
 export const APP_FALLBACK_CONFIG: ApplicationConfig = {

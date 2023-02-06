@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { AuthResponse } from "@app/core/services/cms.service";
 import { HttpClient } from "@angular/common/http";
 import { SimpleLocalCacheService } from "@app/core/services/simple-local-cache.service";
@@ -9,7 +9,6 @@ import { environment } from "@environment/environment";
 const ADMIN_AUTH_URL = `${environment.CMS_URL}/admin/auth/local`;
 const NORMAL_USER_URL = `${environment.CMS_URL}/auth/local`;
 
-// TODO: Templates: https://meta-mapper.com/cms/export-latest-layouts/?users.username=bonnibold
 @Injectable({
   providedIn: 'root'
 })
@@ -50,6 +49,10 @@ export class CmsAuthService {
       this.currentUser.next(this.simpleLocalCacheService.getUser());
     }
     return this.currentUser.asObservable();
+  }
+
+  public isAdmin(): Observable<boolean> {
+    return this.currentUser.pipe(map(u => !!u?.user.isAdmin));
   }
 
   public logout() {

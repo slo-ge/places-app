@@ -62,7 +62,10 @@ export interface Tag {
   created_at: Date;
   updated_at: Date;
   presets: Preset[];
+}
 
+interface PresetRequestParams {
+  userTemplatesOnly?: boolean;
 }
 
 @Injectable({
@@ -83,7 +86,7 @@ export class CmsService {
   }
 
   /**
-   * get all files which should be shown as preview
+   * Get all files which should be shown as preview
    */
   public getPreviews(): Observable<Preview[]> {
     return this.httpClient.get<Preview[]>(`${CMS_API_URL}/previews/?_sort=created_at:DESC`);
@@ -91,17 +94,22 @@ export class CmsService {
 
   /**
    * Fetch Layouts from CMS
-   *
-   * TODO: just call with additionalQueryParams and not only with presetTag
    */
-  public getLayoutSetting(presetTag?: string | null): Observable<Preset[]> {
+  public getLayoutSetting(presetTag?: string | null, presetParams?: PresetRequestParams): Observable<Preset[]> {
     let params = new HttpParams()
       .set('_sort', 'sortIndex:asc');
 
     if (presetTag) {
       params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
-    } else {
+    } else if(!presetParams) {
       params = params.set('highlighted', 'true'); // show only highlighted
+    }
+
+    if (presetParams) {
+      if (presetParams.userTemplatesOnly) {
+        // shitty strapi v3 query param, not really need, but for admin mode useful
+        params = params.set('_where[users.username_ne]', 'null');
+      }
     }
 
     if (this.presetCache.get(params.toString()) === undefined) {

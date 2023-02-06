@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
-import { Observable, } from 'rxjs';
+import { Observable } from 'rxjs';
 import { CMS_API_URL } from "@app/core/services/cms.service";
 import { mergeMap, take } from "rxjs/operators";
 import { CmsAuthService } from "@app/core/services/cms-auth.service";
 
 
 /**
- * Adds the user to every request in url
+ * Adds the user to every CMS request
  */
 @Injectable()
 export class AuthenticatedUserInterceptor implements HttpInterceptor {
@@ -25,9 +25,10 @@ export class AuthenticatedUserInterceptor implements HttpInterceptor {
                 if (user && !user.user.isAdmin) {
                     let params = new HttpParams();
                     params = params.append('users.username', user.user.username);
-                    return next.handle(request.clone({ params }));
+                    return next.handle(request.clone({params}));
                 }
                 return next.handle(request);
-            }));
+            })
+        );
     }
 }

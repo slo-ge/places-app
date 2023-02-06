@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="fixed-position" *ngIf="authService.getUser() | async">
+      <div class="fixed-position" *ngIf="isAdmin$ | async">
         <div>Position:</div>
         <div (click)="position(ObjectPosition.RELATIVE)"
              [class.active]="activeObject.presetObjectPosition === ObjectPosition.RELATIVE">relative

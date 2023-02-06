@@ -23,6 +23,7 @@ interface CustomFabricObjectFields {
   presetObjectPosition?: ObjectPosition;
   presetFont?: Font;
   presetStaticImageUrl?: string;
+  presetFontTransform?: 'uppercase' | 'lowercase';
 }
 
 interface InnterClipPath {
@@ -126,12 +127,12 @@ export function getPresetItem(canvas: Canvas): PresetObject[] {
   const items = canvas.getObjects()
     .filter(object => {
 
-      if ((object as CustomObject).presetType === null) {
+      if (!(object as CustomObject).presetType) {
         console.warn("Ignoring fabric object", object.type, "because the presetType is not set.");
         console.warn(object);
       }
 
-      return (object as CustomObject).presetType !== null
+      return !!(object as CustomObject).presetType;
     });
 
   return prepareItems(items)

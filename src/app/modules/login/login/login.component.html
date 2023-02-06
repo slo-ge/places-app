@@ -5,8 +5,8 @@
     <input formControlName="username" type="text">
     <label>Password</label>
     <input formControlName="password" type="password">
+    <button (click)="sendLogin()">Login</button>
   </form>
-  <button (click)="sendLogin()">Login</button>
 
   <div *ngFor="let message of error" class="login-error">
     {{message}}

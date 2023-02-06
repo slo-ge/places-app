@@ -42,6 +42,7 @@ import { AddShapeComponent } from './components/sidebar/meta-data-actions/add-sh
 import { ObjectMaskComponent } from './components/actions/object/object-mask/object-mask.component';
 import { ObjectOpacityComponent } from './components/actions/object/object-opacity/object-opacity.component';
 import { UrlMetaPropertiesInputComponent } from './components/utils/url-meta-properties-input/url-meta-properties-input.component';
+import { FontTransformComponent } from './components/actions/object/font-transform/font-transform.component';
 
 @NgModule({
 	declarations: [
@@ -79,7 +80,8 @@ import { UrlMetaPropertiesInputComponent } from './components/utils/url-meta-pro
 		AddShapeComponent,
 		ObjectMaskComponent,
 		ObjectOpacityComponent,
-  UrlMetaPropertiesInputComponent
+  UrlMetaPropertiesInputComponent,
+  FontTransformComponent
 	],
 	imports: [
 		CommonModule,

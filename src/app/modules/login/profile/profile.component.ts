@@ -12,6 +12,8 @@ import { CmsAuthService } from "@app/core/services/cms-auth.service";
 export class ProfileComponent implements OnInit {
     currentUser$: Observable<AuthResponse | null> = EMPTY;
 
+    locationReload = () => location.reload();
+
     constructor(private authService: CmsAuthService) {
     }
 

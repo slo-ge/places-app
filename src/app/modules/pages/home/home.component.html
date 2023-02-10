@@ -1,9 +1,13 @@
-<section class="background" *ifFeatureFlag="FeatureFlags.DISABLE_LANDING_PAGE; else landingPage" >
-  <button  [routerLink]="['/editor']" [queryParams]="
-  {adapter: ApiAdapter.LOREM_IPSUM, data: baseURLForm.get('url')?.value}">
-    Open FCE
-  </button>
-</section>
+<div *ifFeatureFlag="FeatureFlags.DISABLE_LANDING_PAGE; else landingPage" class="login-wrapper background">
+    <div class="login">
+        <h1>Get started</h1>
+        <h2>Creat content with FCE.</h2>
+        <button [routerLink]="['/editor']" [queryParams]="
+      {adapter: ApiAdapter.LOREM_IPSUM, data: baseURLForm.get('url')?.value}">
+            Open Editor
+        </button>
+    </div>
+</div>
 <ng-template #landingPage>
     <section class="background">
         <div class="inner-wrapper">

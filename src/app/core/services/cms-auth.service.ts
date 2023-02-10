@@ -38,8 +38,6 @@ export class CmsAuthService {
       tap(data => {
         this.currentUser.next(data);
         this.simpleLocalCacheService.setUser(data);
-        // TODO: https://github.com/slo-ge/ExportLatest/issues/13
-        location.reload();
       })
     );
   }

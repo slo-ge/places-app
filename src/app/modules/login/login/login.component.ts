@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, UntypedFormControl } from "@angular/forms";
 import { AuthResponse } from "@app/core/services/cms.service";
-import { take } from "rxjs/operators";
+import { take, tap } from "rxjs/operators";
 import { EMPTY, Observable } from "rxjs";
 import { CmsAuthService } from "@app/core/services/cms-auth.service";
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,6 +22,11 @@ interface LoginError {
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+    @Input()
+    successfulAction?: () => void;
+    @Input()
+    alreadyLoggedInAction?: () => void;
+
     userForm = this.fb.group({
         username: new UntypedFormControl(''),
         password: new UntypedFormControl('')
@@ -36,7 +41,9 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.currentUser = this.authService.getUser();
+        this.currentUser = this.authService.getUser().pipe(
+            tap(user => user && this.alreadyLoggedInAction?.())
+        );
     }
 
     sendLogin() {
@@ -44,8 +51,7 @@ export class LoginComponent implements OnInit {
             this.userForm.get('username')?.value,
             this.userForm.get('password')?.value
         ).pipe(take(1)).subscribe(
-            _res => {
-            },
+            () => this.successfulAction?.(),
             (err: HttpErrorResponse) => {
 
                 const error: LoginError = err.error;

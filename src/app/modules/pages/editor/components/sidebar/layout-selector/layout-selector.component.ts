@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CmsService } from "@app/core/services/cms.service";
-import { EMPTY, Observable } from "rxjs";
+import { combineLatest, EMPTY, Observable, of } from "rxjs";
 import { Preset } from "@app/core/model/preset";
 import { toAbsoluteCMSUrl } from "@app/core/editor/utils";
 import { ActivatedRoute } from "@angular/router";
@@ -8,6 +8,7 @@ import { distinctUntilChanged, map, mergeMap, tap } from "rxjs/operators";
 import { faVideo } from "@fortawesome/free-solid-svg-icons";
 import { SeoService } from "@app/core/seo/seo.service";
 import { FeatureFlags } from '@shared-lib/config';
+import { CmsAuthService } from '@app/core/services/cms-auth.service';
 
 @Component({
     selector: 'app-layout-selector',
@@ -18,7 +19,7 @@ export class LayoutSelectorComponent implements OnInit {
     @Output()
     layout = new EventEmitter<Preset>();
 
-    settings$: Observable<Preset[]> = EMPTY;
+    presets$: Observable<Preset[]> = EMPTY;
 
     readonly previewUrls: Map<number, string> = new Map<number, string>();
     readonly faVideo = faVideo;
@@ -26,15 +27,27 @@ export class LayoutSelectorComponent implements OnInit {
 
     constructor(private cmsService: CmsService,
                 private route: ActivatedRoute,
-                private seoService: SeoService) {
+                private seoService: SeoService,
+                private authService: CmsAuthService) {
     }
 
     ngOnInit(): void {
-        this.settings$ = this.route.queryParamMap.pipe(
+        const userTemplates$: Observable<Preset[] | null> = this.authService.getUser().pipe(
+            mergeMap(user => (!!user
+                ? this.cmsService.getPresets(null, {templatesForUser: user.user.username})
+                : of(null)
+            ))
+        );
+
+        const queryParamTemplates$: Observable<Preset[]> = this.route.queryParamMap.pipe(
             map(param => param.get('presetTag')),
             tap(id => this.seoService.setSeoForPresetTag(Number(id))),
             distinctUntilChanged(),
-            mergeMap(param => this.cmsService.getLayoutSetting(param)),
+            mergeMap(param => this.cmsService.getPresets(param))
+        );
+
+        this.presets$ = combineLatest([userTemplates$, queryParamTemplates$]).pipe(
+            map(([userTemplates, queryParamTemplates]) => userTemplates || queryParamTemplates),
             tap(presets => {
                 // Setting the preview urls and reading them in template
                 for (const preset of presets) {

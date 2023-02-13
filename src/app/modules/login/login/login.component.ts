@@ -5,6 +5,7 @@ import { take, tap } from "rxjs/operators";
 import { EMPTY, Observable } from "rxjs";
 import { CmsAuthService } from "@app/core/services/cms-auth.service";
 import { HttpErrorResponse } from '@angular/common/http';
+import { InitialConfigService } from '@app/core/services/initial-config.service';
 
 
 interface LoginError {
@@ -42,7 +43,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit(): void {
         this.currentUser = this.authService.getUser().pipe(
-            tap(user => user && this.alreadyLoggedInAction?.())
+            tap(user => {
+                if (user) {
+                    //this.alreadyLoggedInAction?.()
+                    ;
+                }
+            })
         );
     }
 
@@ -51,7 +57,9 @@ export class LoginComponent implements OnInit {
             this.userForm.get('username')?.value,
             this.userForm.get('password')?.value
         ).pipe(take(1)).subscribe(
-            () => this.successfulAction?.(),
+            () => {
+                //this.successfulAction?.();
+            },
             (err: HttpErrorResponse) => {
 
                 const error: LoginError = err.error;

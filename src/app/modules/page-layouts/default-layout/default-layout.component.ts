@@ -37,13 +37,16 @@ export class DefaultLayoutComponent implements OnInit{
     this.overlay.open(FeedbackComponent);
   }
 
-  async ngOnInit() {
-    const config = await lastValueFrom(this.initialConfig.getConfig());
-    this.appName = config.applicationName;
-    this.simpleFooter = !!config.featureFlags?.includes(FeatureFlags.SIMPLE_FOOTER);
-    this.hideFeedback = !!config.featureFlags?.includes(FeatureFlags.HIDE_FEEDBACK);
-    this.showImprint = !!config.featureFlags?.includes(FeatureFlags.SHOW_IMPRINT);
-    this.style = getCSSVariables(config);
+  ngOnInit() {
+    this.initialConfig.getConfig().subscribe(
+        config => {
+          this.appName = config.applicationName;
+          this.simpleFooter = !!config.featureFlags?.includes(FeatureFlags.SIMPLE_FOOTER);
+          this.hideFeedback = !!config.featureFlags?.includes(FeatureFlags.HIDE_FEEDBACK);
+          this.showImprint = !!config.featureFlags?.includes(FeatureFlags.SHOW_IMPRINT);
+          this.style = getCSSVariables(config);
+        }
+    );
   }
 
   openImprint() {

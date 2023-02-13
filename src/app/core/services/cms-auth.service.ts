@@ -43,9 +43,10 @@ export class CmsAuthService {
   }
 
   public getUser(): Observable<AuthResponse | null> {
-    if (this.simpleLocalCacheService.getUser()) {
+    if (!this.currentUser.getValue() && this.simpleLocalCacheService.getUser()?.user.username) {
       this.currentUser.next(this.simpleLocalCacheService.getUser());
     }
+
     return this.currentUser.asObservable();
   }
 

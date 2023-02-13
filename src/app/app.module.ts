@@ -29,13 +29,8 @@ import { InitialConfigService } from "@app/core/services/initial-config.service"
             multi: true
         },
         {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthenticatedUserInterceptor,
-            multi: true
-        },
-        {
             provide: APP_INITIALIZER,
-            useFactory: (service: InitialConfigService) => () => service.fetchInitialConfig(),
+            useFactory: (service: InitialConfigService) => () => service._initialConfigListener(),
             deps: [InitialConfigService],
             multi: true
         },

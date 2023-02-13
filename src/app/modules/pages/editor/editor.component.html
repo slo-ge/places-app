@@ -1,4 +1,4 @@
-<app-canvas *ngIf="setting$ | async as setting; else loading" [metaProperties]="setting"></app-canvas>
+<app-canvas *ngIf="metaData$ | async as setting; else loading" [metaProperties]="setting"></app-canvas>
 <ng-template #loading>
   <app-loading-animation></app-loading-animation>
 </ng-template>

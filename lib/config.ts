@@ -15,7 +15,7 @@ export interface ApplicationConfig {
         primary?: string;
         'primary-soft'?: string
     };
-    featureFlags?: FeatureFlags[];
+    featureFlags: FeatureFlags[];
 }
 
 export const APP_CONFIGS: Map<string, ApplicationConfig> = new Map();

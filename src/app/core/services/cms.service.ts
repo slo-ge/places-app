@@ -65,7 +65,14 @@ export interface Tag {
 }
 
 interface PresetRequestParams {
+  /**
+   * Fetches all presets which have a user been set
+   */
   userTemplatesOnly?: boolean;
+  /**
+   * Fetches only presets for a given user
+   */
+  templatesForUser?: string;
 }
 
 @Injectable({
@@ -95,7 +102,7 @@ export class CmsService {
   /**
    * Fetch Layouts from CMS
    */
-  public getLayoutSetting(presetTag?: string | null, presetParams?: PresetRequestParams): Observable<Preset[]> {
+  public getPresets(presetTag?: string | null, presetParams?: PresetRequestParams): Observable<Preset[]> {
     let params = new HttpParams()
       .set('_sort', 'sortIndex:asc');
 
@@ -109,6 +116,8 @@ export class CmsService {
       if (presetParams.userTemplatesOnly) {
         // shitty strapi v3 query param, not really need, but for admin mode useful
         params = params.set('_where[users.username_ne]', 'null');
+      } else if (presetParams.templatesForUser) {
+        params = params.set('users.username', presetParams.templatesForUser);
       }
     }
 

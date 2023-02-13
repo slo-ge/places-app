@@ -11,7 +11,7 @@ import {AdapterService} from "@app/core/services/adapters/adapter.service";
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  setting$: Observable<MetaMapperData> = EMPTY;
+  metaData$: Observable<MetaMapperData> = EMPTY;
 
   constructor(private adapterService: AdapterService,
               private route: ActivatedRoute) {
@@ -21,6 +21,6 @@ export class EditorComponent implements OnInit {
     // data is in most cases the url where we can get our meta data from
     const data = this.route.snapshot.queryParamMap.get('data');
     const contentService = this.adapterService.getService(this.route.snapshot.queryParamMap);
-    this.setting$ = contentService.getMetaMapperData(data as string);
+    this.metaData$ = contentService.getMetaMapperData(data as string);
   }
 }

@@ -11,6 +11,7 @@ export enum FeatureFlags {
 
 export interface ApplicationConfig {
     applicationName: string;
+    logo: 'metamapper' | 'fce';
     colors?: {
         primary?: string;
         'primary-soft'?: string
@@ -21,6 +22,7 @@ export interface ApplicationConfig {
 export const APP_CONFIGS: Map<string, ApplicationConfig> = new Map();
 
 const BONNIBOLD: ApplicationConfig = {
+    logo: 'fce',
     applicationName: "FCE",
     colors: {
         primary: "#353956",
@@ -38,6 +40,7 @@ const BONNIBOLD: ApplicationConfig = {
 };
 const APP_DEFAULT_CONFIG: ApplicationConfig = {
     applicationName: "FCE",
+    logo: 'fce',
     colors: {
         primary: "black",
         'primary-soft': "#c0c0c0"
@@ -52,6 +55,7 @@ const APP_DEFAULT_CONFIG: ApplicationConfig = {
 };
 export const APP_FALLBACK_CONFIG: ApplicationConfig = {
     applicationName: "METAMAPPER",
+    logo: 'metamapper',
     featureFlags: [
         FeatureFlags.SHOW_PREST_TAGS
     ]

@@ -24,6 +24,7 @@ export class DefaultLayoutComponent implements OnInit{
   simpleFooter: boolean = false;
   hideFeedback: boolean = false;
   showImprint: boolean = false;
+  iconUrl: string = '/assets/logo/metamapper.png';
 
   @HostBinding('style')
   style = '';
@@ -45,6 +46,7 @@ export class DefaultLayoutComponent implements OnInit{
           this.hideFeedback = !!config.featureFlags?.includes(FeatureFlags.HIDE_FEEDBACK);
           this.showImprint = !!config.featureFlags?.includes(FeatureFlags.SHOW_IMPRINT);
           this.style = getCSSVariables(config);
+          this.iconUrl = '/assets/logo/' + config.logo + '.png';
         }
     );
   }

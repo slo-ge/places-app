@@ -11,6 +11,10 @@
     padding: 0 10px;
     height: calc(#{$header-height} - 1px);
 
+    .logo {
+        height: 30px;
+        width: auto;
+    }
 }
 
 header {
@@ -27,6 +31,7 @@ header {
     }
 
     a {
+        display: inline-flex;
         text-decoration: none;
     }
 

@@ -1,4 +1,12 @@
-import {AfterContentInit, Component, ContentChildren, QueryList} from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  Input,
+  OnChanges,
+  QueryList,
+  SimpleChanges
+} from '@angular/core';
 import {TabComponent} from './tab.component';
 
 @Component({
@@ -20,8 +28,11 @@ import {TabComponent} from './tab.component';
   `,
   styleUrls: ['./tab-group.component.scss']
 })
-export class TabGroupComponent implements AfterContentInit {
+export class TabGroupComponent implements AfterContentInit, OnChanges {
   @ContentChildren(TabComponent) tabs: any | QueryList<TabComponent>;
+
+  @Input()
+  currentIndex?: number;
 
   ngAfterContentInit() {
     let activeTabs = this.tabs.filter((tab: TabComponent) => tab.active);
@@ -34,5 +45,12 @@ export class TabGroupComponent implements AfterContentInit {
   selectTab(tab: TabComponent) {
     this.tabs.toArray().forEach((tab: TabComponent) => tab.active = false);
     tab.active = true;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // initially this.tabs is undefined and will only be available in ngAfterContentInit
+    if (this.currentIndex !== undefined && this.tabs?.length >= this.currentIndex) {
+      this.selectTab(this.tabs.get(this.currentIndex));
+    }
   }
 }

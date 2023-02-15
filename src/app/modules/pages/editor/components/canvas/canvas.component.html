@@ -19,6 +19,7 @@
 
       <tab tabTitle="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
         <ng-container *ngIf="(loggedInUser | async)?.user?.isAdmin">
+          <button [routerLink]="['./']" class="save-change secondary" queryParamsHandling="merge" [queryParams]="{userPresetsOnly: true}">User templates</button>
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>
           </button>

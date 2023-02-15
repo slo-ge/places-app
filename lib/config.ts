@@ -60,5 +60,18 @@ export const APP_FALLBACK_CONFIG: ApplicationConfig = {
         FeatureFlags.SHOW_PREST_TAGS
     ]
 };
+
+const APP_PHILIPP_CONFIG: ApplicationConfig = {
+    ...APP_DEFAULT_CONFIG,
+    featureFlags: [
+        FeatureFlags.SHOW_USER_SETTINGS,
+        FeatureFlags.SHOW_IMPRINT,
+        FeatureFlags.SIMPLE_FOOTER,
+        FeatureFlags.SHOW_PREST_TAGS,
+        FeatureFlags.SHOW_INLINE_META_INPUT,
+    ]
+}
+
 APP_CONFIGS.set('default', APP_DEFAULT_CONFIG);
 APP_CONFIGS.set('bonnibold', BONNIBOLD);
+APP_CONFIGS.set('philipp', APP_PHILIPP_CONFIG);

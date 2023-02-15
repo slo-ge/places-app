@@ -1,17 +1,17 @@
 <app-preset-tags *ifFeatureFlag="FeatureFlags.SHOW_PREST_TAGS"></app-preset-tags>
 <div class="preview">
-  <a (click)="selectPreset(preset)" *ngFor="let preset of presets$ | async" [routerLink]="['./']"
-     [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'"
-     trackClick="Change preset to: {{preset.title}} (ID: {{preset.id}})" class="preview-tile">
+    <a (click)="selectPreset(preset)" *ngFor="let preset of presets$ | async" [routerLink]="['./']"
+       [queryParams]="{presetId: preset.id}" [queryParamsHandling]="'merge'"
+       trackClick="Change preset to: {{preset.title}} (ID: {{preset.id}})" class="preview-tile">
 
-    <div class="preview-tile-title">{{preset.title}}</div>
-    <img *ngIf="previewUrls.get(preset.id); else noImage" loading="lazy" [alt]="preset.title"
-      [src]="previewUrls.get(preset.id)">
-    <ng-template #noImage>
-      <div class="no-image">
-        <span>{{preset.title}}</span>
-      </div>
-    </ng-template>
-    <fa-icon class="video-icon" *ngIf="preset.backgroundImage.mime.startsWith('video')" [icon]="faVideo"></fa-icon>
-  </a>
+        <div class="preview-tile-title">{{preset.title}}</div>
+        <img *ngIf="previewUrls.get(preset.id); else noImage" loading="lazy" [alt]="preset.title"
+             [src]="previewUrls.get(preset.id)">
+        <ng-template #noImage>
+            <div class="no-image">
+                <span>{{preset.title}}</span>
+            </div>
+        </ng-template>
+        <fa-icon class="video-icon" *ngIf="preset.backgroundImage.mime.startsWith('video')" [icon]="faVideo"></fa-icon>
+    </a>
 </div>

@@ -68,7 +68,7 @@ interface PresetRequestParams {
   /**
    * Fetches all presets which have a user been set
    */
-  userTemplatesOnly?: boolean;
+  userPresetsOnly?: boolean;
   /**
    * Fetches only presets for a given user
    */
@@ -113,7 +113,7 @@ export class CmsService {
     }
 
     if (presetParams) {
-      if (presetParams.userTemplatesOnly) {
+      if (presetParams.userPresetsOnly) {
         // shitty strapi v3 query param, not really need, but for admin mode useful
         params = params.set('_where[users.username_ne]', 'null');
       } else if (presetParams.templatesForUser) {

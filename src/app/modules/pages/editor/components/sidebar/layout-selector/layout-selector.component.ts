@@ -19,11 +19,11 @@ export class LayoutSelectorComponent implements OnInit {
     @Output()
     layout = new EventEmitter<Preset>();
 
-    presets$: Observable<Preset[]> = EMPTY;
-
     readonly previewUrls: Map<number, string> = new Map<number, string>();
     readonly faVideo = faVideo;
     readonly FeatureFlags = FeatureFlags;
+
+    presets$: Observable<Preset[]> = EMPTY;
 
     constructor(private cmsService: CmsService,
                 private route: ActivatedRoute,
@@ -33,17 +33,23 @@ export class LayoutSelectorComponent implements OnInit {
 
     ngOnInit(): void {
         const userTemplates$: Observable<Preset[] | null> = this.authService.getUser().pipe(
+            map(user => user?.user.isAdmin ? null : user),
             mergeMap(user => (!!user
                 ? this.cmsService.getPresets(null, {templatesForUser: user.user.username})
                 : of(null)
             ))
         );
 
+        // Get from preset tag or if userPresetOnly param is set, only fetch templates
+        // which have a given user, this feature is only available for admin users
         const queryParamTemplates$: Observable<Preset[]> = this.route.queryParamMap.pipe(
-            map(param => param.get('presetTag')),
-            tap(id => this.seoService.setSeoForPresetTag(Number(id))),
+            map(param => [param.get('presetTag'), param.get('userPresetsOnly')]),
+            tap(([id, _]) => this.seoService.setSeoForPresetTag(Number(id))),
             distinctUntilChanged(),
-            mergeMap(param => this.cmsService.getPresets(param))
+            mergeMap(([presetTag, userPresetsOnly]) => userPresetsOnly
+                ? this.cmsService.getPresets(undefined, {userPresetsOnly: true})
+                : this.cmsService.getPresets(presetTag)
+            )
         );
 
         this.presets$ = combineLatest([userTemplates$, queryParamTemplates$]).pipe(

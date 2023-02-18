@@ -7,7 +7,6 @@ import { JWTAuthInterceptor } from "@app/core/interceptors/jwtauth.interceptor";
 import { PageLayoutsModule } from "@app/modules/page-layouts/page-layouts.module";
 import { OverlayModule } from '@angular/cdk/overlay';
 import * as Sentry from "@sentry/angular";
-import { AuthenticatedUserInterceptor } from './core/interceptors/user.interceptor';
 import { InitialConfigService } from "@app/core/services/initial-config.service";
 
 

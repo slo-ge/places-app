@@ -1,9 +1,9 @@
 <form [formGroup]="metaPropertiesInputForm " (ngSubmit)="onSubmit()">
-  <input formControlName="url" type="url" placeholder="https://example.com">
-  <app-loading-animation class="s-30" *ngIf="loading; else search"></app-loading-animation>
-  <ng-template #search>
+    <input formControlName="url" type="url" placeholder="https://example.com">
     <button type="submit" [disabled]="!metaPropertiesInputForm.valid">
-      <fa-icon [icon]="faSearch"></fa-icon>
+        <fa-icon [class.rotate]="loading" [icon]="faSearch"></fa-icon>
     </button>
-  </ng-template>
 </form>
+<div *ngIf="error" class="error">
+    {{error}}
+</div>

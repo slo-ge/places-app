@@ -11,3 +11,12 @@ form {
 button {
   width: 80px;
 }
+
+.rotate {
+  display: block;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate{
+  to{ transform: rotate(360deg); }
+}

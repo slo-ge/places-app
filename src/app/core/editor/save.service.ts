@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {fabric} from "fabric";
 import {BehaviorSubject, Observable} from "rxjs";
+import { Object } from 'fabric/fabric-impl';
 
 // https://stackoverflow.com/a/32618231
 // TODO: this feature is a bit experimental and is not fully tested
@@ -8,11 +9,11 @@ import {BehaviorSubject, Observable} from "rxjs";
   providedIn: 'root'
 })
 export class SaveService {
-  undo: string[] = [];
-  redo: string[] = [];
+  undo: { version: string, objects: Object[] }[] = [];
+  redo: { version: string, objects: Object[] }[] = [];
 
   canvas!: fabric.Canvas;
-  state: string | null = null;
+  state: { version: string, objects: Object[] } | null = null;
 
   private currentUndo: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private currentRedo: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -65,7 +66,7 @@ export class SaveService {
     this.state = this.canvas.toJSON(['selectable', 'name', 'ownType', 'ddlValue', 'lockScalingX', 'textAlign']);
   }
 
-  private replay(playStack: string[], saveStack: string[]) {
+  private replay(playStack: { version: string, objects: Object[] }[], saveStack: { version: string, objects: Object[] }[]) {
     if (!playStack.length) {
       return;
     }

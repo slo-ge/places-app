@@ -4,7 +4,7 @@ import { LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStati
 import { Canvas, Image, Object } from "fabric/fabric-impl";
 import * as FontFaceObserver from 'fontfaceobserver';
 import {
-    CustomCircleObject,
+    CustomCircleObject, CustomImageBox,
     CustomObject,
     CustomRectObject,
     CustomTextBox,
@@ -50,6 +50,7 @@ fabric.Text.prototype.set({
     },
     // @ts-ignore
     _calculateCurrentDimensions() { // Controls dimensions
+        // @ts-ignore
         return fabric.util.transformPoint(this._getTransformedDimensions(), this.getViewportTransform(), true);
     }
 });
@@ -162,7 +163,7 @@ export class PresetService {
         }
     }
 
-    public createImage(image: Image, offsetTop: number, item: PresetObject) {
+    public createImage(image: CustomImageBox, offsetTop: number, item: PresetObject) {
         this.applyOptions(image, item, offsetTop);
         return image;
     }

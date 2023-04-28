@@ -21,7 +21,7 @@ export class AddShapeComponent {
   }
 
   addCircle() {
-    const circle: CustomObject = new fabric.Circle({
+    const circle: fabric.Circle & CustomObject = new fabric.Circle({
       top: 100,
       left: 100,
       radius: 200,
@@ -33,7 +33,7 @@ export class AddShapeComponent {
   }
 
   addRect() {
-    const rect: CustomObject = new fabric.Rect({
+    const rect: fabric.Rect & CustomObject = new fabric.Rect({
       left: 100,
       top: 100,
       fill: '#20bfa9',

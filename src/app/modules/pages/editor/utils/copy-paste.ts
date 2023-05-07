@@ -24,7 +24,9 @@ export async function copyPasteKeyPress($event: KeyboardEvent,
   }
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'v') {
     // only if it is a FABRIC_COPY then we should clone the active object
-    const text = await navigator?.clipboard?.readText();
+    const text = navigator?.clipboard?.readText
+        ? await navigator?.clipboard?.readText()
+        : undefined;
     if(text === IS_FABRIC_OBJECT_COPY_ACTION) {
       paste(canvas);
     }

@@ -2,9 +2,9 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import { OverlayService } from "@app/modules/overlay/overlay.service";
 import { FeedbackComponent } from "@app/modules/shared/components/feedback/feedback.component";
 import { InitialConfigService } from '@app/core/services/initial-config.service';
-import { lastValueFrom } from 'rxjs';
 import { ApplicationConfig, FeatureFlags } from '@shared-lib/config';
 import { ImprintComponent } from '@app/standalones/imprint/imprint.component';
+import { CURRENT_VERSION } from '@app/modules/pages/static-page/changelog.md';
 
 function getCSSVariables(config: ApplicationConfig) {
   return config.colors
@@ -25,6 +25,7 @@ export class DefaultLayoutComponent implements OnInit{
   hideFeedback: boolean = false;
   showImprint: boolean = false;
   iconUrl: string = '/assets/logo/metamapper.png';
+  currentApplicationVersion = CURRENT_VERSION;
 
   @HostBinding('style')
   style = '';

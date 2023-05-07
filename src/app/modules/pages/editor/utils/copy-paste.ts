@@ -18,13 +18,13 @@ export async function copyPasteKeyPress($event: KeyboardEvent,
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'c') {
     // if we have selected some text inside the text box, we do not copy the whole object
     if (activeObject && !activeObject.isEditing) {
-      await navigator.clipboard.writeText(IS_FABRIC_OBJECT_COPY_ACTION); // set that the current copy is an fabric copy
+      await navigator?.clipboard?.writeText(IS_FABRIC_OBJECT_COPY_ACTION); // set that the current copy is an fabric copy
       copy(activeObject);
     }
   }
   if(($event.ctrlKey || $event.metaKey) && $event.key == 'v') {
     // only if it is a FABRIC_COPY then we should clone the active object
-    const text = await navigator.clipboard.readText();
+    const text = await navigator?.clipboard?.readText();
     if(text === IS_FABRIC_OBJECT_COPY_ACTION) {
       paste(canvas);
     }

@@ -6,7 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { JWTAuthInterceptor } from "@app/core/interceptors/jwtauth.interceptor";
 import { PageLayoutsModule } from "@app/modules/page-layouts/page-layouts.module";
 import { OverlayModule } from '@angular/cdk/overlay';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from "@sentry/angular-ivy";
 import { InitialConfigService } from "@app/core/services/initial-config.service";
 
 

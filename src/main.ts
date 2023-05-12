@@ -3,7 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from '@app/app.module';
 import { environment } from '@environment/environment';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from "@sentry/angular-ivy";
 import { BrowserTracing } from "@sentry/tracing";
 
 if (environment.production) {

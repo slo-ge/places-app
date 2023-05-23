@@ -3,29 +3,32 @@
   <aside [class.visible]="mobileToolbar">
     <tabs [currentIndex]="(loggedInUser | async)?.user ? 0 : undefined">
       <tab tabTitle="Presets" [faIcon]="faPalette">
-        <app-url-meta-properties-input *ifFeatureFlag="FeatureFlags.SHOW_INLINE_META_INPUT" (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
+        <app-url-meta-properties-input *ifFeatureFlag="FeatureFlags.SHOW_INLINE_META_INPUT"
+          (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
         <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
       </tab>
       <tab tabTitle="Add" [faIcon]="faCode">
-        <app-meta-data-actions *ngIf="currentPresetService"
-                               [presetService]="currentPresetService"
-                               [metaProperties]="metaProperties">
+        <app-meta-data-actions *ngIf="currentPresetService" [presetService]="currentPresetService"
+          [metaProperties]="metaProperties">
         </app-meta-data-actions>
       </tab>
 
       <tab tabTitle="Share" [faIcon]="faDownload">
-          <app-tab-download [presetService]="currentPresetService"></app-tab-download>
+        <app-tab-download [presetService]="currentPresetService"></app-tab-download>
       </tab>
 
       <tab tabTitle="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
         <ng-container *ngIf="(loggedInUser | async)?.user?.isAdmin">
-          <button [routerLink]="['./']" class="save-change secondary" queryParamsHandling="merge" [queryParams]="{userPresetsOnly: true}">User templates</button>
+          <button [routerLink]="['./']" class="save-change secondary" queryParamsHandling="merge"
+            [queryParams]="{userPresetsOnly: true}">User templates</button>
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>
           </button>
           <button class="save-change secondary" (click)="updateValues()">Save Preset
             <fa-icon [icon]="saveChangesIcon"></fa-icon>
           </button>
+          <button class="save-change secondary" (click)="duplicate()">Duplicate Preset</button>
+          <button class="save-change secondary" (click)="delete()">Delete Preset</button>
           <div>{{sentUpdateResponse}}</div>
         </ng-container>
         <app-profile></app-profile>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { BackgroundImage, Font, Preset, PresetObject } from "@app/core/model/preset";
-import { EMPTY, Observable } from "rxjs";
+import { EMPTY, Observable, lastValueFrom } from "rxjs";
 import { MetaMapperData } from "@app/modules/pages/editor/models";
 import { shareReplay, take } from "rxjs/operators";
 import { environment } from "@environment/environment";
@@ -108,7 +108,7 @@ export class CmsService {
 
     if (presetTag) {
       params = params.set('preset_tags', presetTag); // limit the layouts to a given preset
-    } else if(!presetParams) {
+    } else if (!presetParams) {
       params = params.set('highlighted', 'true'); // show only highlighted
     }
 
@@ -136,7 +136,7 @@ export class CmsService {
    * @param items
    * @param presetId
    */
-  public update(items: PresetObject[], presetId: number) {
+  public updatePreset(items: PresetObject[], presetId: number) {
     const formData = new FormData();
     formData.append('data', JSON.stringify({ itemsJson: items }));
     const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
@@ -144,7 +144,35 @@ export class CmsService {
   }
 
   /**
+   * Duplicates a preset by given id,
+   * and returns the new template
+   * 
+   * @param presetId: preset which should be copied
+   * @returns the id of the copy
+   */
+  public async duplicatePreset(presetId: number): Promise<Preset> {
+    const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
+    const preset = await lastValueFrom(this.httpClient.get<Preset>(url));
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(preset));
+    const copy = await lastValueFrom(this.httpClient.post<Preset>(`${CMS_API_URL}/export-latest-layouts/`, formData));
+    return copy;
+  }
+
+  /**
+   * Deletes the given preset and returns nothing,
+   * (no error handling at the moment)
+   * 
+   * @param presetId, the preset which should be deleted
+   */
+  public async deletePreset(presetId: number) {
+    const url = `${CMS_API_URL}/export-latest-layouts/${presetId}`;
+    await lastValueFrom(this.httpClient.delete<Preset>(url));
+  }
+
+  /**
    * Uploads a file to the CMS
+   * 
    * @param file, current file
    * @param data, the file name which can also be queried
    */

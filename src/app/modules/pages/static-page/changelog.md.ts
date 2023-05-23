@@ -1,5 +1,8 @@
-export const CURRENT_VERSION = '0.1.29';
+export const CURRENT_VERSION = '0.1.30';
 export const CHANGELOG_MD = `
+### 0.1.30 (05-23)
+Angular 16
+
 ### 0.1.29 (05-23)
 Add markdown viewer
 Small bugfix for firefox
@@ -11,7 +14,7 @@ Angular 15
 
 handle error on url fetch and better loading animation
 
-### 0.1.26
+### 0.1.26s
 
 add mask/clip mask action
 add opacity action

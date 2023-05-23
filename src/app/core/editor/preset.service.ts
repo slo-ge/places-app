@@ -106,7 +106,7 @@ export class PresetService {
             const apply = (obj: fabric.Object, item: PresetObject) => {
                 this.applyOptions(obj, item, item.offsetTop + posLastObjectY);
                 this.addObjectToCanvas(obj);
-                renderedItems.push({object: obj, preset: item});
+                renderedItems.push({ object: obj, preset: item });
                 posLastObjectY = getYPos(obj); // side effect, but helps if positions are relative to their object size
             }
 
@@ -147,7 +147,7 @@ export class PresetService {
          */
         for (const item of renderedItems.sort((a, b) =>
             (a.preset.zIndex || 0) < (b.preset.zIndex || 0) ? -1 : 1)
-            ) {
+        ) {
             this.afterAddToCanvasAttributes(item.object, item.preset);
         }
     }
@@ -185,7 +185,7 @@ export class PresetService {
 
             if (!(proxiedImageUrl in imageCache)) {
                 const prom = new Promise<Image>((resolve, _reject) => {
-                    fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), {crossOrigin: "*"})
+                    fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), { crossOrigin: "*" })
                 });
 
                 imageCache[proxiedImageUrl] = fabric.util.object.clone(await prom);
@@ -251,7 +251,7 @@ export class PresetService {
      */
     public async createText(text: string, item: PresetObject, offsetTop: number) {
         const fabricText = new fabric.Textbox(
-            text, {fontSize: item.fontSize, left: 10, top: 10}
+            text, { fontSize: item.fontSize, left: 10, top: 10 }
         ) as any | CustomTextBox;
 
         // NOTE: This is also set in this.applyOptions

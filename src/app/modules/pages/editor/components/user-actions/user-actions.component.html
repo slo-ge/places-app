@@ -1,0 +1,24 @@
+<div class='actions'>
+    <button class='save-change secondary' (click)='updateValues()'>Save
+        <fa-icon [icon]='saveChangesIcon' />
+    </button>
+    <button class='save-change secondary' (click)='duplicate()'>Duplicate
+        <fa-icon [icon]='duplicateIcon' />
+    </button>
+    <button class='save-change secondary' (click)='openDelete()'>Delete
+        <fa-icon [icon]='deleteIcon' />
+    </button>
+</div>
+<div>{{sentUpdateResponse}}</div>
+
+
+<ng-template #deleteConformation>
+    <div [ngStyle]="{width: '320px'}">
+        <div>
+            <img alt='preset to delete' [src]='toCmsUrl(this.preset.backgroundImage.formats.thumbnail.url)'>
+        </div>
+        <div>
+            <button (click)='delete()'>Delete Preset: {{preset.title}}</button>
+        </div>
+    </div>
+</ng-template>

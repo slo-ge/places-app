@@ -1,24 +1,19 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MetaMapperData } from "@app/modules/pages/editor/models";
 import { fabric } from "fabric";
-import { Preset, PresetObject } from "@app/core/model/preset";
+import { Preset } from "@app/core/model/preset";
 import { EditorService } from "@app/core/editor/editor.service";
 import { PresetService } from "@app/core/editor/preset.service";
 import {
   faAngleUp,
   faBars,
   faCode,
-  faCogs,
   faDownload,
   faPalette,
-  faSave,
   faUndo, faUser
 } from "@fortawesome/free-solid-svg-icons";
-import { AuthResponse, CmsService } from "@app/core/services/cms.service";
-import { getPresetItem } from "@app/core/editor/fabric-object.utils";
+import { AuthResponse } from "@app/core/services/cms.service";
 import { EMPTY, Observable } from "rxjs";
-import { HttpErrorResponse } from "@angular/common/http";
-import { take } from "rxjs/operators";
 import { DEFAULT_ITEMS, mergeLayouts } from "@app/modules/pages/editor/components/canvas/defaults";
 import { Canvas } from "fabric/fabric-impl";
 import { ActivatedRoute } from "@angular/router";
@@ -43,7 +38,6 @@ export class CanvasComponent implements OnInit, OnChanges {
   currentPresetService: PresetService | null = null;
   loggedInUser: Observable<AuthResponse | null> = EMPTY;
 
-  readonly saveChangesIcon = faSave;
   readonly undoIcon = faUndo;
   readonly faCode = faCode;
   readonly faPalette = faPalette;
@@ -52,7 +46,6 @@ export class CanvasComponent implements OnInit, OnChanges {
   readonly faWindowClose = faAngleUp;
   readonly faUser = faUser;
 
-  sentUpdateResponse: string | null = '';
   zoomFactor = 1;
   initZoom = 1;
 
@@ -64,7 +57,6 @@ export class CanvasComponent implements OnInit, OnChanges {
   mobileToolbar = false;
 
   constructor(private editorService: EditorService,
-    private cmsService: CmsService,
     private authService: CmsAuthService,
     private activatedRoute: ActivatedRoute,
     private saveService: SaveService) {
@@ -134,37 +126,6 @@ export class CanvasComponent implements OnInit, OnChanges {
       );
     }
   }
-
-  /**
-   * Update the template in CMS
-   */
-  updateValues(defaults?: PresetObject[] | null) {
-    defaults = defaults || getPresetItem(this.canvas);
-
-    if (!defaults) {
-      return;
-    }
-    this.cmsService.updatePreset(defaults, this.preset.id)
-      .pipe(take(1))
-      .subscribe(
-        res => this.sentUpdateResponse = `updated at: ${res.updated_at?.toString() || null}`,
-        (err: HttpErrorResponse) => this.sentUpdateResponse = err.message
-      );
-  }
-
-  /**
-   * Duplicate preset
-   */
-  async duplicate() {
-    const preset = this.cmsService.duplicatePreset(this.preset.id);
-    this.setLayout(await preset);
-  }
-
-  async delete() {
-    this.cmsService.deletePreset(this.preset.id);
-  }
-
-
 
   /**
    * Resets the template to predefined defaults

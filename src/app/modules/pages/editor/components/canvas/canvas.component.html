@@ -24,12 +24,7 @@
           <button class="save-change secondary" (click)="resetTemplate()">Reset Template
             <fa-icon [icon]="undoIcon"></fa-icon>
           </button>
-          <button class="save-change secondary" (click)="updateValues()">Save Preset
-            <fa-icon [icon]="saveChangesIcon"></fa-icon>
-          </button>
-          <button class="save-change secondary" (click)="duplicate()">Duplicate Preset</button>
-          <button class="save-change secondary" (click)="delete()">Delete Preset</button>
-          <div>{{sentUpdateResponse}}</div>
+          <app-user-actions [canvas]="canvas" [preset]="preset" />
         </ng-container>
         <app-profile></app-profile>
       </tab>

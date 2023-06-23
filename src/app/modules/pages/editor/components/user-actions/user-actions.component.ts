@@ -30,6 +30,7 @@ export class UserActionsComponent {
 
     constructor(private cmsService: CmsService, private router: Router, private overlay: OverlayService) {}
 
+
     /**
      * Update the template in CMS
      */

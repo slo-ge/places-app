@@ -1,14 +1,25 @@
 <div class='actions'>
-    <button class='save-change secondary' (click)='updateValues()'>Save
+    <button class='secondary' (click)='updateValues()'>Save
         <fa-icon [icon]='saveChangesIcon' />
     </button>
-    <button class='save-change secondary' (click)='duplicate()'>Duplicate
+    <button class='secondary' (click)='duplicate()'>Duplicate
         <fa-icon [icon]='duplicateIcon' />
     </button>
-    <button class='save-change secondary' (click)='openDelete()'>Delete
+    <button class='secondary' (click)='openDelete()'>Delete
         <fa-icon [icon]='deleteIcon' />
     </button>
+    <app-overlay-menu>
+        <button class='opener secondary'>Upload Preset Image</button>
+        <button class='closer secondary'>Upload Preset Image</button>
+        <div class='preset-upload content' style='width: 320px'>
+            <div>Select any resource from your local computer and upload it to the asset management.</div>
+            <label class='button --secondary' for='presetImageUploader'>Add Resource</label>
+            <input type='file' id='presetImageUploader' (change)='addPresetImageToResourceLibrary($event)'
+                   style='display: none'>
+        </div>
+    </app-overlay-menu>
 </div>
+
 <div>{{sentUpdateResponse}}</div>
 
 
@@ -22,3 +33,4 @@
         </div>
     </div>
 </ng-template>
+

@@ -9,6 +9,7 @@ import { OverlayService } from '@app/modules/overlay/overlay.service';
 import { faPaste, faSave, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { Canvas } from 'fabric/fabric-impl';
 import { take } from 'rxjs';
+import { ResourcesService } from '@app/core/services/resources.service';
 
 @Component({
     selector: 'app-user-actions',
@@ -28,8 +29,12 @@ export class UserActionsComponent {
 
     sentUpdateResponse: string | null = '';
 
-    constructor(private cmsService: CmsService, private router: Router, private overlay: OverlayService) {}
-
+    constructor(
+        private cmsService: CmsService,
+        private cmsResourceService: ResourcesService,
+        private router: Router,
+        private overlay: OverlayService
+    ) {}
 
     /**
      * Update the template in CMS
@@ -50,6 +55,11 @@ export class UserActionsComponent {
             });
     }
 
+    openDelete() {
+        this.deleteConformationRef = this.overlay.open(this.deleteConformation!);
+    }
+
+
     /**
      * Duplicate preset
      */
@@ -67,8 +77,22 @@ export class UserActionsComponent {
         this.reloadBrowserWith('');
     }
 
-    openDelete() {
-        this.deleteConformationRef = this.overlay.open(this.deleteConformation!);
+    /**
+     * File Upload for static images
+     */
+    async addPresetImageToResourceLibrary(e: any) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        const self = this;
+        reader.onload = async function (_reader) {
+            self.cmsResourceService
+                .uploadResource({ file, fileName: file.name, isPresetImage: true })
+                .pipe(take(1))
+                .subscribe({
+                    next: value => (self.sentUpdateResponse = `Image uploaded at: ${value.updatedAt}`),
+                });
+        };
+        reader.readAsDataURL(file);
     }
 
     private reloadBrowserWith(presetId: number | '') {

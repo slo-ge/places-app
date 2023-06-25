@@ -1,5 +1,6 @@
 .actions {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     justify-content: space-between;
 }
@@ -7,4 +8,9 @@
 button {
     width: 100%;
     font-size: 14px;
+}
+
+.preset-upload {
+    margin: 10px;
+
 }

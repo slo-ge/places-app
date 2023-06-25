@@ -96,8 +96,8 @@ export const DEFAULT_SETTING: Preset = {
     "previewUrl": null,
     "provider": "local",
     "provider_metadata": null,
-    "created_at": new Date(),
-    "updated_at": new Date()
+    "created_at": new Date().toDateString(),
+    "updated_at": new Date().toDateString()
   },
 };
 

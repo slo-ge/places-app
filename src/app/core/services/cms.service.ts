@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { BackgroundImage, Font, Preset, PresetObject } from "@app/core/model/preset";
-import { EMPTY, Observable, lastValueFrom } from "rxjs";
-import { MetaMapperData } from "@app/modules/pages/editor/models";
-import { shareReplay, take } from "rxjs/operators";
-import { environment } from "@environment/environment";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { BackgroundImage, Font, Preset, PresetObject } from '@app/core/model/preset';
+import { EMPTY, lastValueFrom, Observable } from 'rxjs';
+import { MetaMapperData } from '@app/modules/pages/editor/models';
+import { shareReplay, take } from 'rxjs/operators';
+import { environment } from '@environment/environment';
 
 export const CMS_API_URL = `${environment.CMS_URL}`;
 const LAYOUT_CONFIG_API = `${environment.CMS_URL}/export-latest-layouts`;
@@ -146,7 +146,7 @@ export class CmsService {
   /**
    * Duplicates a preset by given id,
    * and returns the new template
-   * 
+   *
    * @param presetId: preset which should be copied
    * @returns the id of the copy
    */
@@ -155,14 +155,13 @@ export class CmsService {
     const preset = await lastValueFrom(this.httpClient.get<Preset>(url));
     const formData = new FormData();
     formData.append('data', JSON.stringify(preset));
-    const copy = await lastValueFrom(this.httpClient.post<Preset>(`${CMS_API_URL}/export-latest-layouts/`, formData));
-    return copy;
+    return await lastValueFrom(this.httpClient.post<Preset>(`${CMS_API_URL}/export-latest-layouts/`, formData));
   }
 
   /**
    * Deletes the given preset and returns nothing,
    * (no error handling at the moment)
-   * 
+   *
    * @param presetId, the preset which should be deleted
    */
   public async deletePreset(presetId: number) {
@@ -172,7 +171,7 @@ export class CmsService {
 
   /**
    * Uploads a file to the CMS
-   * 
+   *
    * @param file, current file
    * @param data, the file name which can also be queried
    */
@@ -210,14 +209,6 @@ export class CmsService {
     }
 
     return this.tags;
-  }
-
-  /**
-   * static images can be used in templates
-   */
-  public getStaticImages(additionalParameter: string = '') {
-    const url = 'upload/files?_limit=1000&_start=0&_sort=updated_at:DESC&caption=static-image' + additionalParameter;
-    return this.httpClient.get<BackgroundImage[]>(`${CMS_API_URL}/${url}`);
   }
 }
 

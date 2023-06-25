@@ -90,10 +90,16 @@ button {
 
 .button.secondary,
 button.secondary {
-  background-color: white;
-  color: $primary-dark;
-  border: 1px solid $primary-dark;
+    background-color: white;
+    color: $primary-dark;
+    border: 1px solid $primary-dark;
+
+    &:hover,
+    &:focus {
+        background-color: $grey-0;
+    }
 }
+
 
 app-loading-animation {
   display: block;

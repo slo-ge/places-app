@@ -32,8 +32,8 @@ export interface BackgroundImage {
   previewUrl?: any;
   provider: string;
   provider_metadata?: any;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface GlobalFont {
@@ -45,8 +45,8 @@ export interface Preset {
   width: number;
   height: number;
   title?: string;
-  created_at?: Date;
-  updated_at?: Date;
+  created_at?: string;
+  updated_at?: string;
   backgroundImage: BackgroundImage;
 
   fontFileWoff?: GlobalFont;

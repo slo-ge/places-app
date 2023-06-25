@@ -1,25 +1,15 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostBinding,
-  OnChanges,
-  OnInit,
-  Output, SimpleChanges
-} from '@angular/core';
-import {BackgroundImage} from "@app/core/model/preset";
-import {CmsService} from "@app/core/services/cms.service";
-import {Observable} from "rxjs";
-import {finalize, map, mergeMap, take, toArray} from "rxjs/operators";
-import {toAbsoluteCMSUrl} from "@app/core/editor/utils";
-import {MetaDataActionsComponent} from "@app/modules/pages/editor/components/sidebar/meta-data-actions/meta-data-actions.component";
-import {CmsAuthService} from "@app/core/services/cms-auth.service";
-
+import { Component, ElementRef, EventEmitter, HostBinding, OnInit, Output } from '@angular/core';
+import { BackgroundImage } from '@app/core/model/preset';
+import { CmsService } from '@app/core/services/cms.service';
+import { Observable } from 'rxjs';
+import { finalize, map, mergeMap, take, toArray } from 'rxjs/operators';
+import { toAbsoluteCMSUrl } from '@app/core/editor/utils';
+import { CmsAuthService } from '@app/core/services/cms-auth.service';
+import { ResourcesService } from '@app/core/services/resources.service';
 
 interface StaticImage {
-  url: string;
-  thumbnailUrl: string;
+    url: string;
+    thumbnailUrl: string;
 }
 
 @Component({
@@ -56,6 +46,7 @@ export class MetaDataActionStaticImageComponent implements OnInit {
 
 
   constructor(private cmsService: CmsService,
+              private resourceService: ResourcesService,
               private elementRef: ElementRef,
               private cmsAuthService: CmsAuthService) {
   }
@@ -64,7 +55,7 @@ export class MetaDataActionStaticImageComponent implements OnInit {
     const user$ = this.cmsAuthService.getUser();
     this.staticImages$ = user$.pipe(
       take(1),
-      mergeMap(d => this.cmsService.getStaticImages(d?.user ? '&caption=other' : '').pipe(
+      mergeMap(d => this.resourceService.getStaticImages(d?.user ? '&caption=other' : '').pipe(
         mergeMap(image => image),
         map(image => ({
           thumbnailUrl: toAbsoluteCMSUrl(MetaDataActionStaticImageComponent.getSmallestUrl(image)),

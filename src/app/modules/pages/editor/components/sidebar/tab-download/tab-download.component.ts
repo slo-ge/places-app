@@ -1,16 +1,18 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {faDownload, faInfo} from "@fortawesome/free-solid-svg-icons";
-import {DataUrlFileType, DownloadCanvasService} from "@app/core/editor/download-canvas.service";
-import {PresetService} from "@app/core/editor/preset.service";
-import {take} from "rxjs/operators";
-import {AuthResponse, CmsService} from "@app/core/services/cms.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {EMPTY, Observable} from "rxjs";
-import {CmsAuthService} from "@app/core/services/cms-auth.service";
-import {StaticContentAdapter} from "@app/core/services/adapters/static-content.adapter";
-import {getScaledImage} from "@app/core/editor/canvas.utils";
-import {FeedbackService} from "@app/modules/shared/components/feedback/feedback.service";
-
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { faDownload, faInfo } from '@fortawesome/free-solid-svg-icons';
+import {
+  DataUrlFileType,
+  DownloadCanvasService,
+} from '@app/core/editor/download-canvas.service';
+import { PresetService } from '@app/core/editor/preset.service';
+import { take } from 'rxjs/operators';
+import { AuthResponse, CmsService } from '@app/core/services/cms.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EMPTY, Observable } from 'rxjs';
+import { CmsAuthService } from '@app/core/services/cms-auth.service';
+import { StaticContentAdapter } from '@app/core/services/adapters/static-content.adapter';
+import { getScaledImage } from '@app/core/editor/canvas.utils';
+import { FeedbackService } from '@app/modules/shared/components/feedback/feedback.service';
 
 interface SelectOption {
   formControlName: string;
@@ -58,7 +60,6 @@ export class TabDownloadComponent implements OnChanges, OnInit {
 
 
   constructor(private downloadService: DownloadCanvasService,
-              private formBuilder: FormBuilder,
               private cmsService: CmsService,
               private authService: CmsAuthService,
               private feedbackService: FeedbackService) {
@@ -68,7 +69,7 @@ export class TabDownloadComponent implements OnChanges, OnInit {
     this.currentUser$ = this.authService.getUser();
   }
 
-  ngOnChanges(sC: SimpleChanges): void {
+  ngOnChanges(): void {
     this.extended = !!this.presetService?.info?.isAnimatedBackground;
 
     this.downloadSizes = [

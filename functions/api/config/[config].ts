@@ -5,7 +5,9 @@ export async function onRequest(event: EventContext<any, any, any>) {
   console.log(event.request.url);
 
   const url = new URL(event.request.url);
-  if (url.searchParams?.get('referrer') === 'meta-mapper.com'){
+  const referrer = url.searchParams?.get('referrer');
+
+  if (['meta-mapper.com', 'www.meta-mapper.com'].includes(referrer)){
       return APP_FALLBACK_CONFIG;
   }
 

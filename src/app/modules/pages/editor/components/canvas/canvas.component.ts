@@ -75,7 +75,7 @@ export class CanvasComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(data: SimpleChanges): void {
+  ngOnChanges(_data: SimpleChanges): void {
     this.loggedInUser = this.authService.getUser();
   }
 
@@ -100,8 +100,8 @@ export class CanvasComponent implements OnInit, OnChanges {
       this.canvas.clear();
     }
 
-    this.editorService.setCanvas(this.canvas);
-    this.preset = mergeLayouts(this.preset);
+      this.preset = mergeLayouts(this.preset);
+      this.editorService.setCanvas(this.canvas, this.preset);
 
     if (this.metaProperties) {
       this.currentPresetService = new PresetService(

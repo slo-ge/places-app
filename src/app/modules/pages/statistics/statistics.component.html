@@ -1,0 +1,12 @@
+<ng-container *ngIf='(trackingEvents$ | async) as eventsMap'>
+    <div class='block' *ngFor='let keyValue of eventsMap | keyvalue'>
+        <div class='inner-block'>
+            <div>{{keyValue.key}}</div>
+            <div>
+                <div class="item" *ngFor='let event of keyValue.value'>
+                    {{event.trackingDetail}}
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,4 @@
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "metamapper"
+database_id = "0fb27c4b-1c59-4c64-a2d3-e3e6aa893444"

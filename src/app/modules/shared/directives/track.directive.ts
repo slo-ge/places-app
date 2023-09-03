@@ -1,5 +1,4 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { CookieService } from '@app/core/services/cookie.service';
 
 
 @Directive({
@@ -18,15 +17,10 @@ export class TrackDirective {
     @Input()
     public trackingCategory: 'Download' | 'Feedback' | null = null;
 
-    constructor(private cookieService: CookieService) {
+    constructor() {
     }
 
     @HostListener('click', ['$event']) onClick(_$event: any) {
-        if (this.cookieService.isTrackingDisabled()) {
-            console.debug('tracking disabled by localStorage variable');
-            return;
-        }
-
         if (!this.dataStr) {
             console.error('dataStr must be provided for tracking');
         } else {

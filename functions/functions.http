@@ -1,0 +1,17 @@
+
+# Id             INTEGER PRIMARY KEY,
+# TrackingEvent  TEXT,
+# TrackingDetail TEXT,
+# EventDate      DATETIME
+
+# Add new tracking download
+POST http://localhost:8788/api/download/tmp
+Content-Type: application/x-www-form-urlencoded
+
+trackingEvent = download &
+trackingDetail = {presetId: 10, presetTitle: "windows95"}
+
+###
+
+# Get all
+GET http://localhost:8788/api/download/list

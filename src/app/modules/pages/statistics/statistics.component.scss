@@ -1,0 +1,14 @@
+.block {
+    display: flex;
+    margin: 10px;
+}
+
+.inner-block {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 10px;
+}
+
+.item {
+    margin: 5px 0;
+}

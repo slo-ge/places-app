@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/export-latest/stats.json",
-    "wrangler": "wrangler pages dev dist/export-latest"
+    "wrangler": "wrangler pages dev dist/export-latest --d1=DB --local --persist"
   },
   "private": true,
   "dependencies": {

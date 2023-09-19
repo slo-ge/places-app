@@ -81,18 +81,19 @@ export class UserActionsComponent {
      * File Upload for static images
      */
     async addPresetImageToResourceLibrary(e: any) {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        const self = this;
-        reader.onload = async function (_reader) {
-            self.cmsResourceService
-                .uploadResource({ file, fileName: file.name, isPresetImage: true })
-                .pipe(take(1))
-                .subscribe({
-                    next: value => (self.sentUpdateResponse = `Image uploaded at: ${value.updatedAt}`),
-                });
-        };
-        reader.readAsDataURL(file);
+        for (const file of e.target.files) {
+            const reader = new FileReader();
+            const self = this;
+            reader.onload = async function (_reader) {
+                self.cmsResourceService
+                    .uploadResource({ file, fileName: file.name, isPresetImage: true })
+                    .pipe(take(1))
+                    .subscribe({
+                        next: value => (self.sentUpdateResponse = `Image uploaded at: ${value.updatedAt}`),
+                    });
+            };
+            reader.readAsDataURL(file);
+        }
     }
 
     private reloadBrowserWith(presetId: number | '') {

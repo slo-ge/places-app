@@ -77,7 +77,7 @@ export class LayoutSelectorComponent implements OnInit {
 
         if (!url) {
             // if it is a video without preview url, then there should be an error loged
-            console.error('video preset', preset.id, 'must contain preview image');
+            console.warn('video preset', preset.id, 'must contain preview image');
             return '';
         }
 

@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {EditorComponent} from "@app/modules/pages/editor/editor.component";
-import {PresetResolver} from "@app/core/editor/preset.resolver";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { EditorComponent } from '@app/modules/pages/editor/editor.component';
+import { presetResolver } from '@app/core/editor/preset.resolver';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: EditorComponent,
-    resolve: {preset: PresetResolver}
-  }
+    {
+        path: '',
+        component: EditorComponent,
+        resolve: { preset: presetResolver },
+    },
 ];
 
 @NgModule({

@@ -3,6 +3,16 @@ import { HttpTrackingService, TrackingEvent } from '@app/core/editor/http-tracki
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+
+function isJsonString(str: string) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
+
 @Component({
     selector: 'app-statistics',
     templateUrl: './statistics.component.html',
@@ -16,6 +26,10 @@ export class StatisticsComponent {
             map(events => {
                 const map = new Map<string, Array<TrackingEvent>>();
                 for (const event of events) {
+                    if (!isJsonString(event.trackingDetail)) {
+                        continue;
+                    }
+
                     const date = new Date(event.eventDate);
                     const key = `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()}`;
                     if (map.get(key)) {
@@ -24,7 +38,6 @@ export class StatisticsComponent {
                         map.set(key, [event]);
                     }
                 }
-                console.log(map)
                 return map;
             })
         );

@@ -1,9 +1,7 @@
-import { Observable } from 'rxjs';
-import { ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, ResolveFn } from '@angular/router';
 import { CmsService } from '@app/core/services/cms.service';
 import { Preset } from '@app/core/model/preset';
+import { inject } from '@angular/core';
 
-export const presetResolver: Observable<Preset> | Promise<any> | any = (
-    cmsService: CmsService,
-    route: ActivatedRouteSnapshot
-) => (route.queryParams?.presetId ? cmsService.getPreset(route.queryParams.presetId) : null);
+export const presetResolver: ResolveFn<Preset | null> = (route: ActivatedRouteSnapshot) =>
+    route.queryParams?.presetId ? inject(CmsService).getPreset(route.queryParams.presetId) : null;

@@ -27,7 +27,7 @@ interface CustomFabricObjectFields {
 }
 
 interface InnterClipPath {
-  __internalClipPath?: ClipPath; 
+  __internalClipPath?: ClipPath;
 }
 
 export type CustomObject = fabric.Object & CustomFabricObjectFields;

@@ -1,10 +1,11 @@
-import { fabric } from "fabric";
-import { MetaMapperData } from "@app/modules/pages/editor/models";
-import { LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStaticImage } from "@app/core/model/preset";
-import { Canvas, Image, Object } from "fabric/fabric-impl";
+import { fabric } from 'fabric';
+import { MetaMapperData } from '@app/modules/pages/editor/models';
+import { LayoutItemType, ObjectPosition, Preset, PresetObject, PresetObjectStaticImage } from '@app/core/model/preset';
+import { Canvas, Image, Object } from 'fabric/fabric-impl';
 import * as FontFaceObserver from 'fontfaceobserver';
 import {
-    CustomCircleObject, CustomImageBox,
+    CustomCircleObject,
+    CustomImageBox,
     CustomObject,
     CustomRectObject,
     CustomTextBox,
@@ -15,25 +16,24 @@ import {
     isPositionXFixed,
     isPositionYFixed,
     isRect,
-    isText
-} from "@app/core/editor/fabric-object.utils";
+    isText,
+} from '@app/core/editor/fabric-object.utils';
 import {
     appendFontToDom,
     isAbsoluteUrl,
     isVideoBackground,
     proxiedUrl,
     resetFabricImage,
-    toAbsoluteCMSUrl
-} from "@app/core/editor/utils";
-import { PresetVideo } from "@app/core/editor/preset-video.service";
+    toAbsoluteCMSUrl,
+} from '@app/core/editor/utils';
+import { PresetVideo } from '@app/core/editor/preset-video.service';
 import {
     CIRCLE_RESOLVERS,
     OBJECT_RESOLVERS,
     RECT_RESOLVERS,
-    TEXT_RESOLVERS
-} from "@app/core/editor/resolvers/resolvers";
-import { FontResolver } from "@app/core/editor/resolvers/font.resolver";
-
+    TEXT_RESOLVERS,
+} from '@app/core/editor/resolvers/resolvers';
+import { FontResolver } from '@app/core/editor/resolvers/font.resolver';
 
 /**
  * This is a simple cache which does only cache the images,
@@ -44,23 +44,25 @@ const imageCache: { [key: string]: Image } = {};
 
 // Change the padding logic to include background-color
 fabric.Text.prototype.set({
-    _getNonTransformedDimensions() { // Object dimensions
+    _getNonTransformedDimensions() {
+        // Object dimensions
         // @ts-ignore
         return new fabric.Point(this.width, this.height).scalarAdd(this.padding);
     },
     // @ts-ignore
-    _calculateCurrentDimensions() { // Controls dimensions
+    _calculateCurrentDimensions() {
+        // Controls dimensions
         // @ts-ignore
         return fabric.util.transformPoint(this._getTransformedDimensions(), this.getViewportTransform(), true);
-    }
+    },
 });
 
 /**
  * store fabricjs object with corresponding preset
  */
 interface FabricObjectAndPreset {
-    object: any,
-    preset: PresetObject
+    object: any;
+    preset: PresetObject;
 }
 
 /**
@@ -73,7 +75,7 @@ interface PresetServiceInfo {
 /**
  * Sort by there vertical position
  */
-const POSITION_SORT = (a: PresetObject, b: PresetObject) => a.position < b.position ? -1 : 1;
+const POSITION_SORT = (a: PresetObject, b: PresetObject) => (a.position < b.position ? -1 : 1);
 
 export class PresetService {
     public readonly metaMapperData: MetaMapperData;
@@ -97,7 +99,7 @@ export class PresetService {
             await this.loadGlobalFontFromLayoutSetting();
         }
 
-        // holds all fabricJs objects for setting the correct zIndex
+        // Holds all fabricJs objects for setting the correct zIndex
         const renderedItems: FabricObjectAndPreset[] = [];
 
         if (this.preset.itemsJson && this.preset.itemsJson.length > 0) {
@@ -108,30 +110,29 @@ export class PresetService {
                 this.addObjectToCanvas(obj);
                 renderedItems.push({ object: obj, preset: item });
                 posLastObjectY = getYPos(obj); // side effect, but helps if positions are relative to their object size
-            }
+            };
 
-            for (const item of this.preset.itemsJson.sort(POSITION_SORT)) {
+            for (const preset of this.preset.itemsJson.sort(POSITION_SORT)) {
                 let obj: fabric.Object | null = null;
-                if (isText(item)) {
-                    const text = getMetaFieldOrStaticField(this.metaMapperData, item);
-                    obj = await this.createText(text, item, item.offsetTop + posLastObjectY);
-                } else if (isImage(item)) {
-                    const url = getMetaFieldOrStaticField(this.metaMapperData, item);
+                if (isText(preset)) {
+                    const text = getMetaFieldOrStaticField(this.metaMapperData, preset);
+                    obj = await this.createText(text, preset, preset.offsetTop + posLastObjectY);
+                } else if (isImage(preset)) {
+                    const url = getMetaFieldOrStaticField(this.metaMapperData, preset);
                     obj = fabric.util.object.clone(await this.getImage(url));
-                } else if (isCircle(item)) {
+                } else if (isCircle(preset)) {
                     obj = new fabric.Circle();
-                    CIRCLE_RESOLVERS.applyOnObject(obj as CustomCircleObject, item);
-                } else if (isRect(item)) {
+                    CIRCLE_RESOLVERS.applyOnObject(obj as CustomCircleObject, preset);
+                } else if (isRect(preset)) {
                     obj = new fabric.Rect();
-                    RECT_RESOLVERS.applyOnObject(obj as CustomRectObject, item);
+                    RECT_RESOLVERS.applyOnObject(obj as CustomRectObject, preset);
                 }
 
                 if (obj) {
-                    apply(obj, item)
+                    apply(obj, preset);
                 } else {
-                    console.error(`Could not apply object with type ${item.type} in preset: ${this.preset.id}`);
+                    console.error(`Could not apply object with type ${preset.type} in preset: ${this.preset.id}`);
                 }
-
             }
         } else {
             console.error('no items to show');
@@ -145,9 +146,7 @@ export class PresetService {
          * But if 3 items on canvas, we can change it to 3, so we need to render first, and also
          * keep the order of the zIndex if available
          */
-        for (const item of renderedItems.sort((a, b) =>
-            (a.preset.zIndex || 0) < (b.preset.zIndex || 0) ? -1 : 1)
-        ) {
+        for (const item of renderedItems.sort((a, b) => ((a.preset.zIndex || 0) < (b.preset.zIndex || 0) ? -1 : 1))) {
             this.afterAddToCanvasAttributes(item.object, item.preset);
         }
     }
@@ -156,7 +155,10 @@ export class PresetService {
      * Adds the object to the canvas
      * Also adds object and item to a list
      */
-    public addObjectToCanvas(object: fabric.Image | fabric.Textbox | fabric.Rect | fabric.Circle, selected: boolean = false) {
+    public addObjectToCanvas(
+        object: fabric.Image | fabric.Textbox | fabric.Rect | fabric.Circle,
+        selected: boolean = false
+    ) {
         this.canvas.add(object);
         if (selected) {
             this.canvas.setActiveObject(object);
@@ -178,14 +180,14 @@ export class PresetService {
         // if the url starts with blob, it is a preselected or taken photo,
         // used by the @ImageUploadContentAdapter,
         // also ignore proxy if there is no absolute url, because its internal content
-        useProxy = (url.startsWith('blob:') || !isAbsoluteUrl(url)) ? false : useProxy;
+        useProxy = url.startsWith('blob:') || !isAbsoluteUrl(url) ? false : useProxy;
 
         if (url) {
             const proxiedImageUrl = useProxy ? proxiedUrl(url) : url;
 
             if (!(proxiedImageUrl in imageCache)) {
                 const prom = new Promise<Image>((resolve, _reject) => {
-                    fabric.Image.fromURL(proxiedImageUrl, (img) => resolve(img), { crossOrigin: "*" })
+                    fabric.Image.fromURL(proxiedImageUrl, img => resolve(img), { crossOrigin: '*' });
                 });
 
                 imageCache[proxiedImageUrl] = fabric.util.object.clone(await prom);
@@ -232,10 +234,7 @@ export class PresetService {
      */
     private async loadGlobalFontFromLayoutSetting() {
         if (this.preset.fontFamilyHeadingCSS && this.preset.fontFileWoff) {
-            appendFontToDom(
-                this.preset.fontFileWoff.url,
-                this.preset.fontFamilyHeadingCSS
-            );
+            appendFontToDom(this.preset.fontFileWoff.url, this.preset.fontFamilyHeadingCSS);
 
             const font = new FontFaceObserver(this.preset.fontFamilyHeadingCSS);
             await font.load(null, 5000);
@@ -250,9 +249,9 @@ export class PresetService {
      * @param offsetTop
      */
     public async createText(text: string, item: PresetObject, offsetTop: number) {
-        const fabricText = new fabric.Textbox(
-            text, { fontSize: item.fontSize, left: 10, top: 10 }
-        ) as any | CustomTextBox;
+        const fabricText = new fabric.Textbox(text, { fontSize: item.fontSize, left: 10, top: 10 }) as
+            | any
+            | CustomTextBox;
 
         // NOTE: This is also set in this.applyOptions
         fabricText.presetType = item.type;
@@ -280,14 +279,14 @@ export class PresetService {
         fabricObject.set('left', preset.offsetLeft);
 
         if (isPositionYFixed(preset)) {
-            fabricObject.set('top', preset.offsetTop)
+            fabricObject.set('top', preset.offsetTop);
         } else {
             // else use the relative position
             fabricObject.set('top', offsetTop);
         }
 
         // setting the x position and calculating the width
-        let width = (this.canvas.width || 0) - (2 * preset.offsetLeft);
+        let width = (this.canvas.width || 0) - 2 * preset.offsetLeft;
         if (isPositionXFixed(preset)) {
             let offsetRight = preset.offsetRight || preset.offsetLeft;
             width = (this.canvas.width || 0) - preset.offsetLeft - offsetRight;

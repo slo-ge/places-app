@@ -63,7 +63,9 @@ export class StatisticsComponent {
                     const year = parseInt(parts[2], 10);
                     const parsedDate = new Date(year, month, day);
 
-                    aggregatedEvents.push({...Array.from(tmpValue.values())[0], date: parsedDate});
+                    for (const eventValues of tmpValue.values()) {
+                        aggregatedEvents.push({...eventValues, date: parsedDate});
+                    }
                 }
                 const sortedEvents = [...aggregatedEvents].sort((a, b) => a.date.getTime() - b.date.getTime());
                 return sortedEvents;

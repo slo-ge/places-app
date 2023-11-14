@@ -12,7 +12,7 @@
     "lint": "ng lint",
     "build:stats": "ng build --stats-json",
     "analyze": "webpack-bundle-analyzer dist/export-latest/stats.json",
-    "wrangler": "wrangler pages dev dist/export-latest --d1=DB --local --persist"
+    "wrangler": "wrangler pages dev dist/export-latest --d1=DB --local --persist --compatibility-date=2023-11-14"
   },
   "private": true,
   "dependencies": {
@@ -50,10 +50,10 @@
     "@cloudflare/workers-types": "^4.20221111.1",
     "@types/dom-mediacapture-record": "1.0.7",
     "@types/node": "^12.20.55",
-    "@typescript-eslint/eslint-plugin": "5.37.0",
-    "@typescript-eslint/parser": "5.37.0",
+    "@typescript-eslint/eslint-plugin": "6.11.0",
+    "@typescript-eslint/parser": "6.11.0",
     "codelyzer": "^6.0.0",
-    "eslint": "^8.23.1",
+    "eslint": "^8.53.0",
     "prettier": "2.8.8",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.3",

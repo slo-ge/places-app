@@ -77,12 +77,12 @@ aside {
   border-right: 1px solid $grey-1;
   background-color: $grey-0;
 
-  tabs {
+  app-tabs {
     @include respond-above(sm) {
       height: $content-height;
     }
 
-    tab {
+    app-tab {
       height: 100%;
     }
   }

@@ -1,4 +1,4 @@
-<ng-container *ngIf="!(currentUser | async); else username">
+<ng-container *ngIf="(currentUser | async) === null; else username">
   <form class="values" [formGroup]="userForm">
     <h1>Log in</h1>
     <label>User</label>

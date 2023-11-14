@@ -1,23 +1,23 @@
 <app-loading-animation *ngIf="loading"></app-loading-animation>
 <div class="preview">
   <aside [class.visible]="mobileToolbar">
-    <tabs [currentIndex]="(loggedInUser | async)?.user ? 0 : undefined">
-      <tab tabTitle="Presets" [faIcon]="faPalette">
+    <app-tabs [currentIndex]="(loggedInUser | async)?.user ? 0 : undefined">
+      <app-tab title="Presets" [faIcon]="faPalette">
         <app-url-meta-properties-input *ifFeatureFlag="FeatureFlags.SHOW_INLINE_META_INPUT"
           (meta)="metaProperties = $event; refreshCanvas()"></app-url-meta-properties-input>
         <app-layout-selector (layout)="setLayout($event)"></app-layout-selector>
-      </tab>
-      <tab tabTitle="Add" [faIcon]="faCode">
+      </app-tab>
+      <app-tab title="Add" [faIcon]="faCode">
         <app-meta-data-actions *ngIf="currentPresetService" [presetService]="currentPresetService"
           [metaProperties]="metaProperties">
         </app-meta-data-actions>
-      </tab>
+      </app-tab>
 
-      <tab tabTitle="Share" [faIcon]="faDownload">
+      <app-tab title="Share" [faIcon]="faDownload">
         <app-tab-download [presetService]="currentPresetService"></app-tab-download>
-      </tab>
+      </app-tab>
 
-      <tab tabTitle="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
+      <app-tab title="User" [faIcon]="faUser" *ifFeatureFlag="FeatureFlags.SHOW_USER_SETTINGS">
         <ng-container *ngIf="(loggedInUser | async)?.user?.isAdmin">
           <button [routerLink]="['./']" class="save-change secondary" queryParamsHandling="merge"
             [queryParams]="{userPresetsOnly: true}">User templates</button>
@@ -27,8 +27,8 @@
           <app-user-actions [canvas]="canvas" [preset]="preset" />
         </ng-container>
         <app-profile></app-profile>
-      </tab>
-    </tabs>
+      </app-tab>
+    </app-tabs>
   </aside>
   <main>
     <div class="canvas-actions">

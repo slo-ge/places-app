@@ -1,8 +1,8 @@
 <div class="wrapper">
-  <div class="action-tile" [class.disabled]="!(isUndoable$ | async)">
+  <div class="action-tile" [class.disabled]="(isUndoable$ | async) === false">
     <fa-icon [icon]="iconUndo" (click)="undo()"></fa-icon>
   </div>
-  <div class="action-tile" [class.disabled]="!(isReDoable$ | async)">
+  <div class="action-tile" [class.disabled]="(isReDoable$ | async) === false">
     <fa-icon [icon]="iconRedo" (click)="redo()"></fa-icon>
   </div>
 </div>

@@ -39,12 +39,12 @@
                         <fa-icon class="success" [icon]="faCheckCircle"></fa-icon>
                         {{adapterInfoText[adapter]}}</div>
 
-                    <button *ngIf="adapter == ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
+                    <button *ngIf="adapter === ApiAdapter.WORDPRESS" [routerLink]="['/result-list']"
                             [queryParams]="{adapter: adapter, apiUrl: baseURLForm.get('url')?.value}">
                         Select Post
                     </button>
 
-                    <button *ngIf="adapter == ApiAdapter.METADATA" [routerLink]="['/editor']"
+                    <button *ngIf="adapter === ApiAdapter.METADATA" [routerLink]="['/editor']"
                             trackClick="Open Editor with data: {{baseURLForm.get('url')?.value}}"
                             [queryParams]="{
                     adapter: adapter,
@@ -53,13 +53,13 @@
                         Generate
                     </button>
 
-                    <button *ngIf="adapter == ApiAdapter.LOREM_IPSUM" [routerLink]="['/editor']" [queryParams]="
+                    <button *ngIf="adapter === ApiAdapter.LOREM_IPSUM" [routerLink]="['/editor']" [queryParams]="
   {adapter: this.adapter, data: baseURLForm.get('url')?.value}">
                         Open Open Open
                     </button>
                 </div>
 
-                <div *ngIf="adapter == false">
+                <div *ngIf="adapter === false">
                     <div>There was a problem detection any framework or meta data, may the selected link is incorrect
                     </div>
                 </div>

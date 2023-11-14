@@ -10,7 +10,7 @@ import {
 import {TabComponent} from './tab.component';
 
 @Component({
-  selector: 'tabs',
+  selector: 'app-tabs',
   template: `
       <div class="nav-tabs">
           <div *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active" class="nav-item">

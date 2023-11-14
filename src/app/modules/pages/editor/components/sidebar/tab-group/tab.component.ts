@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 @Component({
-  selector: 'tab',
+  selector: 'app-tab',
   styleUrls: ['./tab.component.scss'],
   template: `
     <div [hidden]="!active" class="pane" [class.active]="active">
@@ -11,7 +11,7 @@ import {IconProp} from "@fortawesome/fontawesome-svg-core";
   `
 })
 export class TabComponent {
-  @Input('tabTitle') title: string = '';
+  @Input() title: string = '';
   @Input() faIcon: IconProp | null = null;
   @Input() active = false;
 }

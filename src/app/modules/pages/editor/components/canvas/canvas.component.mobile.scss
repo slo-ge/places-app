@@ -1,8 +1,8 @@
 @import 'style';
 
 @include respond-below(sm) {
-  tab,
-  tabs {
+  app-tab,
+  app-tabs {
     width: auto;
   }
 

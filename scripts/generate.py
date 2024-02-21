@@ -57,7 +57,7 @@ def get_wp_response(url):
 
 
 def append_tag_pages(url_set):
-    query = f'{API_URL}/tags?per_page=200'
+    query = f'{API_URL}/tags?per_page=100'
     # TODO: iterate over all tags
     wp_response = requests.get(query).json() + requests.get(query + '&page=2').json()
     for index, item in enumerate(sorted(wp_response, key=lambda tag: tag['count'], reverse=True)):

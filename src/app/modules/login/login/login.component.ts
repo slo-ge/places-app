@@ -5,7 +5,6 @@ import { take, tap } from "rxjs/operators";
 import { EMPTY, Observable } from "rxjs";
 import { CmsAuthService } from "@app/core/services/cms-auth.service";
 import { HttpErrorResponse } from '@angular/common/http';
-import { InitialConfigService } from '@app/core/services/initial-config.service';
 
 
 interface LoginError {

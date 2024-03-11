@@ -1,20 +1,24 @@
-<div class="load-entries">
-  <button class="secondary" (click)="toggle()">show examples</button>
+<div class='load-entries'>
+    <button class='secondary' (click)='toggle()'>show examples</button>
 </div>
 
 @if (open) {
-    <div class="carousel">
-        <img class="overlay" src="/assets/images/iphone-overlay.png">
-        <ng-container *ngIf="currentPreview | async as preview">
-        <a [href]="preview.url" class="url" target="_blank">{{preview.url}}</a>
-        <img class="preview-image" (load)="onImageLoad($event)"
-        loading="lazy"
-        src="{{'/cms' + preview.rendered.formats.small.url}}">
-        </ng-container>
-        <app-loading-animation *ngIf="loading"></app-loading-animation>
-        <div class="controls">
-        <div (click)="prev()">prev</div>
-        <div (click)="next()">next</div>
+    <div class='carousel'>
+        <img class='overlay' src='/assets/images/iphone-overlay.png'>
+
+        @if (currentPreview | async;as preview) {
+            <a [href]='preview.url' class='url' target='_blank'>{{ preview.url }}</a>
+            <img class='preview-image' (load)='onImageLoad($event)'
+                 loading='lazy'
+                 src="{{'/cms' + preview.rendered.formats.small.url}}">
+        }
+
+        @if (loading) {
+            <app-loading-animation />
+        }
+        <div class='controls'>
+            <div (click)='prev()'>prev</div>
+            <div (click)='next()'>next</div>
         </div>
     </div>
 }
